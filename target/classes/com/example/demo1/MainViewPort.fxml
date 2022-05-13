@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml">
+    <top>
+        <BorderPane>
+            <center>
+                <Label text="请选择您要进行的操作~" style="-fx-font-size:18"/>
+            </center>
+            <bottom>
+                <Label text="请注意管理员按钮只有管理员可以按哦" style="-fx-font-size:18"/>
+            </bottom>
+        </BorderPane>
+    </top>
+    <center>
+        <GridPane alignment="TOP_CENTER" hgap="8" vgap="8" style="-fx-padding:30 0 0 0">
+            <Button fx:id="Navigate" text="导航系统"
+                    GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+
+            <Button fx:id="Stu_Cour" text="学生选课"
+                    GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+            <Button fx:id="Stu_Act" text="学生活动"
+                    GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+
+            <Button fx:id="Tea_Cour" text="教师选课"
+                    GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+
+            <Button fx:id="Tea_Act" text="教师活动"
+                    GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Button fx:id="Cour_Tab" text="课程表"
+                    GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
+            <Button fx:id="Upload" text="上传文件"
+                    GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+
+            <Button fx:id="Clock" text="设置闹钟"
+                    GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+        </GridPane>
+    </center>
+    <bottom>
+        <BorderPane>
+            <center>
+                <Button fx:id="Manager" text="管*理*员*系*统"/>
+            </center>
+            <bottom>
+                <BorderPane>
+                    <center>
+                        <Label fx:id="buttonStatusText" styleClass="-fx-font-size:15"  alignment="CENTER"/>
+                    </center>
+                </BorderPane>
+            </bottom>
+        </BorderPane>
+    </bottom>
+
+</BorderPane>
+

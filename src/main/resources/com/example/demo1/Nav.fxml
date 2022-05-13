@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns:fx="http://javafx.com/fxml">
+    <top>
+        <StackPane>
+            <Label text="请根据指示填写下列空格及选项~" style="-fx-font-size:18"/>
+        </StackPane>
+    </top>
+
+    <center>
+        <GridPane alignment="TOP_CENTER" hgap="8" vgap="8" style="-fx-padding:30 0 0 0">
+            <Label text="起点:" labelFor="$StartPoint" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <TextField fx:id="StartPoint" prefColumnCount="10" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+            <Label text="终点：" labelFor="$EndPoint" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+            <TextField fx:id="EndPoint" prefColumnCount="10" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+
+            <Label text="请选择您想使用的交通工具"  GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <RadioButton fx:id="Walk" text="步行" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <RadioButton fx:id="Bicycle" text="自行车" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <RadioButton fx:id="Electric" text="电动车" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+            <RadioButton fx:id="Car" text="汽车" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+
+        </GridPane>
+    </center>
+
+    <bottom>
+        <BorderPane>
+            <center>
+                <GridPane>
+                    <Label text="导航结果为：" labelFor="$ResOfNav" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <TextArea  fx:id="ResOfNav" GridPane.rowIndex="1"
+                               GridPane.columnIndex="1" prefColumnCount="30" prefRowCount="15" />
+                </GridPane>
+            </center>
+            <right>
+                <GridPane>
+                    <Button fx:id="submitButton" text="确  定" alignment="CENTER"
+                            GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                    <Label text="  " GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                    <Button fx:id="backToMain" text="回到主界面" alignment="CENTER"
+                            GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                </GridPane>
+            </right>
+            <bottom>
+                <Label text="               "/>
+            </bottom>
+        </BorderPane>
+
+    </bottom>
+</BorderPane>
