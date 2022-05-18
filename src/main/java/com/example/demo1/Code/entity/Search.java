@@ -1,8 +1,6 @@
 package com.example.demo1.Code.entity;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class Search {
     /**

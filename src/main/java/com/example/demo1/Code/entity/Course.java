@@ -113,4 +113,5 @@ public class Course extends Event{
                 this.getM_iExamFloor()+"≤„"+this.getM_iExamRoom()+" “"+"\n");
     }
 
+
 }
