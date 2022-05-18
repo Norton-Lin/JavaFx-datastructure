@@ -55,6 +55,4 @@ public class Search {
         QuickSort(events, low, i-1);
         QuickSort(events, i + 1, high);
     }
-
-
 }

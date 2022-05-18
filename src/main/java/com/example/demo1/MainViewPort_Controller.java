@@ -1,6 +1,7 @@
 package com.example.demo1;
 
 import com.example.demo1.Code.Util.Authority;
+import com.example.demo1.Code.entity.Activity;
 import com.example.demo1.Code.entity.account.Account;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,9 +27,9 @@ public class MainViewPort_Controller {
     @FXML
     public Button Stu_Act;
     @FXML
-    public Button Tea_Cour;
-    @FXML
     public Button Tea_Act;
+    @FXML
+    public Button Tea_data;
     @FXML
     public Button Cour_Tab;
     @FXML
@@ -79,12 +80,12 @@ public class MainViewPort_Controller {
         Navigate.setOnAction(event -> handleNavButtonAction());
         Stu_Cour.setOnAction(event -> handleStuCourButtonAction());
         Stu_Act.setOnAction(event -> handleStuActButtonAction());
-        Tea_Cour.setOnAction(event -> handleTeaCourButtonAction());
         Tea_Act.setOnAction(event -> handleTeaActButtonAction());
         Cour_Tab.setOnAction(event -> handleCourTabButtonAction());
         Upload.setOnAction(event -> handleUploadButtonAction());
         Clock.setOnAction(event -> handleClockButtonAction());
         Manager.setOnAction(event -> handleManagerButtonAction());
+        Tea_data.setOnAction(event -> handleTeaDataButtonAction());
     }
 
     protected void handleNavButtonAction() {
@@ -105,24 +106,27 @@ public class MainViewPort_Controller {
     }
 
     protected void handleStuActButtonAction() {
-        if (this.helloController.getAccount().getAuthority() != Authority.Student)
+        if (this.helloController.getAccount().getAuthority() != Authority.Student) {
             buttonStatusText.setText("你不是学生！");
-
+            return;
+        }
+        ActivityChooseController activityChooseController = new ActivityChooseController(this);
+        thisStage.hide();
+        activityChooseController.showStage();
     }
 
-    protected void handleTeaCourButtonAction() {
+    protected void handleTeaActButtonAction() {
         if (this.helloController.getAccount().getAuthority() != Authority.Teacher) {
             buttonStatusText.setText("你不是教师！");
             return;
         }
-        CourseChooseController courseChooseController = new CourseChooseController(this);
+        ActivityChooseController activityChooseController = new ActivityChooseController(this);
         thisStage.hide();
-        courseChooseController.showStage();
+        activityChooseController.showStage();
     }
 
-    protected void handleTeaActButtonAction() {
-        if (this.helloController.getAccount().getAuthority() != Authority.Teacher)
-            buttonStatusText.setText("你不是教师！");
+    protected void handleTeaDataButtonAction() {
+
     }
 
     protected void handleCourTabButtonAction() {
@@ -134,7 +138,7 @@ public class MainViewPort_Controller {
     }
 
     protected void handleClockButtonAction() {
-
+        ClockController clockController = new ClockController(this);
     }
 
     protected void handleManagerButtonAction() {

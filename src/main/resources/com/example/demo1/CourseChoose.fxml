@@ -55,10 +55,14 @@
                     <Label text="查询结果如下：" GridPane.columnIndex="0" GridPane.rowIndex="0"
                         style="-fx-font-size:18"/>
                     <TextArea  fx:id="ResOfSearch" GridPane.rowIndex="1"
-                               GridPane.columnIndex="1" prefColumnCount="10" prefRowCount="15" />
+                               GridPane.columnIndex="0" prefColumnCount="10"/>
                 </GridPane>
             </center>
             <right>
+                <GridPane>
+                    <Label fx:id="SearchResult_Name" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <Label fx:id="SearchResult_Boolean" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                </GridPane>
             </right>
         </BorderPane>
     </center>
@@ -74,7 +78,6 @@
                     </left>
                     <center>
                         <Button fx:id="backToMain" text="回到主界面" alignment="CENTER"/>
-
                     </center>
                     <right>
                         <Button fx:id="Search2" text="查询自己课程" alignment="CENTER"/>
