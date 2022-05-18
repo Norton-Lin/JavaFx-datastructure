@@ -1,10 +1,12 @@
 package com.example.demo1;
 
-import com.example.demo1.Code.Mysql.CourseDatabase;
-import com.example.demo1.Code.entity.Course;
+import com.example.demo1.Code.Mysql.ActivityDatabase;
+import com.example.demo1.Code.Util.Authority;
+import com.example.demo1.Code.entity.Activity;
 import com.example.demo1.Code.entity.FuzzySearch;
 import com.example.demo1.Code.entity.Search;
 import com.example.demo1.Code.entity.account.StudentAccount;
+import com.example.demo1.Code.entity.account.TeacherAccount;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,8 +19,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class CourseChooseController {
-
+public class ActivityChooseController {
     private final Stage thisStage;
     private final MainViewPort_Controller controller;
 
@@ -45,17 +46,14 @@ public class CourseChooseController {
     public TextArea ResOfSearch;
 
     StudentAccount studentAccount;
+    TeacherAccount teacherAccount;
 
     //存放本账号的课程表
-    ArrayList<Course> courses;
+    ArrayList<Activity> activities;
 
-    public CourseChooseController(MainViewPort_Controller mainViewPort_controller) {
+    public ActivityChooseController(MainViewPort_Controller mainViewPort_controller) {
         //得到新Controller
         this.controller = mainViewPort_controller;
-        //获取学生账户信息
-        this.studentAccount = new StudentAccount(this.controller.getAccount());
-        //获得课程列表
-        this.courses = this.studentAccount.getCourse();
 
         //创建新场景
         thisStage = new Stage();
@@ -65,11 +63,21 @@ public class CourseChooseController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseChoose.fxml"));
             loader.setController(this);
             thisStage.setScene(new Scene(loader.load(), 450, 400));
-            thisStage.setTitle("欢迎来到选课界面~");
+            thisStage.setTitle("欢迎来到选择活动界面~");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        this.activities = getActivity(this.controller.getAccount().getAuthority());
+
+        if (this.controller.getAccount().getAuthority() == Authority.Student) {
+            this.studentAccount = new StudentAccount(this.controller.getAccount());
+            this.activities = this.studentAccount.getActivity();
+        }
+        else if (this.controller.getAccount().getAuthority() == Authority.Teacher) {
+            this.teacherAccount = new TeacherAccount(this.controller.getAccount());
+            this.activities = this.teacherAccount.getActivity();
+        }
     }
 
     public void showStage() {
@@ -93,24 +101,24 @@ public class CourseChooseController {
     /**
      * 将在所有课程库中查找到的结果显示在文本框中
      */
-    private ArrayList<Course> Search1ButtonClicked() {
-        //用来存储课程列表的空表
-        ArrayList<Course> tool = new ArrayList<>();
+    private ArrayList<Activity> Search1ButtonClicked() {
+        //用来存储活动列表的空表
+        ArrayList<Activity> tool = new ArrayList<>();
         //实例化数据库
-        CourseDatabase courseDatabase = new CourseDatabase();
-        //从数据库中得到课程列表
-        courseDatabase.find(tool);
+        ActivityDatabase activityDatabase = new ActivityDatabase();
+        //从数据库中得到活动列表
+        activityDatabase.find(tool);
         //实例化一个模糊查找对象
         FuzzySearch fuzzySearch = new FuzzySearch();
         //建立一个空表用于存储模糊查找结果
-        ArrayList<Course> primaryResults;
+        ArrayList<Activity> primaryResults;
         //将模糊查找结果存入 list
         primaryResults = fuzzySearch.get_FS_result(ToBeFuzzySearched.getText(), tool);
         //查询结果的list
         ArrayList<String> texts = new ArrayList<>();
         //将结果字符串化
-        for (Course course : primaryResults)
-            texts.add(course.getM_sName() + " 编号为：" + course.getM_iNum());
+        for (Activity activity : primaryResults)
+            texts.add(activity.getM_sName() + " 编号为：" + activity.getM_iNum());
         //将查询得到的结果显示在文本框中
         ResOfSearch.setText(texts.toString());
         return primaryResults;
@@ -120,12 +128,12 @@ public class CourseChooseController {
      * 点击此按钮选定课程
      */
     private void Assure1ButtonClicked() {
-        //用来存储课程列表的空表
-        ArrayList<Course> tool = new ArrayList<>();
+        //用来存储活动列表的空表
+        ArrayList<Activity> tool = new ArrayList<>();
         //实例化数据库
-        CourseDatabase courseDatabase = new CourseDatabase();
-        //从数据库中得到课程列表
-        courseDatabase.find(tool);
+        ActivityDatabase activityDatabase = new ActivityDatabase();
+        //从数据库中得到活动列表
+        activityDatabase.find(tool);
         //实例化查找类型对象
         Search search = new Search();
         //标记查找是否成功
@@ -135,7 +143,7 @@ public class CourseChooseController {
             int fin = 0;
 
             if (Search1ButtonClicked() == null) {
-                //模糊查找失败或未进行模糊查找，在所有课程列表中查询
+                //模糊查找失败或未进行模糊查找，在所有活动列表中查询
                 int Num1 = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), tool);
                 if (Num1 != tool.size()) {
                     mark = true;
@@ -152,10 +160,13 @@ public class CourseChooseController {
             }
 
             if (mark) {
-                //展示查找到的课程名称
+                //展示查找到的活动名称
                 SearchResult_Name.setText(tool.get(fin).getM_sName() + " 编号为：" + tool.get(fin).getM_iNum());
                 //根据账号类型将课程添加到课表
-                this.studentAccount.addCourse(tool.get(fin));
+                if (this.controller.getAccount().getAuthority() == Authority.Student)
+                    this.studentAccount.addActivity(tool.get(fin));
+                else if (this.controller.getAccount().getAuthority() == Authority.Teacher)
+                    this.teacherAccount.addActivity(tool.get(fin));
                 SearchResult_Boolean.setText("查找并添加成功！好耶！");
             }
             else
@@ -167,18 +178,18 @@ public class CourseChooseController {
         }
     }
 
-    private ArrayList<Course> Search2ButtonClicked() {
+    private ArrayList<Activity> Search2ButtonClicked() {
         //实例化模糊查找对象
         FuzzySearch fuzzySearch = new FuzzySearch();
         //建立一个空表用于存储模糊查找结果
-        ArrayList<Course> primaryResults;
+        ArrayList<Activity> primaryResults;
         //将模糊查找结果存入 list
-        primaryResults = fuzzySearch.get_FS_result(ToBeFuzzySearched.getText(), this.courses);
+        primaryResults = fuzzySearch.get_FS_result(ToBeFuzzySearched.getText(), this.activities);
         //查询结果的list
         ArrayList<String> texts = new ArrayList<>();
         //将结果字符串化
-        for (Course course : primaryResults)
-            texts.add(course.getM_sName() + " 编号为：" + course.getM_iNum());
+        for (Activity activity : primaryResults)
+            texts.add(activity.getM_sName() + " 编号为：" + activity.getM_iNum());
         //将查询得到的结果显示在文本框中
         ResOfSearch.setText(texts.toString());
         return primaryResults;
@@ -194,8 +205,8 @@ public class CourseChooseController {
 
             if (Search1ButtonClicked() == null) {
                 //模糊查找失败或未进行模糊查找，在所有课程列表中查询
-                int Num1 = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), this.courses);
-                if (Num1 != this.courses.size()) {
+                int Num1 = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), this.activities);
+                if (Num1 != this.activities.size()) {
                     mark = true;
                     fin = Num1;
                 }
@@ -211,9 +222,12 @@ public class CourseChooseController {
 
             if (mark) {
                 //展示查找到的课程名称
-                SearchResult_Name.setText(this.courses.get(fin).getM_sName() + " 编号为：" + this.courses.get(fin).getM_iNum());
+                SearchResult_Name.setText(this.activities.get(fin).getM_sName() + " 编号为：" + this.activities.get(fin).getM_iNum());
                 //根据账号类型将课程从课表中删除
-                this.studentAccount.decCourse(this.courses.get(fin));
+                if (this.controller.getAccount().getAuthority() == Authority.Student)
+                    this.studentAccount.decActivity(this.activities.get(fin));
+                else if (this.controller.getAccount().getAuthority() == Authority.Teacher)
+                    this.teacherAccount.decActivity(this.activities.get(fin));
                 SearchResult_Boolean.setText("查找并删除成功！好耶！");
             }
             else
@@ -231,5 +245,22 @@ public class CourseChooseController {
 
         //本页面隐藏
         this.thisStage.hide();
+    }
+
+    private ArrayList<Activity> getActivity(Authority authority) {
+        //存放单人课程列表
+        ArrayList<Activity> activities_fake = new ArrayList<>();
+        //根据权限获取账户信息
+        switch (authority) {
+            case Student -> {
+                StudentAccount studentAccount = new StudentAccount(this.controller.getAccount());
+                activities_fake = studentAccount.getActivity();
+            }
+            case Teacher -> {
+                TeacherAccount teacherAccount = new TeacherAccount(this.controller.getAccount());
+                activities_fake = teacherAccount.getActivity();
+            }
+        }
+        return activities_fake;
     }
 }

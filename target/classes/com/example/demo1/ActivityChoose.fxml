@@ -12,12 +12,12 @@
             <top>
                 <BorderPane>
                     <center>
-                        <Label text="请在左侧根据名字模糊查找课程" style="-fx-font-size:18" alignment="TOP_CENTER"/>
+                        <Label text="请在左侧根据名字模糊查找活动" style="-fx-font-size:18" alignment="TOP_CENTER"/>
                     </center>
                     <bottom>
                         <BorderPane>
                             <center>
-                                <Label text="得到精确课程编号后在右侧输入" style="-fx-font-size:18" alignment="TOP_CENTER"/>
+                                <Label text="得到精确活动编号后在右侧输入" style="-fx-font-size:18" alignment="TOP_CENTER"/>
                             </center>
                         </BorderPane>
                     </bottom>
@@ -53,7 +53,7 @@
             <center>
                 <GridPane>
                     <Label text="查询结果如下：" GridPane.columnIndex="0" GridPane.rowIndex="0"
-                        style="-fx-font-size:18"/>
+                           style="-fx-font-size:18"/>
                     <TextArea  fx:id="ResOfSearch" GridPane.rowIndex="1"
                                GridPane.columnIndex="0" prefColumnCount="10"/>
                 </GridPane>
@@ -69,23 +69,23 @@
     <bottom>
         <BorderPane>
             <left>
-                <Button fx:id="Search1" text="查询所有课程" alignment="CENTER"/>
+                <Button fx:id="Search1" text="查询所有活动" alignment="CENTER"/>
             </left>
             <center>
                 <BorderPane>
                     <left>
-                        <Button fx:id="Assure1" text="添加未选课程" alignment="CENTER"/>
+                        <Button fx:id="Assure1" text="添加未选活动" alignment="CENTER"/>
                     </left>
                     <center>
                         <Button fx:id="backToMain" text="回到主界面" alignment="CENTER"/>
                     </center>
                     <right>
-                        <Button fx:id="Search2" text="查询自己课程" alignment="CENTER"/>
+                        <Button fx:id="Search2" text="查询自己活动" alignment="CENTER"/>
                     </right>
                 </BorderPane>
             </center>
             <right>
-                <Button fx:id="Assure2" text="删除已有课程" alignment="CENTER"/>
+                <Button fx:id="Assure2" text="删除已有活动" alignment="CENTER"/>
             </right>
         </BorderPane>
     </bottom>

@@ -10,6 +10,7 @@ import com.example.demo1.Code.entity.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class NavController {
     //从主界面继承而来的信息
@@ -84,18 +85,15 @@ public class NavController {
 
         final int[] Traffic = new int[1];
 
-        toggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-             @Override
-             public void changed(ObservableValue<? extends Toggle> observableValue, Toggle toggle, Toggle t1) {
-                 RadioButton r = (RadioButton)t1;
-                 switch (r.getText()) {
-                     case "步行" -> Traffic[0] = 0;
-                     case "自行车" -> Traffic[0] = 1;
-                     case "电动车" -> Traffic[0] = 2;
-                     case "汽车" -> Traffic[0] = 3;
-                 }
-             }
-         });
+        toggleGroup.selectedToggleProperty().addListener((observableValue, toggle, t1) -> {
+            RadioButton r = (RadioButton)t1;
+            switch (r.getText()) {
+                case "步行" -> Traffic[0] = 0;
+                case "自行车" -> Traffic[0] = 1;
+                case "电动车" -> Traffic[0] = 2;
+                case "汽车" -> Traffic[0] = 3;
+            }
+        });
 
         Navigate navigate = new Navigate();
         ResOfNav.setText(navigate.toNavigate(Traffic[0], StartPoint.getText(), EndPoint.getText()).toString());
