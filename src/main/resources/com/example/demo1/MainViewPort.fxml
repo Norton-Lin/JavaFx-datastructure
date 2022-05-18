@@ -28,14 +28,14 @@
             <Button fx:id="Stu_Act" text="学生活动"
                     GridPane.columnIndex="2" GridPane.rowIndex="0"/>
 
-            <Button fx:id="Tea_data" text="上传资料"
+            <Button fx:id="Tea_Cour" text="教师选课"
                     GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
             <Button fx:id="Tea_Act" text="教师活动"
-                    GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                    GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
             <Button fx:id="Cour_Tab" text="课程表"
-                    GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
             <Button fx:id="Upload" text="上传文件"
                     GridPane.columnIndex="0" GridPane.rowIndex="2"/>
