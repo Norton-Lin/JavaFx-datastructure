@@ -4,7 +4,7 @@
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/CodeApplication.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Interactive/MainInterface.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/LogUtil/LogFile.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/LogUtil/LogFile.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/AccountDatabase.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/ActivityDatabase.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/ConstructionDatabase.java" charset="GBK" />

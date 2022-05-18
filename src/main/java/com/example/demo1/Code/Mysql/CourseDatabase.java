@@ -27,7 +27,7 @@ public class CourseDatabase {
         Connection conn = null ; // 数据库连接
         Statement stmt = null ; // 数据库操作
         String sql = "INSERT INTO course(id,name,weeks,starthour,startmin,endhour,endmin,property,num,maxnum," +
-                "connectgroup,tstartmonth,tstartdate,tstarthour,tstartmin,tendhour,tendmin)"
+                "connectgroup,tstartmonth,tstartdate,tstarthour,tstartmin,tendhour,tendmin,data)"
                 + " VALUES ('" + course.getM_iNum() + "','" + course.getM_sName() + "','" +course.getM_tTime().getWeek()
                 + "','" + course.getM_tTime().getStartHour() + "','" +course.getM_tTime().getStartMinute()
                 + "','" + course.getM_tTime().getEndHour() + "','" + course.getM_tTime().getEndMinute()
@@ -35,7 +35,8 @@ public class CourseDatabase {
                 + "','" +course.getM_iMaxPle()+ "','" +course.getM_sCurGroup()
                 + "','" +course.getM_cExamTime().getStartMonth()+"','" +course.getM_cExamTime().getStartDate()
                 + "','" +course.getM_cExamTime().getStartHour()+"','" +course.getM_cExamTime().getStartMinute()
-                + "','" +course.getM_cExamTime().getEndHour() + "','" +course.getM_cExamTime().getEndMinute()+"')";
+                + "','" +course.getM_cExamTime().getEndHour() + "','" +course.getM_cExamTime().getEndMinute()
+                + "','" +course.getM_sData()+"')";
         String sql1 = "INSERT INTO course_construction(course_id,construction_id,floor,room,type)"+
                 "VALUES ('"+course.getM_iNum()+ "','" +course.getM_sConstruction().get_con_number()
                 + "','" +course.getM_iFloor()+ "','" +course.getM_iRoom()+"','"+0+"')";//普通教室数据插入
@@ -94,7 +95,7 @@ public class CourseDatabase {
                 + course.getM_cExamTime().getStartMonth() +"',tstartdate='" +course.getM_cExamTime().getStartDate()
                 + "',tstarthour='" + course.getM_cExamTime().getStartHour() +"',tstartmin='"
                 + course.getM_cExamTime().getStartMinute() +"',tendhour='"+ course.getM_cExamTime().getEndHour()
-                +"',tendmin='"+course.getM_cExamTime().getEndMinute()
+                +"',tendmin='"+course.getM_cExamTime().getEndMinute()+"',data='"+course.getM_sData()
                 + "'WHERE id=" + course.getM_iNum() ;
         String sql1 = "UPDATE course_construction SET construction_id='"+course.getM_sConstruction().get_con_number()
                 +"',floor='"+course.getM_iFloor()+"',room='"+course.getM_iRoom()+"'WHERE course_id='"+course.getM_iNum()
@@ -200,6 +201,7 @@ public class CourseDatabase {
                 course.getM_cExamTime().setStartMinute(rs.getInt("tstartmin"));
                 course.getM_cExamTime().setEndHour(rs.getInt("tendhour"));
                 course.getM_cExamTime().setEndMinute(rs.getInt("tendmin"));
+                course.setM_sData(rs.getString("data"));
             }
             rs.close();// 关闭结果集
             stmt.close(); // 操作关闭
@@ -246,6 +248,7 @@ public class CourseDatabase {
                 c.getM_cExamTime().setStartMinute(rs.getInt("tstartmin"));
                 c.getM_cExamTime().setEndHour(rs.getInt("tendhour"));
                 c.getM_cExamTime().setEndMinute(rs.getInt("tendmin"));
+                c.setM_sData(rs.getString("data"));
                 course.add(c);
             }
             rs.close();// 关闭结果集
@@ -261,7 +264,7 @@ public class CourseDatabase {
             course.set(i,course1);
         }
     }
-    public static void main(String args[])
+    public static void main(String[] args)
     {
         CourseDatabase courseDatabase = new CourseDatabase();
         Course course = new Course();

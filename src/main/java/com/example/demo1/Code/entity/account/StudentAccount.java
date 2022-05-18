@@ -33,10 +33,6 @@ public class StudentAccount extends Account{
         super(account.getID(), account.getPassword());
         AccountDatabase accountDatabase = new AccountDatabase();
         accountDatabase.findStuAccount(this);
-      /*  CourseDatabase courseDatabase = new CourseDatabase();
-        ActivityDatabase activityDatabase = new ActivityDatabase();
-        courseDatabase.find(this.m_CaCourse);//从数据库内读取所有课程信息
-        activityDatabase.find(this.m_CaActivity);//从数据库内读取所有活动信息*/
         sortCourse();//对课程进行排序
         sortActivity();//对活动进行排序
     }

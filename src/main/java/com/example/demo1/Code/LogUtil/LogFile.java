@@ -10,38 +10,38 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * ÈÕÖ¾Êä³ö¹¤¾ß <br/><br/>
+ * æ—¥å¿—è¾“å‡ºå·¥å…· <br/><br/>
  *
- * ¿ÉÒÔÊä³öµ½¿ØÖÆÌ¨ºÍÖ¸¶¨µÄÎÄ¼şÖĞ, ·ÖÎª4¸ö¼¶±ğ, ÓÉµÍµ½¸ß·Ö±ğÎª: debug, info, warn, error
+ * å¯ä»¥è¾“å‡ºåˆ°æ§åˆ¶å°å’ŒæŒ‡å®šçš„æ–‡ä»¶ä¸­, åˆ†ä¸º4ä¸ªçº§åˆ«, ç”±ä½åˆ°é«˜åˆ†åˆ«ä¸º: debug, info, warn, error
  *
  * <br/><br/>
  *
- * Êä³ö¼¶±ğ:
+ * è¾“å‡ºçº§åˆ«:
  *
  * <ul>
- *     <li> debug: Êä³ö debug, info, warn, error </li>
- *     <li> info: Êä³ö info, warn, error </li>
- *     <li> warn: Êä³ö warn, error </li>
- *     <li> error: Êä³ö error </li>
+ *     <li> debug: è¾“å‡º debug, info, warn, error </li>
+ *     <li> info: è¾“å‡º info, warn, error </li>
+ *     <li> warn: è¾“å‡º warn, error </li>
+ *     <li> error: è¾“å‡º error </li>
  * </ul>
  *
- * Ä¬ÈÏÎª info Êä³ö¼¶±ğ
+ * é»˜è®¤ä¸º info è¾“å‡ºçº§åˆ«
  *
  * <p/>
  *
  * Demo:
  *
  * <pre>{@code
- *     // (¿ÉÑ¡) ÉèÖÃÈÕÖ¾Êä³ö¼¶±ğ, Ä¬ÈÏÎª INFO ¼¶±ğ
+ *     // (å¯é€‰) è®¾ç½®æ—¥å¿—è¾“å‡ºçº§åˆ«, é»˜è®¤ä¸º INFO çº§åˆ«
  *     LogFile.setLogOutLevel(LogFile.Level.DEBUG);
  *
- *     // (¿ÉÑ¡) ÉèÖÃÈÕÖ¾Êä³öÎÄ¼ş(×·¼Óµ½ÎÄ¼şÎ²²¿)
+ *     // (å¯é€‰) è®¾ç½®æ—¥å¿—è¾“å‡ºæ–‡ä»¶(è¿½åŠ åˆ°æ–‡ä»¶å°¾éƒ¨)
  *     LogFile.setLogOutFile(new File("MyLog.log"));
  *
- *     // (¿ÉÑ¡) ÉèÖÃÈÕÖ¾Êä³öÎ»ÖÃ(ÊÇ·ñÊä³öµ½¿ØÖÆÌ¨ ºÍ ÊÇ·ñÊä³öµ½ÎÄ¼ş), Ä¬ÈÏÖ»Êä³öµ½¿ØÖÆÌ¨, ²»Êä³öµ½ÎÄ¼ş
+ *     // (å¯é€‰) è®¾ç½®æ—¥å¿—è¾“å‡ºä½ç½®(æ˜¯å¦è¾“å‡ºåˆ°æ§åˆ¶å° å’Œ æ˜¯å¦è¾“å‡ºåˆ°æ–‡ä»¶), é»˜è®¤åªè¾“å‡ºåˆ°æ§åˆ¶å°, ä¸è¾“å‡ºåˆ°æ–‡ä»¶
  *     LogFile.setLogOutTarget(true, true);
  *
- *     // Êä³öÈÕÖ¾
+ *     // è¾“å‡ºæ—¥å¿—
  *     LogFile.debug("TAG", "The debug log.");
  *     LogFile.info("TAG", "The info log.");
  *     LogFile.warn("TAG", "The warn log.");
@@ -52,30 +52,30 @@ import java.util.Date;
  */
 public class LogFile {
 
-    /** Ã¿Ìõ Log µÄ tag Êä³öµÄ×î´ó³¤¶È, ³¬¹ı²¿·Ö½«±»½Ø¶Ï */
+    /** æ¯æ¡ Log çš„ tag è¾“å‡ºçš„æœ€å¤§é•¿åº¦, è¶…è¿‡éƒ¨åˆ†å°†è¢«æˆªæ–­ */
     private static final int TAG_MAX_LENGTH = 20;
 
-    /** Ã¿Ìõ Log µÄ message Êä³öµÄ×î´ó³¤¶È, ³¬¹ı²¿·Ö½«±»½Ø¶Ï */
+    /** æ¯æ¡ Log çš„ message è¾“å‡ºçš„æœ€å¤§é•¿åº¦, è¶…è¿‡éƒ¨åˆ†å°†è¢«æˆªæ–­ */
     private static final int MESSAGE_MAX_LENGTH = 1024;
 
-    /** ÈÕÆÚÇ°×º¸ñÊ½»¯ */
+    /** æ—¥æœŸå‰ç¼€æ ¼å¼åŒ– */
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd HH:mm:ss.SSS");
 
-    /** ÈÕÖ¾µ±Ç°µÄÊä³ö¼¶±ğ, Ä¬ÈÏÎª INFO ¼¶±ğ */
+    /** æ—¥å¿—å½“å‰çš„è¾“å‡ºçº§åˆ«, é»˜è®¤ä¸º INFO çº§åˆ« */
     private static Level logOutLevel = Level.INFO;
 
-    /** ÊÇ·ñÊä³öµ½¿ØÖÆÌ¨, Ä¬ÈÏÊä³ö */
+    /** æ˜¯å¦è¾“å‡ºåˆ°æ§åˆ¶å°, é»˜è®¤è¾“å‡º */
     private static boolean isOutToConsole = false;
 
-    /** ÊÇ·ñÊä³öµ½ÎÄ¼ş */
+    /** æ˜¯å¦è¾“å‡ºåˆ°æ–‡ä»¶ */
     private static boolean isOutToFile = true;
 
-    /** ÈÕÖ¾Êä³öÎÄ¼ş, ×·¼Óµ½ÎÄ¼şÎ² */
+    /** æ—¥å¿—è¾“å‡ºæ–‡ä»¶, è¿½åŠ åˆ°æ–‡ä»¶å°¾ */
     private static File logOutFile = new File("MyLog");
 
-    /** ÈÕÖ¾ÎÄ¼şÊä³öÁ÷, ×·¼Óµ½ÎÄ¼şÎ²  */
+    /** æ—¥å¿—æ–‡ä»¶è¾“å‡ºæµ, è¿½åŠ åˆ°æ–‡ä»¶å°¾  */
     private static RandomAccessFile logOutFileStream;
-    private String message;//ÏêÏ¸Êä³öÊı¾İ
+    private String message;//è¯¦ç»†è¾“å‡ºæ•°æ®
     public static void setLogOutLevel(Level currentLevel) {
         if (currentLevel == null) {
             currentLevel = Level.INFO;
@@ -168,8 +168,8 @@ public class LogFile {
 
     private static void outLogToConsole(boolean isOutToErr, String log) {
         if (isOutToErr) {
-            // System.err ºÍ System.out ÊÇÁ½¸ö²»Í¬µÄÊä³öÁ÷Í¨µÀ, Èç¹û¼«¶ÌÊ±¼äÄÚÁ¬
-            // ĞøÊä³ö log µ½ err ºÍ out, ¿ØÖÆÌ¨ÉÏµÄ´òÓ¡Ë³Ğò¿ÉÄÜ»á²»ÍêÈ«°´Ê±Ğò´òÓ¡.
+            // System.err å’Œ System.out æ˜¯ä¸¤ä¸ªä¸åŒçš„è¾“å‡ºæµé€šé“, å¦‚æœæçŸ­æ—¶é—´å†…è¿
+            // ç»­è¾“å‡º log åˆ° err å’Œ out, æ§åˆ¶å°ä¸Šçš„æ‰“å°é¡ºåºå¯èƒ½ä¼šä¸å®Œå…¨æŒ‰æ—¶åºæ‰“å°.
             System.err.println(log);
         } else {
             System.out.println(log);
@@ -226,23 +226,23 @@ public class LogFile {
 
     public static void main(String args[]) {
         final String TAG = "Main";
-            // (¿ÉÑ¡) ÉèÖÃÈÕÖ¾Êä³ö¼¶±ğ, Ä¬ÈÏÎª INFO ¼¶±ğ
+            // (å¯é€‰) è®¾ç½®æ—¥å¿—è¾“å‡ºçº§åˆ«, é»˜è®¤ä¸º INFO çº§åˆ«
             LogFile.setLogOutLevel(Level.DEBUG);
-            // (¿ÉÑ¡) ÉèÖÃÈÕÖ¾Êä³öÎÄ¼ş(×·¼Óµ½ÎÄ¼şÎ²²¿)
+            // (å¯é€‰) è®¾ç½®æ—¥å¿—è¾“å‡ºæ–‡ä»¶(è¿½åŠ åˆ°æ–‡ä»¶å°¾éƒ¨)
         try {
             LogFile.setLogOutFile(new File("MyLog.log"));
         } catch (IOException e) {
-            LogFile.error(TAG, "The error log.ÎŞ·¨´ò¿ªÈÕÖ¾Êä³öÎÄ¼ş");
+            LogFile.error(TAG, "The error log.æ— æ³•æ‰“å¼€æ—¥å¿—è¾“å‡ºæ–‡ä»¶");
             e.printStackTrace();
         }
-        // (¿ÉÑ¡) ÉèÖÃÈÕÖ¾Êä³öÎ»ÖÃ(ÊÇ·ñÊä³öµ½¿ØÖÆÌ¨ ºÍ ÊÇ·ñÊä³öµ½ÎÄ¼ş), Ä¬ÈÏÖ»Êä³öµ½¿ØÖÆÌ¨, ²»Êä³öµ½ÎÄ¼ş
+        // (å¯é€‰) è®¾ç½®æ—¥å¿—è¾“å‡ºä½ç½®(æ˜¯å¦è¾“å‡ºåˆ°æ§åˆ¶å° å’Œ æ˜¯å¦è¾“å‡ºåˆ°æ–‡ä»¶), é»˜è®¤åªè¾“å‡ºåˆ°æ§åˆ¶å°, ä¸è¾“å‡ºåˆ°æ–‡ä»¶
             LogFile.setLogOutTarget(true, true);
-            // Êä³öÈÕÖ¾
+            // è¾“å‡ºæ—¥å¿—
             LogFile.debug(TAG, "The debug log.");
             LogFile.info(TAG, "The info log.");
             LogFile.warn(TAG, "The warn log.");
-            LogFile.error(TAG, "The error log.ÎŞ·¨´ò¿ªÈÕÖ¾Êä³öÎÄ¼ş");
-            LogFile.info("Student","²éÑ¯¿Î³Ì"+1);
+            LogFile.error(TAG, "The error log.æ— æ³•æ‰“å¼€æ—¥å¿—è¾“å‡ºæ–‡ä»¶");
+            LogFile.info("Student","æŸ¥è¯¢è¯¾ç¨‹"+1);
 
         }
 
