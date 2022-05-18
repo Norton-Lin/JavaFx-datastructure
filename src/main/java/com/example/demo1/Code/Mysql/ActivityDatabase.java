@@ -32,10 +32,14 @@ public class ActivityDatabase {
                 "','" + activity.getM_tTime().getEndHour()+ "','" + activity.getM_tTime().getEndMinute()
                 + "','" + activity.getM_eProperty()+ "','" +activity.getM_iPle()+ "','" 
                 +activity.getM_iMaxPle()+ "')";
+        String sql1 = "INSERT INTO activity_construction(activity_id,construction_id,floor,room)"+
+                "VALUES('"+activity.getM_iNum()+"','"+activity.getM_sConstruction().get_con_number()+
+                "','"+activity.getM_iFloor()+"','"+activity.getM_iRoom()+"')";
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
             stmt = conn.createStatement() ;// 实例化Statement对象
             stmt.executeUpdate(sql);// 执行数据库更新操作
+            stmt.executeUpdate(sql1);
             stmt.close() ; // 操作关闭
             conn.close() ; // 数据库关闭
         } catch (SQLException e) {
@@ -81,11 +85,15 @@ public class ActivityDatabase {
                 activity.getM_tTime().getEndMinute() + "',property='" + activity.getM_eProperty() 
                 +"',num='" + activity.getM_iPle() + "',maxnum='" + activity.getM_iMaxPle() 
                  + "'WHERE id=" + activity.getM_iNum() ;
+        String sql1 = "UPDATE activity_construction SET construction_id='"+activity.getM_sConstruction().get_con_number()
+                +"',floor = '"+activity.getM_iFloor()+"',room = '"+activity.getM_iRoom()+"'WHERE activity_id ="
+                +activity.getM_iNum();
         try {
             Class.forName(m_sDriver) ; // 加载驱动程序
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
             stmt = conn.createStatement() ;// 实例化Statement对象
             stmt.executeUpdate(sql);// 执行数据库更新操作
+            stmt.executeUpdate(sql1);
             stmt.close() ; // 操作关闭
             conn.close() ; // 数据库关闭
         } catch (ClassNotFoundException | SQLException e) {
@@ -100,13 +108,16 @@ public class ActivityDatabase {
     public void delete(Activity activity){
         Connection conn = null ; // 数据库连接
         Statement stmt = null ; // 数据库操作
-        // 拼凑出一个完整的SQL语句
-            String sql = "DELETE FROM account WHERE id=" + activity.getM_iNum();
+        String sql1 = "DELETE FROM account WHERE id=" + activity.getM_iNum();
+        String sql2 = "DELETE FROM account_activity WHERE id_activity = "+activity.getM_iNum();//删除用户_活动管理表中的对应数据
+        String sql3 = "DELETE FROM activity_construction WHERE activity_id="+activity.getM_iNum();//删除活动_建筑关联表中的对应数据
         try {
             Class.forName(m_sDriver) ; // 加载驱动程序
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
             stmt = conn.createStatement() ;// 实例化Statement对象
-            stmt.executeUpdate(sql);// 执行数据库更新操作
+            stmt.executeUpdate(sql1);// 执行数据库更新操作
+            stmt.executeUpdate(sql2);// 执行数据库更新操作
+            stmt.executeUpdate(sql3);// 执行数据库更新操作
             stmt.close() ; // 操作关闭
             conn.close() ; // 数据库关闭
         } catch (ClassNotFoundException | SQLException e) {
@@ -176,6 +187,7 @@ public class ActivityDatabase {
                 " endmin, property, num, maxnum FROM activity" ;
         Connection conn = null; // 数据库连接
         Statement stmt = null; // 数据库操作
+        ConstructionDatabase constructionDatabase = new ConstructionDatabase();
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
             stmt = conn.createStatement();// 实例化Statement对象
@@ -200,6 +212,12 @@ public class ActivityDatabase {
         } catch (SQLException e) {
             e.printStackTrace();
             LogFile.error("ActivityDatabase","数据库读取错误");
+        }
+        for(int i =0;i<activity.size();i++) {
+            Activity activity1 = activity.get(i);
+            constructionDatabase.findByActivity(activity1);
+            constructionDatabase.findByActivity(activity1);
+            activity.set(i,activity1);
         }
 
     }
