@@ -4,11 +4,11 @@ import com.example.demo1.Code.Util.Property;
 import com.example.demo1.Code.Util.Time;
 
 public class Course extends Event{
-    private String m_sCurGroup;//¿Î³ÌÈº
-    private Time m_cExamTime = new Time();//¿¼ÊÔÊ±¼ä
-    private Construction m_cExamConstruction = new Construction();//¿¼ÊÔËùÔÚ½¨Öş
-    private int m_iExamFloor;//¿¼ÊÔËùÔÚÂ¥²ã
-    private int m_iExamRoom;//¿¼ÊÔËùÔÚ·¿¼ä
+    private String m_sCurGroup;//è¯¾ç¨‹ç¾¤
+    private Time m_cExamTime = new Time();//è€ƒè¯•æ—¶é—´
+    private Construction m_cExamConstruction = new Construction();//è€ƒè¯•æ‰€åœ¨å»ºç­‘
+    private int m_iExamFloor;//è€ƒè¯•æ‰€åœ¨æ¥¼å±‚
+    private int m_iExamRoom;//è€ƒè¯•æ‰€åœ¨æˆ¿é—´
 
 
     public Course() {
@@ -25,48 +25,48 @@ public class Course extends Event{
     }
 
     /**
-     * »ñÈ¡¿Î³ÌÈº
-     * @return ¿Î³ÌÈººÅ
+     * è·å–è¯¾ç¨‹ç¾¤
+     * @return è¯¾ç¨‹ç¾¤å·
      */
     public String getM_sCurGroup() {
         return m_sCurGroup;
     }
 
     /**
-     * ĞŞ¸Ä¿Î³ÌÈº
-     * @param m_sCurGroup ĞÂ¿Î³ÌÈººÅ
+     * ä¿®æ”¹è¯¾ç¨‹ç¾¤
+     * @param m_sCurGroup æ–°è¯¾ç¨‹ç¾¤å·
      */
     public void setM_sCurGroup(String m_sCurGroup) {
         this.m_sCurGroup = m_sCurGroup;
     }
 
     /**
-     * »ñÈ¡¿¼ÊÔÊ±¼ä
-     * @return ĞÂ¿¼ÊÔÊ±¼ä
+     * è·å–è€ƒè¯•æ—¶é—´
+     * @return æ–°è€ƒè¯•æ—¶é—´
      */
     public Time getM_cExamTime() {
         return m_cExamTime;
     }
 
     /**
-     * ĞŞ¸Ä¿¼ÊÔÊ±¼ä
-     * @param m_cExamTime ĞÂ¿¼ÊÔÊ±¼ä
+     * ä¿®æ”¹è€ƒè¯•æ—¶é—´
+     * @param m_cExamTime æ–°è€ƒè¯•æ—¶é—´
      */
     public void setM_cExamTime(Time m_cExamTime) {
         this.m_cExamTime = m_cExamTime;
     }
 
     /**
-     * »ñÈ¡¿¼ÊÔµØµã
-     * @return ¿¼ÊÔµØµã
+     * è·å–è€ƒè¯•åœ°ç‚¹
+     * @return è€ƒè¯•åœ°ç‚¹
      */
     public Construction getM_cExamConstruction() {
         return m_cExamConstruction;
     }
 
     /**
-     * ĞŞ¸Ä¿¼ÊÔµØµã
-     * @param m_cExamConstruction ĞÂ¿¼ÊÔµØµã
+     * ä¿®æ”¹è€ƒè¯•åœ°ç‚¹
+     * @param m_cExamConstruction æ–°è€ƒè¯•åœ°ç‚¹
      */
     public void setM_cExamConstruction(Construction m_cExamConstruction) {
         this.m_cExamConstruction = m_cExamConstruction;
@@ -96,21 +96,23 @@ public class Course extends Event{
         return true;
     }
     /**
-    * Êä³ö¿Î³ÌĞÅÏ¢
+    * è¾“å‡ºè¯¾ç¨‹ä¿¡æ¯
     */
     public void printCourse(){
-        System.out.println("¿Î³ÌÃû£º"+this.getM_sName()+"\n");
-        System.out.println("ÉÏ¿ÎÊ±¼äÎª£º"+this.getM_tTime()+"\n");
-        System.out.println("¿Î³ÌÀàĞÍ£º"+this.getM_eProperty()+"\n");
-        System.out.println("ÊÚ¿ÎµØµã£º"+this.getM_sConstruction().get_con_name()+
-                this.getM_iFloor()+"²ã"+this.getM_iRoom()+"ÊÒ"+"\n");
-        System.out.println("µ±Ç°²Î¼Ó¿Î³ÌÈËÊı£º"+this.getM_iPle()+"\n");
-        System.out.println("×î´ó²ÎÓë¿Î³Ì¿Î³Ì£º"+this.getM_iMaxPle()+"\n");
-        System.out.println("¿Î³Ì±àºÅ£º"+this.getM_iNum()+"\n");
-        System.out.println("¿Î³ÌÈº£º"+this.getM_sCurGroup()+"\n");
-        System.out.println("¿Î³Ì¿¼ÊÔÊ±¼ä£º"+this.getM_cExamTime()+"\n");
-        System.out.println("¿Î³Ì¿¼ÊÔµØµã£º"+this.getM_cExamConstruction().get_con_name()+
-                this.getM_iExamFloor()+"²ã"+this.getM_iExamRoom()+"ÊÒ"+"\n");
+        System.out.println("è¯¾ç¨‹åï¼š"+this.getM_sName()+"\n");
+        System.out.println("ä¸Šè¯¾æ—¶é—´ä¸ºï¼š");
+        this.getM_tTime().printTime(true);
+        System.out.println("è¯¾ç¨‹ç±»å‹ï¼š"+this.getM_eProperty()+"\n");
+        System.out.println("æˆè¯¾åœ°ç‚¹ï¼š"+this.getM_sConstruction().get_con_name()+
+                this.getM_iFloor()+"å±‚"+this.getM_iRoom()+"å®¤"+"\n");
+        System.out.println("å½“å‰å‚åŠ è¯¾ç¨‹äººæ•°ï¼š"+this.getM_iPle()+"\n");
+        System.out.println("æœ€å¤§å‚ä¸è¯¾ç¨‹è¯¾ç¨‹ï¼š"+this.getM_iMaxPle()+"\n");
+        System.out.println("è¯¾ç¨‹ç¼–å·ï¼š"+this.getM_iNum()+"\n");
+        System.out.println("è¯¾ç¨‹ç¾¤ï¼š"+this.getM_sCurGroup()+"\n");
+        System.out.println("è¯¾ç¨‹è€ƒè¯•æ—¶é—´ï¼š");
+        this.getM_cExamTime().printTime(false);
+        System.out.println("è¯¾ç¨‹è€ƒè¯•åœ°ç‚¹ï¼š"+this.getM_cExamConstruction().get_con_name()+
+                this.getM_iExamFloor()+"å±‚"+this.getM_iExamRoom()+"å®¤"+"\n");
     }
 
 

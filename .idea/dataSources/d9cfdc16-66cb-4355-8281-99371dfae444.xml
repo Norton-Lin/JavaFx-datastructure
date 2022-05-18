@@ -1,7 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="informationmanagement@localhost">
   <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.23">
-    <root id="1"/>
+    <root id="1">
+      <ServerVersion>8.0.27</ServerVersion>
+      <Grants>|root||root|localhost|ALTER|G
+|root||root|localhost|ALTER ROUTINE|G
+|root||root|localhost|APPLICATION_PASSWORD_ADMIN|G
+|root||root|localhost|AUDIT_ADMIN|G
+|root||root|localhost|AUTHENTICATION_POLICY_ADMIN|G
+|root||mysql.session|localhost|BACKUP_ADMIN|G
+|root||root|localhost|BACKUP_ADMIN|G
+|root||root|localhost|BINLOG_ADMIN|G
+|root||root|localhost|BINLOG_ENCRYPTION_ADMIN|G
+|root||mysql.session|localhost|CLONE_ADMIN|G
+|root||root|localhost|CLONE_ADMIN|G
+|root||mysql.session|localhost|CONNECTION_ADMIN|G
+|root||root|localhost|CONNECTION_ADMIN|G
+|root||root|localhost|CREATE|G
+|root||root|localhost|CREATE ROLE|G
+|root||root|localhost|CREATE ROUTINE|G
+|root||root|localhost|CREATE TABLESPACE|G
+|root||root|localhost|CREATE TEMPORARY TABLES|G
+|root||root|localhost|CREATE USER|G
+|root||root|localhost|CREATE VIEW|G
+|root||root|localhost|DELETE|G
+|root||root|localhost|DROP|G
+|root||root|localhost|DROP ROLE|G
+|root||root|localhost|ENCRYPTION_KEY_ADMIN|G
+|root||root|localhost|EVENT|G
+|root||root|localhost|EXECUTE|G
+|root||root|localhost|FILE|G
+|root||root|localhost|FLUSH_OPTIMIZER_COSTS|G
+|root||root|localhost|FLUSH_STATUS|G
+|root||root|localhost|FLUSH_TABLES|G
+|root||root|localhost|FLUSH_USER_RESOURCES|G
+|root||root|localhost|GROUP_REPLICATION_ADMIN|G
+|root||root|localhost|GROUP_REPLICATION_STREAM|G
+|root||root|localhost|INDEX|G
+|root||root|localhost|INNODB_REDO_LOG_ARCHIVE|G
+|root||root|localhost|INNODB_REDO_LOG_ENABLE|G
+|root||root|localhost|INSERT|G
+|root||root|localhost|LOCK TABLES|G
+|root||root|localhost|PASSWORDLESS_USER_ADMIN|G
+|root||mysql.session|localhost|PERSIST_RO_VARIABLES_ADMIN|G
+|root||root|localhost|PERSIST_RO_VARIABLES_ADMIN|G
+|root||root|localhost|PROCESS|G
+|root||root|localhost|REFERENCES|G
+|root||root|localhost|RELOAD|G
+|root||root|localhost|REPLICATION CLIENT|G
+|root||root|localhost|REPLICATION SLAVE|G
+|root||root|localhost|REPLICATION_APPLIER|G
+|root||root|localhost|REPLICATION_SLAVE_ADMIN|G
+|root||root|localhost|RESOURCE_GROUP_ADMIN|G
+|root||root|localhost|RESOURCE_GROUP_USER|G
+|root||root|localhost|ROLE_ADMIN|G
+|root||mysql.infoschema|localhost|SELECT|G
+|root||root|localhost|SELECT|G
+|root||root|localhost|SERVICE_CONNECTION_ADMIN|G
+|root||mysql.session|localhost|SESSION_VARIABLES_ADMIN|G
+|root||root|localhost|SESSION_VARIABLES_ADMIN|G
+|root||root|localhost|SET_USER_ID|G
+|root||root|localhost|SHOW DATABASES|G
+|root||root|localhost|SHOW VIEW|G
+|root||root|localhost|SHOW_ROUTINE|G
+|root||mysql.session|localhost|SHUTDOWN|G
+|root||root|localhost|SHUTDOWN|G
+|root||mysql.session|localhost|SUPER|G
+|root||root|localhost|SUPER|G
+|root||mysql.infoschema|localhost|SYSTEM_USER|G
+|root||mysql.session|localhost|SYSTEM_USER|G
+|root||mysql.sys|localhost|SYSTEM_USER|G
+|root||root|localhost|SYSTEM_USER|G
+|root||mysql.session|localhost|SYSTEM_VARIABLES_ADMIN|G
+|root||root|localhost|SYSTEM_VARIABLES_ADMIN|G
+|root||root|localhost|TABLE_ENCRYPTION_ADMIN|G
+|root||root|localhost|TRIGGER|G
+|root||root|localhost|UPDATE|G
+|root||root|localhost|XA_RECOVER_ADMIN|G
+|root||root|localhost|grant option|G
+performance_schema|schema||mysql.session|localhost|SELECT|G
+sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
+      <DefaultEngine>InnoDB</DefaultEngine>
+      <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
+      <DefaultCasing>lower/lower</DefaultCasing>
+    </root>
     <schema id="2" parent="1" name="information_schema">
       <Collation>utf8_general_ci</Collation>
     </schema>
@@ -1005,10 +1087,10 @@
       <Comment>活动ID</Comment>
       <DataType>bigint|0s</DataType>
     </column>
-    <column id="315" parent="290" name="name">
+    <column id="315" parent="290" name="construction_id">
       <Position>2</Position>
-      <Comment>建筑物名称</Comment>
-      <DataType>varchar(20)|0s</DataType>
+      <Comment>建筑物编号</Comment>
+      <DataType>int|0s</DataType>
     </column>
     <column id="316" parent="290" name="floor">
       <Position>3</Position>
@@ -1142,10 +1224,10 @@
       <Comment>课程ID</Comment>
       <DataType>bigint|0s</DataType>
     </column>
-    <column id="342" parent="293" name="name">
+    <column id="342" parent="293" name="construction_id">
       <Position>2</Position>
-      <Comment>建筑物名称</Comment>
-      <DataType>varchar(20)|0s</DataType>
+      <Comment>建筑物编号</Comment>
+      <DataType>int|0s</DataType>
     </column>
     <column id="343" parent="293" name="floor">
       <Position>3</Position>
@@ -1157,52 +1239,57 @@
       <Comment>房间号</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="345" parent="294" name="id">
+    <column id="345" parent="293" name="type">
+      <Position>5</Position>
+      <Comment>普通教室/考试教室</Comment>
+      <DataType>tinyint(1)|0s</DataType>
+    </column>
+    <column id="346" parent="294" name="id">
       <Position>1</Position>
       <Comment>门编号</Comment>
       <DataType>bigint|0s</DataType>
     </column>
-    <column id="346" parent="294" name="name">
+    <column id="347" parent="294" name="name">
       <Position>2</Position>
       <Comment>建筑物名称</Comment>
       <DataType>varchar(20)|0s</DataType>
     </column>
-    <column id="347" parent="295" name="start_id">
+    <column id="348" parent="295" name="start_id">
       <Position>1</Position>
       <Comment>起点</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="348" parent="295" name="end_id">
+    <column id="349" parent="295" name="end_id">
       <Position>2</Position>
       <Comment>终点</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="349" parent="295" name="name">
+    <column id="350" parent="295" name="name">
       <Position>3</Position>
       <Comment>道路名字</Comment>
       <DataType>varchar(10)|0s</DataType>
     </column>
-    <column id="350" parent="295" name="crowded1">
+    <column id="351" parent="295" name="crowded1">
       <Position>4</Position>
       <Comment>人行道拥挤度</Comment>
       <DataType>double(3,2 digit)|0s</DataType>
     </column>
-    <column id="351" parent="295" name="crowded2">
+    <column id="352" parent="295" name="crowded2">
       <Position>5</Position>
       <Comment>自行车道拥挤度</Comment>
       <DataType>double(3,2 digit)|0s</DataType>
     </column>
-    <column id="352" parent="295" name="crowded3">
+    <column id="353" parent="295" name="crowded3">
       <Position>6</Position>
       <Comment>机动车道拥挤度</Comment>
       <DataType>double(3,2 digit)|0s</DataType>
     </column>
-    <column id="353" parent="295" name="degree">
+    <column id="354" parent="295" name="degree">
       <Position>7</Position>
       <Comment>车道等级（0人行道,1非机动车道,2机动车道）</Comment>
       <DataType>tinyint(1)|0s</DataType>
     </column>
-    <column id="354" parent="295" name="len">
+    <column id="355" parent="295" name="len">
       <Position>8</Position>
       <Comment>道路长度</Comment>
       <DataType>int|0s</DataType>

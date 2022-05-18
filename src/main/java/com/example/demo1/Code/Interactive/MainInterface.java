@@ -30,73 +30,73 @@ public class MainInterface {
         int choice=1;
         Scanner in = new Scanner(System.in);
         while(choice==1) {
-            System.out.println("ÇëÑ¡ÔñÄúÒªÖ´ĞĞµÄ²Ù×÷£º\n");
-            System.out.println("1.ÓÃ»§µÇÂ¼\n");
-            System.out.println("2.ÍË³ö\n");
+            System.out.println("è¯·é€‰æ‹©æ‚¨è¦æ‰§è¡Œçš„æ“ä½œï¼š\n");
+            System.out.println("1.ç”¨æˆ·ç™»å½•\n");
+            System.out.println("2.é€€å‡º\n");
             choice = in.nextInt();
             if(choice == 1)
             {
                 AccountDatabase accountDatabase = new AccountDatabase();
-                System.out.println("ÇëÊäÈëÓÃ»§Ãû:\n");
+                System.out.println("è¯·è¾“å…¥ç”¨æˆ·å:\n");
                 String username = in.next();
-                System.out.println("ÇëÊäÈëÃÜÂë:\n");
+                System.out.println("è¯·è¾“å…¥å¯†ç :\n");
                 String password = in.next();
                 Account account = new Account(username,password);
                 if(accountDatabase.findByPassword(account))
-                switch (account.getAuthority())
-                {
-                    case Student -> {
-                        System.out.println("Ñ§ÉúÕËºÅµÇÂ¼³É¹¦£¡\n");
-                        StudentInterface(account);
+                    switch (account.getAuthority())
+                    {
+                        case Student -> {
+                            System.out.println("å­¦ç”Ÿè´¦å·ç™»å½•æˆåŠŸï¼\n");
+                            StudentInterface(account);
+                        }
+                        case Teacher -> {
+                            System.out.println("æ•™å¸ˆè´¦å·ç™»å½•æˆåŠŸï¼\n");
+                            TeacherInterface(account);
+                        }
+                        case Manager -> {
+                            System.out.println("ç®¡ç†å‘˜è´¦å·ç™»å½•æˆåŠŸï¼\n");
+                            ManagerInterface(account);
+                        }
                     }
-                    case Teacher -> {
-                        System.out.println("½ÌÊ¦ÕËºÅµÇÂ¼³É¹¦£¡\n");
-                        TeacherInterface(account);
-                    }
-                    case Manager -> {
-                        System.out.println("¹ÜÀíÔ±ÕËºÅµÇÂ¼³É¹¦£¡\n");
-                        ManagerInterface(account);
-                    }
-                }
                 else
-                    System.out.println("µÇÂ¼Ê§°Ü£¡ÕËºÅ»òÃÜÂë´íÎó\n");
+                    System.out.println("ç™»å½•å¤±è´¥ï¼è´¦å·æˆ–å¯†ç é”™è¯¯\n");
             }
         }
     }
 
     /**
-     * ¹ÜÀíÔ±²Ù×÷½çÃæ
-     * @param account ÕËºÅĞÅÏ¢
+     * ç®¡ç†å‘˜æ“ä½œç•Œé¢
+     * @param account è´¦å·ä¿¡æ¯
      */
     public void ManagerInterface(Account account){
-        ManagerAccount managerAccount = new ManagerAccount(account);//µ÷ÓÃº¯ÊıÖ¤Ã÷ÕËºÅ´æÔÚ£¬Ö±½ÓÀûÓÃ¹¹Ôìº¯Êı¶ÁÈ¡Êı¾İ
+        ManagerAccount managerAccount = new ManagerAccount(account);//è°ƒç”¨å‡½æ•°è¯æ˜è´¦å·å­˜åœ¨ï¼Œç›´æ¥åˆ©ç”¨æ„é€ å‡½æ•°è¯»å–æ•°æ®
         int choice=1;
         Scanner in = new Scanner(System.in);
         while(choice<=3&&choice>=1) {
-            System.out.println("ÇëÑ¡ÔñÄúÒªÖ´ĞĞµÄ²Ù×÷£º\n");
-            System.out.println("1.¿Î³Ì²Ù×÷\n");
-            System.out.println("2.»î¶¯²Ù×÷\n");
-            System.out.println("3.µ¼º½");
-            System.out.println("4.ÍË³öµÇÂ¼");
+            System.out.println("è¯·é€‰æ‹©æ‚¨è¦æ‰§è¡Œçš„æ“ä½œï¼š\n");
+            System.out.println("1.è¯¾ç¨‹æ“ä½œ\n");
+            System.out.println("2.æ´»åŠ¨æ“ä½œ\n");
+            System.out.println("3.å¯¼èˆª");
+            System.out.println("4.é€€å‡ºç™»å½•");
             choice = in.nextInt();
             switch (choice)
             {
                 case 1 -> CourseOperation(managerAccount);
                 case 2 -> ActivityOperation(managerAccount);
-                default ->  System.out.println("¸ĞĞ»ÄúµÄÊ¹ÓÃ£¡");
+                default ->  System.out.println("æ„Ÿè°¢æ‚¨çš„ä½¿ç”¨ï¼");
             }
         }
 
     }
 
     /**
-     * ½ÌÊ¦²Ù×÷½çÃæ
-     * @param account ÕËºÅĞÅÏ¢
+     * æ•™å¸ˆæ“ä½œç•Œé¢
+     * @param account è´¦å·ä¿¡æ¯
      */
     public void TeacherInterface(Account account) {
-        TeacherAccount teacherAccount = new TeacherAccount(account);//µ÷ÓÃº¯ÊıÖ¤Ã÷ÕËºÅ´æÔÚ£¬Ö±½ÓÀûÓÃ¹¹Ôìº¯Êı¶ÁÈ¡Êı¾İ
-        ArrayList<Course> allCourses = new ArrayList<>();//ËùÓĞ¿Î³ÌÁĞ±í
-        ArrayList<Activity> allActivities  = new ArrayList<>();//ËùÓĞ»î¶¯ÁĞ±í
+        TeacherAccount teacherAccount = new TeacherAccount(account);//è°ƒç”¨å‡½æ•°è¯æ˜è´¦å·å­˜åœ¨ï¼Œç›´æ¥åˆ©ç”¨æ„é€ å‡½æ•°è¯»å–æ•°æ®
+        ArrayList<Course> allCourses = new ArrayList<>();//æ‰€æœ‰è¯¾ç¨‹åˆ—è¡¨
+        ArrayList<Activity> allActivities  = new ArrayList<>();//æ‰€æœ‰æ´»åŠ¨åˆ—è¡¨
         CourseDatabase courseDatabase = new CourseDatabase();
         ActivityDatabase activityDatabase =new ActivityDatabase();
         courseDatabase.find(allCourses);
@@ -104,28 +104,28 @@ public class MainInterface {
         int choice = 1;
         Scanner in = new Scanner(System.in);
         while (choice <= 3 && choice >= 1) {
-            System.out.println("ÇëÑ¡ÔñÄúÒªÖ´ĞĞµÄ²Ù×÷£º\n");
-            System.out.println("1.¿Î³Ì²Ù×÷\n");
-            System.out.println("2.»î¶¯²Ù×÷\n");
-            System.out.println("3.µ¼º½");
-            System.out.println("4.ÍË³öµÇÂ¼");
+            System.out.println("è¯·é€‰æ‹©æ‚¨è¦æ‰§è¡Œçš„æ“ä½œï¼š\n");
+            System.out.println("1.è¯¾ç¨‹æ“ä½œ\n");
+            System.out.println("2.æ´»åŠ¨æ“ä½œ\n");
+            System.out.println("3.å¯¼èˆª");
+            System.out.println("4.é€€å‡ºç™»å½•");
             choice = in.nextInt();
             switch (choice) {
                 case 1 -> CourseOperation(teacherAccount,allCourses);
                 case 2 -> ActivityOperation(teacherAccount,allActivities);
-                default -> System.out.println("¸ĞĞ»ÄúµÄÊ¹ÓÃ£¡");
+                default -> System.out.println("æ„Ÿè°¢æ‚¨çš„ä½¿ç”¨ï¼");
             }
         }
     }
 
     /**
-     * Ñ§Éú²Ù×÷½çÃæ
-     * @param account ÕËºÅĞÅÏ¢
+     * å­¦ç”Ÿæ“ä½œç•Œé¢
+     * @param account è´¦å·ä¿¡æ¯
      */
     public void StudentInterface(Account account){
-        StudentAccount studentAccount = new StudentAccount(account);//µ÷ÓÃº¯ÊıÖ¤Ã÷ÕËºÅ´æÔÚ£¬Ö±½ÓÀûÓÃ¹¹Ôìº¯Êı¶ÁÈ¡Êı¾İ
-        ArrayList<Course> allCourses = new ArrayList<>();//ËùÓĞ¿Î³ÌÁĞ±í
-        ArrayList<Activity> allActivities  = new ArrayList<>();//ËùÓĞ»î¶¯ÁĞ±í
+        StudentAccount studentAccount = new StudentAccount(account);//è°ƒç”¨å‡½æ•°è¯æ˜è´¦å·å­˜åœ¨ï¼Œç›´æ¥åˆ©ç”¨æ„é€ å‡½æ•°è¯»å–æ•°æ®
+        ArrayList<Course> allCourses = new ArrayList<>();//æ‰€æœ‰è¯¾ç¨‹åˆ—è¡¨
+        ArrayList<Activity> allActivities  = new ArrayList<>();//æ‰€æœ‰æ´»åŠ¨åˆ—è¡¨
         CourseDatabase courseDatabase = new CourseDatabase();
         ActivityDatabase activityDatabase =new ActivityDatabase();
         courseDatabase.find(allCourses);
@@ -133,35 +133,35 @@ public class MainInterface {
         int choice = 1;
         Scanner in = new Scanner(System.in);
         while (choice <= 3 && choice >= 1) {
-            System.out.println("ÇëÑ¡ÔñÄúÒªÖ´ĞĞµÄ²Ù×÷£º\n");
-            System.out.println("1.¿Î³Ì²Ù×÷\n");
-            System.out.println("2.»î¶¯²Ù×÷\n");
-            System.out.println("3.µ¼º½");
-            System.out.println("4.ÍË³öµÇÂ¼");
+            System.out.println("è¯·é€‰æ‹©æ‚¨è¦æ‰§è¡Œçš„æ“ä½œï¼š\n");
+            System.out.println("1.è¯¾ç¨‹æ“ä½œ\n");
+            System.out.println("2.æ´»åŠ¨æ“ä½œ\n");
+            System.out.println("3.å¯¼èˆª");
+            System.out.println("4.é€€å‡ºç™»å½•");
             choice = in.nextInt();
             switch (choice) {
                 case 1 -> CourseOperation(studentAccount,allCourses);
                 case 2 -> ActivityOperation(studentAccount,allActivities);
-                default -> System.out.println("¸ĞĞ»ÄúµÄÊ¹ÓÃ£¡");
+                default -> System.out.println("æ„Ÿè°¢æ‚¨çš„ä½¿ç”¨ï¼");
             }
         }
     }
 
     /**
-     * ¿Î³Ì²Ù×÷½çÃæ£¨¹ÜÀíÔ±£©
-     * @param managerAccount ¹ÜÀíÔ±ÕËºÅĞÅÏ¢
+     * è¯¾ç¨‹æ“ä½œç•Œé¢ï¼ˆç®¡ç†å‘˜ï¼‰
+     * @param managerAccount ç®¡ç†å‘˜è´¦å·ä¿¡æ¯
      */
     public void CourseOperation(ManagerAccount managerAccount){
         int choice=1;
         Scanner in = new Scanner(System.in);
         while(choice<=5&&choice>=1) {
-            System.out.println("ÇëÑ¡ÔñÄúÒªÖ´ĞĞµÄ²Ù×÷£º\n");
-            System.out.println("1.¿Î³Ì²éÑ¯\n");
-            System.out.println("2.¿Î³ÌÌí¼Ó\n");
-            System.out.println("3.¿Î³ÌÉ¾³ı\n");
-            System.out.println("4.¿Î³ÌĞŞ¸Ä\n");
-            System.out.println("5.¿¼ÊÔÊ±¼ä·¢²¼\n");
-            System.out.println("6.·µ»ØÖ÷½çÃæ\n");
+            System.out.println("è¯·é€‰æ‹©æ‚¨è¦æ‰§è¡Œçš„æ“ä½œï¼š\n");
+            System.out.println("1.è¯¾ç¨‹æŸ¥è¯¢\n");
+            System.out.println("2.è¯¾ç¨‹æ·»åŠ \n");
+            System.out.println("3.è¯¾ç¨‹åˆ é™¤\n");
+            System.out.println("4.è¯¾ç¨‹ä¿®æ”¹\n");
+            System.out.println("5.è€ƒè¯•æ—¶é—´å‘å¸ƒ\n");
+            System.out.println("6.è¿”å›ä¸»ç•Œé¢\n");
             choice = in.nextInt();
             switch (choice)
             {
@@ -170,75 +170,75 @@ public class MainInterface {
                 case 3 -> deleteCourse(managerAccount);
                 case 4 -> updateCourse(managerAccount);
                 case 5 -> releaseTest();
-                default ->  System.out.println("¸ĞĞ»ÄúµÄÊ¹ÓÃ£¡");
+                default ->  System.out.println("æ„Ÿè°¢æ‚¨çš„ä½¿ç”¨ï¼");
             }
         }
     }
 
     /**
-     *  ¿Î³Ì²Ù×÷½çÃæ£¨½ÌÊ¦£©
-     * @param teacherAccount ½ÌÊ¦ÕËºÅ
-     * @param allCourse ËùÓĞ¿Î³ÌÁĞ±í
+     *  è¯¾ç¨‹æ“ä½œç•Œé¢ï¼ˆæ•™å¸ˆï¼‰
+     * @param teacherAccount æ•™å¸ˆè´¦å·
+     * @param allCourse æ‰€æœ‰è¯¾ç¨‹åˆ—è¡¨
      */
     public void CourseOperation(TeacherAccount teacherAccount,ArrayList<Course> allCourse){
         int choice=1;
         Scanner in = new Scanner(System.in);
         while(choice<=3&&choice>=1) {
-            System.out.println("ÇëÑ¡ÔñÄúÒªÖ´ĞĞµÄ²Ù×÷£º\n");
-            System.out.println("1.¿Î³Ì²éÑ¯\n");
-            System.out.println("2.¿Î³ÌÌí¼Ó\n");
-            System.out.println("3.¿Î³ÌÍË³ö\n");
-            System.out.println("4.·µ»ØÖ÷½çÃæ\n");
+            System.out.println("è¯·é€‰æ‹©æ‚¨è¦æ‰§è¡Œçš„æ“ä½œï¼š\n");
+            System.out.println("1.è¯¾ç¨‹æŸ¥è¯¢\n");
+            System.out.println("2.è¯¾ç¨‹æ·»åŠ \n");
+            System.out.println("3.è¯¾ç¨‹é€€å‡º\n");
+            System.out.println("4.è¿”å›ä¸»ç•Œé¢\n");
             choice = in.nextInt();
             switch (choice)
             {
                 case 1 -> findCourse(teacherAccount,allCourse);
                 case 2 -> addCourse(teacherAccount,allCourse);
                 case 3 -> deleteCourse(teacherAccount);
-                default ->  System.out.println("¸ĞĞ»ÄúµÄÊ¹ÓÃ£¡");
+                default ->  System.out.println("æ„Ÿè°¢æ‚¨çš„ä½¿ç”¨ï¼");
             }
         }
     }
 
     /**
-     * ¿Î³Ì²Ù×÷½çÃæ£¨Ñ§Éú£©
-     * @param studentAccount Ñ§ÉúÕËºÅ
-     * @param allCourse ËùÓĞ¿Î³ÌÁĞ±í
+     * è¯¾ç¨‹æ“ä½œç•Œé¢ï¼ˆå­¦ç”Ÿï¼‰
+     * @param studentAccount å­¦ç”Ÿè´¦å·
+     * @param allCourse æ‰€æœ‰è¯¾ç¨‹åˆ—è¡¨
      */
     public void CourseOperation(StudentAccount studentAccount,ArrayList<Course> allCourse){
         int choice=1;
         Scanner in = new Scanner(System.in);
         while(choice<=3&&choice>=1) {
-            System.out.println("ÇëÑ¡ÔñÄúÒªÖ´ĞĞµÄ²Ù×÷£º\n");
-            System.out.println("1.¿Î³Ì²éÑ¯\n");
-            System.out.println("2.¿Î³ÌÌí¼Ó\n");
-            System.out.println("3.¿Î³ÌÍË³ö\n");
-            System.out.println("4.·µ»ØÖ÷½çÃæ\n");
+            System.out.println("è¯·é€‰æ‹©æ‚¨è¦æ‰§è¡Œçš„æ“ä½œï¼š\n");
+            System.out.println("1.è¯¾ç¨‹æŸ¥è¯¢\n");
+            System.out.println("2.è¯¾ç¨‹æ·»åŠ \n");
+            System.out.println("3.è¯¾ç¨‹é€€å‡º\n");
+            System.out.println("4.è¿”å›ä¸»ç•Œé¢\n");
             choice = in.nextInt();
             switch (choice)
             {
                 case 1 -> findCourse(studentAccount,allCourse);
                 case 2 -> addCourse(studentAccount,allCourse);
                 case 3 -> deleteCourse(studentAccount);
-                default ->  System.out.println("¸ĞĞ»ÄúµÄÊ¹ÓÃ£¡");
+                default ->  System.out.println("æ„Ÿè°¢æ‚¨çš„ä½¿ç”¨ï¼");
             }
         }
     }
 
     /**
-     * »î¶¯²Ù×÷½çÃæ£¨¹ÜÀíÔ±£©
-     * @param managerAccount ¹ÜÀíÔ±ÕËºÅĞÅÏ¢
+     * æ´»åŠ¨æ“ä½œç•Œé¢ï¼ˆç®¡ç†å‘˜ï¼‰
+     * @param managerAccount ç®¡ç†å‘˜è´¦å·ä¿¡æ¯
      */
     public void ActivityOperation(ManagerAccount managerAccount){
         int choice=1;
         Scanner in = new Scanner(System.in);
         while(choice<=5&&choice>=1) {
-            System.out.println("ÇëÑ¡ÔñÄúÒªÖ´ĞĞµÄ²Ù×÷£º\n");
-            System.out.println("1.»î¶¯²éÑ¯\n");
-            System.out.println("2.»î¶¯Ìí¼Ó\n");
-            System.out.println("3.»î¶¯ĞŞ¸Ä\n");
-            System.out.println("4.»î¶¯É¾³ı\n");
-            System.out.println("5.·µ»ØÖ÷½çÃæ\n");
+            System.out.println("è¯·é€‰æ‹©æ‚¨è¦æ‰§è¡Œçš„æ“ä½œï¼š\n");
+            System.out.println("1.æ´»åŠ¨æŸ¥è¯¢\n");
+            System.out.println("2.æ´»åŠ¨æ·»åŠ \n");
+            System.out.println("3.æ´»åŠ¨ä¿®æ”¹\n");
+            System.out.println("4.æ´»åŠ¨åˆ é™¤\n");
+            System.out.println("5.è¿”å›ä¸»ç•Œé¢\n");
             choice = in.nextInt();
             switch (choice)
             {
@@ -246,258 +246,272 @@ public class MainInterface {
                 case 2 -> addActivity(managerAccount);
                 case 3 -> deleteActivity(managerAccount);
                 case 4 -> updateActivity(managerAccount);
-                default ->  System.out.println("¸ĞĞ»ÄúµÄÊ¹ÓÃ£¡");
+                default ->  System.out.println("æ„Ÿè°¢æ‚¨çš„ä½¿ç”¨ï¼");
             }
         }
 
     }
 
     /**
-     * »î¶¯²Ù×÷½çÃæ£¨½ÌÊ¦£©
-     * @param teacherAccount ½ÌÊ¦ÕËºÅĞÅÏ¢
-     * @param allActivities ËùÓĞ»î¶¯ÁĞ±í
+     * æ´»åŠ¨æ“ä½œç•Œé¢ï¼ˆæ•™å¸ˆï¼‰
+     * @param teacherAccount æ•™å¸ˆè´¦å·ä¿¡æ¯
+     * @param allActivities æ‰€æœ‰æ´»åŠ¨åˆ—è¡¨
      */
     public void ActivityOperation(TeacherAccount teacherAccount,ArrayList<Activity> allActivities){
         int choice=1;
         Scanner in = new Scanner(System.in);
         while(choice<=3&&choice>=1) {
-            System.out.println("ÇëÑ¡ÔñÄúÒªÖ´ĞĞµÄ²Ù×÷£º\n");
-            System.out.println("1.¿Î³Ì²éÑ¯\n");
-            System.out.println("2.¿Î³ÌÌí¼Ó\n");
-            System.out.println("3.¿Î³ÌÍË³ö\n");
-            System.out.println("4.·µ»ØÖ÷½çÃæ\n");
+            System.out.println("è¯·é€‰æ‹©æ‚¨è¦æ‰§è¡Œçš„æ“ä½œï¼š\n");
+            System.out.println("1.æ´»åŠ¨æŸ¥è¯¢\n");
+            System.out.println("2.æ´»åŠ¨æ·»åŠ \n");
+            System.out.println("3.æ´»åŠ¨åˆ é™¤\n");
+            System.out.println("4.è¿”å›ä¸»ç•Œé¢\n");
             choice = in.nextInt();
             switch (choice)
             {
                 case 1 -> findActivity(teacherAccount,allActivities);
                 case 2 -> addActivity(teacherAccount,allActivities);
                 case 3 -> deleteActivity(teacherAccount);
-                default ->  System.out.println("¸ĞĞ»ÄúµÄÊ¹ÓÃ£¡");
+                default ->  System.out.println("æ„Ÿè°¢æ‚¨çš„ä½¿ç”¨ï¼");
             }
         }
     }
 
     /**
-     * »î¶¯²Ù×÷½çÃæ£¨Ñ§Éú£©
-     * @param studentAccount Ñ§ÉúÕËºÅ
-     * @param allActivities ËùÓĞ»î¶¯ÁĞ±í
+     * æ´»åŠ¨æ“ä½œç•Œé¢ï¼ˆå­¦ç”Ÿï¼‰
+     * @param studentAccount å­¦ç”Ÿè´¦å·
+     * @param allActivities æ‰€æœ‰æ´»åŠ¨åˆ—è¡¨
      */
     public void ActivityOperation(StudentAccount studentAccount,ArrayList<Activity> allActivities){
         int choice=1;
         Scanner in = new Scanner(System.in);
         while(choice<=3&&choice>=1) {
-            System.out.println("ÇëÑ¡ÔñÄúÒªÖ´ĞĞµÄ²Ù×÷£º\n");
-            System.out.println("1.¿Î³Ì²éÑ¯\n");
-            System.out.println("2.¿Î³ÌÌí¼Ó\n");
-            System.out.println("3.¿Î³ÌÍË³ö\n");
-            System.out.println("4.·µ»ØÖ÷½çÃæ\n");
+            System.out.println("è¯·é€‰æ‹©æ‚¨è¦æ‰§è¡Œçš„æ“ä½œï¼š\n");
+            System.out.println("1.æ´»åŠ¨æŸ¥è¯¢\n");
+            System.out.println("2.æ´»åŠ¨æ·»åŠ \n");
+            System.out.println("3.æ´»åŠ¨åˆ é™¤\n");
+            System.out.println("4.è¿”å›ä¸»ç•Œé¢\n");
             choice = in.nextInt();
             switch (choice)
             {
                 case 1 -> findActivity(studentAccount,allActivities);
                 case 2 -> addActivity(studentAccount,allActivities);
                 case 3 -> deleteActivity(studentAccount);
-                default ->  System.out.println("¸ĞĞ»ÄúµÄÊ¹ÓÃ£¡");
+                default ->  System.out.println("æ„Ÿè°¢æ‚¨çš„ä½¿ç”¨ï¼");
             }
         }
 
     }
     /**
-     * ²éÑ¯¿Î³Ì
-     * @param managerAccount ¹ÜÀíÔ±ÕËºÅ
+     * æŸ¥è¯¢è¯¾ç¨‹
+     * @param managerAccount ç®¡ç†å‘˜è´¦å·
      */
     public void findCourse(ManagerAccount managerAccount) {
         int choice=1;
         Scanner in = new Scanner(System.in);
-        while(choice<=2&&choice>=1) {
-            System.out.println("ÇëÑ¡ÔñÄúÒªÖ´ĞĞµÄ²Ù×÷£º\n");
-            System.out.println("1.¸ù¾İ¿Î³Ì±àºÅ²éÑ¯\n");//¾«×¼²éÑ¯
-            System.out.println("2.¸ù¾İ¿Î³ÌÃû³Æ²éÑ¯\n");//Ä£ºı²éÑ¯
-            System.out.println("3.·µ»ØÉÏ¸ö½çÃæ\n");
+        while(choice<=3&&choice>=1) {
+            System.out.println("è¯·é€‰æ‹©æ‚¨è¦æ‰§è¡Œçš„æ“ä½œï¼š\n");
+            System.out.println("1.æ ¹æ®è¯¾ç¨‹ç¼–å·æŸ¥è¯¢\n");//ç²¾å‡†æŸ¥è¯¢
+            System.out.println("2.æ ¹æ®è¯¾ç¨‹åç§°æŸ¥è¯¢\n");//æ¨¡ç³ŠæŸ¥è¯¢
+            System.out.println("3.æŸ¥è¯¢æ‰€æœ‰è¯¾ç¨‹\n");
+            System.out.println("4.è¿”å›ä¸Šä¸ªç•Œé¢\n");
             choice = in.nextInt();
             switch (choice) {
                 case 1->{
-                    System.out.println("ÇëÊäÈë¿Î³Ì±àºÅ");
+                    System.out.println("è¯·è¾“å…¥è¯¾ç¨‹ç¼–å·");
                     int index = managerAccount.getCourseById(in.nextInt());
                     if(index<managerAccount.getCourse().size())
                     {
-                        System.out.println("¿Î³ÌĞÅÏ¢Îª:");
+                        System.out.println("è¯¾ç¨‹ä¿¡æ¯ä¸º:");
                         managerAccount.getCourse().get(index).printCourse();
                     }
                     else
-                        System.out.println("¿Î³Ì²»´æÔÚ");
+                        System.out.println("è¯¾ç¨‹ä¸å­˜åœ¨");
                 }
                 case 2->{
                     FuzzySearch fuzzySearch = new FuzzySearch();
-                    System.out.println("ÇëÊäÈë¿Î³ÌÃû³Æ");
-                    ArrayList<Course> courses = fuzzySearch.get_FS_result(in.next(),managerAccount.getCourse());//Ä£ºı²éÑ¯»ñµÃ¿Î³Ì
+                    System.out.println("è¯·è¾“å…¥è¯¾ç¨‹åç§°");
+                    ArrayList<Course> courses = fuzzySearch.get_FS_result(in.next(),managerAccount.getCourse());//æ¨¡ç³ŠæŸ¥è¯¢è·å¾—è¯¾ç¨‹
                     if(courses.size()!=0) {
                         for (Course course : courses)
                             course.printCourse();
                     }
                     else
-                        System.out.println("ÎŞÏà¹Ø¿Î³Ì¡£\n");
+                        System.out.println("æ— ç›¸å…³è¯¾ç¨‹ã€‚\n");
                 }
-
+                case 3->{
+                    for (Course course : managerAccount.getCourse())
+                        course.printCourse();
+                }
             }
         }
     }
 
     /**
-     * ²éÑ¯¿Î³Ì
-     * @param teacherAccount ½ÌÊ¦ÕËºÅ
-     * @param allCourse ËùÓĞ¿Î³ÌÁĞ±í
+     * æŸ¥è¯¢è¯¾ç¨‹
+     * @param teacherAccount æ•™å¸ˆè´¦å·
+     * @param allCourse æ‰€æœ‰è¯¾ç¨‹åˆ—è¡¨
      */
     public void findCourse(TeacherAccount teacherAccount,ArrayList<Course> allCourse) {
         int choice=1;
         Scanner in = new Scanner(System.in);
-        while(choice<=2&&choice>=1) {
-            System.out.println("ÇëÑ¡ÔñÄúÒªÖ´ĞĞµÄ²Ù×÷£º\n");
-            System.out.println("1.¸ù¾İ¿Î³Ì±àºÅ²éÑ¯ËùÓĞ¿Î³Ì\n");//¾«×¼²éÑ¯
-            System.out.println("2.¸ù¾İ¿Î³ÌÃû³Æ²éÑ¯ËùÓĞ¿Î³Ì\n");//Ä£ºı²éÑ¯
-            System.out.println("3.¸ù¾İ¿Î³Ì±àºÅ²éÑ¯ÒÑÑ¡¿Î³Ì\n");//¾«×¼²éÑ¯
-            System.out.println("4.¸ù¾İ¿Î³ÌÃû³Æ²éÑ¯ÒÑÑ¡¿Î³Ì\n");//Ä£ºı²éÑ¯
-            System.out.println("5.·µ»ØÉÏ¸ö½çÃæ\n");
+        while(choice<=5&&choice>=1) {
+            System.out.println("è¯·é€‰æ‹©æ‚¨è¦æ‰§è¡Œçš„æ“ä½œï¼š\n");
+            System.out.println("1.æ ¹æ®è¯¾ç¨‹ç¼–å·æŸ¥è¯¢æ‰€æœ‰è¯¾ç¨‹\n");//ç²¾å‡†æŸ¥è¯¢
+            System.out.println("2.æ ¹æ®è¯¾ç¨‹åç§°æŸ¥è¯¢æ‰€æœ‰è¯¾ç¨‹\n");//æ¨¡ç³ŠæŸ¥è¯¢
+            System.out.println("3.æ ¹æ®è¯¾ç¨‹ç¼–å·æŸ¥è¯¢å·²é€‰è¯¾ç¨‹\n");//ç²¾å‡†æŸ¥è¯¢
+            System.out.println("4.æ ¹æ®è¯¾ç¨‹åç§°æŸ¥è¯¢å·²é€‰è¯¾ç¨‹\n");//æ¨¡ç³ŠæŸ¥è¯¢
+            System.out.println("5.æŸ¥è¯¢æ‰€æœ‰å·²é€‰è¯¾ç¨‹\n");
+            System.out.println("6.è¿”å›ä¸Šä¸ªç•Œé¢\n");
             choice = in.nextInt();
             switch (choice) {
                 case 1->{
-                    System.out.println("ÇëÊäÈë¿Î³Ì±àºÅ");
+                    System.out.println("è¯·è¾“å…¥è¯¾ç¨‹ç¼–å·");
                     Search search = new Search();
                     int index = in.nextInt();
-                    LogFile.info("Teacher"+teacherAccount.getID()," ²éÑ¯¿Î³Ì"+index);
+                    LogFile.info("Teacher"+teacherAccount.getID()," æŸ¥è¯¢è¯¾ç¨‹"+index);
                     index = search.BinaryCourseSearch(index,allCourse);
                     if(index<allCourse.size())
                     {
-                        System.out.println("¿Î³ÌĞÅÏ¢Îª:");
+                        System.out.println("è¯¾ç¨‹ä¿¡æ¯ä¸º:");
                         allCourse.get(index).printCourse();
                     }
                     else
-                        System.out.println("¿Î³Ì²»´æÔÚ");
+                        System.out.println("è¯¾ç¨‹ä¸å­˜åœ¨");
                 }
                 case 2->{
                     FuzzySearch fuzzySearch = new FuzzySearch();
-                    System.out.println("ÇëÊäÈë¿Î³ÌÃû³Æ");
-                    ArrayList<Course> courses = fuzzySearch.get_FS_result(in.next(),allCourse);//Ä£ºı²éÑ¯»ñµÃ¿Î³Ì
+                    System.out.println("è¯·è¾“å…¥è¯¾ç¨‹åç§°");
+                    ArrayList<Course> courses = fuzzySearch.get_FS_result(in.next(),allCourse);//æ¨¡ç³ŠæŸ¥è¯¢è·å¾—è¯¾ç¨‹
                     if(courses.size()!=0) {
                         for (Course course : courses)
                             course.printCourse();
                     }
                     else
-                        System.out.println("ÎŞÏà¹Ø¿Î³Ì¡£\n");
+                        System.out.println("æ— ç›¸å…³è¯¾ç¨‹ã€‚\n");
                 }
                 case 3->{
-                    System.out.println("ÇëÊäÈë¿Î³Ì±àºÅ");
+                    System.out.println("è¯·è¾“å…¥è¯¾ç¨‹ç¼–å·");
                     int index = teacherAccount.getCourseById(in.nextInt());
                     if(index<teacherAccount.getCourse().size())
                     {
-                        System.out.println("¿Î³ÌĞÅÏ¢Îª:");
+                        System.out.println("è¯¾ç¨‹ä¿¡æ¯ä¸º:");
                         teacherAccount.getCourse().get(index).printCourse();
                     }
                     else
-                        System.out.println("¿Î³Ì²»´æÔÚ");
+                        System.out.println("è¯¾ç¨‹ä¸å­˜åœ¨");
                 }
                 case 4->{
                     FuzzySearch fuzzySearch = new FuzzySearch();
-                    System.out.println("ÇëÊäÈë¿Î³ÌÃû³Æ");
-                    ArrayList<Course> courses = fuzzySearch.get_FS_result(in.next(),teacherAccount.getCourse());//Ä£ºı²éÑ¯»ñµÃ¿Î³Ì
+                    System.out.println("è¯·è¾“å…¥è¯¾ç¨‹åç§°");
+                    ArrayList<Course> courses = fuzzySearch.get_FS_result(in.next(),teacherAccount.getCourse());//æ¨¡ç³ŠæŸ¥è¯¢è·å¾—è¯¾ç¨‹
                     if(courses.size()!=0) {
                         for (Course course : courses)
                             course.printCourse();
                     }
                     else
-                        System.out.println("ÎŞÏà¹Ø¿Î³Ì¡£\n");
+                        System.out.println("æ— ç›¸å…³è¯¾ç¨‹ã€‚\n");
+                }
+                case 5->{
+                    for (Course course : teacherAccount.getCourse())
+                        course.printCourse();
                 }
             }
         }
     }
 
     /**
-     * ²éÑ¯¿Î³Ì
-     * @param studentAccount Ñ§ÉúÕËºÅ
-     * @param allCourse ËùÓĞ¿Î³ÌÁĞ±í
+     * æŸ¥è¯¢è¯¾ç¨‹
+     * @param studentAccount å­¦ç”Ÿè´¦å·
+     * @param allCourse æ‰€æœ‰è¯¾ç¨‹åˆ—è¡¨
      */
     public void findCourse(StudentAccount studentAccount,ArrayList<Course> allCourse) {
         int choice=1;
         Scanner in = new Scanner(System.in);
-        while(choice<=2&&choice>=1) {
-            System.out.println("ÇëÑ¡ÔñÄúÒªÖ´ĞĞµÄ²Ù×÷£º\n");
-            System.out.println("1.¸ù¾İ¿Î³Ì±àºÅ²éÑ¯ËùÓĞ¿Î³Ì\n");//¾«×¼²éÑ¯
-            System.out.println("2.¸ù¾İ¿Î³ÌÃû³Æ²éÑ¯ËùÓĞ¿Î³Ì\n");//Ä£ºı²éÑ¯
-            System.out.println("3.¸ù¾İ¿Î³Ì±àºÅ²éÑ¯ÒÑÑ¡¿Î³Ì\n");//¾«×¼²éÑ¯
-            System.out.println("4.¸ù¾İ¿Î³ÌÃû³Æ²éÑ¯ÒÑÑ¡¿Î³Ì\n");//Ä£ºı²éÑ¯
-            System.out.println("5.·µ»ØÉÏ¸ö½çÃæ\n");
+        while(choice<=5&&choice>=1) {
+            System.out.println("è¯·é€‰æ‹©æ‚¨è¦æ‰§è¡Œçš„æ“ä½œï¼š\n");
+            System.out.println("1.æ ¹æ®è¯¾ç¨‹ç¼–å·æŸ¥è¯¢æ‰€æœ‰è¯¾ç¨‹\n");//ç²¾å‡†æŸ¥è¯¢
+            System.out.println("2.æ ¹æ®è¯¾ç¨‹åç§°æŸ¥è¯¢æ‰€æœ‰è¯¾ç¨‹\n");//æ¨¡ç³ŠæŸ¥è¯¢
+            System.out.println("3.æ ¹æ®è¯¾ç¨‹ç¼–å·æŸ¥è¯¢å·²é€‰è¯¾ç¨‹\n");//ç²¾å‡†æŸ¥è¯¢
+            System.out.println("4.æ ¹æ®è¯¾ç¨‹åç§°æŸ¥è¯¢å·²é€‰è¯¾ç¨‹\n");//æ¨¡ç³ŠæŸ¥è¯¢
+            System.out.println("5.æŸ¥è¯¢æ‰€æœ‰å·²é€‰è¯¾ç¨‹\n");
+            System.out.println("6.è¿”å›ä¸Šä¸ªç•Œé¢\n");
             choice = in.nextInt();
             switch (choice) {
                 case 1->{
-                    System.out.println("ÇëÊäÈë¿Î³Ì±àºÅ");
+                    System.out.println("è¯·è¾“å…¥è¯¾ç¨‹ç¼–å·");
                     Search search = new Search();
                     int index = in.nextInt();
-                    LogFile.info("Teacher"+studentAccount.getID()," ²éÑ¯¿Î³Ì"+index);
+                    LogFile.info("Teacher"+studentAccount.getID()," æŸ¥è¯¢è¯¾ç¨‹"+index);
                     index = search.BinaryCourseSearch(index,allCourse);
                     if(index<allCourse.size())
                     {
-                        System.out.println("¿Î³ÌĞÅÏ¢Îª:");
+                        System.out.println("è¯¾ç¨‹ä¿¡æ¯ä¸º:");
                         allCourse.get(index).printCourse();
                     }
                     else
-                        System.out.println("¿Î³Ì²»´æÔÚ");
+                        System.out.println("è¯¾ç¨‹ä¸å­˜åœ¨");
                 }
                 case 2->{
                     FuzzySearch fuzzySearch = new FuzzySearch();
-                    System.out.println("ÇëÊäÈë¿Î³ÌÃû³Æ");
-                    ArrayList<Course> courses = fuzzySearch.get_FS_result(in.next(),allCourse);//Ä£ºı²éÑ¯»ñµÃ¿Î³Ì
+                    System.out.println("è¯·è¾“å…¥è¯¾ç¨‹åç§°");
+                    ArrayList<Course> courses = fuzzySearch.get_FS_result(in.next(),allCourse);//æ¨¡ç³ŠæŸ¥è¯¢è·å¾—è¯¾ç¨‹
                     if(courses.size()!=0) {
                         for (Course course : courses)
                             course.printCourse();
                     }
                     else
-                        System.out.println("ÎŞÏà¹Ø¿Î³Ì¡£\n");
+                        System.out.println("æ— ç›¸å…³è¯¾ç¨‹ã€‚\n");
                 }
                 case 3->{
-                    System.out.println("ÇëÊäÈë¿Î³Ì±àºÅ");
+                    System.out.println("è¯·è¾“å…¥è¯¾ç¨‹ç¼–å·");
                     int index = studentAccount.getCourseById(in.nextInt());
                     if(index<studentAccount.getCourse().size())
                     {
-                        System.out.println("¿Î³ÌĞÅÏ¢Îª:");
+                        System.out.println("è¯¾ç¨‹ä¿¡æ¯ä¸º:");
                         studentAccount.getCourse().get(index).printCourse();
                     }
                     else
-                        System.out.println("¿Î³Ì²»´æÔÚ");
+                        System.out.println("è¯¾ç¨‹ä¸å­˜åœ¨");
                 }
                 case 4->{
                     FuzzySearch fuzzySearch = new FuzzySearch();
-                    System.out.println("ÇëÊäÈë¿Î³ÌÃû³Æ");
-                    ArrayList<Course> courses = fuzzySearch.get_FS_result(in.next(),studentAccount.getCourse());//Ä£ºı²éÑ¯»ñµÃ¿Î³Ì
+                    System.out.println("è¯·è¾“å…¥è¯¾ç¨‹åç§°");
+                    ArrayList<Course> courses = fuzzySearch.get_FS_result(in.next(),studentAccount.getCourse());//æ¨¡ç³ŠæŸ¥è¯¢è·å¾—è¯¾ç¨‹
                     if(courses.size()!=0) {
                         for (Course course : courses)
                             course.printCourse();
                     }
                     else
-                        System.out.println("ÎŞÏà¹Ø¿Î³Ì¡£\n");
+                        System.out.println("æ— ç›¸å…³è¯¾ç¨‹ã€‚\n");
+                }
+                case 5->{
+                    for (Course course : studentAccount.getCourse())
+                        course.printCourse();
                 }
             }
         }
     }
 
     /**
-     * Ìí¼Ó¿Î³Ì
-     * @param managerAccount ¹ÜÀíÔ±ÕËºÅ
+     * æ·»åŠ è¯¾ç¨‹
+     * @param managerAccount ç®¡ç†å‘˜è´¦å·
      */
     public void addCourse(ManagerAccount managerAccount){
         Course course = new Course();
         scanCourse(course);
-        course.setM_iPle(0);//µ±Ç°Ñ¡¿ÎÈËÊıÎª0
-        course.setM_iNum(managerAccount.getCourse().get(managerAccount.getCourse().size()-1).getM_iNum()+1 );//·ÖÅä¿Î³Ì±àºÅ
+        course.setM_iPle(0);//å½“å‰é€‰è¯¾äººæ•°ä¸º0
+        course.setM_iNum(managerAccount.getCourse().get(managerAccount.getCourse().size()-1).getM_iNum()+1 );//åˆ†é…è¯¾ç¨‹ç¼–å·
         managerAccount.addCourse(course);
     }
 
     /**
-     * Ìí¼Ó¿Î³Ì
-     * @param teacherAccount ½ÌÊ¦ÕËºÅ
-     * @param allCourse ËùÓĞ¿Î³ÌÁĞ±í
+     * æ·»åŠ è¯¾ç¨‹
+     * @param teacherAccount æ•™å¸ˆè´¦å·
+     * @param allCourse æ‰€æœ‰è¯¾ç¨‹åˆ—è¡¨
      */
     public void addCourse(TeacherAccount teacherAccount,ArrayList<Course> allCourse) {
-        System.out.println("ÇëÊäÈë¿Î³Ì±àºÅ£º");
+        System.out.println("è¯·è¾“å…¥è¯¾ç¨‹ç¼–å·ï¼š");
         Scanner in = new Scanner(System.in);
         Search search = new Search();
         int index = search.BinaryCourseSearch(in.nextInt(),allCourse);
@@ -507,16 +521,16 @@ public class MainInterface {
             teacherAccount.addCourse(course);
         }
         else
-            System.out.println("¿Î³Ì²»´æÔÚ");
+            System.out.println("è¯¾ç¨‹ä¸å­˜åœ¨");
     }
 
     /**
-     * Ìí¼Ó¿Î³Ì
-     * @param studentAccount Ñ§ÉúÕËºÅ
-     * @param allCourse ËùÓĞ¿Î³ÌÁĞ±í
+     * æ·»åŠ è¯¾ç¨‹
+     * @param studentAccount å­¦ç”Ÿè´¦å·
+     * @param allCourse æ‰€æœ‰è¯¾ç¨‹åˆ—è¡¨
      */
     public void addCourse(StudentAccount studentAccount,ArrayList<Course> allCourse) {
-        System.out.println("ÇëÊäÈë¿Î³Ì±àºÅ£º");
+        System.out.println("è¯·è¾“å…¥è¯¾ç¨‹ç¼–å·ï¼š");
         Scanner in = new Scanner(System.in);
         Search search = new Search();
         int index = search.BinaryCourseSearch(in.nextInt(),allCourse);
@@ -526,117 +540,123 @@ public class MainInterface {
             studentAccount.addCourse(course);
         }
         else
-            System.out.println("¿Î³Ì²»´æÔÚ");
+            System.out.println("è¯¾ç¨‹ä¸å­˜åœ¨");
     }
 
     /**
-     * É¾³ı¿Î³Ì
-     * @param managerAccount ¹ÜÀíÔ±ÕËºÅ
+     * åˆ é™¤è¯¾ç¨‹
+     * @param managerAccount ç®¡ç†å‘˜è´¦å·
      */
     public void deleteCourse(ManagerAccount managerAccount){
         Course course = new Course();
         Scanner in = new Scanner(System.in);
-        System.out.println("ÇëÊäÈë¿Î³Ì±àºÅ£º");
+        System.out.println("è¯·è¾“å…¥è¯¾ç¨‹ç¼–å·ï¼š");
         int index = managerAccount.getCourseById(in.nextInt());
         if(index<managerAccount.getCourse().size()) {
             course = managerAccount.getCourse().get(index);
             managerAccount.deleteCourse(course);
         }
         else
-            System.out.println("¿Î³Ì²»´æÔÚ");
+            System.out.println("è¯¾ç¨‹ä¸å­˜åœ¨");
     }
 
     /**
-     * É¾³ı¿Î³Ì
-     * @param teacherAccount ½ÌÊ¦ÕËºÅ
+     * åˆ é™¤è¯¾ç¨‹
+     * @param teacherAccount æ•™å¸ˆè´¦å·
      */
     public void deleteCourse(TeacherAccount teacherAccount) {
         Course course = new Course();
         Scanner in = new Scanner(System.in);
-        System.out.println("ÇëÊäÈë¿Î³Ì±àºÅ£º");
+        System.out.println("è¯·è¾“å…¥è¯¾ç¨‹ç¼–å·ï¼š");
         int index = teacherAccount.getCourseById(in.nextInt());
         if(index<teacherAccount.getCourse().size()) {
             course = teacherAccount.getCourse().get(index);
             teacherAccount.decCourse(course);
         }
         else
-            System.out.println("¿Î³Ì²»´æÔÚ");
+            System.out.println("è¯¾ç¨‹ä¸å­˜åœ¨");
 
     }
 
     /**
-     * É¾³ı¿Î³Ì
-     * @param studentAccount Ñ§ÉúÕËºÅ
+     * åˆ é™¤è¯¾ç¨‹
+     * @param studentAccount å­¦ç”Ÿè´¦å·
      */
     public void deleteCourse(StudentAccount studentAccount) {
         Course course = new Course();
         Scanner in = new Scanner(System.in);
-        System.out.println("ÇëÊäÈë¿Î³Ì±àºÅ£º");
+        System.out.println("è¯·è¾“å…¥è¯¾ç¨‹ç¼–å·ï¼š");
         int index = studentAccount.getCourseById(in.nextInt());
         if(index<studentAccount.getCourse().size()) {
             course = studentAccount.getCourse().get(index);
             studentAccount.decCourse(course);
         }
         else
-            System.out.println("¿Î³Ì²»´æÔÚ");
+            System.out.println("è¯¾ç¨‹ä¸å­˜åœ¨");
 
     }
 
     /**
-     * ¸üĞÂ¿Î³ÌĞÅÏ¢
-     * @param managerAccount ¹ÜÀíÔ±ÕËºÅ
+     * æ›´æ–°è¯¾ç¨‹ä¿¡æ¯
+     * @param managerAccount ç®¡ç†å‘˜è´¦å·
      */
     public void updateCourse(ManagerAccount managerAccount){
-        System.out.println("ÇëÊäÈë¿Î³Ì±àºÅ£º");
+        System.out.println("è¯·è¾“å…¥è¯¾ç¨‹ç¼–å·ï¼š");
         Course course = new Course();
         Scanner in = new Scanner(System.in);
         int index = managerAccount.getCourseById(in.nextInt());
+        course= managerAccount.getCourse().get(index);
         scanCourse(course);
         managerAccount.changeCourse(index,course);
     }
 
     /**
-     * ·¢²¼¿¼ÊÔĞÅÏ¢
+     * å‘å¸ƒè€ƒè¯•ä¿¡æ¯
      */
     public void releaseTest(){
 
     }
 
     /**
-     * ²éÑ¯»î¶¯
-     * @param managerAccount ¹ÜÀíÔ±ÕËºÅ
+     * æŸ¥è¯¢æ´»åŠ¨
+     * @param managerAccount ç®¡ç†å‘˜è´¦å·
      */
     public void findActivity(ManagerAccount managerAccount){
         int choice=1;
         Scanner in = new Scanner(System.in);
-        while(choice<=2&&choice>=1) {
-            System.out.println("ÇëÑ¡ÔñÄúÒªÖ´ĞĞµÄ²Ù×÷£º\n");
-            System.out.println("1.¸ù¾İ»î¶¯±àºÅ²éÑ¯\n");//¾«×¼²éÑ¯
-            System.out.println("2.¸ù¾İ»î¶¯Ãû³Æ²éÑ¯\n");//Ä£ºı²éÑ¯
-            System.out.println("3.·µ»ØÉÏ¸ö½çÃæ\n");
+        while(choice<=3&&choice>=1) {
+            System.out.println("è¯·é€‰æ‹©æ‚¨è¦æ‰§è¡Œçš„æ“ä½œï¼š\n");
+            System.out.println("1.æ ¹æ®æ´»åŠ¨ç¼–å·æŸ¥è¯¢\n");//ç²¾å‡†æŸ¥è¯¢
+            System.out.println("2.æ ¹æ®æ´»åŠ¨åç§°æŸ¥è¯¢\n");//æ¨¡ç³ŠæŸ¥è¯¢
+            System.out.println("3.æŸ¥è¯¢æ‰€æœ‰æ´»åŠ¨\n");
+            System.out.println("4.è¿”å›ä¸Šä¸ªç•Œé¢\n");
             choice = in.nextInt();
             switch (choice) {
                 case 1->{
-                    System.out.println("ÇëÊäÈë»î¶¯±àºÅ");
+                    System.out.println("è¯·è¾“å…¥æ´»åŠ¨ç¼–å·");
                     int index = managerAccount.getCourseById(in.nextInt());
                     if(index<managerAccount.getCourse().size())
                     {
-                        System.out.println("»î¶¯ĞÅÏ¢Îª:");
+                        System.out.println("æ´»åŠ¨ä¿¡æ¯ä¸º:");
                         managerAccount.getActivity().get(index).printActivity();
                     }
                     else
-                        System.out.println("»î¶¯²»´æÔÚ");
+                        System.out.println("æ´»åŠ¨ä¸å­˜åœ¨");
                 }
                 case 2->{
                     FuzzySearch fuzzySearch = new FuzzySearch();
-                    System.out.println("ÇëÊäÈë»î¶¯Ãû³Æ");
-                    ArrayList<Activity> activities = fuzzySearch.get_FS_result(in.next(),managerAccount.getActivity());//Ä£ºı²éÑ¯»ñµÃ¿Î³Ì
+                    System.out.println("è¯·è¾“å…¥æ´»åŠ¨åç§°");
+                    ArrayList<Activity> activities = fuzzySearch.get_FS_result(in.next(),managerAccount.getActivity());//æ¨¡ç³ŠæŸ¥è¯¢è·å¾—è¯¾ç¨‹
                     if(activities.size()!=0) {
                         for (Activity activity:activities)
                             activity.printActivity();
                     }
                     else
-                        System.out.println("ÎŞÏà¹Ø¿Î³Ì¡£\n");
+                        System.out.println("æ— ç›¸å…³è¯¾ç¨‹ã€‚\n");
+                }
+                case 3->{
+                    for (Activity activity : managerAccount.getActivity())
+                        activity.printActivity();
                 }
 
             }
@@ -644,160 +664,169 @@ public class MainInterface {
     }
 
     /**
-     * ²éÑ¯»î¶¯
-     * @param teacherAccount ½ÌÊ¦ÕËºÅ
-     * @param allActivity ËùÓĞ»î¶¯ÁĞ±í
+     * æŸ¥è¯¢æ´»åŠ¨
+     * @param teacherAccount æ•™å¸ˆè´¦å·
+     * @param allActivity æ‰€æœ‰æ´»åŠ¨åˆ—è¡¨
      */
     public void findActivity(TeacherAccount teacherAccount,ArrayList<Activity> allActivity)  {
         int choice=1;
         Scanner in = new Scanner(System.in);
         while(choice<=2&&choice>=1) {
-            System.out.println("ÇëÑ¡ÔñÄúÒªÖ´ĞĞµÄ²Ù×÷£º\n");
-            System.out.println("1.¸ù¾İ»î¶¯±àºÅ²éÑ¯ËùÓĞ»î¶¯\n");//¾«×¼²éÑ¯
-            System.out.println("2.¸ù¾İ»î¶¯Ãû³Æ²éÑ¯ËùÓĞ»î¶¯\n");//Ä£ºı²éÑ¯
-            System.out.println("3.¸ù¾İ»î¶¯±àºÅ²éÑ¯ÒÑÑ¡»î¶¯\n");//¾«×¼²éÑ¯
-            System.out.println("4.¸ù¾İ»î¶¯Ãû³Æ²éÑ¯ÒÑÑ¡»î¶¯\n");//Ä£ºı²éÑ¯
-            System.out.println("5.·µ»ØÉÏ¸ö½çÃæ\n");
+            System.out.println("è¯·é€‰æ‹©æ‚¨è¦æ‰§è¡Œçš„æ“ä½œï¼š\n");
+            System.out.println("1.æ ¹æ®æ´»åŠ¨ç¼–å·æŸ¥è¯¢æ‰€æœ‰æ´»åŠ¨\n");//ç²¾å‡†æŸ¥è¯¢
+            System.out.println("2.æ ¹æ®æ´»åŠ¨åç§°æŸ¥è¯¢æ‰€æœ‰æ´»åŠ¨\n");//æ¨¡ç³ŠæŸ¥è¯¢
+            System.out.println("3.æ ¹æ®æ´»åŠ¨ç¼–å·æŸ¥è¯¢å·²é€‰æ´»åŠ¨\n");//ç²¾å‡†æŸ¥è¯¢
+            System.out.println("4.æ ¹æ®æ´»åŠ¨åç§°æŸ¥è¯¢å·²é€‰æ´»åŠ¨\n");//æ¨¡ç³ŠæŸ¥è¯¢
+            System.out.println("5.æŸ¥è¯¢æ‰€æœ‰æ´»åŠ¨\n");
+            System.out.println("6.è¿”å›ä¸Šä¸ªç•Œé¢\n");
             choice = in.nextInt();
             switch (choice) {
                 case 1->{
-                    System.out.println("ÇëÊäÈë»î¶¯±àºÅ");
+                    System.out.println("è¯·è¾“å…¥æ´»åŠ¨ç¼–å·");
                     Search search = new Search();
                     int index = in.nextInt();
-                    LogFile.info("Teacher"+teacherAccount.getID()," ²éÑ¯»î¶¯"+index);
+                    LogFile.info("Teacher"+teacherAccount.getID()," æŸ¥è¯¢æ´»åŠ¨"+index);
                     index = search.BinaryCourseSearch(index,allActivity);
                     if(index<allActivity.size())
                     {
-                        System.out.println("»î¶¯ĞÅÏ¢Îª:");
+                        System.out.println("æ´»åŠ¨ä¿¡æ¯ä¸º:");
                         allActivity.get(index).printActivity();
                     }
                     else
-                        System.out.println("»î¶¯²»´æÔÚ");
+                        System.out.println("æ´»åŠ¨ä¸å­˜åœ¨");
                 }
                 case 2->{
                     FuzzySearch fuzzySearch = new FuzzySearch();
-                    System.out.println("ÇëÊäÈë»î¶¯Ãû³Æ");
-                    ArrayList<Activity> activities = fuzzySearch.get_FS_result(in.next(),allActivity);//Ä£ºı²éÑ¯»ñµÃ»î¶¯
+                    System.out.println("è¯·è¾“å…¥æ´»åŠ¨åç§°");
+                    ArrayList<Activity> activities = fuzzySearch.get_FS_result(in.next(),allActivity);//æ¨¡ç³ŠæŸ¥è¯¢è·å¾—æ´»åŠ¨
                     if(activities.size()!=0) {
                         for (Activity activity : activities)
                             activity.printActivity();
                     }
                     else
-                        System.out.println("ÎŞÏà¹Ø»î¶¯¡£\n");
+                        System.out.println("æ— ç›¸å…³æ´»åŠ¨ã€‚\n");
                 }
                 case 3->{
-                    System.out.println("ÇëÊäÈë»î¶¯±àºÅ");
+                    System.out.println("è¯·è¾“å…¥æ´»åŠ¨ç¼–å·");
                     int index = teacherAccount.getActivityById(in.nextInt());
                     if(index<teacherAccount.getActivity().size())
                     {
-                        System.out.println("»î¶¯ĞÅÏ¢Îª:");
+                        System.out.println("æ´»åŠ¨ä¿¡æ¯ä¸º:");
                         teacherAccount.getActivity().get(index).printActivity();
                     }
                     else
-                        System.out.println("»î¶¯²»´æÔÚ");
+                        System.out.println("æ´»åŠ¨ä¸å­˜åœ¨");
                 }
-                case 4->{
+                case 4-> {
                     FuzzySearch fuzzySearch = new FuzzySearch();
-                    System.out.println("ÇëÊäÈë¿Î³ÌÃû³Æ");
-                    ArrayList<Activity> activities = fuzzySearch.get_FS_result(in.next(),teacherAccount.getActivity());//Ä£ºı²éÑ¯»ñµÃ¿Î³Ì
-                    if(activities.size()!=0) {
-                        for (Activity activity:activities)
+                    System.out.println("è¯·è¾“å…¥è¯¾ç¨‹åç§°");
+                    ArrayList<Activity> activities = fuzzySearch.get_FS_result(in.next(), teacherAccount.getActivity());//æ¨¡ç³ŠæŸ¥è¯¢è·å¾—è¯¾ç¨‹
+                    if (activities.size() != 0) {
+                        for (Activity activity : activities)
                             activity.printActivity();
-                    }
-                    else
-                        System.out.println("ÎŞÏà¹Ø¿Î³Ì¡£\n");
+                    } else
+                        System.out.println("æ— ç›¸å…³è¯¾ç¨‹ã€‚\n");
+                }
+                case 5-> {
+                    for (Activity activity : teacherAccount.getActivity())
+                        activity.printActivity();
                 }
             }
         }
     }
 
     /**
-     * ²éÑ¯»î¶¯
-     * @param studentAccount Ñ§ÉúÕËºÅ
-     * @param allActivity ËùÓĞ»î¶¯ÁĞ±í
+     * æŸ¥è¯¢æ´»åŠ¨
+     * @param studentAccount å­¦ç”Ÿè´¦å·
+     * @param allActivity æ‰€æœ‰æ´»åŠ¨åˆ—è¡¨
      */
     public void findActivity(StudentAccount studentAccount,ArrayList<Activity> allActivity)  {
         int choice=1;
         Scanner in = new Scanner(System.in);
         while(choice<=2&&choice>=1) {
-            System.out.println("ÇëÑ¡ÔñÄúÒªÖ´ĞĞµÄ²Ù×÷£º\n");
-            System.out.println("1.¸ù¾İ»î¶¯±àºÅ²éÑ¯ËùÓĞ»î¶¯\n");//¾«×¼²éÑ¯
-            System.out.println("2.¸ù¾İ»î¶¯Ãû³Æ²éÑ¯ËùÓĞ»î¶¯\n");//Ä£ºı²éÑ¯
-            System.out.println("3.¸ù¾İ»î¶¯±àºÅ²éÑ¯ÒÑÑ¡»î¶¯\n");//¾«×¼²éÑ¯
-            System.out.println("4.¸ù¾İ»î¶¯Ãû³Æ²éÑ¯ÒÑÑ¡»î¶¯\n");//Ä£ºı²éÑ¯
-            System.out.println("5.·µ»ØÉÏ¸ö½çÃæ\n");
+            System.out.println("è¯·é€‰æ‹©æ‚¨è¦æ‰§è¡Œçš„æ“ä½œï¼š\n");
+            System.out.println("1.æ ¹æ®æ´»åŠ¨ç¼–å·æŸ¥è¯¢æ‰€æœ‰æ´»åŠ¨\n");//ç²¾å‡†æŸ¥è¯¢
+            System.out.println("2.æ ¹æ®æ´»åŠ¨åç§°æŸ¥è¯¢æ‰€æœ‰æ´»åŠ¨\n");//æ¨¡ç³ŠæŸ¥è¯¢
+            System.out.println("3.æ ¹æ®æ´»åŠ¨ç¼–å·æŸ¥è¯¢å·²é€‰æ´»åŠ¨\n");//ç²¾å‡†æŸ¥è¯¢
+            System.out.println("4.æ ¹æ®æ´»åŠ¨åç§°æŸ¥è¯¢å·²é€‰æ´»åŠ¨\n");//æ¨¡ç³ŠæŸ¥è¯¢
+            System.out.println("5.æŸ¥è¯¢æ‰€æœ‰æ´»åŠ¨\n");
+            System.out.println("6.è¿”å›ä¸Šä¸ªç•Œé¢\n");
             choice = in.nextInt();
             switch (choice) {
                 case 1->{
-                    System.out.println("ÇëÊäÈë»î¶¯±àºÅ");
+                    System.out.println("è¯·è¾“å…¥æ´»åŠ¨ç¼–å·");
                     Search search = new Search();
                     int index = in.nextInt();
-                    LogFile.info("Student"+studentAccount.getID()," ²éÑ¯»î¶¯"+index);
+                    LogFile.info("Student"+studentAccount.getID()," æŸ¥è¯¢æ´»åŠ¨"+index);
                     index = search.BinaryCourseSearch(index,allActivity);
                     if(index<allActivity.size())
                     {
-                        System.out.println("»î¶¯ĞÅÏ¢Îª:");
+                        System.out.println("æ´»åŠ¨ä¿¡æ¯ä¸º:");
                         allActivity.get(index).printActivity();
                     }
                     else
-                        System.out.println("»î¶¯²»´æÔÚ");
+                        System.out.println("æ´»åŠ¨ä¸å­˜åœ¨");
                 }
                 case 2->{
                     FuzzySearch fuzzySearch = new FuzzySearch();
-                    System.out.println("ÇëÊäÈë»î¶¯Ãû³Æ");
-                    ArrayList<Activity> activities = fuzzySearch.get_FS_result(in.next(),allActivity);//Ä£ºı²éÑ¯»ñµÃ»î¶¯
+                    System.out.println("è¯·è¾“å…¥æ´»åŠ¨åç§°");
+                    ArrayList<Activity> activities = fuzzySearch.get_FS_result(in.next(),allActivity);//æ¨¡ç³ŠæŸ¥è¯¢è·å¾—æ´»åŠ¨
                     if(activities.size()!=0) {
                         for (Activity activity : activities)
                             activity.printActivity();
                     }
                     else
-                        System.out.println("ÎŞÏà¹Ø»î¶¯¡£\n");
+                        System.out.println("æ— ç›¸å…³æ´»åŠ¨ã€‚\n");
                 }
                 case 3->{
-                    System.out.println("ÇëÊäÈë»î¶¯±àºÅ");
+                    System.out.println("è¯·è¾“å…¥æ´»åŠ¨ç¼–å·");
                     int index = studentAccount.getActivityById(in.nextInt());
                     if(index<studentAccount.getActivity().size())
                     {
-                        System.out.println("»î¶¯ĞÅÏ¢Îª:");
+                        System.out.println("æ´»åŠ¨ä¿¡æ¯ä¸º:");
                         studentAccount.getActivity().get(index).printActivity();
                     }
                     else
-                        System.out.println("»î¶¯²»´æÔÚ");
+                        System.out.println("æ´»åŠ¨ä¸å­˜åœ¨");
                 }
                 case 4->{
                     FuzzySearch fuzzySearch = new FuzzySearch();
-                    System.out.println("ÇëÊäÈë¿Î³ÌÃû³Æ");
-                    ArrayList<Activity> activities = fuzzySearch.get_FS_result(in.next(),studentAccount.getActivity());//Ä£ºı²éÑ¯»ñµÃ¿Î³Ì
+                    System.out.println("è¯·è¾“å…¥è¯¾ç¨‹åç§°");
+                    ArrayList<Activity> activities = fuzzySearch.get_FS_result(in.next(),studentAccount.getActivity());//æ¨¡ç³ŠæŸ¥è¯¢è·å¾—è¯¾ç¨‹
                     if(activities.size()!=0) {
                         for (Activity activity:activities)
                             activity.printActivity();
                     }
                     else
-                        System.out.println("ÎŞÏà¹Ø¿Î³Ì¡£\n");
+                        System.out.println("æ— ç›¸å…³è¯¾ç¨‹ã€‚\n");
+                }
+                case 5->{
+                    for (Activity activity : studentAccount.getActivity())
+                        activity.printActivity();
                 }
             }
         }
     }
 
     /**
-     * Ìí¼Ó»î¶¯
-     * @param managerAccount ¹ÜÀíÔ±ÕËºÅ
+     * æ·»åŠ æ´»åŠ¨
+     * @param managerAccount ç®¡ç†å‘˜è´¦å·
      */
     public void addActivity(ManagerAccount managerAccount){
         Activity activity = new Activity();
         scanActivity(activity);
-        activity.setM_iPle(0);//µ±Ç°»î¶¯ÈËÊıÎª0
-        activity.setM_iNum(2000+managerAccount.getActivity().get(managerAccount.getActivity().size()-1).getM_iNum());//·ÖÅä¿Î³Ì±àºÅ
+        activity.setM_iPle(0);//å½“å‰æ´»åŠ¨äººæ•°ä¸º0
+        activity.setM_iNum(2000+managerAccount.getActivity().get(managerAccount.getActivity().size()-1).getM_iNum());//åˆ†é…è¯¾ç¨‹ç¼–å·
         managerAccount.addActivity(activity);
     }
 
     /**
-     * Ìí¼Ó»î¶¯
-     * @param teacherAccount ½ÌÊ¦ÕËºÅ
-     * @param allActivity ËùÓĞ»î¶¯ÁĞ±í
+     * æ·»åŠ æ´»åŠ¨
+     * @param teacherAccount æ•™å¸ˆè´¦å·
+     * @param allActivity æ‰€æœ‰æ´»åŠ¨åˆ—è¡¨
      */
     public void addActivity(TeacherAccount teacherAccount,ArrayList<Activity> allActivity){
-        System.out.println("ÇëÊäÈë¿Î³Ì±àºÅ£º");
+        System.out.println("è¯·è¾“å…¥è¯¾ç¨‹ç¼–å·ï¼š");
         Scanner in = new Scanner(System.in);
         Search search = new Search();
         int index = search.BinaryCourseSearch(in.nextInt(),allActivity);
@@ -807,16 +836,16 @@ public class MainInterface {
             teacherAccount.addActivity(activity);
         }
         else
-            System.out.println("¿Î³Ì²»´æÔÚ");
+            System.out.println("è¯¾ç¨‹ä¸å­˜åœ¨");
     }
 
     /**
-     * Ìí¼Ó»î¶¯
-     * @param studentAccount Ñ§ÉúÕËºÅ
-     * @param allActivity
+     * æ·»åŠ æ´»åŠ¨
+     * @param studentAccount å­¦ç”Ÿè´¦å·
+     * @param allActivity æ‰€æœ‰æ´»åŠ¨åˆ—è¡¨
      */
     public void addActivity(StudentAccount studentAccount,ArrayList<Activity> allActivity){
-        System.out.println("ÇëÊäÈë¿Î³Ì±àºÅ£º");
+        System.out.println("è¯·è¾“å…¥è¯¾ç¨‹ç¼–å·ï¼š");
         Scanner in = new Scanner(System.in);
         Search search = new Search();
         int index = search.BinaryCourseSearch(in.nextInt(),allActivity);
@@ -826,89 +855,89 @@ public class MainInterface {
             studentAccount.addActivity(activity);
         }
         else
-            System.out.println("¿Î³Ì²»´æÔÚ");
+            System.out.println("è¯¾ç¨‹ä¸å­˜åœ¨");
     }
 
-
     /**
-     * É¾³ı»î¶¯
-     * @param managerAccount ¹ÜÀíÔ±ÕËºÅ
+     * åˆ é™¤æ´»åŠ¨
+     * @param managerAccount ç®¡ç†å‘˜è´¦å·
      */
     public void deleteActivity(ManagerAccount managerAccount){
         Activity activity = new Activity();
         Scanner in = new Scanner(System.in);
-        System.out.println("ÇëÊäÈë¿Î³Ì±àºÅ£º");
+        System.out.println("è¯·è¾“å…¥è¯¾ç¨‹ç¼–å·ï¼š");
         int index = managerAccount.getActivityById(in.nextInt());
         activity = managerAccount.getActivity().get(index);
         managerAccount.deleteActivity(activity);
     }
 
     /**
-     * É¾³ı»î¶¯
-     * @param teacherAccount ½ÌÊ¦ÕËºÅ
+     * åˆ é™¤æ´»åŠ¨
+     * @param teacherAccount æ•™å¸ˆè´¦å·
      */
     public void deleteActivity(TeacherAccount teacherAccount){
         Activity activity = new Activity();
         Scanner in = new Scanner(System.in);
-        System.out.println("ÇëÊäÈë¿Î³Ì±àºÅ£º");
+        System.out.println("è¯·è¾“å…¥è¯¾ç¨‹ç¼–å·ï¼š");
         int index = teacherAccount.getActivityById(in.nextInt());
         activity = teacherAccount.getActivity().get(index);
         teacherAccount.decActivity(activity);
     }
 
     /**
-     * É¾³ı»î¶¯
-     * @param studentAccount ½ÌÊ¦ÕËºÅ
+     * åˆ é™¤æ´»åŠ¨
+     * @param studentAccount æ•™å¸ˆè´¦å·
      */
     public void deleteActivity(StudentAccount studentAccount){
         Activity activity = new Activity();
         Scanner in = new Scanner(System.in);
-        System.out.println("ÇëÊäÈë¿Î³Ì±àºÅ£º");
+        System.out.println("è¯·è¾“å…¥è¯¾ç¨‹ç¼–å·ï¼š");
         int index = studentAccount.getActivityById(in.nextInt());
         activity = studentAccount.getActivity().get(index);
         studentAccount.decActivity(activity);
     }
 
     /**
-     * ¸üĞÂ»î¶¯ĞÅÏ¢
-     * @param managerAccount ¹ÜÀíÔ±ÕËºÅ
+     * æ›´æ–°æ´»åŠ¨ä¿¡æ¯
+     * @param managerAccount ç®¡ç†å‘˜è´¦å·
      */
     public void updateActivity(ManagerAccount managerAccount){
         Activity activity = new Activity();
         Scanner in = new Scanner(System.in);
-        System.out.println("ÇëÊäÈë»î¶¯±àºÅ£º");
+        System.out.println("è¯·è¾“å…¥æ´»åŠ¨ç¼–å·ï¼š");
         int index = managerAccount.getCourseById(in.nextInt());
+        activity = managerAccount.getActivity().get(index);
         scanActivity(activity);
         managerAccount.changeActivity(index,activity);
     }
 
     /**
-     * ÊäÈë¿Î³ÌĞÅÏ¢
-     * @param course ´ıÊäÈë¿Î³Ì
+     * è¾“å…¥è¯¾ç¨‹ä¿¡æ¯
+     * @param course å¾…è¾“å…¥è¯¾ç¨‹
      */
     public void scanCourse(Course course) {
         Scanner in = new Scanner(System.in);
         Time time1 = new Time();
         Time time2 = new Time();
         Construction construction = new Construction();
-        System.out.println("ÇëÊäÈë¿Î³ÌÃû³Æ£º");
+        System.out.println("è¯·è¾“å…¥è¯¾ç¨‹åç§°ï¼š");
         course.setM_sName(in.next());
-        System.out.println("ÇëÊäÈëÉÏ¿ÎÊ±¼ä£º");
+        System.out.println("è¯·è¾“å…¥ä¸Šè¯¾æ—¶é—´ï¼š");
         time1.scanTime();
         course.setM_tTime(time1);
-        System.out.println("ÇëÊäÈë¿Î³ÌÀàĞÍ£¨0.ÀíÂÛÀà£¬1.Êµ¼ùÀà£¬2.ÌåÓıÀà£©£º");
+        System.out.println("è¯·è¾“å…¥è¯¾ç¨‹ç±»å‹ï¼ˆ0.ç†è®ºç±»ï¼Œ1.å®è·µç±»ï¼Œ2.ä½“è‚²ç±»ï¼‰ï¼š");
         course.setM_eProperty(in.nextInt());
-        System.out.println("ÇëÊäÈëÊÚ¿ÎµØµã£º");
+        System.out.println("è¯·è¾“å…¥æˆè¯¾åœ°ç‚¹ï¼š");
         course.setM_sConstruction(constructions.get(findConstruction(in.nextInt())));
         course.setM_iFloor(in.nextInt());
         course.setM_iRoom(in.nextInt());
-        System.out.println("ÇëÊäÈë×î´ó²ÎÓë¿Î³ÌÈËÊı£º");
+        System.out.println("è¯·è¾“å…¥æœ€å¤§å‚ä¸è¯¾ç¨‹äººæ•°ï¼š");
         course.setM_iMaxPle(in.nextInt());
-        System.out.println("ÇëÊäÈë¿Î³ÌÈº£º");
+        System.out.println("è¯·è¾“å…¥è¯¾ç¨‹ç¾¤ï¼š");
         course.setM_sCurGroup(in.next());
-        System.out.println("ÇëÊäÈë¿Î³Ì¿¼ÊÔÊ±¼ä£º");
+        System.out.println("è¯·è¾“å…¥è¯¾ç¨‹è€ƒè¯•æ—¶é—´ï¼š");
         time2.scanDateTime();
-        System.out.println("ÇëÊäÈë¿Î³Ì¿¼ÊÔµØµã£º");
+        System.out.println("è¯·è¾“å…¥è¯¾ç¨‹è€ƒè¯•åœ°ç‚¹ï¼š");
         course.setM_cExamConstruction(constructions.get(findConstruction(in.nextInt())));
         course.setM_iFloor(in.nextInt());
         course.setM_iRoom(in.nextInt());
@@ -916,25 +945,25 @@ public class MainInterface {
     }
 
     /**
-     * ÊäÈë»î¶¯ĞÅÏ¢
-     * @param activity ´ıÊäÈë»î¶¯
+     * è¾“å…¥æ´»åŠ¨ä¿¡æ¯
+     * @param activity å¾…è¾“å…¥æ´»åŠ¨
      */
     public void scanActivity(Activity activity){
         Scanner in = new Scanner(System.in);
         Time time1 = new Time();
         Construction construction = new Construction();
-        System.out.println("ÇëÊäÈë»î¶¯Ãû³Æ£º");
+        System.out.println("è¯·è¾“å…¥æ´»åŠ¨åç§°ï¼š");
         activity.setM_sName(in.next());
-        System.out.println("ÇëÊäÈë»î¶¯Ê±¼ä£º");
+        System.out.println("è¯·è¾“å…¥æ´»åŠ¨æ—¶é—´ï¼š");
         time1.scanTime();
         activity.setM_tTime(time1);
-        System.out.println("ÇëÊäÈë»î¶¯ÀàĞÍ£¨0.¸öÈË£¬1.¼¯Ìå£©£º");
+        System.out.println("è¯·è¾“å…¥æ´»åŠ¨ç±»å‹ï¼ˆ0.ä¸ªäººï¼Œ1.é›†ä½“ï¼‰ï¼š");
         activity.setM_eProperty(in.nextInt());
-        System.out.println("ÇëÊäÈë»î¶¯µØµã£º");
+        System.out.println("è¯·è¾“å…¥æ´»åŠ¨åœ°ç‚¹ï¼š");
         activity.setM_sConstruction(constructions.get(findConstruction(in.nextInt())));
         activity.setM_iFloor(in.nextInt());
         activity.setM_iRoom(in.nextInt());
-        System.out.println("ÇëÊäÈë×î´ó²ÎÓë»î¶¯ÈËÊı£º");
+        System.out.println("è¯·è¾“å…¥æœ€å¤§å‚ä¸æ´»åŠ¨äººæ•°ï¼š");
         activity.setM_iMaxPle(in.nextInt());
     }
 
@@ -942,6 +971,7 @@ public class MainInterface {
     {
         MainInterface m = new MainInterface();
         m.mainInterface();
+
     }
 
 }

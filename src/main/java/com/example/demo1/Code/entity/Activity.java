@@ -17,13 +17,14 @@ public class Activity extends Event{
       * 输出活动信息
       */
      public void printActivity(){
-          System.out.println("课程名："+this.getM_sName()+"\n");
-          System.out.println("上课时间为："+this.getM_tTime()+"\n");
-          System.out.println("课程类型："+this.getM_eProperty()+"\n");
-          System.out.println("授课地点："+this.getM_sConstruction().get_con_name()+
+          System.out.println("活动名："+this.getM_sName()+"\n");
+          System.out.println("活动时间为：");
+          this.getM_tTime().printTime(false);
+          System.out.println("活动类型："+this.getM_eProperty()+"\n");
+          System.out.println("活动地点："+this.getM_sConstruction().get_con_name()+
                   this.getM_iFloor()+"层"+this.getM_iRoom()+"室"+"\n");
-          System.out.println("当前参加课程人数："+this.getM_iPle()+"\n");
-          System.out.println("最大参与课程课程："+this.getM_iMaxPle()+"\n");
-          System.out.println("课程编号："+this.getM_iNum()+"\n");
+          System.out.println("当前参加活动人数："+this.getM_iPle()+"\n");
+          System.out.println("最大参与活动课程："+this.getM_iMaxPle()+"\n");
+          System.out.println("活动编号："+this.getM_iNum()+"\n");
      }
 }

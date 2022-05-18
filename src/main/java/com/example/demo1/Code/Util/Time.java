@@ -8,9 +8,9 @@ public class Time {
     private int startMinute;
     private int endHour;
     private int endMinute;
-    private int startMonth;//¿ªÊ¼ÔÂ·İ
-    private int startDate;//¿ªÊ¼ÈÕÆÚ
-    private int week;//ĞÇÆÚ
+    private int startMonth;//å¼€å§‹æœˆä»½
+    private int startDate;//å¼€å§‹æ—¥æœŸ
+    private int week;//æ˜ŸæœŸ
     public Time() {
         startHour = 0;
         startMinute = 0;
@@ -102,37 +102,46 @@ public class Time {
     }
 
     /**
-     * ÊäÈëÊ±¼äÊı¾İ£¨¿Î³Ì£©
-     * ÓĞĞÇÆÚ£¬ÎŞÔÂÈÕ
+     * è¾“å…¥æ—¶é—´æ•°æ®ï¼ˆè¯¾ç¨‹ï¼‰
+     * æœ‰æ˜ŸæœŸï¼Œæ— æœˆæ—¥
      */
     public void scanTime () {
         Scanner in = new Scanner(System.in);
-        System.out.println("ÇëÊäÈëĞÇÆÚ£º");
+        System.out.println("è¯·è¾“å…¥æ˜ŸæœŸï¼š");
         this.week = in.nextInt();
-        System.out.println("ÇëÊäÈë¿ªÊ¼Ê±¼ä£¨Ê±£©");
+        System.out.println("è¯·è¾“å…¥å¼€å§‹æ—¶é—´ï¼ˆæ—¶ï¼‰");
         this.startHour = in.nextInt();
-        System.out.println("ÇëÊäÈë¿ªÊ¼Ê±¼ä£¨·Ö£©");
+        System.out.println("è¯·è¾“å…¥å¼€å§‹æ—¶é—´ï¼ˆåˆ†ï¼‰");
         this.startMinute = in.nextInt();
-        System.out.println("ÇëÊäÈë½áÊøÊ±¼ä£¨Ê±£©");
+        System.out.println("è¯·è¾“å…¥ç»“æŸæ—¶é—´ï¼ˆæ—¶ï¼‰");
         this.endHour = in.nextInt();
-        System.out.println("ÇëÊäÈë½áÊøÊ±¼ä£¨Ê±£©");
-        this.endHour = in.nextInt();
+        System.out.println("è¯·è¾“å…¥ç»“æŸæ—¶é—´ï¼ˆæ—¶ï¼‰");
+        this.endMinute = in.nextInt();
     }
 
     public void scanDateTime() {
         Scanner in = new Scanner(System.in);
-        System.out.println("ÇëÊäÈëÔÂ·İ£º");
+        System.out.println("è¯·è¾“å…¥æœˆä»½ï¼š");
         this.startMonth = in.nextInt();
-        System.out.println("ÇëÊäÈëÈÕÆÚ£º");
+        System.out.println("è¯·è¾“å…¥æ—¥æœŸï¼š");
         this.startDate = in.nextInt();
-        System.out.println("ÇëÊäÈë¿ªÊ¼Ê±¼ä£¨Ê±£©");
+        System.out.println("è¯·è¾“å…¥å¼€å§‹æ—¶é—´ï¼ˆæ—¶ï¼‰");
         this.startHour = in.nextInt();
-        System.out.println("ÇëÊäÈë¿ªÊ¼Ê±¼ä£¨·Ö£©");
+        System.out.println("è¯·è¾“å…¥å¼€å§‹æ—¶é—´ï¼ˆåˆ†ï¼‰");
         this.startMinute = in.nextInt();
-        System.out.println("ÇëÊäÈë½áÊøÊ±¼ä£¨Ê±£©");
+        System.out.println("è¯·è¾“å…¥ç»“æŸæ—¶é—´ï¼ˆæ—¶ï¼‰");
         this.endHour = in.nextInt();
-        System.out.println("ÇëÊäÈë½áÊøÊ±¼ä£¨Ê±£©");
+        System.out.println("è¯·è¾“å…¥ç»“æŸæ—¶é—´ï¼ˆæ—¶ï¼‰");
         this.endHour = in.nextInt();
+    }
+    public void printTime(boolean choice){
+        if(choice) {
+            System.out.println("æ˜ŸæœŸ"+this.week+"\t");
+        }
+        else{
+            System.out.println(this.startMonth+"æœˆ"+this.startDate+"æ—¥\t");
+        }
+        System.out.println(this.startHour+":"+this.startMinute+"-"+this.endHour+":"+this.endMinute+"\n");
     }
     /** public void setsDate(String time){
         int head = 0,tail =0;
