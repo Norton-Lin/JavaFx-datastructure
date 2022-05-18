@@ -5,16 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f31b41d3-5157-4dd5-b266-80b5f9b1b865" name="变更" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d9cfdc16-66cb-4355-8281-99371dfae444.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d9cfdc16-66cb-4355-8281-99371dfae444.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Interactive/MainInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Interactive/MainInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/LogUtil/LogFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/LogUtil/LogFile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/CourseDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/CourseDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Course.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/StudentAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/StudentAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyLog.log" beforeDir="false" afterPath="$PROJECT_DIR$/MyLog.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/Interactive/MainInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/Interactive/MainInterface.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/Mysql/CourseDatabase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/Mysql/CourseDatabase.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/entity/Course.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/entity/Course.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +61,7 @@
       <recent name="com.example.demo1" />
     </key>
   </component>
-  <component name="RunManager" selected="应用程序.LogFile">
+  <component name="RunManager" selected="应用程序.HelloApplication">
     <configuration name="CodeApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.demo1.Code.CodeApplication" />
       <module name="demo" />
@@ -121,10 +116,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="应用程序.HelloApplication" />
         <item itemvalue="应用程序.LogFile" />
         <item itemvalue="应用程序.MainInterface" />
         <item itemvalue="应用程序.CodeApplication" />
-        <item itemvalue="应用程序.HelloApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -151,7 +146,7 @@
       <workItem from="1652445552009" duration="3913000" />
       <workItem from="1652611078532" duration="25000" />
       <workItem from="1652838448221" duration="10313000" />
-      <workItem from="1652848810417" duration="5011000" />
+      <workItem from="1652848810417" duration="5252000" />
     </task>
     <servers />
   </component>
