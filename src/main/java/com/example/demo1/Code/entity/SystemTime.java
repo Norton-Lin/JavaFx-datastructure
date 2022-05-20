@@ -13,69 +13,86 @@ import java.util.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import static com.example.demo1.Code.entity.SystemTime.shiftDate;
-import static com.example.demo1.Code.entity.SystemTime.showSimulateTime;
+import static com.example.demo1.Code.entity.SystemTime.*;
 
 /**
- * Ä£ÄâÏµÍ³Ê±¼ä+ÉèÖÃÄÖÖÓ
- * ´æÔÚÒÔÏÂµÄÎÊÌâ£º
- * 1.Ê±ÖÓÍ¼ĞÎ»¯½çÃæÓ¦¸Ã½»¸øÇ°¶ËÍê³É£¬¶ø²»ÊÇÌåÏÖÔÚÕâ¸öÀàÖĞ
- * 2.µ±ÄÖÖÓÏìÁËµÄÊ±ºò²»Ó¦¸ÃÊ¹ÓÃprint´òÓ¡×Ö·û´®£¬¶øÊÇÓ¦¸ÃÔÙÇ°¶ËÏÔÊ¾³öÀ´£¬Ò²ÒªºÍÇ°¶ËÔÙ¹µÍ¨
- * 3.Ä£ÄâÊµ¼ùÏµÍ³µÄÆğÊ¼Ê±¼äÓ¦¸ÃÊÇÓÃ»§¿ªÊ¼Ê¹ÓÃÏµÍ³µÄÊ±ºòµÄ¼ÆËã»úÏµÍ³Ê±¼ä£¬Õâ¸öÒ²ºÍÇ°¶ËÓĞ¹Ø
- * ½Ó¿Ú£º
- * Êı¾İ¿â½Ó¿Ú :ÔÚsetClock()·½·¨ÖĞµ÷ÓÃÄÖÖÓµÄÊı¾İ¿â
- * Ç°¶Ë½Ó¿Ú :1.ÔİÍ£ÏµÍ³Ê±¼äÍÆ½ø 2.ÉèÖÃÄÖÖÓ½Ó¿ÚÎª SystemTime.setClock()
+ * æ¨¡æ‹Ÿç³»ç»Ÿæ—¶é—´+è®¾ç½®é—¹é’Ÿ
+ * å­˜åœ¨ä»¥ä¸‹çš„é—®é¢˜ï¼š
+ * 1.æ—¶é’Ÿå›¾å½¢åŒ–ç•Œé¢åº”è¯¥äº¤ç»™å‰ç«¯å®Œæˆï¼Œè€Œä¸æ˜¯ä½“ç°åœ¨è¿™ä¸ªç±»ä¸­
+ * 2.å½“é—¹é’Ÿå“äº†çš„æ—¶å€™ä¸åº”è¯¥ä½¿ç”¨printæ‰“å°å­—ç¬¦ä¸²ï¼Œè€Œæ˜¯åº”è¯¥å†å‰ç«¯æ˜¾ç¤ºå‡ºæ¥ï¼Œä¹Ÿè¦å’Œå‰ç«¯å†æ²Ÿé€š
+ * 3.æ¨¡æ‹Ÿå®è·µç³»ç»Ÿçš„èµ·å§‹æ—¶é—´åº”è¯¥æ˜¯ç”¨æˆ·å¼€å§‹ä½¿ç”¨ç³»ç»Ÿçš„æ—¶å€™çš„è®¡ç®—æœºç³»ç»Ÿæ—¶é—´ï¼Œè¿™ä¸ªä¹Ÿå’Œå‰ç«¯æœ‰å…³
+ * æ¥å£ï¼š
+ * æ•°æ®åº“æ¥å£ :åœ¨setClock()æ–¹æ³•ä¸­è°ƒç”¨é—¹é’Ÿçš„æ•°æ®åº“
+ * å‰ç«¯æ¥å£ :1.æš‚åœç³»ç»Ÿæ—¶é—´æ¨è¿› 2.è®¾ç½®é—¹é’Ÿæ¥å£ä¸º SystemTime.setClock()
  */
 public class SystemTime {
 
-    private static int speed;//Ê±¼ä¿ì½øËÙ¶È
+    private static int speed;//æ—¶é—´å¿«è¿›é€Ÿåº¦
+    private static String StartTime;//å¼€å§‹è®¡æ—¶æ—¶é—´
 
     /**
-     * ÉèÖÃÄ£ÄâÏµÍ³Ê±¼ä¿ì½øËÙ¶È
+     * è®¾ç½®æ¨¡æ‹Ÿç³»ç»Ÿæ—¶é—´å¿«è¿›é€Ÿåº¦
      *
-     * @param speed Ä¿±ê¿ì½øËÙ¶È
+     * @param speed ç›®æ ‡å¿«è¿›é€Ÿåº¦
      */
     public void setSpeed(int speed) {
         SystemTime.speed = speed;
     }
 
     /**
-     * »ñÈ¡Ä£ÄâÏµÍ³Ê±¼ä¿ì½øËÙ¶È
+     * è·å–æ¨¡æ‹Ÿç³»ç»Ÿæ—¶é—´å¿«è¿›é€Ÿåº¦
      *
-     * @return µ±Ç°¿ì½øËÙ¶È
+     * @return å½“å‰å¿«è¿›é€Ÿåº¦
      */
-    public int getSpeed() {
+    public static int getSpeed() {
         return SystemTime.speed;
     }
 
     /**
-     * ÔİÍ£ÏµÍ³Ê±¼äÍÆ½ø
+     * æš‚åœç³»ç»Ÿæ—¶é—´æ¨è¿›
      */
     public void stopTime() {
         SystemTime.speed = 0;
     }
 
     /**
-     * »ñÈ¡Ä£ÄâÏµÍ³µ±Ç°Ê±¼ä
+     * ç³»ç»Ÿè¿è¡Œæ—¶è°ƒç”¨è¯¥æ–¹æ³•ï¼Œå°†æ­¤æ—¶çš„è®¡ç®—æœºç³»ç»Ÿæ—¶é—´è®¾ç½®ä¸ºæ¨¡æ‹Ÿç³»ç»Ÿçš„å¼€å§‹æ—¶é—´
+     */
+    public void setStartTime() {
+        Date current_time = new Date();//å½“å‰ç³»ç»Ÿæ—¶é—´
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        StartTime = sdf.format(current_time);
+    }
+
+    /**
+     * è·å¾—æ¨¡æ‹Ÿç³»ç»Ÿæ—¶é—´çš„å¼€å§‹æ—¶é—´
+     * @return å¼€å§‹æ—¶é—´
+     */
+    public static String getStartTime() {
+        return StartTime;
+    }
+
+    /**
+     * è·å–æ¨¡æ‹Ÿç³»ç»Ÿå½“å‰æ—¶é—´
      *
-     * @param initial_time Ä£ÄâÏµÍ³³õÊ¼Ê±¼ä
-     * @return ²»´ø¸ñÊ½µÄÄ£ÄâÏµÍ³µ±Ç°Ê±¼ä
+     * @param initial_time æ¨¡æ‹Ÿç³»ç»Ÿåˆå§‹æ—¶é—´
+     * @return ä¸å¸¦æ ¼å¼çš„æ¨¡æ‹Ÿç³»ç»Ÿå½“å‰æ—¶é—´
      */
     public static long showSimulateTime(Calendar initial_time) {
 
-        Calendar current_time = Calendar.getInstance();//µ±Ç°ÏµÍ³Ê±¼ä
+        Calendar current_time = Calendar.getInstance();//å½“å‰ç³»ç»Ÿæ—¶é—´
 
-        long interval = (current_time.getTimeInMillis() - initial_time.getTimeInMillis()) * speed;//Ê±¼ä¼äÏ¶
+        long interval = (current_time.getTimeInMillis() - initial_time.getTimeInMillis()) * getSpeed();//æ—¶é—´é—´éš™
 
-        return initial_time.getTimeInMillis() + interval;// show_timeÎªÄ£ÄâÏµÍ³µÄµ±Ç°Ê±¼ä
+        return initial_time.getTimeInMillis() + interval;// show_timeä¸ºæ¨¡æ‹Ÿç³»ç»Ÿçš„å½“å‰æ—¶é—´
 
     }
 
     /**
-     * ½«¹æ¶¨¸ñÊ½µÄÊ±¼ä×Ö·û´®×ª»»ÎªCalendarÀàĞÍ
+     * å°†è§„å®šæ ¼å¼çš„æ—¶é—´å­—ç¬¦ä¸²è½¬æ¢ä¸ºCalendarç±»å‹
      *
-     * @param t ×Ö·û´®ÀàĞÍµÄÊ±¼ä
-     * @return CalendarÀàĞÍµÄÊ±¼ä
+     * @param t å­—ç¬¦ä¸²ç±»å‹çš„æ—¶é—´
+     * @return Calendarç±»å‹çš„æ—¶é—´
      */
     public static Calendar shiftDate(String t) {
 
@@ -92,71 +109,72 @@ public class SystemTime {
     }
 
     /**
-     * ¸ù¾İ´«ÈëµÄ²ÎÊıÉèÖÃÖ¸¶¨ÄÖÖÓ
+     * æ ¹æ®ä¼ å…¥çš„å‚æ•°è®¾ç½®æŒ‡å®šé—¹é’Ÿ
      *
-     * @param clockTime ÄÖÖÓÊ±¼ä
-     * @param clockName ÄÖÖÓÃû×Ö
-     * @param clockType ÄÖÖÓÀàĞÍ
-     * @param allClock  ¸ÃÓÃ»§µÄËùÓĞÄÖÖÓÁĞ±í£¬Ó¦¸ÃÓÉÊı¾İ¿â¶Á³ö£¬´Ë´¦½öÎªÁÙÊ±Ğ´·¨
+     * @param clockTime é—¹é’Ÿæ—¶é—´
+     * @param clockName é—¹é’Ÿåå­—
+     * @param clockType é—¹é’Ÿç±»å‹
+     * @param allClock  è¯¥ç”¨æˆ·çš„æ‰€æœ‰é—¹é’Ÿåˆ—è¡¨ï¼Œåº”è¯¥ç”±æ•°æ®åº“è¯»å‡ºï¼Œæ­¤å¤„ä»…ä¸ºä¸´æ—¶å†™æ³•
      */
     public void setClock(Time clockTime, String clockName, int clockType, ArrayList<EventClock> allClock) {
 
-        //´Ë´¦Ó¦¸Ã´ÓÊı¾İ¿âÖĞµÃµ½¸ÃÓÃ»§µÄËùÓĞÄÖÖÓ
+        //æ­¤å¤„åº”è¯¥ä»æ•°æ®åº“ä¸­å¾—åˆ°è¯¥ç”¨æˆ·çš„æ‰€æœ‰é—¹é’Ÿ
 
-        allClock.add(new EventClock(clockTime, clockName, clockType));//¸üĞÂÓÃ»§µÄÄÖÖÓÁĞ±í
+        allClock.add(new EventClock(clockTime, clockName, clockType));//æ›´æ–°ç”¨æˆ·çš„é—¹é’Ÿåˆ—è¡¨
 
-        //´´½¨ÄÖÖÓÏß³ÌÁĞ±í²¢ÎªËùÓĞÄÖÖÓÌí¼ÓÄÖÖÓÏß³Ì
+        //åˆ›å»ºé—¹é’Ÿçº¿ç¨‹åˆ—è¡¨å¹¶ä¸ºæ‰€æœ‰é—¹é’Ÿæ·»åŠ é—¹é’Ÿçº¿ç¨‹
         ArrayList<Runnable> clockThread = new ArrayList<>();
         for (EventClock ec : allClock) {
             clockThread.add(new ClockThread(ec));
         }
 
-        //´´½¨Ïß³ÌÁĞ±í²¢½«ËùÓĞµÄÄÖÖÓÏß³ÌÌí¼ÓÏß³Ì
+        //åˆ›å»ºçº¿ç¨‹åˆ—è¡¨å¹¶å°†æ‰€æœ‰çš„é—¹é’Ÿçº¿ç¨‹æ·»åŠ çº¿ç¨‹
         ArrayList<Thread> Threads = new ArrayList<>();
         for (Runnable ct : clockThread) {
             Threads.add(new Thread(ct));
         }
 
-        //Æô¶¯ËùÓĞÏß³Ì
+        //å¯åŠ¨æ‰€æœ‰çº¿ç¨‹
         for (Thread t : Threads) {
             t.start();
         }
 
     }
 
-    //main·½·¨½ö×÷²âÊÔÓÃ
+    //mainæ–¹æ³•ä»…ä½œæµ‹è¯•ç”¨
     public static void main(String[] args) {
 
         SystemTime test_1 = new SystemTime();
-        test_1.setSpeed(600);//ÉèÖÃ¿ì½øËÙ¶È
+        test_1.setSpeed(1);//è®¾ç½®å¿«è¿›é€Ÿåº¦
+        test_1.setStartTime();//è®¾ç½®æ¨¡æ‹Ÿç³»ç»Ÿå¼€å§‹è®¡æ—¶æ—¶é—´
 
         ArrayList<EventClock> allClock = new ArrayList<>();
 
         Time time_1 = new Time();
-        time_1.setStartMonth(5);//»î¶¯Ê±¼ä¶ÔÓ¦µÄÔÂ·İ
-        time_1.setStartDate(11);//»î¶¯Ê±¼ä¶ÔÓ¦µÄÈÕÆÚ
-        time_1.setWeek(3);//»î¶¯Ê±¼ä¶ÔÓ¦µÄĞÇÆÚ
-        time_1.setStartHour(18);//»î¶¯Ê±¼ä¶ÔÓ¦µÄĞ¡Ê±
-        time_1.setStartMinute(25);//»î¶¯Ê±¼ä¶ÔÓ¦µÄ·ÖÖÓ
-        String name_1 = "µÚÒ»¸ö»î¶¯";
+        time_1.setStartMonth(5);//æ´»åŠ¨æ—¶é—´å¯¹åº”çš„æœˆä»½
+        time_1.setStartDate(11);//æ´»åŠ¨æ—¶é—´å¯¹åº”çš„æ—¥æœŸ
+        time_1.setWeek(3);//æ´»åŠ¨æ—¶é—´å¯¹åº”çš„æ˜ŸæœŸ
+        time_1.setStartHour(18);//æ´»åŠ¨æ—¶é—´å¯¹åº”çš„å°æ—¶
+        time_1.setStartMinute(25);//æ´»åŠ¨æ—¶é—´å¯¹åº”çš„åˆ†é’Ÿ
+        String name_1 = "ç¬¬ä¸€ä¸ªæ´»åŠ¨";
         int type_1 = 1;
 
         Time time_2 = new Time();
-        time_2.setStartMonth(5);//»î¶¯Ê±¼ä¶ÔÓ¦µÄÔÂ·İ
-        time_2.setStartDate(11);//»î¶¯Ê±¼ä¶ÔÓ¦µÄÈÕÆÚ
-        time_2.setWeek(3);//»î¶¯Ê±¼ä¶ÔÓ¦µÄĞÇÆÚ
-        time_2.setStartHour(19);//»î¶¯Ê±¼ä¶ÔÓ¦µÄĞ¡Ê±
-        time_2.setStartMinute(0);//»î¶¯Ê±¼ä¶ÔÓ¦µÄ·ÖÖÓ
-        String name_2 = "µÚ¶ş¸ö»î¶¯";
+        time_2.setStartMonth(5);//æ´»åŠ¨æ—¶é—´å¯¹åº”çš„æœˆä»½
+        time_2.setStartDate(11);//æ´»åŠ¨æ—¶é—´å¯¹åº”çš„æ—¥æœŸ
+        time_2.setWeek(3);//æ´»åŠ¨æ—¶é—´å¯¹åº”çš„æ˜ŸæœŸ
+        time_2.setStartHour(19);//æ´»åŠ¨æ—¶é—´å¯¹åº”çš„å°æ—¶
+        time_2.setStartMinute(0);//æ´»åŠ¨æ—¶é—´å¯¹åº”çš„åˆ†é’Ÿ
+        String name_2 = "ç¬¬äºŒä¸ªæ´»åŠ¨";
         int type_2 = 1;
 
         allClock.add(new EventClock(time_1, name_1, type_1));
 
         test_1.setClock(time_2, name_2, type_2, allClock);
 
-        //Ä£ÄâÏµÍ³Ê±¼äÍ¼ĞÎ»¯
+        //æ¨¡æ‹Ÿç³»ç»Ÿæ—¶é—´å›¾å½¢åŒ–
         SimulatedTime simulatedTime = new SimulatedTime();
-        simulatedTime.setLocationRelativeTo(null);//Ê±ÖÓ´°ÌåÏÔÊ¾ÔÚÆÁÄ»ÖĞÑë
+        simulatedTime.setLocationRelativeTo(null);//æ—¶é’Ÿçª—ä½“æ˜¾ç¤ºåœ¨å±å¹•ä¸­å¤®
         simulatedTime.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         simulatedTime.setVisible(true);
 
@@ -164,7 +182,7 @@ public class SystemTime {
 }
 
 /**
- * ÄÖÖÓÏß³Ì
+ * é—¹é’Ÿçº¿ç¨‹
  */
 class ClockThread implements Runnable {
 
@@ -183,13 +201,13 @@ class ClockThread implements Runnable {
 }
 
 /**
- * ÓÃÓÚºó¶ËÊµÏÖËã·¨µÄÄÖÖÓ
+ * ç”¨äºåç«¯å®ç°ç®—æ³•çš„é—¹é’Ÿ
  */
-class Clock{
+class Clock {
 
     GregorianCalendar calendar;
 
-    //¼ÆËã»úÏµÍ³ÊµÊ±Ê±¼äµÄĞÅÏ¢
+    //è®¡ç®—æœºç³»ç»Ÿå®æ—¶æ—¶é—´çš„ä¿¡æ¯
     int year;
     int month;
     int date;
@@ -203,11 +221,11 @@ class Clock{
         Timer t = new Timer();
         Task task = new Task(eventClock);
 
-        t.schedule(task, 0, 1); //ÄÖÖÓË¢ĞÂÊ±¼ä¼ä¸ô(µ¥Î»£ºms)
+        t.schedule(task, 0, 1); //é—¹é’Ÿåˆ·æ–°æ—¶é—´é—´éš”(å•ä½ï¼šms)
 
     }
 
-    //Ä£ÄâÊ±¼äÁ÷ÊÅ
+    //æ¨¡æ‹Ÿæ—¶é—´æµé€
     class Task extends TimerTask {
 
         public EventClock eventClock;
@@ -227,10 +245,10 @@ class Clock{
         public void run() {
 
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String i_t = "2022-05-11 10:54:00";
+            String i_t = getStartTime();
             Calendar initial_time = shiftDate(i_t);
 
-            //Ä£ÄâÏµÍ³µÄµ±Ç°Ê±¼ä¼°»ù±¾Ê±¼äĞÅÏ¢
+            //æ¨¡æ‹Ÿç³»ç»Ÿçš„å½“å‰æ—¶é—´åŠåŸºæœ¬æ—¶é—´ä¿¡æ¯
             calendar = (GregorianCalendar) shiftDate(df.format(showSimulateTime(initial_time)));
 
             year = calendar.get(Calendar.YEAR);
@@ -241,7 +259,7 @@ class Clock{
             minute = calendar.get(Calendar.MINUTE);
             second = calendar.get(Calendar.SECOND);
 
-            //»ñÈ¡ÄÖÖÓµÄËùÓĞĞÅÏ¢ĞÅÏ¢
+            //è·å–é—¹é’Ÿçš„æ‰€æœ‰ä¿¡æ¯ä¿¡æ¯
             setMonth = eventClock.clockTime.getStartMonth();
             setDate = eventClock.clockTime.getStartDate();
             setWeek = eventClock.clockTime.getWeek();
@@ -251,30 +269,30 @@ class Clock{
             setName = eventClock.clockName;
             setType = eventClock.clockType;
 
-            //Calendar.WEEK´ÓÖÜÈÕ¿ªÊ¼
+            //Calendar.WEEKä»å‘¨æ—¥å¼€å§‹
             if (week == 1) {
                 week = 7;
             } else {
                 week = week - 1;
             }
 
-            month = month + 1;//Calendar.MONTH´Ó0¿ªÊ¼
+            month = month + 1;//Calendar.MONTHä»0å¼€å§‹
 
             switch (setType) {
 
-                //Ò»´ÎĞÔÄÖÖÓ
+                //ä¸€æ¬¡æ€§é—¹é’Ÿ
                 case 0 -> {
                     if (setMonth == month && setDate == date && setHour == hour && setMinute == minute && setSecond == second) {
                         System.out.println(this.setName + " time!");
                     }
                 }
-                //Ã¿ÌìÒ»´ÎÄÖÖÓ
+                //æ¯å¤©ä¸€æ¬¡é—¹é’Ÿ
                 case 1 -> {
                     if (setHour == hour && setMinute == minute && setSecond == second) {
                         System.out.println(this.setName + " time!");
                     }
                 }
-                //Ã¿ÖÜÒ»´ÎÄÖÖÓ
+                //æ¯å‘¨ä¸€æ¬¡é—¹é’Ÿ
                 case 7 -> {
                     if (setWeek == week && setHour == hour && setMinute == minute && setSecond == second) {
                         System.out.println(this.setName + " time!");
@@ -288,7 +306,7 @@ class Clock{
 }
 
 /**
- * Ä£ÄâÏµÍ³Ê±¼äÒÔ¼°Í¼ĞÎ»¯
+ * æ¨¡æ‹Ÿç³»ç»Ÿæ—¶é—´ä»¥åŠå›¾å½¢åŒ–
  */
 class SimulatedTime extends JFrame {
 
@@ -300,7 +318,7 @@ class SimulatedTime extends JFrame {
     Line2D.Double secondLine;
     GregorianCalendar calendar;
 
-    //¼ÆËã»úÏµÍ³ÊµÊ±Ê±¼äµÄĞÅÏ¢
+    //è®¡ç®—æœºç³»ç»Ÿå®æ—¶æ—¶é—´çš„ä¿¡æ¯
     int year;
     int month;
     int date;
@@ -326,20 +344,20 @@ class SimulatedTime extends JFrame {
         Timer t = new Timer();
         Task task = new Task();
 
-        t.schedule(task, 0, 1); //ÖÓ±íË¢ĞÂÊ±¼ä¼ä¸ô(µ¥Î»£ºms)
+        t.schedule(task, 0, 1); //é’Ÿè¡¨åˆ·æ–°æ—¶é—´é—´éš”(å•ä½ï¼šms)
 
     }
 
-    //Ä£ÄâÊ±¼äÁ÷ÊÅ
+    //æ¨¡æ‹Ÿæ—¶é—´æµé€
     class Task extends TimerTask {
 
         public void run() {
 
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String i_t = "2022-05-11 10:54:00";
+            String i_t = getStartTime();
             Calendar initial_time = shiftDate(i_t);
 
-            //Ä£ÄâÏµÍ³µÄµ±Ç°Ê±¼ä¼°»ù±¾Ê±¼äĞÅÏ¢
+            //æ¨¡æ‹Ÿç³»ç»Ÿçš„å½“å‰æ—¶é—´åŠåŸºæœ¬æ—¶é—´ä¿¡æ¯
             calendar = (GregorianCalendar) shiftDate(df.format(showSimulateTime(initial_time)));
             year = calendar.get(Calendar.YEAR);
             month = calendar.get(Calendar.MONTH);
@@ -349,7 +367,16 @@ class SimulatedTime extends JFrame {
             minute = calendar.get(Calendar.MINUTE);
             second = calendar.get(Calendar.SECOND);
 
-            timeStr = year + "Äê" + month + "ÔÂ" + date + "ÈÕ " + "ĞÇÆÚ" + week + " " + hour + " : " + minute + " : " + second;
+            //Calendar.WEEKä»å‘¨æ—¥å¼€å§‹
+            if (week == 1) {
+                week = 7;
+            } else {
+                week = week - 1;
+            }
+
+            month = month + 1;//Calendar.MONTHä»0å¼€å§‹
+
+            timeStr = year + "å¹´" + month + "æœˆ" + date + "æ—¥ " + "æ˜ŸæœŸ" + week + " " + hour + " : " + minute + " : " + second;
 
             hourLine.x2 = X + 40 * Math.cos(hour * (Math.PI / 6) - Math.PI / 2);
             hourLine.y2 = Y + 40 * Math.sin(hour * (Math.PI / 6) - Math.PI / 2);
@@ -363,7 +390,7 @@ class SimulatedTime extends JFrame {
 
     }
 
-    //Ê±ÖÓÍ¼ĞÎ»¯
+    //æ—¶é’Ÿå›¾å½¢åŒ–
     class MyPanel extends JPanel {
 
         public MyPanel() {
@@ -383,7 +410,7 @@ class SimulatedTime extends JFrame {
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g;
 
-            g2.drawString("12", 55, 25);//ÕûµãÊ±¼ä
+            g2.drawString("12", 55, 25);//æ•´ç‚¹æ—¶é—´
 
             g2.drawString("6", 55, 105);
 
@@ -395,11 +422,11 @@ class SimulatedTime extends JFrame {
 
             g2.draw(e);
 
-            g2.draw(hourLine);//Ê±Õë
+            g2.draw(hourLine);//æ—¶é’ˆ
 
-            g2.draw(minLine);//·ÖÕë
+            g2.draw(minLine);//åˆ†é’ˆ
 
-            g2.draw(secondLine);//ÃëÕë
+            g2.draw(secondLine);//ç§’é’ˆ
 
         }
 
