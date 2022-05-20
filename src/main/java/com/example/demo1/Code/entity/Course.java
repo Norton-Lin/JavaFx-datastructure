@@ -3,13 +3,17 @@ package com.example.demo1.Code.entity;
 import com.example.demo1.Code.Util.Property;
 import com.example.demo1.Code.Util.Time;
 
+import java.util.ArrayList;
+
 public class Course extends Event{
     private String m_sCurGroup;//课程群
     private Time m_cExamTime = new Time();//考试时间
     private Construction m_cExamConstruction = new Construction();//考试所在建筑
     private int m_iExamFloor;//考试所在楼层
     private int m_iExamRoom;//考试所在房间
+    private String m_sData;//课程资料
 
+    private ArrayList<Homework> m_CaHomework;//课程作业列表
 
     public Course() {
     }
@@ -95,6 +99,22 @@ public class Course extends Event{
     public boolean exitCourse() {
         return true;
     }
+
+    public String getM_sData() {
+        return m_sData;
+    }
+
+    public void setM_sData(String m_sData) {
+        this.m_sData = m_sData;
+    }
+
+    public ArrayList<Homework> getM_CaHomework() {
+        return m_CaHomework;
+    }
+
+    public void setM_CaHomework(ArrayList<Homework> m_CaHomework) {
+        this.m_CaHomework = m_CaHomework;
+    }
     /**
     * 输出课程信息
     */
@@ -113,7 +133,7 @@ public class Course extends Event{
         this.getM_cExamTime().printTime(false);
         System.out.println("课程考试地点："+this.getM_cExamConstruction().get_con_name()+
                 this.getM_iExamFloor()+"层"+this.getM_iExamRoom()+"室"+"\n");
+        System.out.println("课程资料区路径："+this.getM_sData());
     }
-
 
 }

@@ -1219,77 +1219,82 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Comment>考试结束时间（分）</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="341" parent="293" name="course_id">
+    <column id="341" parent="292" name="data">
+      <Position>18</Position>
+      <Comment>课程资料目录</Comment>
+      <DataType>varchar(100)|0s</DataType>
+    </column>
+    <column id="342" parent="293" name="course_id">
       <Position>1</Position>
       <Comment>课程ID</Comment>
       <DataType>bigint|0s</DataType>
     </column>
-    <column id="342" parent="293" name="construction_id">
+    <column id="343" parent="293" name="construction_id">
       <Position>2</Position>
       <Comment>建筑物编号</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="343" parent="293" name="floor">
+    <column id="344" parent="293" name="floor">
       <Position>3</Position>
       <Comment>楼层</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="344" parent="293" name="room">
+    <column id="345" parent="293" name="room">
       <Position>4</Position>
       <Comment>房间号</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="345" parent="293" name="type">
+    <column id="346" parent="293" name="type">
       <Position>5</Position>
       <Comment>普通教室/考试教室</Comment>
       <DataType>tinyint(1)|0s</DataType>
     </column>
-    <column id="346" parent="294" name="id">
+    <column id="347" parent="294" name="id">
       <Position>1</Position>
       <Comment>门编号</Comment>
       <DataType>bigint|0s</DataType>
     </column>
-    <column id="347" parent="294" name="name">
+    <column id="348" parent="294" name="name">
       <Position>2</Position>
       <Comment>建筑物名称</Comment>
       <DataType>varchar(20)|0s</DataType>
     </column>
-    <column id="348" parent="295" name="start_id">
+    <column id="349" parent="295" name="start_id">
       <Position>1</Position>
       <Comment>起点</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="349" parent="295" name="end_id">
+    <column id="350" parent="295" name="end_id">
       <Position>2</Position>
       <Comment>终点</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="350" parent="295" name="name">
+    <column id="351" parent="295" name="name">
       <Position>3</Position>
       <Comment>道路名字</Comment>
       <DataType>varchar(10)|0s</DataType>
     </column>
-    <column id="351" parent="295" name="crowded1">
+    <column id="352" parent="295" name="crowded1">
       <Position>4</Position>
       <Comment>人行道拥挤度</Comment>
       <DataType>double(3,2 digit)|0s</DataType>
     </column>
-    <column id="352" parent="295" name="crowded2">
+    <column id="353" parent="295" name="crowded2">
       <Position>5</Position>
       <Comment>自行车道拥挤度</Comment>
       <DataType>double(3,2 digit)|0s</DataType>
     </column>
-    <column id="353" parent="295" name="crowded3">
+    <column id="354" parent="295" name="crowded3">
       <Position>6</Position>
       <Comment>机动车道拥挤度</Comment>
       <DataType>double(3,2 digit)|0s</DataType>
     </column>
-    <column id="354" parent="295" name="degree">
+    <column id="355" parent="295" name="degree">
       <Position>7</Position>
       <Comment>车道等级（0人行道,1非机动车道,2机动车道）</Comment>
       <DataType>tinyint(1)|0s</DataType>
     </column>
-    <column id="355" parent="295" name="len">
+    <column id="356" parent="295" name="len">
       <Position>8</Position>
       <Comment>道路长度</Comment>
       <DataType>int|0s</DataType>

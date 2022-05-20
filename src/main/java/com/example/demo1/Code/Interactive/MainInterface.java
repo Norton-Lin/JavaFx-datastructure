@@ -5,7 +5,6 @@ import com.example.demo1.Code.Mysql.AccountDatabase;
 import com.example.demo1.Code.Mysql.ActivityDatabase;
 import com.example.demo1.Code.Mysql.ConstructionDatabase;
 import com.example.demo1.Code.Mysql.CourseDatabase;
-import com.example.demo1.Code.Util.Authority;
 import com.example.demo1.Code.Util.Time;
 import com.example.demo1.Code.entity.*;
 import com.example.demo1.Code.entity.account.Account;
@@ -919,7 +918,6 @@ public class MainInterface {
         Scanner in = new Scanner(System.in);
         Time time1 = new Time();
         Time time2 = new Time();
-        Construction construction = new Construction();
         System.out.println("请输入课程名称：");
         course.setM_sName(in.next());
         System.out.println("请输入上课时间：");
@@ -939,9 +937,10 @@ public class MainInterface {
         time2.scanDateTime();
         System.out.println("请输入课程考试地点：");
         course.setM_cExamConstruction(constructions.get(findConstruction(in.nextInt())));
+        System.out.println("请输入课程资料区路径：");
+        course.setM_sData(in.next());
         course.setM_iFloor(in.nextInt());
         course.setM_iRoom(in.nextInt());
-
     }
 
     /**
@@ -951,7 +950,6 @@ public class MainInterface {
     public void scanActivity(Activity activity){
         Scanner in = new Scanner(System.in);
         Time time1 = new Time();
-        Construction construction = new Construction();
         System.out.println("请输入活动名称：");
         activity.setM_sName(in.next());
         System.out.println("请输入活动时间：");
@@ -967,7 +965,7 @@ public class MainInterface {
         activity.setM_iMaxPle(in.nextInt());
     }
 
-    public static void main(String args[])
+    public static void main(String[] args)
     {
         MainInterface m = new MainInterface();
         m.mainInterface();
