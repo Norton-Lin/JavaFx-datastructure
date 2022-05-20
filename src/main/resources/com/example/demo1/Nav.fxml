@@ -24,11 +24,13 @@
 
 
             <Label text="请选择您想使用的交通工具"  GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-            <RadioButton fx:id="Walk" text="步行" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-            <RadioButton fx:id="Bicycle" text="自行车" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-            <RadioButton fx:id="Electric" text="电动车" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
-            <RadioButton fx:id="Car" text="汽车" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
-
+            <fx:define>
+            <ToggleGroup fx:id="toggleGroup"/>
+            </fx:define>
+            <RadioButton fx:id="Walk" text="步行" GridPane.columnIndex="0" GridPane.rowIndex="2" toggleGroup="$toggleGroup"/>
+            <RadioButton fx:id="Bicycle" text="自行车" GridPane.columnIndex="1" GridPane.rowIndex="2" toggleGroup="$toggleGroup"/>
+            <RadioButton fx:id="Electric" text="电动车" GridPane.columnIndex="2" GridPane.rowIndex="2" toggleGroup="$toggleGroup"/>
+            <RadioButton fx:id="Car" text="汽车" GridPane.columnIndex="3" GridPane.rowIndex="2" toggleGroup="$toggleGroup"/>
         </GridPane>
     </center>
 

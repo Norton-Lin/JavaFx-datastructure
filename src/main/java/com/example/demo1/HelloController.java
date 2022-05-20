@@ -85,7 +85,7 @@ public class HelloController {
         account = new Account();
         this.account.setM_sID(usernameField.getText());
         this.account.setPassword(passwordField.getText());
-        this.account.setM_eAuthority(Authority.Teacher);
+        this.account.setM_eAuthority(Authority.Student);
 
         //创建主界面的Controller，它也将加载它自己的FXML文件
         //传入的this参数允许主界面Controller访问本类中的方法

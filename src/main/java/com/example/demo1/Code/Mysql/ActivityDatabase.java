@@ -9,22 +9,22 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class ActivityDatabase {
-    // ¶¨ÒåMySQLµÄÊı¾İ¿âÇı¶¯³ÌĞò
+    // å®šä¹‰MySQLçš„æ•°æ®åº“é©±åŠ¨ç¨‹åº
     public static final String m_sDriver ="com.mysql.cj.jdbc.Driver" ;
-    // ¶¨ÒåMySQLÊı¾İ¿âµÄÁ¬½ÓµØÖ·
+    // å®šä¹‰MySQLæ•°æ®åº“çš„è¿æ¥åœ°å€
     public static final String m_sUrl ="jdbc:mysql://localhost:3306/informationmanagement";
-    // MySQLÊı¾İ¿âµÄÁ¬½ÓÓÃ»§Ãû
+    // MySQLæ•°æ®åº“çš„è¿æ¥ç”¨æˆ·å
     public static final String m_sUser ="root";
-    // MySQLÊı¾İ¿âµÄÁ¬½ÓÃÜÂë
+    // MySQLæ•°æ®åº“çš„è¿æ¥å¯†ç 
     public static final String m_sPassword ="20021213";
 
     /**
-     * ÏòÊı¾İ¿â²åÈëĞÂµÄ»î¶¯ÄÚÈİ
-     * @param activity ĞÂ»î¶¯
+     * å‘æ•°æ®åº“æ’å…¥æ–°çš„æ´»åŠ¨å†…å®¹
+     * @param activity æ–°æ´»åŠ¨
      */
     public void insert(Activity activity){
-        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
+        Connection conn = null ; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null ; // æ•°æ®åº“æ“ä½œ
         String sql = "INSERT INTO activity(id,name,startmonth,startdate,starthour,startmin,endhour,endmin,property,num,maxnum,)"
                 + " VALUES ('" + activity.getM_iNum() + "','" + activity.getM_sName() + "','" +
                 activity.getM_tTime().getStartMonth()+ "','" +activity.getM_tTime().getStartDate()+ "','" +
@@ -37,46 +37,46 @@ public class ActivityDatabase {
                 "','"+activity.getM_iFloor()+"','"+activity.getM_iRoom()+"')";
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement() ;// ÊµÀı»¯Statement¶ÔÏó
-            stmt.executeUpdate(sql);// Ö´ĞĞÊı¾İ¿â¸üĞÂ²Ù×÷
+            stmt = conn.createStatement() ;// å®ä¾‹åŒ–Statementå¯¹è±¡
+            stmt.executeUpdate(sql);// æ‰§è¡Œæ•°æ®åº“æ›´æ–°æ“ä½œ
             stmt.executeUpdate(sql1);
-            stmt.close() ; // ²Ù×÷¹Ø±Õ
-            conn.close() ; // Êı¾İ¿â¹Ø±Õ
+            stmt.close() ; // æ“ä½œå…³é—­
+            conn.close() ; // æ•°æ®åº“å…³é—­
         } catch (SQLException e) {
             e.printStackTrace();
-            LogFile.error("ActivityDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
+            LogFile.error("ActivityDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
         }
     }
     /**
-     * ÏòÓÃ»§¹ØÁª±íÖĞ²åÈëÊı¾İ£¬ÊµÏÖÓÃ»§ÒÑÑ¡¿Î³ÌµÄÌí¼Ó
-     * @param activity ´ıÌí¼Ó¿Î³Ì
-     * @param account ´ıÌí¼Ó¿Î³ÌµÄ¶ÔÓ¦ÕËºÅ
+     * å‘ç”¨æˆ·å…³è”è¡¨ä¸­æ’å…¥æ•°æ®ï¼Œå®ç°ç”¨æˆ·å·²é€‰è¯¾ç¨‹çš„æ·»åŠ 
+     * @param activity å¾…æ·»åŠ è¯¾ç¨‹
+     * @param account å¾…æ·»åŠ è¯¾ç¨‹çš„å¯¹åº”è´¦å·
      */
     public void insert(Activity activity, Account account){
-        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
+        Connection conn = null ; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null ; // æ•°æ®åº“æ“ä½œ
         String sql = "INSERT INTO account_activity(id_account, id_activity)"
                 + " VALUES ('" + account.getID() + "','" + activity.getM_iNum() + "')";
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement() ;// ÊµÀı»¯Statement¶ÔÏó
-            stmt.executeUpdate(sql);// Ö´ĞĞÊı¾İ¿â¸üĞÂ²Ù×÷
-            stmt.close() ; // ²Ù×÷¹Ø±Õf
-            conn.close() ; // Êı¾İ¿â¹Ø±Õ
+            stmt = conn.createStatement() ;// å®ä¾‹åŒ–Statementå¯¹è±¡
+            stmt.executeUpdate(sql);// æ‰§è¡Œæ•°æ®åº“æ›´æ–°æ“ä½œ
+            stmt.close() ; // æ“ä½œå…³é—­f
+            conn.close() ; // æ•°æ®åº“å…³é—­
         } catch (SQLException e) {
             e.printStackTrace();
-            LogFile.error("ActivityDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
+            LogFile.error("ActivityDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
         }
 
     }
     /**
-     * ĞŞ¸ÄÊı¾İ¿âÖĞµÄ»î¶¯ÄÚÈİ
-     * @param activity ´ıĞŞ¸Ä»î¶¯
+     * ä¿®æ”¹æ•°æ®åº“ä¸­çš„æ´»åŠ¨å†…å®¹
+     * @param activity å¾…ä¿®æ”¹æ´»åŠ¨
      */
     public void update(Activity activity){
-        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
-        // Æ´´Õ³öÒ»¸öÍêÕûµÄSQLÓï¾ä
+        Connection conn = null ; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null ; // æ•°æ®åº“æ“ä½œ
+        // æ‹¼å‡‘å‡ºä¸€ä¸ªå®Œæ•´çš„SQLè¯­å¥
         String sql = "UPDATE activity SET name='" + activity.getM_sName() +"',startmonth='"
                 + activity.getM_tTime().getStartMonth() + "',startdate='"+activity.getM_tTime().getStartDate()
                 + "',starthour='" + activity.getM_tTime().getStartHour()
@@ -89,79 +89,79 @@ public class ActivityDatabase {
                 +"',floor = '"+activity.getM_iFloor()+"',room = '"+activity.getM_iRoom()+"'WHERE activity_id ="
                 +activity.getM_iNum();
         try {
-            Class.forName(m_sDriver) ; // ¼ÓÔØÇı¶¯³ÌĞò
+            Class.forName(m_sDriver) ; // åŠ è½½é©±åŠ¨ç¨‹åº
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement() ;// ÊµÀı»¯Statement¶ÔÏó
-            stmt.executeUpdate(sql);// Ö´ĞĞÊı¾İ¿â¸üĞÂ²Ù×÷
+            stmt = conn.createStatement() ;// å®ä¾‹åŒ–Statementå¯¹è±¡
+            stmt.executeUpdate(sql);// æ‰§è¡Œæ•°æ®åº“æ›´æ–°æ“ä½œ
             stmt.executeUpdate(sql1);
-            stmt.close() ; // ²Ù×÷¹Ø±Õ
-            conn.close() ; // Êı¾İ¿â¹Ø±Õ
+            stmt.close() ; // æ“ä½œå…³é—­
+            conn.close() ; // æ•°æ®åº“å…³é—­
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-            LogFile.error("ActivityDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
+            LogFile.error("ActivityDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
         }
     }
     /**
-     * É¾³ıÊı¾İ¿âÖĞµÄÖ¸¶¨»î¶¯
-     * @param activity ´ıÉ¾³ı»î¶¯
+     * åˆ é™¤æ•°æ®åº“ä¸­çš„æŒ‡å®šæ´»åŠ¨
+     * @param activity å¾…åˆ é™¤æ´»åŠ¨
      */
     public void delete(Activity activity){
-        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
+        Connection conn = null ; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null ; // æ•°æ®åº“æ“ä½œ
         String sql1 = "DELETE FROM account WHERE id=" + activity.getM_iNum();
-        String sql2 = "DELETE FROM account_activity WHERE id_activity = "+activity.getM_iNum();//É¾³ıÓÃ»§_»î¶¯¹ÜÀí±íÖĞµÄ¶ÔÓ¦Êı¾İ
-        String sql3 = "DELETE FROM activity_construction WHERE activity_id="+activity.getM_iNum();//É¾³ı»î¶¯_½¨Öş¹ØÁª±íÖĞµÄ¶ÔÓ¦Êı¾İ
+        String sql2 = "DELETE FROM account_activity WHERE id_activity = "+activity.getM_iNum();//åˆ é™¤ç”¨æˆ·_æ´»åŠ¨ç®¡ç†è¡¨ä¸­çš„å¯¹åº”æ•°æ®
+        String sql3 = "DELETE FROM activity_construction WHERE activity_id="+activity.getM_iNum();//åˆ é™¤æ´»åŠ¨_å»ºç­‘å…³è”è¡¨ä¸­çš„å¯¹åº”æ•°æ®
         try {
-            Class.forName(m_sDriver) ; // ¼ÓÔØÇı¶¯³ÌĞò
+            Class.forName(m_sDriver) ; // åŠ è½½é©±åŠ¨ç¨‹åº
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement() ;// ÊµÀı»¯Statement¶ÔÏó
-            stmt.executeUpdate(sql1);// Ö´ĞĞÊı¾İ¿â¸üĞÂ²Ù×÷
-            stmt.executeUpdate(sql2);// Ö´ĞĞÊı¾İ¿â¸üĞÂ²Ù×÷
-            stmt.executeUpdate(sql3);// Ö´ĞĞÊı¾İ¿â¸üĞÂ²Ù×÷
-            stmt.close() ; // ²Ù×÷¹Ø±Õ
-            conn.close() ; // Êı¾İ¿â¹Ø±Õ
+            stmt = conn.createStatement() ;// å®ä¾‹åŒ–Statementå¯¹è±¡
+            stmt.executeUpdate(sql1);// æ‰§è¡Œæ•°æ®åº“æ›´æ–°æ“ä½œ
+            stmt.executeUpdate(sql2);// æ‰§è¡Œæ•°æ®åº“æ›´æ–°æ“ä½œ
+            stmt.executeUpdate(sql3);// æ‰§è¡Œæ•°æ®åº“æ›´æ–°æ“ä½œ
+            stmt.close() ; // æ“ä½œå…³é—­
+            conn.close() ; // æ•°æ®åº“å…³é—­
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-            LogFile.error("ActivityDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
+            LogFile.error("ActivityDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
         }
     }
     /**
-     * ´ÓÓÃ»§¿Î³Ì¹ØÁª±íÖĞÉ¾³ıÊı¾İ£¬ÊµÏÖÓÃ»§ÒÑÑ¡¿Î³ÌµÄÉ¾³ı
-     * @param activity ´ıÉ¾³ı¿Î³Ì
-     * @param account ´ı²Ù×÷ÕËºÅ
+     * ä»ç”¨æˆ·è¯¾ç¨‹å…³è”è¡¨ä¸­åˆ é™¤æ•°æ®ï¼Œå®ç°ç”¨æˆ·å·²é€‰è¯¾ç¨‹çš„åˆ é™¤
+     * @param activity å¾…åˆ é™¤è¯¾ç¨‹
+     * @param account å¾…æ“ä½œè´¦å·
      */
     public void delete(Activity activity,Account account){
-        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
-        // Æ´´Õ³öÒ»¸öÍêÕûµÄSQLÓï¾ä
+        Connection conn = null ; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null ; // æ•°æ®åº“æ“ä½œ
+        // æ‹¼å‡‘å‡ºä¸€ä¸ªå®Œæ•´çš„SQLè¯­å¥
         String sql = "DELETE FROM account_activity WHERE id_account = '"+ account.getID()+"'and id_activity=" + activity.getM_iNum();
         try {
-            Class.forName(m_sDriver) ; // ¼ÓÔØÇı¶¯³ÌĞò
+            Class.forName(m_sDriver) ; // åŠ è½½é©±åŠ¨ç¨‹åº
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement() ;// ÊµÀı»¯Statement¶ÔÏó
-            stmt.executeUpdate(sql);// Ö´ĞĞÊı¾İ¿â¸üĞÂ²Ù×÷
-            stmt.close() ; // ²Ù×÷¹Ø±Õ
-            conn.close() ; // Êı¾İ¿â¹Ø±Õ
+            stmt = conn.createStatement() ;// å®ä¾‹åŒ–Statementå¯¹è±¡
+            stmt.executeUpdate(sql);// æ‰§è¡Œæ•°æ®åº“æ›´æ–°æ“ä½œ
+            stmt.close() ; // æ“ä½œå…³é—­
+            conn.close() ; // æ•°æ®åº“å…³é—­
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-            LogFile.error("ActivityDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
+            LogFile.error("ActivityDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
         }
     }
     /**
-     * ´ÓÊı¾İ¿âÄÚ¶ÁÈ¡»î¶¯
-     * @param activity ´ı¶ÁÈ¡»î¶¯ÄÚÈİ
+     * ä»æ•°æ®åº“å†…è¯»å–æ´»åŠ¨
+     * @param activity å¾…è¯»å–æ´»åŠ¨å†…å®¹
      */
     public void find(Activity activity) {
-        ResultSet rs = null; // ±£´æ²éÑ¯½á¹û
+        ResultSet rs = null; // ä¿å­˜æŸ¥è¯¢ç»“æœ
         String sql = "SELECT id, name, startmonth,startdate,starthour, startmin, endhour," +
                 " endmin, property, num, maxnum FROM activity WHERE id =" + activity.getM_iNum();
-        Connection conn = null; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null; // Êı¾İ¿â²Ù×÷
+        Connection conn = null; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null; // æ•°æ®åº“æ“ä½œ
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement();// ÊµÀı»¯Statement¶ÔÏó
-            rs = stmt.executeQuery(sql);// ÊµÀı»¯ResultSet¶ÔÏó
-            while (rs.next()) { // Ö¸ÕëÏòÏÂÒÆ¶¯
+            stmt = conn.createStatement();// å®ä¾‹åŒ–Statementå¯¹è±¡
+            rs = stmt.executeQuery(sql);// å®ä¾‹åŒ–ResultSetå¯¹è±¡
+            while (rs.next()) { // æŒ‡é’ˆå‘ä¸‹ç§»åŠ¨
                 activity.setM_sName(rs.getString("name"));
                 activity.getM_tTime().setStartMonth(rs.getInt("startmonth"));
                 activity.getM_tTime().setStartDate(rs.getInt("startdate"));
@@ -173,26 +173,26 @@ public class ActivityDatabase {
                 activity.setM_iPle(rs.getInt("num"));
                 activity.setM_iMaxPle(rs.getInt("maxnum"));
             }
-            rs.close();// ¹Ø±Õ½á¹û¼¯
-            stmt.close(); // ²Ù×÷¹Ø±Õ
-            conn.close(); // Êı¾İ¿â¹Ø±Õ
+            rs.close();// å…³é—­ç»“æœé›†
+            stmt.close(); // æ“ä½œå…³é—­
+            conn.close(); // æ•°æ®åº“å…³é—­
         } catch (SQLException e) {
             e.printStackTrace();
-            LogFile.error("ActivityDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
+            LogFile.error("ActivityDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
         }
     }
     public void find(ArrayList<Activity> activity) {
-        ResultSet rs = null; // ±£´æ²éÑ¯½á¹û
+        ResultSet rs = null; // ä¿å­˜æŸ¥è¯¢ç»“æœ
         String sql = "SELECT id, name,startmonth,startdate ,starthour, startmin, endhour," +
                 " endmin, property, num, maxnum FROM activity" ;
-        Connection conn = null; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null; // Êı¾İ¿â²Ù×÷
+        Connection conn = null; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null; // æ•°æ®åº“æ“ä½œ
         ConstructionDatabase constructionDatabase = new ConstructionDatabase();
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement();// ÊµÀı»¯Statement¶ÔÏó
-            rs = stmt.executeQuery(sql);// ÊµÀı»¯ResultSet¶ÔÏó
-            while (rs.next()) { // Ö¸ÕëÏòÏÂÒÆ¶¯
+            stmt = conn.createStatement();// å®ä¾‹åŒ–Statementå¯¹è±¡
+            rs = stmt.executeQuery(sql);// å®ä¾‹åŒ–ResultSetå¯¹è±¡
+            while (rs.next()) { // æŒ‡é’ˆå‘ä¸‹ç§»åŠ¨
                 Activity a = new Activity();
                 a.setM_sName(rs.getString("name"));
                 a.getM_tTime().setStartMonth(rs.getInt("startmonth"));
@@ -206,12 +206,12 @@ public class ActivityDatabase {
                 a.setM_iMaxPle(rs.getInt("maxnum"));
                 activity.add(a);
             }
-            rs.close();// ¹Ø±Õ½á¹û¼¯
-            stmt.close(); // ²Ù×÷¹Ø±Õ
-            conn.close(); // Êı¾İ¿â¹Ø±Õ
+            rs.close();// å…³é—­ç»“æœé›†
+            stmt.close(); // æ“ä½œå…³é—­
+            conn.close(); // æ•°æ®åº“å…³é—­
         } catch (SQLException e) {
             e.printStackTrace();
-            LogFile.error("ActivityDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
+            LogFile.error("ActivityDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
         }
         for(int i =0;i<activity.size();i++) {
             Activity activity1 = activity.get(i);

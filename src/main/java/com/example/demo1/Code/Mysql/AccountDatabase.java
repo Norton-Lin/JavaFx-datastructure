@@ -4,7 +4,6 @@ import com.example.demo1.Code.Util.Authority;
 import com.example.demo1.Code.Util.Property;
 import com.example.demo1.Code.entity.Activity;
 import com.example.demo1.Code.entity.Course;
-import com.example.demo1.Code.entity.EventClock;
 import com.example.demo1.Code.entity.account.Account;
 import com.example.demo1.Code.entity.account.ManagerAccount;
 import com.example.demo1.Code.entity.account.StudentAccount;
@@ -17,18 +16,18 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class AccountDatabase {
-    // ¶¨ÒåMySQLµÄÊı¾İ¿âÇı¶¯³ÌĞò
+    // å®šä¹‰MySQLçš„æ•°æ®åº“é©±åŠ¨ç¨‹åº
     public static final String m_sDriver ="com.mysql.cj.jdbc.Driver" ;
-    // ¶¨ÒåMySQLÊı¾İ¿âµÄÁ¬½ÓµØÖ·
+    // å®šä¹‰MySQLæ•°æ®åº“çš„è¿æ¥åœ°å€
     public static final String m_sUrl ="jdbc:mysql://localhost:3306/informationmanagement";
-    // MySQLÊı¾İ¿âµÄÁ¬½ÓÓÃ»§Ãû
+    // MySQLæ•°æ®åº“çš„è¿æ¥ç”¨æˆ·å
     public static final String m_sUser ="root";
-    // MySQLÊı¾İ¿âµÄÁ¬½ÓÃÜÂë
+    // MySQLæ•°æ®åº“çš„è¿æ¥å¯†ç 
     public static final String m_sPassword ="20021213";
-    //ÏòÊı¾İ¿âÖĞ²åÈëÊı¾İ
+    //å‘æ•°æ®åº“ä¸­æ’å…¥æ•°æ®
     public void insert(Account account){
-        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
+        Connection conn = null ; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null ; // æ•°æ®åº“æ“ä½œ
         String id = account.getID();
         String password = account.getPassword();
         Authority c = account.getAuthority();
@@ -41,236 +40,195 @@ public class AccountDatabase {
                 " VALUES ('" + id + "','" + password + "','" + authority+ "')";
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement() ;// ÊµÀı»¯Statement¶ÔÏó
-            stmt.executeUpdate(sql);// Ö´ĞĞÊı¾İ¿â¸üĞÂ²Ù×÷
-            stmt.close() ; // ²Ù×÷¹Ø±Õ
-            conn.close() ; // Êı¾İ¿â¹Ø±Õ
+            stmt = conn.createStatement() ;// å®ä¾‹åŒ–Statementå¯¹è±¡
+            stmt.executeUpdate(sql);// æ‰§è¡Œæ•°æ®åº“æ›´æ–°æ“ä½œ
+            stmt.close() ; // æ“ä½œå…³é—­
+            conn.close() ; // æ•°æ®åº“å…³é—­
         } catch (SQLException e) {
             e.printStackTrace();
-            LogFile.error("AccountDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
+            LogFile.error("AccountDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
         }
     }
-    //¸üĞÂÊı¾İ¿âÖĞµÄÊı¾İ
+    //æ›´æ–°æ•°æ®åº“ä¸­çš„æ•°æ®
     public void update(Account account){
-        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
+        Connection conn = null ; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null ; // æ•°æ®åº“æ“ä½œ
         String id = account.getID();
         String password = account.getPassword();
         Authority authority = account.getAuthority();
-        // Æ´´Õ³öÒ»¸öÍêÕûµÄSQLÓï¾ä
+        // æ‹¼å‡‘å‡ºä¸€ä¸ªå®Œæ•´çš„SQLè¯­å¥
         String sql = "UPDATE account SET password='" + password + "',authority='"
                 + authority + "'WHERE id=" + id ;
-        executeSql(sql);
-    }
-    //É¾³ıÊı¾İ¿âÖĞµÄÊı¾İ
-    public void delete(Account account){
-        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
-        String id = account.getID(); // id
-        // Æ´´Õ³öÒ»¸öÍêÕûµÄSQLÓï¾ä
-        String sql = "DELETE FROM account WHERE id=" + id;
-        executeSql(sql);
-    }
-    //ËÑÑ°Êı¾İ¿âÖĞµÄÊı¾İ
-    public void find(Account account) {
-        ResultSet rs = null; // ±£´æ²éÑ¯½á¹û
-        String sql = "SELECT id,password,authority FROM account";
-        Connection conn = null; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null; // Êı¾İ¿â²Ù×÷
         try {
+            Class.forName(m_sDriver) ; // åŠ è½½é©±åŠ¨ç¨‹åº
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement();// ÊµÀı»¯Statement¶ÔÏó
-            rs = stmt.executeQuery(sql);// ÊµÀı»¯ResultSet¶ÔÏó
-            while (rs.next()) { // Ö¸ÕëÏòÏÂÒÆ¶¯
-                account.setM_sID(rs.getString("id")); // È¡µÃidÄÚÈİ
-                account.setPassword(rs.getString("password"));// È¡µÃnameÄÚÈİ
-                account.setM_eAuthority(rs.getInt("authority"));//È¡µÃauthority
-            }
-            rs.close();// ¹Ø±Õ½á¹û¼¯
-            stmt.close(); // ²Ù×÷¹Ø±Õ
-            conn.close(); // Êı¾İ¿â¹Ø±Õ
-        } catch (SQLException e) {
+            stmt = conn.createStatement() ;// å®ä¾‹åŒ–Statementå¯¹è±¡
+            stmt.executeUpdate(sql);// æ‰§è¡Œæ•°æ®åº“æ›´æ–°æ“ä½œ
+            stmt.close() ; // æ“ä½œå…³é—­
+            conn.close() ; // æ•°æ®åº“å…³é—­
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-            LogFile.error("AccountDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
+            LogFile.error("AccountDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
         }
     }
-    //¸ù¾İÕËºÅÃÜÂëËÑÑ°»ñÈ¡ÕËºÅÈ¨ÏŞ
+    //åˆ é™¤æ•°æ®åº“ä¸­çš„æ•°æ®
+    public void delete(Account account){
+        Connection conn = null ; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null ; // æ•°æ®åº“æ“ä½œ
+        String id = account.getID(); // id
+// æ‹¼å‡‘å‡ºä¸€ä¸ªå®Œæ•´çš„SQLè¯­å¥
+        String sql = "DELETE FROM account WHERE id=" + id;
+        try {
+            Class.forName(m_sDriver) ; // åŠ è½½é©±åŠ¨ç¨‹åº
+            conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
+            stmt = conn.createStatement() ;// å®ä¾‹åŒ–Statementå¯¹è±¡
+            stmt.executeUpdate(sql);// æ‰§è¡Œæ•°æ®åº“æ›´æ–°æ“ä½œ
+            stmt.close() ; // æ“ä½œå…³é—­
+            conn.close() ; // æ•°æ®åº“å…³é—­
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            LogFile.error("AccountDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
+        }
+    }
+    //æœå¯»æ•°æ®åº“ä¸­çš„æ•°æ®
+    public void find(Account account) {
+        ResultSet rs = null; // ä¿å­˜æŸ¥è¯¢ç»“æœ
+        String sql = "SELECT id,password,authority FROM account";
+        Connection conn = null; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null; // æ•°æ®åº“æ“ä½œ
+        try {
+            conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
+            stmt = conn.createStatement();// å®ä¾‹åŒ–Statementå¯¹è±¡
+            rs = stmt.executeQuery(sql);// å®ä¾‹åŒ–ResultSetå¯¹è±¡
+            while (rs.next()) { // æŒ‡é’ˆå‘ä¸‹ç§»åŠ¨
+                account.setM_sID(rs.getString("id")); // å–å¾—idå†…å®¹
+                account.setPassword(rs.getString("password"));// å–å¾—nameå†…å®¹
+                account.setM_eAuthority(rs.getInt("authority"));//å–å¾—authority
+            }
+            rs.close();// å…³é—­ç»“æœé›†
+            stmt.close(); // æ“ä½œå…³é—­
+            conn.close(); // æ•°æ®åº“å…³é—­
+        } catch (SQLException e) {
+            e.printStackTrace();
+            LogFile.error("AccountDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
+        }
+    }
+    //æ ¹æ®è´¦å·å¯†ç æœå¯»è·å–è´¦å·æƒé™
     public boolean findByPassword(Account account){
-        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
-        ResultSet rs = null; // ±£´æ²éÑ¯½á¹û
+        Connection conn = null ; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null ; // æ•°æ®åº“æ“ä½œ
+        ResultSet rs = null; // ä¿å­˜æŸ¥è¯¢ç»“æœ
         Account temp = new Account();
         String sql1 = "SELECT id,password,authority FROM account where id = '"+account.getID()+"'and password ="+account.getPassword();
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement();// ÊµÀı»¯Statement¶ÔÏó
-            rs = stmt.executeQuery(sql1);// ÊµÀı»¯ResultSet¶ÔÏó
+            stmt = conn.createStatement();// å®ä¾‹åŒ–Statementå¯¹è±¡
+            rs = stmt.executeQuery(sql1);// å®ä¾‹åŒ–ResultSetå¯¹è±¡
             if(!rs.next())
                 return false;
             else
-                account.setM_eAuthority(rs.getInt("authority"));//È¡µÃauthority
-            rs.close();// ¹Ø±Õ½á¹û¼¯
-            stmt.close(); // ²Ù×÷¹Ø±Õ
-            conn.close(); // Êı¾İ¿â¹Ø±Õ
+                account.setM_eAuthority(rs.getInt("authority"));//å–å¾—authority
+            rs.close();// å…³é—­ç»“æœé›†
+            stmt.close(); // æ“ä½œå…³é—­
+            conn.close(); // æ•°æ®åº“å…³é—­
 
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
        /* if(temp.getAuthority() != account.getAuthority())
         {
-            System.out.println("ÎŞÈ¨ÏŞ");
+            System.out.println("æ— æƒé™");
             return false ;
         }*/
         return true;
     }
-    //¶ÁÈ¡Ñ§Éú¶ÔÓ¦µÄÊı¾İ
+    //è¯»å–å­¦ç”Ÿå¯¹åº”çš„æ•°æ®
     public void findStuAccount(StudentAccount studentAccount){
-        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
-        ResultSet rs = null; // ±£´æ²éÑ¯½á¹û
-        //¶ÁÈ¡¶ÔÓ¦¿Î³Ì
+        Connection conn = null ; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null ; // æ•°æ®åº“æ“ä½œ
+        ResultSet rs = null; // ä¿å­˜æŸ¥è¯¢ç»“æœ
+        //è¯»å–å¯¹åº”è¯¾ç¨‹
         String sql1 = "SELECT id_account,id_course FROM account_course where id_account = "+studentAccount.getID();
-        //¶ÁÈ¡¶ÔÓ¦»î¶¯
+        //è¯»å–å¯¹åº”æ´»åŠ¨
         String sql2 = "SELECT id_account,id_activity FROM account_activity where id_account = "+studentAccount.getID();
-        String sql3 = "SELECT * FROM account_clock where account_id ="+studentAccount.getID();
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement();// ÊµÀı»¯Statement¶ÔÏó
-            rs = stmt.executeQuery(sql1);// ÊµÀı»¯ResultSet¶ÔÏó
-            while (rs.next()) { // Ö¸ÕëÏòÏÂÒÆ¶¯
+            stmt = conn.createStatement();// å®ä¾‹åŒ–Statementå¯¹è±¡
+            rs = stmt.executeQuery(sql1);// å®ä¾‹åŒ–ResultSetå¯¹è±¡
+            while (rs.next()) { // æŒ‡é’ˆå‘ä¸‹ç§»åŠ¨
                 Course course = new Course();
                 course.setM_iNum(rs.getInt("id_course"));
                 CourseDatabase courseDatabase = new CourseDatabase();
-                courseDatabase.find(course);//Õâ±ßÒª¶ÁcourseÊı¾İ
-                studentAccount.getCourse().add(course);//ÏòArrayListÖĞÌí¼Ó
+                courseDatabase.find(course);//è¿™è¾¹è¦è¯»courseæ•°æ®
+                studentAccount.getCourse().add(course);//å‘ArrayListä¸­æ·»åŠ 
             }
-            rs.close();// ¹Ø±Õ¿Î³Ì½á¹û¼¯
-            rs = stmt.executeQuery(sql2);// ÊµÀı»¯ResultSet¶ÔÏó
-            while (rs.next()) { // Ö¸ÕëÏòÏÂÒÆ¶¯
+            rs.close();// å…³é—­è¯¾ç¨‹ç»“æœé›†
+            rs = stmt.executeQuery(sql2);// å®ä¾‹åŒ–ResultSetå¯¹è±¡
+            while (rs.next()) { // æŒ‡é’ˆå‘ä¸‹ç§»åŠ¨
                 Activity activity = new Activity();
                 activity.setM_iNum(rs.getInt("id_activity"));
                 ActivityDatabase activityDatabase = new ActivityDatabase();
-                activityDatabase.find(activity);//Õâ±ßÒª¶ÁactivityÊı¾İ
-                studentAccount.getActivity().add(activity);//ÏòArrayListÖĞÌí¼Ó
+                activityDatabase.find(activity);//è¿™è¾¹è¦è¯»courseæ•°æ®
+                studentAccount.getActivity().add(activity);//å‘ArrayListä¸­æ·»åŠ 
             }
-            rs.close();// ¹Ø±Õ»î¶¯½á¹û¼¯
-            rs = stmt.executeQuery(sql3);// ÊµÀı»¯ResultSet¶ÔÏó
-            while(rs.next()){
-                EventClock eventClock = new EventClock();
-                eventClock.setClockName(rs.getString("clock_name"));
-                eventClock.setClockType(rs.getInt("type"));
-                eventClock.getClockTime().setStartMonth(rs.getInt("month"));
-                eventClock.getClockTime().setStartDate(rs.getInt("day"));
-                eventClock.getClockTime().setWeek(rs.getInt("week"));
-                eventClock.getClockTime().setStartHour(rs.getInt("hour"));
-                eventClock.getClockTime().setStartMinute(rs.getInt("min"));
-                studentAccount.getM_CaEventClock().add(eventClock);
-            }
-            stmt.close(); // ²Ù×÷¹Ø±Õ
-            conn.close(); // Êı¾İ¿â¹Ø±Õ
+            rs.close();// å…³é—­æ´»åŠ¨ç»“æœé›†
+            stmt.close(); // æ“ä½œå…³é—­
+            conn.close(); // æ•°æ®åº“å…³é—­
         } catch (SQLException throwable) {
             throwable.printStackTrace();
-            LogFile.error("AccountDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
+            LogFile.error("AccountDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
         }
-        HomeWorkDatabase homeWorkDatabase = new HomeWorkDatabase();
-        for(Course course:studentAccount.getCourse())
-            homeWorkDatabase.find(course, course.getM_CaHomework(),studentAccount);
     }
-    //¶ÁÈ¡½ÌÊ¦¶ÔÓ¦µÄÊı¾İ
+    //è¯»å–æ•™å¸ˆå¯¹åº”çš„æ•°æ®
     public void findTeaAccount(TeacherAccount teacherAccount){
-        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
-        ResultSet rs = null; // ±£´æ²éÑ¯½á¹û
-        //¶ÁÈ¡¶ÔÓ¦¿Î³Ì
+        Connection conn = null ; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null ; // æ•°æ®åº“æ“ä½œ
+        ResultSet rs = null; // ä¿å­˜æŸ¥è¯¢ç»“æœ
+        //è¯»å–å¯¹åº”è¯¾ç¨‹
         String sql1 = "SELECT id_account,id_course FROM account_course where id_account = "+teacherAccount.getID();
-        //¶ÁÈ¡¶ÔÓ¦»î¶¯
+        //è¯»å–å¯¹åº”æ´»åŠ¨
         String sql2 = "SELECT id_account,id_activity FROM account_activity where id_account = "+teacherAccount.getID();
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement();// ÊµÀı»¯Statement¶ÔÏó
-            rs = stmt.executeQuery(sql1);// ÊµÀı»¯ResultSet¶ÔÏó
-            while (rs.next()) { // Ö¸ÕëÏòÏÂÒÆ¶¯
+            stmt = conn.createStatement();// å®ä¾‹åŒ–Statementå¯¹è±¡
+            rs = stmt.executeQuery(sql1);// å®ä¾‹åŒ–ResultSetå¯¹è±¡
+            while (rs.next()) { // æŒ‡é’ˆå‘ä¸‹ç§»åŠ¨
                 Course course = new Course();
                 course.setM_iNum(rs.getInt("id_account"));
                 CourseDatabase courseDatabase = new CourseDatabase();
-                courseDatabase.find(course);//Õâ±ßÒª¶ÁcourseÊı¾İ
-                teacherAccount.getCourse().add(course);//ÏòArrayListÖĞÌí¼Ó
+                courseDatabase.find(course);//è¿™è¾¹è¦è¯»courseæ•°æ®
+                teacherAccount.getCourse().add(course);//å‘ArrayListä¸­æ·»åŠ 
             }
-            rs.close();// ¹Ø±Õ¿Î³Ì½á¹û¼¯
-            rs = stmt.executeQuery(sql2);// ÊµÀı»¯ResultSet¶ÔÏó
-            while (rs.next()) { // Ö¸ÕëÏòÏÂÒÆ¶¯
+            rs.close();// å…³é—­è¯¾ç¨‹ç»“æœé›†
+            rs = stmt.executeQuery(sql2);// å®ä¾‹åŒ–ResultSetå¯¹è±¡
+            while (rs.next()) { // æŒ‡é’ˆå‘ä¸‹ç§»åŠ¨
                 Activity activity = new Activity();
                 activity.setM_iNum(rs.getInt("id_account"));
                 ActivityDatabase activityDatabase = new ActivityDatabase();
-                activityDatabase.find(activity);//Õâ±ßÒª¶ÁcourseÊı¾İ
-                teacherAccount.getActivity().add(activity);//ÏòArrayListÖĞÌí¼Ó
+                activityDatabase.find(activity);//è¿™è¾¹è¦è¯»courseæ•°æ®
+                teacherAccount.getActivity().add(activity);//å‘ArrayListä¸­æ·»åŠ 
             }
-            rs.close();// ¹Ø±Õ½á¹û¼¯
-            stmt.close(); // ²Ù×÷¹Ø±Õ
-            conn.close(); // Êı¾İ¿â¹Ø±Õ
+            rs.close();// å…³é—­ç»“æœé›†
+            stmt.close(); // æ“ä½œå…³é—­
+            conn.close(); // æ•°æ®åº“å…³é—­
         } catch (SQLException throwable) {
             throwable.printStackTrace();
-            LogFile.error("AccountDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
+            LogFile.error("AccountDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
         }
     }
-    //¹ÜÀíÔ±¶ÁÈ¡È«²¿Êı¾İ
+    //ç®¡ç†å‘˜è¯»å–å…¨éƒ¨æ•°æ®
     public void findManAccount(ManagerAccount managerAccount){
         ArrayList<Course> course = new ArrayList<>();
         ArrayList<Activity> activity = new ArrayList<>();
         CourseDatabase courseDatabase = new CourseDatabase();
         ActivityDatabase activityDatabase = new ActivityDatabase();
-        courseDatabase.find(course);//Õâ±ßÒª¶ÁcourseÊı¾İ
+        courseDatabase.find(course);//è¿™è¾¹è¦è¯»courseæ•°æ®
         activityDatabase.find(activity);
         managerAccount.setCourse(course);
         managerAccount.setActivity(activity);
 
     }
-    //Ñ§ÉúÌí¼ÓÄÖÖÓ
-    public void insertClock(StudentAccount studentAccount,EventClock eventClock) {
-        String sql = "INSERT INTO account_clock(account_id, clock_name, month, day, week, hour, min, type)"+
-                " VALUES ('" + studentAccount.getID()+"','"+eventClock.getClockName() + "','"
-                + eventClock.getClockTime().getStartMonth() + "','" + eventClock.getClockTime().getStartDate()
-                + "','" +eventClock.getClockTime().getWeek() + "','" +eventClock.getClockTime().getStartHour()
-                + "','" +eventClock.getClockTime().getStartMinute() + "','" +eventClock.getClockType() + "')";
-        executeSql(sql);
-    }
-    //Ñ§ÉúĞŞ¸ÄÄÖÖÓ
-    public void updateClock(StudentAccount studentAccount,EventClock eventClock){
-        String sql = "UPDATE account_clock SET clock_name='" + eventClock.getClockName()
-                + "',month='" + eventClock.getClockTime().getStartMonth()
-                + "',day='" + eventClock.getClockTime().getStartDate()
-                + "',week='" + eventClock.getClockTime().getWeek()
-                + "',hour='" + eventClock.getClockTime().getStartHour()
-                + "',min='" + eventClock.getClockTime().getStartMinute()
-                + "',type='" + eventClock.getClockType()+ "'WHERE account_id=" + studentAccount.getID() ;
-        executeSql(sql);
-    }
-
-    public void executeSql(String sql) {
-        Connection conn;
-        Statement stmt;
-        try {
-            Class.forName(m_sDriver) ; // ¼ÓÔØÇı¶¯³ÌĞò
-            conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement() ;// ÊµÀı»¯Statement¶ÔÏó
-            stmt.executeUpdate(sql);// Ö´ĞĞÊı¾İ¿â¸üĞÂ²Ù×÷
-            stmt.close() ; // ²Ù×÷¹Ø±Õ
-            conn.close() ; // Êı¾İ¿â¹Ø±Õ
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-            LogFile.error("AccountDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
-        }
-    }
-
-    //Ñ§ÉúÉ¾³ıÄÖÖÓ
-    public void deleteClock(StudentAccount studentAccount,EventClock eventClock){
-        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
-        // Æ´´Õ³öÒ»¸öÍêÕûµÄSQLÓï¾ä
-        String sql = "DELETE FROM account_clock WHERE account_id='" + studentAccount.getID()
-                +"'and clock_name="+eventClock.getClockName();
-        executeSql(sql);
-    }
+    //ä¸»å‡½æ•°ï¼Œæµ‹è¯•ç”¨
     public static void main(String[] args){
          AccountDatabase accountDatabase = new AccountDatabase();
          ManagerAccount account = new ManagerAccount("1","123456");
@@ -280,6 +238,4 @@ public class AccountDatabase {
          int s = 0;
          s = 1+2;
     }
-
-
 }
