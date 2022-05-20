@@ -134,6 +134,7 @@ public class StringCompute {
             String newStrA = new String(Files.readAllBytes(Paths.get(fileA.getName())));
             String newStrB = new String(Files.readAllBytes(Paths.get(fileB.getName())));
 
+
             String strA = removeSign(newStrA);
             String strB = removeSign(newStrB);
 
@@ -175,10 +176,11 @@ public class StringCompute {
                     m--;
                 }
             }
+            //String finalStrA = StringUtils.remove(newStrA, new String(result));
 
         } catch (IOException ignore) {
-
         }
+
 
 
     }
