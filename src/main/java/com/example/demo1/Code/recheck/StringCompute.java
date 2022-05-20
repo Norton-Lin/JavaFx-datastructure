@@ -3,11 +3,10 @@ package com.example.demo1.Code.recheck;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.NumberFormat;
-import java.util.*;
+import java.util.Locale;
 
 public class StringCompute {
 
