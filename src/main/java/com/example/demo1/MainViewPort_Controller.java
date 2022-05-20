@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.time.OffsetDateTime;
 
 public class MainViewPort_Controller {
 
@@ -134,7 +135,17 @@ public class MainViewPort_Controller {
     }
 
     protected void handleClockButtonAction() {
+<<<<<<< HEAD
+        if (this.helloController.getAccount().getAuthority() != Authority.Student) {
+            buttonStatusText.setText("只有学生可以设置闹钟！");
+            return;
+        }
+        ClockController clockController = new ClockController(this);
+        thisStage.hide();
+        clockController.showStage();
+=======
 
+>>>>>>> d4bc056e2650d41be6210bd3d2a1f4a3fce37229
     }
 
     protected void handleManagerButtonAction() {
