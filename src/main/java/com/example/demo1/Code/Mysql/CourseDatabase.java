@@ -218,6 +218,9 @@ public class CourseDatabase {
      */
     public void find(ArrayList<Course> course){
         ResultSet rs = null; // 保存查询结果
+        ResultSet rs1 = null;
+        ResultSet rs2 = null;
+        Construction construction = new Construction();
         ConstructionDatabase constructionDatabase = new ConstructionDatabase();
         String sql = "SELECT * FROM course";
         Connection conn = null; // 数据库连接
