@@ -134,7 +134,7 @@
       <recent name="com.example.demo1" />
     </key>
   </component>
-  <component name="RunManager" selected="应用程序.SystemTime">
+  <component name="RunManager" selected="应用程序.MainInterface">
     <configuration name="CodeApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.demo1.Code.CodeApplication" />
       <module name="demo" />
@@ -202,10 +202,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="应用程序.SystemTime" />
-        <item itemvalue="应用程序.HelloApplication" />
-        <item itemvalue="应用程序.LogFile" />
         <item itemvalue="应用程序.MainInterface" />
+        <item itemvalue="应用程序.HelloApplication" />
+        <item itemvalue="应用程序.SystemTime" />
+        <item itemvalue="应用程序.LogFile" />
         <item itemvalue="应用程序.CodeApplication" />
       </list>
     </recent_temporary>
