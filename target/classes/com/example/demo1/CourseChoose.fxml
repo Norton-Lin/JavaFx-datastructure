@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml">
+    <top>
+        <BorderPane>
+            <top>
+                <BorderPane>
+                    <center>
+                        <Label text="请输入您要查找的课程~" style="-fx-font-size:18" alignment="TOP_CENTER"/>
+                    </center>
+                </BorderPane>
+            </top>
+            <center>
+                <Label text="可以输入课程编号或课程名" style="-fx-font-size:18" alignment="TOP_CENTER"/>
+            </center>
+            <bottom>
+                <BorderPane>
+                    <center>
+                        <TextField fx:id="ToBeSearched" prefColumnCount="10" alignment="TOP_CENTER"/>
+                    </center>
+                </BorderPane>
+            </bottom>
+        </BorderPane>
+    </top>
+    <center>
+        <BorderPane>
+            <center>
+                <GridPane>
+                    <Label text="查询结果如下：" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <ComboBox fx:id="Results" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="10"/>
+                </GridPane>
+            </center>
+            <right>
+                <Label fx:id="ExceptionInfo"/>
+            </right>
+        </BorderPane>
+    </center>
+    <bottom>
+        <BorderPane>
+            <left>
+                <Button fx:id="Search1" text="查询所有课程" alignment="CENTER"/>
+            </left>
+            <center>
+                <BorderPane>
+                    <left>
+                        <Button fx:id="Assure1" text="添加未选课程" alignment="CENTER"/>
+                    </left>
+                    <center>
+                        <Button fx:id="backToMain" text="回到主界面" alignment="CENTER"/>
+
+                    </center>
+                    <right>
+                        <Button fx:id="Search2" text="查询自己课程" alignment="CENTER"/>
+                    </right>
+                </BorderPane>
+            </center>
+            <right>
+                <Button fx:id="Assure2" text="删除已有课程" alignment="CENTER"/>
+            </right>
+        </BorderPane>
+    </bottom>
+</BorderPane>
