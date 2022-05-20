@@ -16,8 +16,12 @@ public class HomeWorkDatabase {
     // MySQL数据库的连接用户名
     public static final String m_sUser = "root";
     // MySQL数据库的连接密码
+<<<<<<< HEAD
     public static final String m_sPassword = "20021213";
 
+=======
+    public static final String m_sPassword ="20021213";
+>>>>>>> f2e296f2f48842ab542741cad35cee5c065bdb9f
     /**
      * 查询课程名下的作业
      *
@@ -59,9 +63,14 @@ public class HomeWorkDatabase {
         Connection conn = null; // 数据库连接
         Statement stmt = null; // 数据库操作
         ResultSet rs = null; // 保存查询结果
+<<<<<<< HEAD
         String sql = "SELECT * FROM course_homework where course_id = " + course.getM_iNum();
         String sql1 = "SELECT * FROM account_homework where account_id = " + studentAccount.getID();
         try {
+=======
+        String sql = "SELECT * FROM course_homework where course_id = "+course.getM_iNum();
+        try{
+>>>>>>> f2e296f2f48842ab542741cad35cee5c065bdb9f
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
             stmt = conn.createStatement();// 实例化Statement对象
             rs = stmt.executeQuery(sql);// 实例化ResultSet对象
@@ -72,6 +81,7 @@ public class HomeWorkDatabase {
                 homeworks.add(h);
             }
             rs.close();// 关闭结果集
+<<<<<<< HEAD
             if (homeworks.size() > 0)//作业列表不为空
                 for (Homework homework : homeworks) {
                     sql = "SELECT * FROM account_homework where account_id = '" + studentAccount.getID()
@@ -82,6 +92,17 @@ public class HomeWorkDatabase {
                     rs.close();
                 }
 
+=======
+            if(homeworks.size()>0)//作业列表不为空
+            for(Homework homework:homeworks){
+                  sql ="SELECT * FROM account_homework where account_id = '"+studentAccount.getID()
+                          +"'and course_id ='"+course.getM_iNum()+"'and work_name='"+homework.getM_iName()+"'";
+                  rs = stmt.executeQuery(sql);
+                  while(rs.next())
+                  homework.setM_iTag(rs.getInt("tag"));
+                  rs.close();
+            }
+>>>>>>> f2e296f2f48842ab542741cad35cee5c065bdb9f
             stmt.close(); // 操作关闭
             conn.close(); // 数据库关闭
         } catch (SQLException e) {

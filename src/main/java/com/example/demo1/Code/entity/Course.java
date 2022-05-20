@@ -13,7 +13,7 @@ public class Course extends Event{
     private int m_iExamRoom;//考试所在房间
     private String m_sData;//课程资料
     private String teacher;
-    private ArrayList<Homework> m_CaHomework;//课程作业列表
+    private ArrayList<Homework> m_CaHomework = new ArrayList<>();//课程作业列表
 
     public Course() {
     }

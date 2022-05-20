@@ -192,6 +192,9 @@ public class AccountDatabase {
             throwable.printStackTrace();
             LogFile.error("AccountDatabase","数据库读取错误");
         }
+        HomeWorkDatabase homeWorkDatabase = new HomeWorkDatabase();
+        for(Course course:studentAccount.getCourse())
+            homeWorkDatabase.find(course, course.getM_CaHomework(),studentAccount);
     }
     //读取教师对应的数据
     public void findTeaAccount(TeacherAccount teacherAccount){
