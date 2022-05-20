@@ -17,18 +17,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class CourseChooseController {
-    private final Stage thisStage;
 
+    private final Stage thisStage;
     private final MainViewPort_Controller controller;
 
-<<<<<<< HEAD
-    StudentAccount studentAccount;
-
-    //存放本账号的课程表
-    ArrayList<Course> courses;
-
-=======
->>>>>>> d4bc056e2650d41be6210bd3d2a1f4a3fce37229
     @FXML
     private Button ExceptionInfo;
     @FXML
@@ -44,15 +36,7 @@ public class CourseChooseController {
     @FXML
     private ComboBox<String> Results;
     @FXML
-<<<<<<< HEAD
-    public TextField ToBeFuzzySearched;
-    @FXML
-    public TextField ToBeBinarySearched;
-    @FXML
-    public TextArea ResOfSearch;
-=======
     private TextField ToBeSearched;
->>>>>>> d4bc056e2650d41be6210bd3d2a1f4a3fce37229
 
     public CourseChooseController(MainViewPort_Controller mainViewPort_controller) {
         //得到新Controller
@@ -109,48 +93,10 @@ public class CourseChooseController {
         //实例化Course数据库
         CourseDatabase courseDatabase = new CourseDatabase();
         try {
-<<<<<<< HEAD
-            //存储精确查询结果
-            int fin = 0;
-
-            try {
-                if (Search1ButtonClicked() == null) {
-                    //模糊查找失败或未进行模糊查找，在所有课程列表中查询
-                    int Num1 = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), tool);
-                    if (Num1 != tool.size()) {
-                        mark = true;
-                        fin = Num1;
-                    }
-                }
-                else {
-                    //查找成功后在模糊查找得到的列表中精确查找
-                    int Num2 = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), Search1ButtonClicked());
-                    if (Num2 != Search1ButtonClicked().size()) {
-                        mark = true;
-                        fin = Num2;
-                    }
-                }
-            } catch (NumberFormatException e) {
-                mark = false;
-            }
-
-
-            if (mark) {
-                //展示查找到的课程名称
-                SearchResult_Name.setText(tool.get(fin).getM_sName() + " 编号为：" + tool.get(fin).getM_iNum());
-                //根据账号类型将课程添加到课表
-                this.studentAccount.addCourse(tool.get(fin));
-                SearchResult_Boolean.setText("查找并添加成功！好耶！");
-            }
-            else
-                SearchResult_Boolean.setText("查找失败……检查一下操作吧！");
-
-=======
             Num = Integer.parseInt(this.ToBeSearched.getText());
             Search search = new Search();
 //            tool = this.controller.getAccount();
 //            search.BinaryCourseSearch();
->>>>>>> d4bc056e2650d41be6210bd3d2a1f4a3fce37229
         } catch (Exception e) {
             FuzzySearch fuzzySearch = new FuzzySearch();
             courseDatabase.find(tool);
@@ -161,46 +107,18 @@ public class CourseChooseController {
         }
     }
 
-<<<<<<< HEAD
-    /**
-     * 点此按钮从自身课程表中模糊查找课程
-     * @return 模糊查找结果
-     */
-    private ArrayList<Course> Search2ButtonClicked() {
-        //实例化模糊查找对象
-        FuzzySearch fuzzySearch = new FuzzySearch();
-        //建立一个空表用于存储模糊查找结果
-        ArrayList<Course> primaryResults;
-        //将模糊查找结果存入 list
-        primaryResults = fuzzySearch.get_FS_result(ToBeFuzzySearched.getText(), this.courses);
-        //查询结果的list
-        ArrayList<String> texts = new ArrayList<>();
-        //将结果字符串化
-        for (Course course : primaryResults)
-            texts.add(course.getM_sName() + " 编号为：" + course.getM_iNum());
-        //将查询得到的结果显示在文本框中
-        ResOfSearch.setText(texts.toString());
-        return primaryResults;
-=======
     private void Search1ButtonClicked() {
 
     }
 
     private void Search2ButtonClicked() {
 
->>>>>>> d4bc056e2650d41be6210bd3d2a1f4a3fce37229
     }
 
-    /**
-     * 在已有课表得到的模糊结果中精确查找
-     */
     private void Assure2ButtonClicked() {
 
     }
 
-    /**
-     * 回到主界面
-     */
     private void backToMainClicked() {
         //将第二个界面展示出来
         this.controller.showStage();

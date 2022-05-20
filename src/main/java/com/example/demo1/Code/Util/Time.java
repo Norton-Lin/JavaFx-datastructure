@@ -21,7 +21,7 @@ public class Time {
         week =0;
     }
 
-    public Time(int hour1, int minute1, int hour2, int minute2, int date, int month, int week) {
+    public Time(int hour1, int minute1, int hour2, int minute2, int date, int month,int week) {
         this.startHour = hour1;
         this.startMinute = minute1;
         this.endHour = hour2;
