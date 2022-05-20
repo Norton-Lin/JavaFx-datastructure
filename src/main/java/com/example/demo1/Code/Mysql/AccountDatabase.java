@@ -4,6 +4,7 @@ import com.example.demo1.Code.Util.Authority;
 import com.example.demo1.Code.Util.Property;
 import com.example.demo1.Code.entity.Activity;
 import com.example.demo1.Code.entity.Course;
+import com.example.demo1.Code.entity.EventClock;
 import com.example.demo1.Code.entity.account.Account;
 import com.example.demo1.Code.entity.account.ManagerAccount;
 import com.example.demo1.Code.entity.account.StudentAccount;
@@ -76,7 +77,7 @@ public class AccountDatabase {
         Connection conn = null ; // 数据库连接
         Statement stmt = null ; // 数据库操作
         String id = account.getID(); // id
-// 拼凑出一个完整的SQL语句
+        // 拼凑出一个完整的SQL语句
         String sql = "DELETE FROM account WHERE id=" + id;
         try {
             Class.forName(m_sDriver) ; // 加载驱动程序
@@ -151,6 +152,7 @@ public class AccountDatabase {
         String sql1 = "SELECT id_account,id_course FROM account_course where id_account = "+studentAccount.getID();
         //读取对应活动
         String sql2 = "SELECT id_account,id_activity FROM account_activity where id_account = "+studentAccount.getID();
+        String sql3 = "SELECT * FROM account_clock where account_id ="+studentAccount.getID();
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
             stmt = conn.createStatement();// 实例化Statement对象
@@ -168,10 +170,22 @@ public class AccountDatabase {
                 Activity activity = new Activity();
                 activity.setM_iNum(rs.getInt("id_activity"));
                 ActivityDatabase activityDatabase = new ActivityDatabase();
-                activityDatabase.find(activity);//这边要读course数据
+                activityDatabase.find(activity);//这边要读activity数据
                 studentAccount.getActivity().add(activity);//向ArrayList中添加
             }
             rs.close();// 关闭活动结果集
+            rs = stmt.executeQuery(sql3);// 实例化ResultSet对象
+            while(rs.next()){
+                EventClock eventClock = new EventClock();
+                eventClock.setClockName(rs.getString("clock_name"));
+                eventClock.setClockType(rs.getInt("type"));
+                eventClock.getClockTime().setStartMonth(rs.getInt("month"));
+                eventClock.getClockTime().setStartDate(rs.getInt("day"));
+                eventClock.getClockTime().setWeek(rs.getInt("week"));
+                eventClock.getClockTime().setStartHour(rs.getInt("hour"));
+                eventClock.getClockTime().setStartMinute(rs.getInt("min"));
+                studentAccount.getM_CaEventClock().add(eventClock);
+            }
             stmt.close(); // 操作关闭
             conn.close(); // 数据库关闭
         } catch (SQLException throwable) {
@@ -228,7 +242,69 @@ public class AccountDatabase {
         managerAccount.setActivity(activity);
 
     }
-    //主函数，测试用
+    //学生添加闹钟
+    public void insertClock(StudentAccount studentAccount,EventClock eventClock) {
+        Connection conn = null ; // 数据库连接
+        Statement stmt = null ; // 数据库操作
+        String sql = "INSERT INTO account_clock(account_id, clock_name, month, day, week, hour, min, type)"+
+                " VALUES ('" + studentAccount.getID()+"','"+eventClock.getClockName() + "','"
+                + eventClock.getClockTime().getStartMonth() + "','" + eventClock.getClockTime().getStartDate()
+                + "','" +eventClock.getClockTime().getWeek() + "','" +eventClock.getClockTime().getStartHour()
+                + "','" +eventClock.getClockTime().getStartMinute() + "','" +eventClock.getClockType() + "')";
+        try {
+            conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
+            stmt = conn.createStatement() ;// 实例化Statement对象
+            stmt.executeUpdate(sql);// 执行数据库更新操作
+            stmt.close() ; // 操作关闭
+            conn.close() ; // 数据库关闭
+        } catch (SQLException e) {
+            e.printStackTrace();
+            LogFile.error("AccountDatabase","数据库读取错误");
+        }
+    }
+    //学生修改闹钟
+    public void updateClock(StudentAccount studentAccount,EventClock eventClock){
+        Connection conn = null ; // 数据库连接
+        Statement stmt = null ; // 数据库操作
+        // 拼凑出一个完整的SQL语句
+        String sql = "UPDATE account_clock SET clock_name='" + eventClock.getClockName()
+                + "',month='" + eventClock.getClockTime().getStartMonth()
+                + "',day='" + eventClock.getClockTime().getStartDate()
+                + "',week='" + eventClock.getClockTime().getWeek()
+                + "',hour='" + eventClock.getClockTime().getStartHour()
+                + "',min='" + eventClock.getClockTime().getStartMinute()
+                + "',type='" + eventClock.getClockType()+ "'WHERE account_id=" + studentAccount.getID() ;
+        try {
+            Class.forName(m_sDriver) ; // 加载驱动程序
+            conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
+            stmt = conn.createStatement() ;// 实例化Statement对象
+            stmt.executeUpdate(sql);// 执行数据库更新操作
+            stmt.close() ; // 操作关闭
+            conn.close() ; // 数据库关闭
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            LogFile.error("AccountDatabase","数据库读取错误");
+        }
+    }
+    //学生删除闹钟
+    public void deleteClock(StudentAccount studentAccount,EventClock eventClock){
+        Connection conn = null ; // 数据库连接
+        Statement stmt = null ; // 数据库操作
+        // 拼凑出一个完整的SQL语句
+        String sql = "DELETE FROM account_clock WHERE account_id='" + studentAccount.getID()
+                +"'and clock_name="+eventClock.getClockName();
+        try {
+            Class.forName(m_sDriver) ; // 加载驱动程序
+            conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
+            stmt = conn.createStatement() ;// 实例化Statement对象
+            stmt.executeUpdate(sql);// 执行数据库更新操作
+            stmt.close() ; // 操作关闭
+            conn.close() ; // 数据库关闭
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            LogFile.error("AccountDatabase","数据库读取错误");
+        }
+    }
     public static void main(String[] args){
          AccountDatabase accountDatabase = new AccountDatabase();
          ManagerAccount account = new ManagerAccount("1","123456");
@@ -238,4 +314,6 @@ public class AccountDatabase {
          int s = 0;
          s = 1+2;
     }
+
+
 }

@@ -164,23 +164,6 @@ public class SystemTime {
 }
 
 /**
- * 用于和数据库交互的闹钟
- */
-class EventClock {
-
-    Time clockTime;//闹钟的时间
-    String clockName;//闹钟的名字
-    int clockType;//闹钟的类型
-
-    public EventClock(Time time, String name, int type) {
-        this.clockTime = time;
-        this.clockName = name;
-        this.clockType = type;
-    }
-
-}
-
-/**
  * 闹钟线程
  */
 class ClockThread implements Runnable {
