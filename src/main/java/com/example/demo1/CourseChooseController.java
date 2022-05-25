@@ -104,7 +104,7 @@ public class CourseChooseController {
         //实例化一个模糊查找对象
         FuzzySearch fuzzySearch = new FuzzySearch();
         //建立一个空表用于存储模糊查找结果
-        ArrayList<Course> primaryResults;
+        ArrayList<Course> primaryResults = new ArrayList<>();
         //将模糊查找结果存入 list
         primaryResults = fuzzySearch.get_FS_result(ToBeFuzzySearched.getText(), tool);
         //查询结果的list
