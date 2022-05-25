@@ -59,7 +59,8 @@
                 </GridPane>
             </center>
             <right>
-                <Label fx:id="SearchResult"/>
+                <Label fx:id="SearchResult_Name"/>
+                <Label fx:id="SearchResult_Boolean"/>
             </right>
         </BorderPane>
     </center>

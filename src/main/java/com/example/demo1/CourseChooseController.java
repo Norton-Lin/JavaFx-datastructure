@@ -77,6 +77,7 @@ public class CourseChooseController {
         this.thisStage.show();
     }
 
+    @FXML
     private void initialize() {
         //点击查询所有课程的反应
         this.Search1.setOnAction(event -> Search1ButtonClicked());
@@ -177,8 +178,8 @@ public class CourseChooseController {
         //查询结果的list
         ArrayList<String> texts = new ArrayList<>();
         //将结果字符串化
-        for (Course course : primaryResults)
-            texts.add(course.getM_sName() + " 编号为：" + course.getM_iNum());
+        for (Course primaryResult : primaryResults)
+            texts.add(primaryResult.getM_sName() + " 编号为：" + primaryResult.getM_iNum());
         //将查询得到的结果显示在文本框中
         ResOfSearch.setText(texts.toString());
         return primaryResults;
