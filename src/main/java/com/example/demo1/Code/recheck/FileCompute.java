@@ -66,9 +66,13 @@ public class FileCompute {
                         FileReader reader_1 = null;
                         //将文件内容读取到 textarea里面并且进行异常处理
                         try {
+
                             reader_1 = new FileReader(fileChooser_1.getSelectedFile());
                             textarea_1.setText("");
+
+                            //这里出现了中文字符乱码问题，下面的文件二同
                             kit_1.read(reader_1, textarea_1.getDocument(), 0);
+
                         } catch (Exception xe) {
                             System.err.println(xe.getMessage());
                         } finally {
@@ -182,7 +186,7 @@ public class FileCompute {
                     //显示相似内容于textarea_res
                     textarea_repetition.setText("相似的内容为：\n" + StringCompute.longestCommonSubstring(strA, strB));
                     //查重结果.
-                    JOptionPane.showMessageDialog(null, "    动态规划：" + StringCompute.similarityResult(result) ,"计 算 结 果", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "    动态规划：" + StringCompute.similarityResult(result), "计 算 结 果", JOptionPane.PLAIN_MESSAGE);
                     //+" 余弦1："+StringCompute.similarityResult(StringCompute.getSimilarity(strA,strB))+" 余弦3："+StringCompute.similarityResult(StringCompute.getCosineSimilarity(strA,strB)),
                 } else {
                     JOptionPane.showMessageDialog(null, "     请输入正确内容...", "提    示", JOptionPane.ERROR_MESSAGE);
@@ -200,8 +204,27 @@ public class FileCompute {
 
             //去重按钮
             final JButton RemoveRepetition = new JButton("去        重");
-            RemoveRepetition.addActionListener(e ->{
+            RemoveRepetition.addActionListener(e -> {
+                //将文件的所有字符存入一个字符串
+                String temp_strA = textarea_1.getText();
+                String temp_strB = textarea_2.getText();
+                String strA, strB;
 
+                //如果两个textarea都不为空且都不全为符号，则进行相似度计算，否则提示用户进行输入数据或选择文件
+                if (!(StringCompute.removeSign(temp_strA).length() == 0 && StringCompute.removeSign(temp_strB).length() == 0)) {
+
+                    if (temp_strA.length() >= temp_strB.length()) {
+                        strA = temp_strA;
+                        strB = temp_strB;
+                    } else {
+                        strA = temp_strB;
+                        strB = temp_strA;
+                    }
+                    double result = StringCompute.SimilarDegree(strA, strB);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "     请输入正确内容...", "提    示", JOptionPane.ERROR_MESSAGE);
+                }
             });
             //总布局
             //文件一north

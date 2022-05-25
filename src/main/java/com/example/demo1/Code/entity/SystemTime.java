@@ -3,15 +3,14 @@ package com.example.demo1.Code.entity;
 
 import com.example.demo1.Code.Util.Time;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.util.Timer;
+import javax.swing.*;
 
 import static com.example.demo1.Code.entity.SystemTime.*;
 
@@ -27,8 +26,10 @@ import static com.example.demo1.Code.entity.SystemTime.*;
  */
 public class SystemTime {
 
-    private static int speed;//时间快进速度
-    private static String StartTime;//开始计时时间
+    private static int speed = 360;//模拟系统时间快进速度
+    private static String StartTime;//模拟系统开始计时时间
+    private static Calendar CurrentTime;//模拟系统当前时间
+    private static boolean flag = true;//模拟系统时间前进状态
 
     /**
      * 设置模拟系统时间快进速度
@@ -51,8 +52,17 @@ public class SystemTime {
     /**
      * 暂停系统时间推进
      */
-    public void stopTime() {
-        SystemTime.speed = 0;
+    public static void stopTime() {
+        SystemTime.flag = false;
+    }
+
+    /**
+     * 获取模拟系统时间推进状态
+     *
+     * @return 推进状态
+     */
+    public static boolean getFlag() {
+        return SystemTime.flag;
     }
 
     /**
@@ -62,10 +72,13 @@ public class SystemTime {
         Date current_time = new Date();//当前系统时间
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         StartTime = sdf.format(current_time);
+        //System.out.println(SystemTime.getStartTime());
+
     }
 
     /**
      * 获得模拟系统时间的开始时间
+     *
      * @return 开始时间
      */
     public static String getStartTime() {
@@ -73,7 +86,7 @@ public class SystemTime {
     }
 
     /**
-     * 获取模拟系统当前时间
+     * 获取long型模拟系统当前时间
      *
      * @param initial_time 模拟系统初始时间
      * @return 不带格式的模拟系统当前时间
@@ -86,6 +99,25 @@ public class SystemTime {
 
         return initial_time.getTimeInMillis() + interval;// show_time为模拟系统的当前时间
 
+    }
+
+    /**
+     * 设置模拟系统当前时间
+     *
+     * @param calendar 当前时间
+     */
+    public static void setCurrentTime(Calendar calendar) {
+        //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SystemTime.CurrentTime = calendar;
+    }
+
+    /**
+     * 获得Calendar型的系统当前时间
+     *
+     * @return 当前时间
+     */
+    public static Calendar getCurrentTime() {
+        return SystemTime.CurrentTime;
     }
 
     /**
@@ -134,10 +166,14 @@ public class SystemTime {
             Threads.add(new Thread(ct));
         }
 
-        //启动所有线程
-        for (Thread t : Threads) {
-            t.start();
+        //模拟系统时间未暂停推进时启动闹钟
+        if (getFlag()) {
+            //启动所有线程
+            for (Thread t : Threads) {
+                t.start();
+            }
         }
+
 
     }
 
@@ -145,28 +181,29 @@ public class SystemTime {
     public static void main(String[] args) {
 
         SystemTime test_1 = new SystemTime();
-        test_1.setSpeed(1);//设置快进速度
+        test_1.setSpeed(36000);//设置快进速度
         test_1.setStartTime();//设置模拟系统开始计时时间
+        //stopTime();
 
         ArrayList<EventClock> allClock = new ArrayList<>();
 
         Time time_1 = new Time();
-        time_1.setStartMonth(5);//活动时间对应的月份
-        time_1.setStartDate(11);//活动时间对应的日期
+        time_1.setStartMonth(3);//活动时间对应的月份
+        time_1.setStartDate(18);//活动时间对应的日期
         time_1.setWeek(3);//活动时间对应的星期
-        time_1.setStartHour(18);//活动时间对应的小时
-        time_1.setStartMinute(25);//活动时间对应的分钟
+        time_1.setStartHour(21);//活动时间对应的小时
+        time_1.setStartMinute(21);//活动时间对应的分钟
         String name_1 = "第一个活动";
-        int type_1 = 1;
+        int type_1 = 7;
 
         Time time_2 = new Time();
         time_2.setStartMonth(5);//活动时间对应的月份
-        time_2.setStartDate(11);//活动时间对应的日期
-        time_2.setWeek(3);//活动时间对应的星期
-        time_2.setStartHour(19);//活动时间对应的小时
-        time_2.setStartMinute(0);//活动时间对应的分钟
+        time_2.setStartDate(22);//活动时间对应的日期
+        time_2.setWeek(7);//活动时间对应的星期
+        time_2.setStartHour(9);//活动时间对应的小时
+        time_2.setStartMinute(21);//活动时间对应的分钟
         String name_2 = "第二个活动";
-        int type_2 = 1;
+        int type_2 = 7;
 
         allClock.add(new EventClock(time_1, name_1, type_1));
 
@@ -205,9 +242,7 @@ class ClockThread implements Runnable {
  */
 class Clock {
 
-    GregorianCalendar calendar;
-
-    //计算机系统实时时间的信息
+    //模拟系统当前时间的信息
     int year;
     int month;
     int date;
@@ -221,7 +256,14 @@ class Clock {
         Timer t = new Timer();
         Task task = new Task(eventClock);
 
-        t.schedule(task, 0, 1); //闹钟刷新时间间隔(单位：ms)
+        /*if(SystemTime.getSpeed()<=1000){
+            t.schedule(task, 0, 1000/SystemTime.getSpeed()); //闹钟刷新时间间隔(单位：ms)
+
+        }else{
+            t.schedule(task, 0, 1); //闹钟刷新时间间隔(单位：ms)
+        }*/
+
+        t.schedule(task, 0, 3600000 / SystemTime.getSpeed()); //闹钟刷新时间间隔(单位：ms)
 
     }
 
@@ -249,15 +291,26 @@ class Clock {
             Calendar initial_time = shiftDate(i_t);
 
             //模拟系统的当前时间及基本时间信息
-            calendar = (GregorianCalendar) shiftDate(df.format(showSimulateTime(initial_time)));
+            Calendar calendar = shiftDate(df.format(showSimulateTime(initial_time)));
 
-            year = calendar.get(Calendar.YEAR);
-            month = calendar.get(Calendar.MONTH);
-            date = calendar.get(Calendar.DATE);
-            week = calendar.get(Calendar.DAY_OF_WEEK);
-            hour = calendar.get(Calendar.HOUR_OF_DAY);
-            minute = calendar.get(Calendar.MINUTE);
-            second = calendar.get(Calendar.SECOND);
+            if (SystemTime.getCurrentTime() != null && SystemTime.getFlag()) {
+                year = SystemTime.getCurrentTime().get(Calendar.YEAR);
+                month = SystemTime.getCurrentTime().get(Calendar.MONTH);
+                date = SystemTime.getCurrentTime().get(Calendar.DATE);
+                week = SystemTime.getCurrentTime().get(Calendar.DAY_OF_WEEK);
+                hour = SystemTime.getCurrentTime().get(Calendar.HOUR_OF_DAY);
+                minute = SystemTime.getCurrentTime().get(Calendar.MINUTE);
+                second = SystemTime.getCurrentTime().get(Calendar.SECOND);
+            } else if (SystemTime.getCurrentTime() == null && SystemTime.getFlag()) {
+                year = calendar.get(Calendar.YEAR);
+                month = calendar.get(Calendar.MONTH);
+                date = calendar.get(Calendar.DATE);
+                week = calendar.get(Calendar.DAY_OF_WEEK);
+                hour = calendar.get(Calendar.HOUR_OF_DAY);
+                minute = calendar.get(Calendar.MINUTE);
+                second = calendar.get(Calendar.SECOND);
+            }
+
 
             //获取闹钟的所有信息信息
             setMonth = eventClock.clockTime.getStartMonth();
@@ -282,20 +335,65 @@ class Clock {
 
                 //一次性闹钟
                 case 0 -> {
-                    if (setMonth == month && setDate == date && setHour == hour && setMinute == minute && setSecond == second) {
-                        System.out.println(this.setName + " time!");
+                    if (setMonth == month && setDate == date && setHour == hour) {
+                        //System.out.println(this.setName + " time!");
+                        JFrame jf = new JFrame("闹钟提醒");//创建对象
+                        jf.setSize(300, 200);//设置窗口大小
+                        jf.setLocation(200, 100);//设置窗口位置
+                        jf.setVisible(true);//设置窗口可见
+                        jf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//传递参数使关闭按钮有效
+
+                        JPanel panel = new JPanel();
+                        JLabel size = new JLabel(this.setName + " 时间到!");
+                        size.setFont(new Font("宋体", Font.PLAIN, 30));
+                        size.setForeground(Color.PINK);
+
+                        panel.add(size);
+
+                        jf.setContentPane(panel);
+                        jf.setVisible(true);
                     }
                 }
                 //每天一次闹钟
                 case 1 -> {
-                    if (setHour == hour && setMinute == minute && setSecond == second) {
-                        System.out.println(this.setName + " time!");
+                    if (setHour == hour) {
+                        //System.out.println(this.setName + " time!");
+                        JFrame jf = new JFrame("闹钟提醒");//创建对象
+                        jf.setSize(300, 200);//设置窗口大小
+                        jf.setLocation(100, 100);//设置窗口位置
+                        jf.setVisible(true);//设置窗口可见
+                        jf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//传递参数使关闭按钮有效
+
+                        JPanel panel = new JPanel();
+                        JLabel size = new JLabel(this.setName + " 时间到!");
+                        size.setFont(new Font("宋体", Font.PLAIN, 30));
+                        size.setForeground(Color.PINK);
+
+                        panel.add(size);
+
+                        jf.setContentPane(panel);
+                        jf.setVisible(true);
                     }
                 }
                 //每周一次闹钟
                 case 7 -> {
-                    if (setWeek == week && setHour == hour && setMinute == minute && setSecond == second) {
-                        System.out.println(this.setName + " time!");
+                    if (setWeek == week && setHour == hour) {
+                        //System.out.println(this.setName + " time!");
+                        JFrame jf = new JFrame("闹钟提醒");//创建对象
+                        jf.setSize(300, 200);//设置窗口大小
+                        jf.setLocation(100, 100);//设置窗口位置
+                        jf.setVisible(true);//设置窗口可见
+                        jf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//传递参数使关闭按钮有效
+
+                        JPanel panel = new JPanel();
+                        JLabel size = new JLabel(this.setName + " 时间到!");
+                        size.setFont(new Font("宋体", Font.PLAIN, 30));
+                        size.setForeground(Color.PINK);
+
+                        panel.add(size);
+
+                        jf.setContentPane(panel);
+                        jf.setVisible(true);
                     }
                 }
             }
@@ -316,7 +414,7 @@ class SimulatedTime extends JFrame {
     Line2D.Double hourLine;
     Line2D.Double minLine;
     Line2D.Double secondLine;
-    GregorianCalendar calendar;
+    Calendar calendar;
 
     //计算机系统实时时间的信息
     int year;
@@ -358,14 +456,21 @@ class SimulatedTime extends JFrame {
             Calendar initial_time = shiftDate(i_t);
 
             //模拟系统的当前时间及基本时间信息
-            calendar = (GregorianCalendar) shiftDate(df.format(showSimulateTime(initial_time)));
-            year = calendar.get(Calendar.YEAR);
-            month = calendar.get(Calendar.MONTH);
-            date = calendar.get(Calendar.DATE);
-            week = calendar.get(Calendar.DAY_OF_WEEK);
-            hour = calendar.get(Calendar.HOUR_OF_DAY);
-            minute = calendar.get(Calendar.MINUTE);
-            second = calendar.get(Calendar.SECOND);
+            calendar = shiftDate(df.format(showSimulateTime(initial_time)));
+
+            //系统时间未被暂停时更新保持更新系统时间
+            if (SystemTime.getFlag()) {
+                SystemTime.setCurrentTime(calendar);
+            }
+
+            //根据最近的模拟系统时间画钟表
+            year = SystemTime.getCurrentTime().get(Calendar.YEAR);
+            month = SystemTime.getCurrentTime().get(Calendar.MONTH);
+            date = SystemTime.getCurrentTime().get(Calendar.DATE);
+            week = SystemTime.getCurrentTime().get(Calendar.DAY_OF_WEEK);
+            hour = SystemTime.getCurrentTime().get(Calendar.HOUR_OF_DAY);
+            minute = SystemTime.getCurrentTime().get(Calendar.MINUTE);
+            second = SystemTime.getCurrentTime().get(Calendar.SECOND);
 
             //Calendar.WEEK从周日开始
             if (week == 1) {
@@ -386,7 +491,10 @@ class SimulatedTime extends JFrame {
             secondLine.y2 = Y + 50 * Math.sin(second * (Math.PI / 30) - Math.PI / 2);
 
             repaint();
+
+
         }
+
 
     }
 
