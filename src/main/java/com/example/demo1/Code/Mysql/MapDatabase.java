@@ -7,22 +7,22 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class MapDatabase {
-    // å®šä¹‰MySQLçš„æ•°æ®åº“é©±åŠ¨ç¨‹åº
+    // ¶¨ÒåMySQLµÄÊı¾İ¿âÇı¶¯³ÌĞò
     public static final String m_sDriver ="com.mysql.cj.jdbc.Driver" ;
-    // å®šä¹‰MySQLæ•°æ®åº“çš„è¿æ¥åœ°å€
+    // ¶¨ÒåMySQLÊı¾İ¿âµÄÁ¬½ÓµØÖ·
     public static final String m_sUrl ="jdbc:mysql://localhost:3306/informationmanagement";
-    // MySQLæ•°æ®åº“çš„è¿æ¥ç”¨æˆ·å
+    // MySQLÊı¾İ¿âµÄÁ¬½ÓÓÃ»§Ãû
     public static final String m_sUser ="root";
-    // MySQLæ•°æ®åº“çš„è¿æ¥å¯†ç 
+    // MySQLÊı¾İ¿âµÄÁ¬½ÓÃÜÂë
     public static final String m_sPassword ="20021213";
 
     /**
-     *å‘æ•°æ®åº“å†…æ’å…¥æ–°æ•°æ®
-     * @param line å¾…æ’å…¥è·¯å¾„
+     *ÏòÊı¾İ¿âÄÚ²åÈëĞÂÊı¾İ
+     * @param line ´ı²åÈëÂ·¾¶
      */
     public void insert(Line line){
-        Connection conn = null ; // æ•°æ®åº“è¿æ¥
-        Statement stmt = null ; // æ•°æ®åº“æ“ä½œ
+        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
+        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
         String sql = "INSERT INTO map(start_id, end_id, name, crowded1, crowded2, crowded3, degree,len)"
                 + " VALUES ('" + line.getM_i_stp() + "','" + line.getM_i_enp() + "','" +line.getM_s_name()
                 + "','" +line.getM_d_congestion()[0]+ "','" + line.getM_d_congestion()[1]
@@ -30,74 +30,74 @@ public class MapDatabase {
                 + "','" +line.getM_i_length()+ "')";
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement() ;// å®ä¾‹åŒ–Statementå¯¹è±¡
-            stmt.executeUpdate(sql);// æ‰§è¡Œæ•°æ®åº“æ›´æ–°æ“ä½œ
-            stmt.close() ; // æ“ä½œå…³é—­
-            conn.close() ; // æ•°æ®åº“å…³é—­
+            stmt = conn.createStatement() ;// ÊµÀı»¯Statement¶ÔÏó
+            stmt.executeUpdate(sql);// Ö´ĞĞÊı¾İ¿â¸üĞÂ²Ù×÷
+            stmt.close() ; // ²Ù×÷¹Ø±Õ
+            conn.close() ; // Êı¾İ¿â¹Ø±Õ
         } catch (SQLException e) {
             e.printStackTrace();
-            LogFile.error("MapDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
+            LogFile.error("MapDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
         }
     }
 
     /**
-     * æ›´æ–°æ•°æ®åº“å†…å·²æœ‰æ•°æ®çš„å†…å®¹
-     * @param line æ›´æ–°è·¯å¾„
+     * ¸üĞÂÊı¾İ¿âÄÚÒÑÓĞÊı¾İµÄÄÚÈİ
+     * @param line ¸üĞÂÂ·¾¶
      */
     public void update(Line line){
-        Connection conn = null ; // æ•°æ®åº“è¿æ¥
-        Statement stmt = null ; // æ•°æ®åº“æ“ä½œ
+        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
+        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
         String sql = "UPDATE map set start_id ='"+line.getM_i_stp()+"',end_id = '"+ line.getM_i_enp()
                 +"',crowded1 = '"+line.getM_d_congestion()[0]+"',crowded2 = '"+line.getM_d_congestion()[1]
                 +"',crowded3 = '"+line.getM_d_congestion()[2]+"',len = '" + line.getM_i_length()
                 + "',degree = '"+line.getDegree()+"'WHERE name =" + line.getM_s_name();
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement() ;// å®ä¾‹åŒ–Statementå¯¹è±¡
-            stmt.executeUpdate(sql);// æ‰§è¡Œæ•°æ®åº“æ›´æ–°æ“ä½œ
-            stmt.close() ; // æ“ä½œå…³é—­
-            conn.close() ; // æ•°æ®åº“å…³é—­
+            stmt = conn.createStatement() ;// ÊµÀı»¯Statement¶ÔÏó
+            stmt.executeUpdate(sql);// Ö´ĞĞÊı¾İ¿â¸üĞÂ²Ù×÷
+            stmt.close() ; // ²Ù×÷¹Ø±Õ
+            conn.close() ; // Êı¾İ¿â¹Ø±Õ
         } catch (SQLException e) {
             e.printStackTrace();
-            LogFile.error("MapDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
+            LogFile.error("MapDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
         }
     }
 
     /**
-     * åˆ é™¤æ•°æ®åº“å†…çš„æŒ‡å®šè·¯å¾„
-     * @param line å¾…åˆ é™¤è·¯å¾„
+     * É¾³ıÊı¾İ¿âÄÚµÄÖ¸¶¨Â·¾¶
+     * @param line ´ıÉ¾³ıÂ·¾¶
      */
     public void delete(Line line){
-        Connection conn = null ; // æ•°æ®åº“è¿æ¥
-        Statement stmt = null ; // æ•°æ®åº“æ“ä½œ
+        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
+        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
         String sql = "DELETE FROM map WHERE name ="+line.getM_s_name();
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement() ;// å®ä¾‹åŒ–Statementå¯¹è±¡
-            stmt.executeUpdate(sql);// æ‰§è¡Œæ•°æ®åº“æ›´æ–°æ“ä½œ
-            stmt.close() ; // æ“ä½œå…³é—­
-            conn.close() ; // æ•°æ®åº“å…³é—­
+            stmt = conn.createStatement() ;// ÊµÀı»¯Statement¶ÔÏó
+            stmt.executeUpdate(sql);// Ö´ĞĞÊı¾İ¿â¸üĞÂ²Ù×÷
+            stmt.close() ; // ²Ù×÷¹Ø±Õ
+            conn.close() ; // Êı¾İ¿â¹Ø±Õ
         } catch (SQLException e) {
             e.printStackTrace();
-            LogFile.error("MapDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
+            LogFile.error("MapDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
         }
     }
 
     /**
-     * è¯»å–æ‰€æœ‰è·¯å¾„ï¼Œåˆ›å»ºåœ°å›¾
-     * @param lines è·¯å¾„åˆé›†
+     * ¶ÁÈ¡ËùÓĞÂ·¾¶£¬´´½¨µØÍ¼
+     * @param lines Â·¾¶ºÏ¼¯
      */
     public void find(ArrayList<Line> lines){
-        ResultSet rs = null; // ä¿å­˜æŸ¥è¯¢ç»“æœ
-        Connection conn = null ; // æ•°æ®åº“è¿æ¥
-        Statement stmt = null ; // æ•°æ®åº“æ“ä½œ
+        ResultSet rs = null; // ±£´æ²éÑ¯½á¹û
+        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
+        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
         String sql = "SELECT * FROM map ";
         Line line = new Line();
         double[] degree=new double[3];
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement() ;// å®ä¾‹åŒ–Statementå¯¹è±¡
-            rs = stmt.executeQuery(sql);// æ‰§è¡Œæ•°æ®åº“æ›´æ–°æ“ä½œ
+            stmt = conn.createStatement() ;// ÊµÀı»¯Statement¶ÔÏó
+            rs = stmt.executeQuery(sql);// Ö´ĞĞÊı¾İ¿â¸üĞÂ²Ù×÷
             while(rs.next()){
                 line.setM_i_stp(rs.getInt("start_id"));
                 line.setM_i_enp(rs.getInt("end_id"));
@@ -109,11 +109,11 @@ public class MapDatabase {
                 line.setM_i_length(rs.getInt("len"));
                 lines.add(line);
             }
-            stmt.close() ; // æ“ä½œå…³é—­
-            conn.close() ; // æ•°æ®åº“å…³é—­
+            stmt.close() ; // ²Ù×÷¹Ø±Õ
+            conn.close() ; // Êı¾İ¿â¹Ø±Õ
         } catch (SQLException e) {
             e.printStackTrace();
-            LogFile.error("MapDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
+            LogFile.error("MapDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
         }
     }
 }

@@ -28,6 +28,10 @@ public class TeacherAccount extends Account{
         super(account.getID(), account.getPassword());
         AccountDatabase accountDatabase = new AccountDatabase();
         accountDatabase.findTeaAccount(this);
+      /*  CourseDatabase courseDatabase = new CourseDatabase();
+        ActivityDatabase activityDatabase = new ActivityDatabase();
+        courseDatabase.find(this.m_CaCourse);//从数据库内读取所有课程信息
+        activityDatabase.find(this.m_CaActivity);//从数据库内读取所有活动信息*/
         sortCourse();//对课程进行排序
         sortActivity();//对活动进行排序
     }
@@ -129,12 +133,4 @@ public class TeacherAccount extends Account{
         activityDatabase.delete(activity,this);
         LogFile.info("Teacher "+getID(),"删除活动");
     }
-    public void teaching(int id)
-    {
-        this.m_CaCourse.get(id).setM_iCurrentClass(this.m_CaCourse.get(id).getM_iCurrentClass()+1);
-        CourseDatabase courseDatabase = new CourseDatabase();
-        courseDatabase.update(this.m_CaCourse.get(id));
-        LogFile.info("Teacher "+getID(),this.m_CaCourse.get(id).getM_sName()+" 课程进度加1");
-    }
-
 }

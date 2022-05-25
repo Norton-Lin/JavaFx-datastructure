@@ -2,7 +2,6 @@
 package com.example.demo1.Code.entity;
 
 import com.example.demo1.Code.Util.Time;
-import com.example.demo1.Code.entity.EventClock;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -153,8 +152,7 @@ public class SystemTime {
 
         //此处应该从数据库中得到该用户的所有闹钟
 
-        EventClock tool = new EventClock(clockTime, clockName, clockType);
-        allClock.add(tool);//更新用户的闹钟列表
+        allClock.add(new EventClock(clockTime, clockName, clockType));//更新用户的闹钟列表
 
         //创建闹钟线程列表并为所有闹钟添加闹钟线程
         ArrayList<Runnable> clockThread = new ArrayList<>();
@@ -177,43 +175,6 @@ public class SystemTime {
         }
 
 
-    }
-
-
-    public void start() {
-        SystemTime test_1 = new SystemTime();
-        test_1.setSpeed(1);//设置快进速度
-        test_1.setStartTime();//设置模拟系统开始计时时间
-
-        ArrayList<EventClock> allClock = new ArrayList<>();
-
-        Time time_1 = new Time();
-        time_1.setStartMonth(5);//活动时间对应的月份
-        time_1.setStartDate(11);//活动时间对应的日期
-        time_1.setWeek(3);//活动时间对应的星期
-        time_1.setStartHour(18);//活动时间对应的小时
-        time_1.setStartMinute(25);//活动时间对应的分钟
-        String name_1 = "第一个活动";
-        int type_1 = 1;
-
-        Time time_2 = new Time();
-        time_2.setStartMonth(5);//活动时间对应的月份
-        time_2.setStartDate(11);//活动时间对应的日期
-        time_2.setWeek(3);//活动时间对应的星期
-        time_2.setStartHour(19);//活动时间对应的小时
-        time_2.setStartMinute(0);//活动时间对应的分钟
-        String name_2 = "第二个活动";
-        int type_2 = 1;
-
-        allClock.add(new EventClock(time_1, name_1, type_1));
-
-        test_1.setClock(time_2, name_2, type_2, allClock);
-
-        //模拟系统时间图形化
-        SimulatedTime simulatedTime = new SimulatedTime();
-        simulatedTime.setLocationRelativeTo(null);//时钟窗体显示在屏幕中央
-        simulatedTime.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        simulatedTime.setVisible(true);
     }
 
     //main方法仅作测试用

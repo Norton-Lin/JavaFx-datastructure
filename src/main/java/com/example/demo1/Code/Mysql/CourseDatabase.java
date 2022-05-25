@@ -32,11 +32,10 @@ public class CourseDatabase {
                 + "','" + course.getM_tTime().getStartHour() + "','" +course.getM_tTime().getStartMinute()
                 + "','" + course.getM_tTime().getEndHour() + "','" + course.getM_tTime().getEndMinute()
                 + "','" + course.getM_eProperty(0)+ "','" +course.getM_iPle()
-                + "','" + course.getM_iMaxPle()+ "','" +course.getM_sCurGroup()
-                + "','" + course.getM_cExamTime().getStartMonth()+"','" +course.getM_cExamTime().getStartDate()
-                + "','" + course.getM_cExamTime().getStartHour()+"','" +course.getM_cExamTime().getStartMinute()
-                + "','" + course.getM_cExamTime().getEndHour() + "','" +course.getM_cExamTime().getEndMinute()
-                + "','" + course.getM_iTotalClass()+ "','" + course.getM_iCurrentClass()
+                + "','" +course.getM_iMaxPle()+ "','" +course.getM_sCurGroup()
+                + "','" +course.getM_cExamTime().getStartMonth()+"','" +course.getM_cExamTime().getStartDate()
+                + "','" +course.getM_cExamTime().getStartHour()+"','" +course.getM_cExamTime().getStartMinute()
+                + "','" +course.getM_cExamTime().getEndHour() + "','" +course.getM_cExamTime().getEndMinute()
                 + "','" +course.getM_sData()+ "','" +course.getM_sTeacher()+"')";
         String sql1 = "INSERT INTO course_construction(course_id,construction_id,floor,room,type)"+
                 "VALUES ('"+course.getM_iNum()+ "','" +course.getM_sConstruction().get_con_number()
@@ -97,7 +96,6 @@ public class CourseDatabase {
                 + "',tstarthour='" + course.getM_cExamTime().getStartHour() +"',tstartmin='"
                 + course.getM_cExamTime().getStartMinute() +"',tendhour='"+ course.getM_cExamTime().getEndHour()
                 +"',tendmin='"+course.getM_cExamTime().getEndMinute()+"',data='"+course.getM_sData()
-                + "','totalClass" + course.getM_iTotalClass()+ "',currentClass'" + course.getM_iCurrentClass()
                 +"',teacher='"+course.getM_sTeacher()
                 + "'WHERE id=" + course.getM_iNum() ;
         String sql1 = "UPDATE course_construction SET construction_id='"+course.getM_sConstruction().get_con_number()
@@ -176,6 +174,9 @@ public class CourseDatabase {
      */
     public void find(Course course) {
         ResultSet rs = null; // 保存查询结果
+        ResultSet rs1=null;
+        ResultSet rs2=null;
+        Construction construction = new Construction();
         ConstructionDatabase constructionDatabase = new ConstructionDatabase();
         String sql = "SELECT * FROM course WHERE id = " + course.getM_iNum();
         Connection conn = null; // 数据库连接
@@ -201,10 +202,7 @@ public class CourseDatabase {
                 course.getM_cExamTime().setStartMinute(rs.getInt("tstartmin"));
                 course.getM_cExamTime().setEndHour(rs.getInt("tendhour"));
                 course.getM_cExamTime().setEndMinute(rs.getInt("tendmin"));
-                course.setM_iTotalClass(rs.getInt("totalClass"));
-                course.setM_iCurrentClass(rs.getInt("currentClass"));
                 course.setM_sData(rs.getString("data"));
-                course.setM_sTeacher(rs.getString("teacher"));
             }
             rs.close();// 关闭结果集
             stmt.close(); // 操作关闭
@@ -248,10 +246,7 @@ public class CourseDatabase {
                 c.getM_cExamTime().setStartMinute(rs.getInt("tstartmin"));
                 c.getM_cExamTime().setEndHour(rs.getInt("tendhour"));
                 c.getM_cExamTime().setEndMinute(rs.getInt("tendmin"));
-                c.setM_iTotalClass(rs.getInt("totalClass"));
-                c.setM_iCurrentClass(rs.getInt("currentClass"));
                 c.setM_sData(rs.getString("data"));
-                c.setM_sTeacher(rs.getString("teacher"));
                 course.add(c);
             }
             rs.close();// 关闭结果集

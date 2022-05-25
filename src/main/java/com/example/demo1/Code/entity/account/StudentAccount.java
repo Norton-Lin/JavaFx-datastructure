@@ -19,6 +19,7 @@ public class StudentAccount extends Account{
    // private Authority m_eAuthority = Authority.Student; //权限等级
     private ArrayList<Course> m_CaCourse = new ArrayList<Course>(); //已选课程
     private ArrayList<Activity> m_CaActivity = new ArrayList<Activity>(); // 已选活动
+    private ArrayList<EventClock> m_CaEventClock = new ArrayList<>();//已设置闹钟
 
     /**
      * 构造函数
@@ -74,6 +75,13 @@ public class StudentAccount extends Account{
         return search.BinaryCourseSearch(id,m_CaActivity);
     }
 
+    public ArrayList<EventClock> getM_CaEventClock() {
+        return m_CaEventClock;
+    }
+
+    public void setM_CaEventClock(ArrayList<EventClock> m_CaEventClock) {
+        this.m_CaEventClock = m_CaEventClock;
+    }
     /**
      * 对课程列表进行排序
      */
