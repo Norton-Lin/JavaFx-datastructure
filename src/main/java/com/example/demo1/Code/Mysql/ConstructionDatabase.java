@@ -12,17 +12,17 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class ConstructionDatabase {
-    // ¶¨ÒåMySQLµÄÊı¾İ¿âÇı¶¯³ÌĞò
+    // å®šä¹‰MySQLçš„æ•°æ®åº“é©±åŠ¨ç¨‹åº
     public static final String m_sDriver ="com.mysql.cj.jdbc.Driver" ;
-    // ¶¨ÒåMySQLÊı¾İ¿âµÄÁ¬½ÓµØÖ·
+    // å®šä¹‰MySQLæ•°æ®åº“çš„è¿æ¥åœ°å€
     public static final String m_sUrl ="jdbc:mysql://localhost:3306/informationmanagement";
-    // MySQLÊı¾İ¿âµÄÁ¬½ÓÓÃ»§Ãû
+    // MySQLæ•°æ®åº“çš„è¿æ¥ç”¨æˆ·å
     public static final String m_sUser ="root";
-    // MySQLÊı¾İ¿âµÄÁ¬½ÓÃÜÂë
+    // MySQLæ•°æ®åº“çš„è¿æ¥å¯†ç 
     public static final String m_sPassword ="20021213";
     public void insert(Construction construction){
-        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
+        Connection conn = null ; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null ; // æ•°æ®åº“æ“ä½œ
         ArrayList<ArrayList<Integer>> room = construction.get_con_room();
         int floor = room.size();
         StringBuilder numberList = new StringBuilder();
@@ -36,18 +36,18 @@ public class ConstructionDatabase {
                 + "','"+construction.getCampus()+ "','"+construction.get_con_number()+"')";
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement() ;// ÊµÀı»¯Statement¶ÔÏó
-            stmt.executeUpdate(sql);// Ö´ĞĞÊı¾İ¿â¸üĞÂ²Ù×÷
-            stmt.close() ; // ²Ù×÷¹Ø±Õ
-            conn.close() ; // Êı¾İ¿â¹Ø±Õ
+            stmt = conn.createStatement() ;// å®ä¾‹åŒ–Statementå¯¹è±¡
+            stmt.executeUpdate(sql);// æ‰§è¡Œæ•°æ®åº“æ›´æ–°æ“ä½œ
+            stmt.close() ; // æ“ä½œå…³é—­
+            conn.close() ; // æ•°æ®åº“å…³é—­
         } catch (SQLException e) {
             e.printStackTrace();
-            LogFile.error("ConstructionDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
+            LogFile.error("ConstructionDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
         }
     }
     public void update(Construction construction){
-        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
+        Connection conn = null ; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null ; // æ•°æ®åº“æ“ä½œ
         ArrayList<ArrayList<Integer>> room = construction.get_con_room();
         int floor = room.size();
         StringBuilder numberList = new StringBuilder();
@@ -56,64 +56,64 @@ public class ConstructionDatabase {
                 numberList.append(integer).append(' ');
             }
         }
-        // Æ´´Õ³öÒ»¸öÍêÕûµÄSQLÓï¾ä
+        // æ‹¼å‡‘å‡ºä¸€ä¸ªå®Œæ•´çš„SQLè¯­å¥
         String sql = "UPDATE construction SET name='" + construction.get_con_name() + "',floor='"
                 + floor+"',roomnum='" + numberList +"', campus='"+construction.getCampus()
                 + "'WHERE id=" + construction.get_con_number();
         try {
-            Class.forName(m_sDriver) ; // ¼ÓÔØÇı¶¯³ÌĞò
+            Class.forName(m_sDriver) ; // åŠ è½½é©±åŠ¨ç¨‹åº
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement() ;// ÊµÀı»¯Statement¶ÔÏó
-            stmt.executeUpdate(sql);// Ö´ĞĞÊı¾İ¿â¸üĞÂ²Ù×÷
-            stmt.close() ; // ²Ù×÷¹Ø±Õ
-            conn.close() ; // Êı¾İ¿â¹Ø±Õ
+            stmt = conn.createStatement() ;// å®ä¾‹åŒ–Statementå¯¹è±¡
+            stmt.executeUpdate(sql);// æ‰§è¡Œæ•°æ®åº“æ›´æ–°æ“ä½œ
+            stmt.close() ; // æ“ä½œå…³é—­
+            conn.close() ; // æ•°æ®åº“å…³é—­
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-            LogFile.error("ConstructionDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
+            LogFile.error("ConstructionDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
         }
     }
     public void delete(Construction construction){
-        Connection conn = null ; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null ; // Êı¾İ¿â²Ù×÷
-        // Æ´´Õ³öÒ»¸öÍêÕûµÄSQLÓï¾ä
+        Connection conn = null ; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null ; // æ•°æ®åº“æ“ä½œ
+        // æ‹¼å‡‘å‡ºä¸€ä¸ªå®Œæ•´çš„SQLè¯­å¥
         String sql = "DELETE FROM construction WHERE id=" + construction.get_con_number();
         try {
-            Class.forName(m_sDriver) ; // ¼ÓÔØÇı¶¯³ÌĞò
+            Class.forName(m_sDriver) ; // åŠ è½½é©±åŠ¨ç¨‹åº
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement() ;// ÊµÀı»¯Statement¶ÔÏó
-            stmt.executeUpdate(sql);// Ö´ĞĞÊı¾İ¿â¸üĞÂ²Ù×÷
-            stmt.close() ; // ²Ù×÷¹Ø±Õ
-            conn.close() ; // Êı¾İ¿â¹Ø±Õ
+            stmt = conn.createStatement() ;// å®ä¾‹åŒ–Statementå¯¹è±¡
+            stmt.executeUpdate(sql);// æ‰§è¡Œæ•°æ®åº“æ›´æ–°æ“ä½œ
+            stmt.close() ; // æ“ä½œå…³é—­
+            conn.close() ; // æ•°æ®åº“å…³é—­
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-            LogFile.error("ConstructionDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
+            LogFile.error("ConstructionDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
         }
     }
     public void find(Construction construction) {
-        ResultSet rs = null; // ±£´æ²éÑ¯½á¹û
+        ResultSet rs = null; // ä¿å­˜æŸ¥è¯¢ç»“æœ
         String sql = "SELECT * FROM construction WHERE id = "+ construction.get_con_number();
-        Connection conn = null; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null; // Êı¾İ¿â²Ù×÷
+        Connection conn = null; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null; // æ•°æ®åº“æ“ä½œ
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement();// ÊµÀı»¯Statement¶ÔÏó
-            rs = stmt.executeQuery(sql);// ÊµÀı»¯ResultSet¶ÔÏó
-            while (rs.next()) { // Ö¸ÕëÏòÏÂÒÆ¶¯
+            stmt = conn.createStatement();// å®ä¾‹åŒ–Statementå¯¹è±¡
+            rs = stmt.executeQuery(sql);// å®ä¾‹åŒ–ResultSetå¯¹è±¡
+            while (rs.next()) { // æŒ‡é’ˆå‘ä¸‹ç§»åŠ¨
                 construction.set_con_name(rs.getString("name"));
                 construction.setCampus(rs.getInt("campus"));
-                int floorNum = rs.getInt("floor");//»ñÈ¡Â¥²ãÊı
-                ArrayList<ArrayList<Integer>> room = new ArrayList<>();//´æ·Å·¿¼ä±àºÅµÄ¶şÎ¬arraylist
+                int floorNum = rs.getInt("floor");//è·å–æ¥¼å±‚æ•°
+                ArrayList<ArrayList<Integer>> room = new ArrayList<>();//å­˜æ”¾æˆ¿é—´ç¼–å·çš„äºŒç»´arraylist
 
-                String numberList = rs.getString("roomnum");//»ñÈ¡·¿¼ä±àºÅ×Ö·û´®
-                String[] str = numberList.split(" ");//ÒÔ¿Õ¸ñÎª½ç·Ö¸î×Ö·û´®
+                String numberList = rs.getString("roomnum");//è·å–æˆ¿é—´ç¼–å·å­—ç¬¦ä¸²
+                String[] str = numberList.split(" ");//ä»¥ç©ºæ ¼ä¸ºç•Œåˆ†å‰²å­—ç¬¦ä¸²
                 int j = 0;
-                for (int i = 0; i < floorNum; i++)//·ÖÂ¥²ã´æ·ÅÂ¥²ã±àºÅ
+                for (int i = 0; i < floorNum; i++)//åˆ†æ¥¼å±‚å­˜æ”¾æ¥¼å±‚ç¼–å·
                 {
-                    ArrayList<Integer> floor = new ArrayList<>();//´æ´¢Ã¿²ãÂ¥·¿¼äµÄ±àºÅ
-                    while (j < str.length)//´æ·ÅÃ¿²ãÂ¥µÄ·¿¼ä±àºÅ
+                    ArrayList<Integer> floor = new ArrayList<>();//å­˜å‚¨æ¯å±‚æ¥¼æˆ¿é—´çš„ç¼–å·
+                    while (j < str.length)//å­˜æ”¾æ¯å±‚æ¥¼çš„æˆ¿é—´ç¼–å·
                     {
                         int num = Integer.parseInt(str[j]);
-                        if (num > (i + 2) * 100)//µ½´ïÏÂÒ»²ã
+                        if (num > (i + 2) * 100)//åˆ°è¾¾ä¸‹ä¸€å±‚
                             break;
                         j++;
                         floor.add(num);
@@ -122,42 +122,42 @@ public class ConstructionDatabase {
                 }
                 construction.set_con_room(room);
             }
-                rs.close();// ¹Ø±Õ½á¹û¼¯
-                stmt.close(); // ²Ù×÷¹Ø±Õ
-                conn.close(); // Êı¾İ¿â¹Ø±Õ
+                rs.close();// å…³é—­ç»“æœé›†
+                stmt.close(); // æ“ä½œå…³é—­
+                conn.close(); // æ•°æ®åº“å…³é—­
         } catch (SQLException e) {
             e.printStackTrace();
-            LogFile.error("ConstructionDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
+            LogFile.error("ConstructionDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
         }
     }
     public void find(ArrayList<Construction> constructions) {
-        ResultSet rs = null; // ±£´æ²éÑ¯½á¹û
+        ResultSet rs = null; // ä¿å­˜æŸ¥è¯¢ç»“æœ
         String sql = "SELECT * FROM construction ";
 
-        Connection conn = null; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null; // Êı¾İ¿â²Ù×÷
+        Connection conn = null; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null; // æ•°æ®åº“æ“ä½œ
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement();// ÊµÀı»¯Statement¶ÔÏó
-            rs = stmt.executeQuery(sql);// ÊµÀı»¯ResultSet¶ÔÏó
-            while (rs.next()) { // Ö¸ÕëÏòÏÂÒÆ¶¯
+            stmt = conn.createStatement();// å®ä¾‹åŒ–Statementå¯¹è±¡
+            rs = stmt.executeQuery(sql);// å®ä¾‹åŒ–ResultSetå¯¹è±¡
+            while (rs.next()) { // æŒ‡é’ˆå‘ä¸‹ç§»åŠ¨
                 Construction construction = new Construction();
                 construction.set_con_number(rs.getInt("id"));
                 construction.set_con_name(rs.getString("name"));
                 construction.setCampus(rs.getInt("campus"));
-                int floorNum = rs.getInt("floor");//»ñÈ¡Â¥²ãÊı
-                ArrayList<ArrayList<Integer>> room = new ArrayList<>();//´æ·Å·¿¼ä±àºÅµÄ¶şÎ¬arraylist
+                int floorNum = rs.getInt("floor");//è·å–æ¥¼å±‚æ•°
+                ArrayList<ArrayList<Integer>> room = new ArrayList<>();//å­˜æ”¾æˆ¿é—´ç¼–å·çš„äºŒç»´arraylist
 
-                String numberList = rs.getString("roomnum");//»ñÈ¡·¿¼ä±àºÅ×Ö·û´®
-                String[] str = numberList.split(" ");//ÒÔ¿Õ¸ñÎª½ç·Ö¸î×Ö·û´®
+                String numberList = rs.getString("roomnum");//è·å–æˆ¿é—´ç¼–å·å­—ç¬¦ä¸²
+                String[] str = numberList.split(" ");//ä»¥ç©ºæ ¼ä¸ºç•Œåˆ†å‰²å­—ç¬¦ä¸²
                 int j = 0;
-                for (int i = 0; i < floorNum; i++)//·ÖÂ¥²ã´æ·ÅÂ¥²ã±àºÅ
+                for (int i = 0; i < floorNum; i++)//åˆ†æ¥¼å±‚å­˜æ”¾æ¥¼å±‚ç¼–å·
                 {
-                    ArrayList<Integer> floor = new ArrayList<>();//´æ´¢Ã¿²ãÂ¥·¿¼äµÄ±àºÅ
-                    while (j < str.length)//´æ·ÅÃ¿²ãÂ¥µÄ·¿¼ä±àºÅ
+                    ArrayList<Integer> floor = new ArrayList<>();//å­˜å‚¨æ¯å±‚æ¥¼æˆ¿é—´çš„ç¼–å·
+                    while (j < str.length)//å­˜æ”¾æ¯å±‚æ¥¼çš„æˆ¿é—´ç¼–å·
                     {
                         int num = Integer.parseInt(str[j]);
-                        if (num > (i + 2) * 100)//µ½´ïÏÂÒ»²ã
+                        if (num > (i + 2) * 100)//åˆ°è¾¾ä¸‹ä¸€å±‚
                             break;
                         j++;
                         floor.add(num);
@@ -167,73 +167,73 @@ public class ConstructionDatabase {
                 construction.set_con_room(room);
                 constructions.add(construction);
             }
-            rs.close();// ¹Ø±Õ½á¹û¼¯
-            stmt.close(); // ²Ù×÷¹Ø±Õ
-            conn.close(); // Êı¾İ¿â¹Ø±Õ
+            rs.close();// å…³é—­ç»“æœé›†
+            stmt.close(); // æ“ä½œå…³é—­
+            conn.close(); // æ•°æ®åº“å…³é—­
         } catch (SQLException e) {
             e.printStackTrace();
-            LogFile.error("ConstructionDatabase","Êı¾İ¿â¶ÁÈ¡´íÎó");
+            LogFile.error("ConstructionDatabase","æ•°æ®åº“è¯»å–é”™è¯¯");
         }
     }
     public void findByCourse(Course course) {
-        ResultSet rs = null; // ±£´æ²éÑ¯½á¹û
-        Connection conn = null; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null; // Êı¾İ¿â²Ù×÷
+        ResultSet rs = null; // ä¿å­˜æŸ¥è¯¢ç»“æœ
+        Connection conn = null; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null; // æ•°æ®åº“æ“ä½œ
         String sql = "SELECT * FROM course_construction WHERE course_id = '" + course.getM_iNum() +"'and type = "+ 0;
         Construction construction = new Construction();
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement();// ÊµÀı»¯Statement¶ÔÏó
-            rs = stmt.executeQuery(sql);// ÊµÀı»¯ResultSet¶ÔÏó
-            while (rs.next()) { // Ö¸ÕëÏòÏÂÒÆ¶¯
+            stmt = conn.createStatement();// å®ä¾‹åŒ–Statementå¯¹è±¡
+            rs = stmt.executeQuery(sql);// å®ä¾‹åŒ–ResultSetå¯¹è±¡
+            while (rs.next()) { // æŒ‡é’ˆå‘ä¸‹ç§»åŠ¨
                 course.setM_iFloor(rs.getInt("floor"));
                 course.setM_iRoom(rs.getInt("room"));
                 construction.set_con_number(rs.getInt("construction_id"));
                 find(construction);
                 course.setM_sConstruction(construction);
             }
-            rs.close();// ¹Ø±Õ½á¹û¼¯
+            rs.close();// å…³é—­ç»“æœé›†
             sql = "SELECT * FROM course_construction WHERE course_id = '" + course.getM_iNum() +"'and type = "+ 1;
-            rs = stmt.executeQuery(sql);// ÊµÀı»¯ResultSet¶ÔÏó
-            while (rs.next()) { // Ö¸ÕëÏòÏÂÒÆ¶¯
+            rs = stmt.executeQuery(sql);// å®ä¾‹åŒ–ResultSetå¯¹è±¡
+            while (rs.next()) { // æŒ‡é’ˆå‘ä¸‹ç§»åŠ¨
                 course.setM_iExamFloor(rs.getInt("floor"));
                 course.setM_iExamRoom(rs.getInt("room"));
                 construction.set_con_number(rs.getInt("construction_id"));
                 find(construction);
                 course.setM_cExamConstruction(construction);
             }
-            rs.close();// ¹Ø±Õ½á¹û¼¯
-            stmt.close(); // ²Ù×÷¹Ø±Õ
-            conn.close(); // Êı¾İ¿â¹Ø±Õ
+            rs.close();// å…³é—­ç»“æœé›†
+            stmt.close(); // æ“ä½œå…³é—­
+            conn.close(); // æ•°æ®åº“å…³é—­
         } catch (SQLException e) {
             e.printStackTrace();
-            LogFile.error("ConstructionDatabase", "Êı¾İ¿â¶ÁÈ¡´íÎó");
+            LogFile.error("ConstructionDatabase", "æ•°æ®åº“è¯»å–é”™è¯¯");
         }
     }
     public void findByActivity(Activity activity){
-        ResultSet rs = null; // ±£´æ²éÑ¯½á¹û
-        Connection conn = null; // Êı¾İ¿âÁ¬½Ó
-        Statement stmt = null; // Êı¾İ¿â²Ù×÷
+        ResultSet rs = null; // ä¿å­˜æŸ¥è¯¢ç»“æœ
+        Connection conn = null; // æ•°æ®åº“è¿æ¥
+        Statement stmt = null; // æ•°æ®åº“æ“ä½œ
         String sql = "SELECT * FROM activity_construction WHERE activity_id = " + activity.getM_iNum();
         Construction construction = new Construction();
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement();// ÊµÀı»¯Statement¶ÔÏó
-            rs = stmt.executeQuery(sql);// ÊµÀı»¯ResultSet¶ÔÏó
-            while (rs.next()) { // Ö¸ÕëÏòÏÂÒÆ¶¯
+            stmt = conn.createStatement();// å®ä¾‹åŒ–Statementå¯¹è±¡
+            rs = stmt.executeQuery(sql);// å®ä¾‹åŒ–ResultSetå¯¹è±¡
+            while (rs.next()) { // æŒ‡é’ˆå‘ä¸‹ç§»åŠ¨
                 activity.setM_iFloor(rs.getInt("floor"));
                 activity.setM_iRoom(rs.getInt("room"));
                 construction.set_con_number(rs.getInt("construction_id"));
                 find(construction);
                 activity.setM_sConstruction(construction);
             }
-            rs.close();// ¹Ø±Õ½á¹û¼¯
-            rs.close();// ¹Ø±Õ½á¹û¼¯
-            stmt.close(); // ²Ù×÷¹Ø±Õ
-            conn.close(); // Êı¾İ¿â¹Ø±Õ
+            rs.close();// å…³é—­ç»“æœé›†
+            rs.close();// å…³é—­ç»“æœé›†
+            stmt.close(); // æ“ä½œå…³é—­
+            conn.close(); // æ•°æ®åº“å…³é—­
         } catch (SQLException e) {
             e.printStackTrace();
-            LogFile.error("ConstructionDatabase", "Êı¾İ¿â¶ÁÈ¡´íÎó");
+            LogFile.error("ConstructionDatabase", "æ•°æ®åº“è¯»å–é”™è¯¯");
         }
     }
     public static void main(String argc[]){

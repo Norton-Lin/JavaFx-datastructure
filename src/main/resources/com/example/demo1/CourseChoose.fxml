@@ -12,18 +12,38 @@
             <top>
                 <BorderPane>
                     <center>
-                        <Label text="请输入您要查找的课程~" style="-fx-font-size:18" alignment="TOP_CENTER"/>
+                        <Label text="请在左侧根据名字模糊查找课程" style="-fx-font-size:18" alignment="TOP_CENTER"/>
                     </center>
+                    <bottom>
+                        <BorderPane>
+                            <center>
+                                <Label text="得到精确课程编号后在右侧输入" style="-fx-font-size:18" alignment="TOP_CENTER"/>
+                            </center>
+                        </BorderPane>
+                    </bottom>
                 </BorderPane>
             </top>
             <center>
-                <Label text="可以输入课程编号或课程名" style="-fx-font-size:18" alignment="TOP_CENTER"/>
+                <Label text="得到精确结果后按下对应按钮即可~" style="-fx-font-size:18" alignment="TOP_CENTER"/>
             </center>
             <bottom>
                 <BorderPane>
+                    <left>
+                        <Label text="     "/>
+                    </left>
                     <center>
-                        <TextField fx:id="ToBeSearched" prefColumnCount="10" alignment="TOP_CENTER"/>
+                        <BorderPane>
+                            <left>
+                                <TextField fx:id="ToBeFuzzySearched" prefColumnCount="10" alignment="TOP_CENTER"/>
+                            </left>
+                            <right>
+                                <TextField fx:id="ToBeBinarySearched" prefColumnCount="10" alignment="TOP_CENTER"/>
+                            </right>
+                        </BorderPane>
                     </center>
+                    <right>
+                        <Label text="     "/>
+                    </right>
                 </BorderPane>
             </bottom>
         </BorderPane>
@@ -32,12 +52,15 @@
         <BorderPane>
             <center>
                 <GridPane>
-                    <Label text="查询结果如下：" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                    <ComboBox fx:id="Results" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="10"/>
+                    <Label text="查询结果如下：" GridPane.columnIndex="0" GridPane.rowIndex="0"
+                        style="-fx-font-size:18"/>
+                    <TextArea  fx:id="ResOfSearch" GridPane.rowIndex="1"
+                               GridPane.columnIndex="0" prefColumnCount="10"/>
                 </GridPane>
             </center>
             <right>
-                <Label fx:id="ExceptionInfo"/>
+                <Label fx:id="SearchResult_Name"/>
+                <Label fx:id="SearchResult_Boolean"/>
             </right>
         </BorderPane>
     </center>

@@ -11,7 +11,6 @@ module com.example.demo1 {
     requires eu.hansolo.tilesfx;
     requires java.sql;
     requires java.desktop;
-    requires mysql.connector.java;
 
 //    exports com.example.demo1;
 //    opens com.example.demo1 to javafx.fxml;
