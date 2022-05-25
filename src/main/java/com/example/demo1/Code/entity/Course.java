@@ -12,8 +12,10 @@ public class Course extends Event{
     private int m_iExamFloor;//考试所在楼层
     private int m_iExamRoom;//考试所在房间
     private String m_sData;//课程资料
-
-    private ArrayList<Homework> m_CaHomework;//课程作业列表
+    private String m_sTeacher;//任课老师
+    private int m_iTotalClass;//总课时
+    private int m_iCurrentClass;//当前进度
+    private ArrayList<Homework> m_CaHomework = new ArrayList<>();//课程作业列表
 
     public Course() {
     }
@@ -22,10 +24,18 @@ public class Course extends Event{
         super(m_sName, m_tTime, m_eProperty, m_sConstruction,m_iFloor,m_iRoom, m_iPle, m_iMaxPle, m_iNum);
     }
 
-    public Course(String m_sCurGroup, Time m_cExamTime, Construction m_cExamPlace) {
+    public Course(String m_sCurGroup, Time m_cExamTime, Construction m_cExamPlace,int m_iExamFloor, int m_iExamRoom,String m_sData,
+                  int m_iTotalClass,int m_iCurrentClass,String teacher,ArrayList<Homework> m_CaHomework) {
         this.m_sCurGroup = m_sCurGroup;
         this.m_cExamTime = m_cExamTime;
         this.m_cExamConstruction = m_cExamPlace;
+        this.m_iExamFloor = m_iExamFloor;
+        this.m_iExamRoom=m_iExamRoom;
+        this.m_sData = m_sData;
+        this.m_sTeacher  = teacher;
+        this.m_iTotalClass = m_iTotalClass;
+        this.m_iCurrentClass = m_iCurrentClass;
+        this.m_CaHomework = m_CaHomework;
     }
 
     /**
@@ -91,6 +101,28 @@ public class Course extends Event{
     public void setM_iExamRoom(int m_iExamRoom) {
         this.m_iExamRoom = m_iExamRoom;
     }
+    /*
+    * 获取课程总课时
+     */
+    public int getM_iTotalClass() {
+        return m_iTotalClass;
+    }
+
+    /**
+     * 设置课程总课时
+     * @param m_iTotalClass
+     */
+    public void setM_iTotalClass(int m_iTotalClass) {
+        this.m_iTotalClass = m_iTotalClass;
+    }
+
+    public int getM_iCurrentClass() {
+        return m_iCurrentClass;
+    }
+
+    public void setM_iCurrentClass(int m_iCurrentClass) {
+        this.m_iCurrentClass = m_iCurrentClass;
+    }
 
     public boolean joinCourse() {
         return true;
@@ -114,6 +146,14 @@ public class Course extends Event{
 
     public void setM_CaHomework(ArrayList<Homework> m_CaHomework) {
         this.m_CaHomework = m_CaHomework;
+    }
+
+    public String getM_sTeacher() {
+        return m_sTeacher;
+    }
+
+    public void setM_sTeacher(String m_sTeacher) {
+        this.m_sTeacher = m_sTeacher;
     }
     /**
     * 输出课程信息

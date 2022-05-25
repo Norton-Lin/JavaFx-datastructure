@@ -148,7 +148,7 @@ public class AccountDatabase {
         Statement stmt = null ; // 数据库操作
         ResultSet rs = null; // 保存查询结果
         //读取对应课程
-        String sql1 = "SELECT id_account,id_course FROM account_course where id_account = "+studentAccount.getID();
+        String sql1 = "SELECT id_account,id_course FROM account_course where id_account = '"+studentAccount.getID()+"'";
         //读取对应活动
         String sql2 = "SELECT id_account,id_activity FROM account_activity where id_account = "+studentAccount.getID();
         try {

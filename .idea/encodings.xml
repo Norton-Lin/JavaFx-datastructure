@@ -18,11 +18,14 @@
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/compress/Compress.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/compress/FileState.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/compress/Huffman.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Activity.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Campus.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Construction.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Course.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Event.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/FindBuilding.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/FuzzySearch.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/IGraph.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Line.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Navigate.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Search.java" charset="UTF-8" />
