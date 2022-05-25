@@ -44,7 +44,7 @@ public class Homework {
             //创建菜单 Type的选项
             MenuItem typeView = new MenuItem("查看作业");
             MenuItem typeSubmit = new MenuItem("选择作业");
-            MenuItem typeClose = new MenuItem("退出");
+            MenuItem typeClose = new MenuItem("退       出");
 
             AtomicInteger flag = new AtomicInteger();
 
@@ -96,12 +96,15 @@ public class Homework {
             typeSubmit.addActionListener(e -> {
                 flag.set(2);
                 //默认打开时为 d盘
-                JFileChooser homeworkChooser = new JFileChooser("D:");
+                JFileChooser homeworkChooser = new JFileChooser("D:\\Java");
                 homeworkChooser.setFileSelectionMode(FILES_AND_DIRECTORIES);
                 //添加查看文件内容按钮
                 JLabel view = new JLabel();
                 homeworkChooser.showDialog(view, "选择");
-                MyHomeworkPath.set(homeworkChooser.getSelectedFile().getAbsolutePath());//得到学生作业的路径
+                try{
+                    MyHomeworkPath.set(homeworkChooser.getSelectedFile().getAbsolutePath());//得到学生作业的路径
+
+                }catch (NullPointerException ignore){}
             });
 
             //退出程序
@@ -119,44 +122,45 @@ public class Homework {
             MenuItem fileRecheck = new MenuItem("查重并去重");
             MenuItem fileCompress = new MenuItem("压缩并提交");
 
-            AtomicReference<String> tempFilePath = new AtomicReference<>();
+            //AtomicReference<String> tempFilePath = new AtomicReference<>();
             //文件查重并去重
             fileRecheck.addActionListener(e -> {
 
                 //此时对要提交的作业进行查重
                 if (flag.get() == 2) {
 
-                    File tempFile = new File(storage+"\\temp");//临时存放解压文件的文件夹
-                    tempFile.mkdir();
-                    tempFilePath.set(tempFile.getPath());
-                    /*if(tempFile.exists()){
-                        System.out.println("临时目录已创建");
-                    }else {
-                        System.out.println("临时目录创建失败");
-                    }*/
+                    flag.set(3);
 
                     File fileStorage = new File(storage);
-                    File[] fs = fileStorage.listFiles();//遍历 storage下的文件名和目录名放在File数组中
+                    File[] fs = fileStorage.listFiles();//将 storage下的文件名和 students目录名放在 fs数组中
                     assert fs != null;
 
                     //先得到所有待比较的作业文件
                     for (File file : fs) {
 
+                        //System.out.println(file.getAbsolutePath());//测试
+
                         //所有作业文件在存储区子目录下
                         if (file.isDirectory()) {
-                            //&&(fileName.endsWith("txt")||fileName.endsWith("doc")||fileName.endsWith("docx"))
 
-                            File homeworkStorage = new File(file.getName());
-                            File[] packedHomework = homeworkStorage.listFiles();//保存所有的学生作业文件(压缩文件)
+                            File[] packedHomework = file.listFiles();//保存所有的学生作业文件(压缩文件)
 
                             //已经有人提交过作业时才进行查重
                             if (packedHomework != null) {
 
+                                //创建临时存放解压文件的文件夹 temp
+                                File tempFile = new File(storage + "\\temp");
+                                tempFile.mkdir();
+                                String tempFilePath = tempFile.getAbsolutePath();
+
                                 //遍历所有已交的作业，将其解压到临时文件夹
                                 for (File homework : packedHomework) {
 
-                                    String tempFileName = tempFile.getName();
-                                    compressClass.uncompress(homework.getName(), tempFileName);
+                                    String siFileName = homework.getAbsolutePath();
+                                    //防止将码表解压
+                                    if (siFileName.endsWith("si")) {
+                                        compressClass.uncompress(siFileName, tempFilePath);
+                                    }
                                 }
 
                                 //保存临时文件夹下所有的作业文件
@@ -171,9 +175,9 @@ public class Homework {
                                         String otherHomework = new String(Files.readAllBytes(Paths.get(homeworks.getAbsolutePath())));
 
                                         //重复率过高，需要降重
-                                        if (StringCompute.SimilarDegree(otherHomework,myHomework)>0.4){
+                                        if (StringCompute.SimilarDegree(otherHomework, myHomework) > 0.4) {
                                             //将去重后的字符串重新写入学生要提交的作业文件中
-                                            String lastWord = StringCompute.deleteSubstring(otherHomework,myHomework);
+                                            String lastWord = StringCompute.deleteSubstring(otherHomework, myHomework);
                                             PrintStream stream = new PrintStream(String.valueOf(MyHomeworkPath));
                                             stream.print(lastWord);
                                             stream.close();
@@ -185,9 +189,11 @@ public class Homework {
                                 }
 
                                 //删除临时文件夹
-                                if(deleteDirectory(tempFile.getAbsolutePath())){
-                                    System.out.println("删除成功");
-                                }
+                                /*if (deleteDirectory(tempFile.getAbsolutePath())) {
+                                    System.out.println("临时文件夹删除成功");
+                                } else {
+                                    System.out.println("临时文件夹删除未成功");
+                                }*/
                             }
 
                         }
@@ -198,7 +204,14 @@ public class Homework {
             });
 
             //文件压缩并提交
-            fileCompress.addActionListener(e -> compressClass.compress(String.valueOf(MyHomeworkPath), String.valueOf(tempFilePath)));
+            fileCompress.addActionListener(
+                    e -> {
+                        //此时要对已经去重的文件压缩
+                        if (flag.get() == 3) {
+                            compressClass.compress(String.valueOf(MyHomeworkPath), storage + "\\students");
+                        }
+                    }
+            );
 
             menuProcess.add(fileRecheck);
             menuProcess.add(fileCompress);
@@ -260,7 +273,7 @@ public class Homework {
     }
 
 
-    public static void SubmitHomework(String storePath){
+    public static void SubmitHomework(String storePath) {
         new HomeworkMenu(storePath);
     }
 

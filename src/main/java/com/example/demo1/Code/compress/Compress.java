@@ -182,12 +182,13 @@ public class Compress {
     /**
      * 将源文件数据压缩后写入压缩文件
      *
-     * @param filename 文件名
-     * @param storePath 压缩文件存储地址
+     * @param filename  文件名
+     * @param storePath 压缩文件存储地址：students目录
      */
     private void writeToFile(String filename, String storePath) {
         File fr = new File(filename);//待压缩文件
-        String newFileName = storePath;//压缩文件名
+        File temp = new File(filename);
+        String newFileName = storePath +"\\"+ temp.getName().replace("txt","si");//压缩文件名
         /*Scanner x = new Scanner(System.in);//读取输入指令
         int order ;*/
         if (!fr.exists()) {
@@ -272,7 +273,7 @@ public class Compress {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        getRatio(fr, fw);//计算压缩率
+        //getRatio(fr, fw);//计算压缩率
     }
 
     /**
@@ -286,7 +287,7 @@ public class Compress {
         analyse(filename);       //从待文件中获取字符种类和出现次数
         root = creatHuffmanTree(); //建立哈夫曼树
         huffmanCode(root);       //获取哈夫曼编码表
-        writeToFile(filename,storePath);   //将文件压缩存入压缩文档
+        writeToFile(filename, storePath);   //将文件压缩存入压缩文档
     }
 
     /**
@@ -314,8 +315,9 @@ public class Compress {
 
     public void writeToDeFile(String filename, String storePath) {
         File fr = new File(filename);//待解压文件
-        String newFileName = storePath;//解压文件名
-        int order;
+        String newFileName = storePath+"\\"+fr.getName().replace("si", getFileExtension(fr));//解压文件名
+        System.out.println(newFileName);
+        //int order;
         if (!fr.exists()) {
             System.out.println("Cannot open the file ");
             System.out.println(filename);
@@ -391,4 +393,12 @@ public class Compress {
             e.printStackTrace();
         }
     }
+
+    private static String getFileExtension(File file) {
+        String fileName = file.getName();
+        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+            return fileName.substring(fileName.lastIndexOf(".")+1);
+        else return "";
+    }
+
 }
