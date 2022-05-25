@@ -1,6 +1,5 @@
 package com.example.demo1;
 
-import com.example.demo1.Code.Util.Traffic;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -19,22 +18,19 @@ public class NavController {
     //本界面
     private final Stage thisStage;
 
-    //单选组
-    final ToggleGroup toggleGroup;
-
     //本页面中的各种元素
     @FXML
     public TextField StartPoint;
     @FXML
     public TextField EndPoint;
     @FXML
-    public RadioButton Walk = new RadioButton();
+    public RadioButton Walk;
     @FXML
-    public RadioButton Bicycle = new RadioButton();
+    public RadioButton Bicycle;
     @FXML
-    public RadioButton Electric = new RadioButton();
+    public RadioButton Electric;
     @FXML
-    public RadioButton Car = new RadioButton();
+    public RadioButton Car;
     @FXML
     public Button submitButton;
     @FXML
@@ -45,9 +41,6 @@ public class NavController {
     public NavController(MainViewPort_Controller mainController) {
         //将主界面的信息继承来
         this.mainViewPort_controller = mainController;
-
-        //为本界面的单选按钮创建组
-        this.toggleGroup = new ToggleGroup();
 
         //本界面的展开
         thisStage = new Stage();
@@ -77,6 +70,11 @@ public class NavController {
     }
 
     protected void handleSubmitButtonAction() {
+        ToggleGroup toggleGroup = new ToggleGroup();
+        Walk.setToggleGroup(toggleGroup);
+        Bicycle.setToggleGroup(toggleGroup);
+        Electric.setToggleGroup(toggleGroup);
+        Car.setToggleGroup(toggleGroup);//将所有按钮放入同一个组
 //        ArrayList<String> test = new ArrayList<>();
 //        test.add("你好啊\n");
 //        test.add("我是不烂尾石上超\n");
@@ -84,19 +82,23 @@ public class NavController {
 //        test.add("希望你能喜欢我\n");
 //        test.add("想找1\n");
 
-        //默认交通方式为步行
-        int traffic = 0;
+        final int[] Traffic = new int[1];
 
-        if (Bicycle.isSelected()) {
-            traffic = 1;
-        } else if (Electric.isSelected()) {
-            traffic = 2;
-        } else if (Car.isSelected()) {
-            traffic = 3;
-        }
+        toggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+             @Override
+             public void changed(ObservableValue<? extends Toggle> observableValue, Toggle toggle, Toggle t1) {
+                 RadioButton r = (RadioButton)t1;
+                 switch (r.getText()) {
+                     case "步行" -> Traffic[0] = 0;
+                     case "自行车" -> Traffic[0] = 1;
+                     case "电动车" -> Traffic[0] = 2;
+                     case "汽车" -> Traffic[0] = 3;
+                 }
+             }
+         });
 
         Navigate navigate = new Navigate();
-        ResOfNav.setText(navigate.toNavigate(traffic, StartPoint.getText(), EndPoint.getText()).toString());
+        ResOfNav.setText(navigate.toNavigate(Traffic[0], StartPoint.getText(), EndPoint.getText()).toString());
 //        ResOfNav.setText(test.toString());
     }
 

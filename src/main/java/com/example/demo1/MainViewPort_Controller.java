@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.time.OffsetDateTime;
 
 public class MainViewPort_Controller {
 
@@ -106,13 +105,9 @@ public class MainViewPort_Controller {
     }
 
     protected void handleStuActButtonAction() {
-        if (this.helloController.getAccount().getAuthority() != Authority.Student) {
+        if (this.helloController.getAccount().getAuthority() != Authority.Student)
             buttonStatusText.setText("你不是学生！");
-            return;
-        }
-        ActivityController activityController = new ActivityController(this);
-        thisStage.hide();
-        activityController.showStage();
+
     }
 
     protected void handleTeaCourButtonAction() {
@@ -126,13 +121,8 @@ public class MainViewPort_Controller {
     }
 
     protected void handleTeaActButtonAction() {
-        if (this.helloController.getAccount().getAuthority() != Authority.Teacher) {
+        if (this.helloController.getAccount().getAuthority() != Authority.Teacher)
             buttonStatusText.setText("你不是教师！");
-            return;
-        }
-        ActivityController activityController = new ActivityController(this);
-        thisStage.hide();
-        activityController.showStage();
     }
 
     protected void handleCourTabButtonAction() {
@@ -145,13 +135,6 @@ public class MainViewPort_Controller {
 
     protected void handleClockButtonAction() {
 
-        if (this.helloController.getAccount().getAuthority() != Authority.Student) {
-            buttonStatusText.setText("只有学生可以设置闹钟！");
-            return;
-        }
-        ClockController clockController = new ClockController(this);
-        thisStage.hide();
-        clockController.showStage();
     }
 
     protected void handleManagerButtonAction() {
