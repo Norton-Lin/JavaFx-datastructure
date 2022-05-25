@@ -17,8 +17,8 @@
       <scope value="GLOBAL" />
       <destination value="FILE" />
       <format value="EXCEL" />
-      <charset value="UTF-8" />
-      <charset value="UTF-8" />
+      <charset value="GBK" />
+      <charset value="GBK" />
     </export-instructions>
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -28,18 +28,15 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="496214d9-21bd-488b-b37f-bfacc4a6c3bd">
-      <console name="DataStructure" type="STANDARD" schema="mysql" session="Main" />
+    <connection id="6474273f-1d6a-4c79-a7cf-7a03a9c8b57f">
+      <console name="informationmanagement" type="STANDARD" schema="mysql" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="496214d9-21bd-488b-b37f-bfacc4a6c3bd" />
-  </component>
-  <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="496214d9-21bd-488b-b37f-bfacc4a6c3bd" dataset="informationmanagement.account" active-filter-id="" />
+    <connection id="6474273f-1d6a-4c79-a7cf-7a03a9c8b57f" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -70,9 +67,9 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="496214d9-21bd-488b-b37f-bfacc4a6c3bd" active="true" signed="true">
+      <connection id="6474273f-1d6a-4c79-a7cf-7a03a9c8b57f" active="true" signed="true">
         <database>
-          <name value="DataStructure" />
+          <name value="informationmanagement" />
           <description value="" />
           <database-type value="MYSQL" />
           <config-type value="BASIC" />
@@ -115,7 +112,7 @@
           <session-management value="true" />
           <ddl-file-binding value="true" />
           <database-logging value="true" />
-          <connect-automatically value="false" />
+          <connect-automatically value="true" />
           <restore-workspace value="true" />
           <restore-workspace-deep value="false" />
           <environment-type value="default" />

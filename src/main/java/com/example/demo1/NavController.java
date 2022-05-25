@@ -1,5 +1,8 @@
 package com.example.demo1;
 
+import com.example.demo1.Code.Util.Traffic;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -81,20 +84,19 @@ public class NavController {
 //        test.add("希望你能喜欢我\n");
 //        test.add("想找1\n");
 
-        final int[] Traffic = new int[1];
+        //默认交通方式为步行
+        int traffic = 0;
 
-        toggleGroup.selectedToggleProperty().addListener((observableValue, toggle, t1) -> {
-            RadioButton r = (RadioButton)t1;
-            switch (r.getText()) {
-                case "步行" -> Traffic[0] = 0;
-                case "自行车" -> Traffic[0] = 1;
-                case "电动车" -> Traffic[0] = 2;
-                case "汽车" -> Traffic[0] = 3;
-            }
-        });
+        if (Bicycle.isSelected()) {
+            traffic = 1;
+        } else if (Electric.isSelected()) {
+            traffic = 2;
+        } else if (Car.isSelected()) {
+            traffic = 3;
+        }
 
         Navigate navigate = new Navigate();
-        ResOfNav.setText(navigate.toNavigate(Traffic[0], StartPoint.getText(), EndPoint.getText()).toString());
+        ResOfNav.setText(navigate.toNavigate(traffic, StartPoint.getText(), EndPoint.getText()).toString());
 //        ResOfNav.setText(test.toString());
     }
 
