@@ -150,7 +150,7 @@ public class AccountDatabase {
         //读取对应课程
         String sql1 = "SELECT id_account,id_course FROM account_course where id_account = '"+studentAccount.getID()+"'";
         //读取对应活动
-        String sql2 = "SELECT id_account,id_activity FROM account_activity where id_account = "+studentAccount.getID();
+        String sql2 = "SELECT id_account,id_activity FROM account_activity where id_account = '"+studentAccount.getID()+"'";
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
             stmt = conn.createStatement();// 实例化Statement对象

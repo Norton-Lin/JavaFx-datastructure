@@ -13,10 +13,10 @@
             <fx:define>
                 <ToggleGroup fx:id="toggleGroup1"/>
             </fx:define>
-            <RadioButton fx:id="One" text="1" GridPane.columnIndex="1" GridPane.rowIndex="0" toggleGroup="$toggleGroup1"/>
-            <RadioButton fx:id="Hundred" text="100" GridPane.columnIndex="2" GridPane.rowIndex="0" toggleGroup="$toggleGroup1"/>
-            <RadioButton fx:id="SixHundred" text="600" GridPane.columnIndex="3" GridPane.rowIndex="0" toggleGroup="$toggleGroup1"/>
-            <RadioButton fx:id="Thousand" text="1000" GridPane.columnIndex="4" GridPane.rowIndex="0" toggleGroup="$toggleGroup1"/>
+            <RadioButton fx:id="One" text="1" GridPane.columnIndex="1"  userData="1" GridPane.rowIndex="0" toggleGroup="$toggleGroup1"/>
+            <RadioButton fx:id="Hundred" text="100" GridPane.columnIndex="2" userData="100" GridPane.rowIndex="0" toggleGroup="$toggleGroup1"/>
+            <RadioButton fx:id="SixHundred" text="600" GridPane.columnIndex="3" userData="600" GridPane.rowIndex="0" toggleGroup="$toggleGroup1"/>
+            <RadioButton fx:id="Thousand" text="1000" GridPane.columnIndex="4" userData="1000" GridPane.rowIndex="0" toggleGroup="$toggleGroup1"/>
         </GridPane>
     </top>
 
@@ -61,20 +61,20 @@
     <bottom>
         <BorderPane>
             <left>
-                <Button fx:id="Pause" text="暂停计时"/>
+                <Button fx:id="pause" text="暂停计时"/>
             </left>
             <center>
                 <BorderPane>
                     <left>
-                        <Button fx:id="SetClock" text="设置闹钟"/>
+                        <Button fx:id="setClock" text="设置闹钟"/>
                     </left>
                     <right>
-                        <Button fx:id="SetSpeed" text="设置快进速度"/>
+                        <Button fx:id="setSpeed" text="设置快进速度"/>
                     </right>
                 </BorderPane>
             </center>
             <right>
-                <Button fx:id="BackToMain" text="回到主界面"/>
+                <Button fx:id="backToMain" text="回到主界面"/>
             </right>
         </BorderPane>
     </bottom>

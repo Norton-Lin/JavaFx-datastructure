@@ -1,16 +1,15 @@
 package com.example.demo1;
 
 import com.example.demo1.Code.Util.Time;
+//import com.example.demo1.Code.entity.SystemTime;
 import com.example.demo1.Code.entity.SystemTime;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,13 +25,13 @@ public class ClockController {
     SystemTime systemTime;
 
     @FXML
-    public Button Pause;
+    public Button pause;
     @FXML
-    public Button SetClock;
+    public Button setClock;
     @FXML
-    public Button SetSpeed;
+    public Button setSpeed;
     @FXML
-    public Button BackToMain;
+    public Button backToMain;
 
     @FXML
     public TextField NameOfClock;
@@ -58,13 +57,13 @@ public class ClockController {
     @FXML
     public RadioButton PerWeek;
     @FXML
-    public RadioButton One;
+    public RadioButton One = new RadioButton();
     @FXML
-    public RadioButton Hundred;
+    public RadioButton Hundred = new RadioButton();
     @FXML
-    public RadioButton SixHundred;
+    public RadioButton SixHundred = new RadioButton();
     @FXML
-    public RadioButton Thousand;
+    public RadioButton Thousand = new RadioButton();
 
     public ClockController(MainViewPort_Controller mainViewPortController) {
         //收到了hello-view.fxml的Controller
@@ -73,9 +72,11 @@ public class ClockController {
         //创建新场景
         this.thisStage = new Stage();
 
+        //创建按钮
+
         //获取系统时间
-//        this.systemTime = new SystemTime();
-//        this.systemTime.start();
+        this.systemTime = new SystemTime();
+        this.systemTime.start();
 
         try {
             //加载FXML文件
@@ -88,11 +89,12 @@ public class ClockController {
         }
     }
 
+    @FXML
     private void initialize() {
-        this.Pause.setOnAction(event -> ClockPause());
-        this.SetClock.setOnAction(event -> SetOnClock());
-        this.SetSpeed.setOnAction(event -> SetFastSpeed());
-        this.BackToMain.setOnAction(event -> BackToMainMenu());
+        this.pause.setOnAction(event -> ClockPause());
+        this.setClock.setOnAction(event -> SetOnClock());
+        this.setSpeed.setOnAction(event -> SetFastSpeed());
+        this.backToMain.setOnAction(event -> BackToMainMenu());
     }
 
 
@@ -100,11 +102,11 @@ public class ClockController {
         thisStage.show();
     }
 
-    private void ClockPause() {
+    protected void ClockPause() {
         this.systemTime.stopTime();
     }
 
-    private void SetOnClock() {
+    protected void SetOnClock() {
         Time time = new Time(Integer.parseInt(Hour1.getText()), Integer.parseInt(Minute1.getText()), 0, 0,
                 Integer.parseInt(Date.getText()), Integer.parseInt(Month.getText()), Integer.parseInt(Week.getText()));
 
@@ -124,26 +126,24 @@ public class ClockController {
 //        this.systemTime.setClock(time, this.NameOfClock.getText(), type[0]);
     }
 
-    private void SetFastSpeed() {
+    protected void SetFastSpeed() {
         toggleGroup1 = new ToggleGroup();
-        final int[] Speed = new int[1];
+        int speed = 0;
 
-        toggleGroup1.selectedToggleProperty().addListener((observableValue, toggle, t1) -> {
-            RadioButton r = (RadioButton)t1;
-            switch (r.getText()) {
-                case "1" -> Speed[0] = 1;
-                case "100" -> Speed[0] = 100;
-                case "600" -> Speed[0] = 600;
-                case "1000" -> Speed[0] = 1000;
-            }
-        });
+        if (One.isSelected()) {
+            speed = 1;
+        } else if (Hundred.isSelected()) {
+            speed = 100;
+        } else if (SixHundred.isSelected()) {
+            speed = 600;
+        } else if (Thousand.isSelected()) {
+            speed = 1000;
+        }
 
-        System.out.println(Speed[0]);
-        this.systemTime.setSpeed(Speed[0]);
-//        this.systemTime.start();
+        this.systemTime.setSpeed(speed);
     }
 
-    private void BackToMainMenu() {
+    protected void BackToMainMenu() {
         //将第二个界面展示出来
         this.controller.showStage();
 
