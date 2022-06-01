@@ -245,5 +245,7 @@ public class Event {
         return m_iWeight;
     }
 
-
+    public Integer getM_iStartTime(){
+        return m_tTime.getStartHour();
+    }
 }

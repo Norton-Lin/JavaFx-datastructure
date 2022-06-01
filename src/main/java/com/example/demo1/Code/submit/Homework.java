@@ -5,9 +5,7 @@ import com.example.demo1.Code.recheck.StringCompute;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,6 +17,8 @@ import static javax.swing.JFileChooser.FILES_AND_DIRECTORIES;
 
 /**
  * 作业相关功能图形化
+ * 与前端的接口为HomeworkOperation()方法
+ * 注意事项：小组其他成员在测试时可能需要修改代码第70-85行中部分exe文件的内存地址
  */
 public class Homework {
 
@@ -43,28 +43,28 @@ public class Homework {
 
             //创建菜单 Type的选项
             MenuItem typeView = new MenuItem("查看作业");
-            MenuItem typeSubmit = new MenuItem("选择作业");
+            MenuItem typeChoose = new MenuItem("提交作业");
             MenuItem typeClose = new MenuItem("退       出");
 
-            AtomicInteger flag = new AtomicInteger();
+            AtomicInteger flag = new AtomicInteger();//设置标志，用于判断后续执行何种操作
 
-            //查看作业
+            //查看作业选项
             typeView.addActionListener(e -> {
 
-                flag.set(1);
+                flag.set(0);//设置标志，防止后续存在空操作导致抛出异常
                 File file = new File(storage);
                 JFileChooser fileChooser = new JFileChooser(file);
                 fileChooser.setFileSelectionMode(FILES_AND_DIRECTORIES);
 
                 //添加查看文件内容按钮
                 JLabel view = new JLabel();
-                fileChooser.showDialog(view, "查看作业");
+                fileChooser.showDialog(view, "查看");
 
                 try {
-                    String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-                    String fileExtension = filePath.substring(filePath.lastIndexOf(".") + 1);
+                    String filePath = fileChooser.getSelectedFile().getAbsolutePath();//要查看的文件的路径
+                    String fileExtension = filePath.substring(filePath.lastIndexOf(".") + 1);//要查看的文件的拓展名
 
-                    String ViewerPath = null;
+                    String ViewerPath;//文件查看器的内存地址
 
                     //根据文件类型选择文件打开方式
                     switch (fileExtension) {
@@ -77,9 +77,13 @@ public class Homework {
 
                         // MicrosoftEdge打开png,jpg,pdf文件
                         case "png", "jpg", "pdf" -> ViewerPath = "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe";
+
+                        //其他格式文件则使用 MicrosoftEdge打开
+                        default -> ViewerPath = "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe";
                     }
 
-                    ProcessBuilder viewTxt = new ProcessBuilder(ViewerPath, filePath);
+                    ProcessBuilder viewTxt = new ProcessBuilder(ViewerPath, filePath);//创建文件查看进程
+
                     try {
                         viewTxt.start();
                     } catch (IOException ioException) {
@@ -90,70 +94,97 @@ public class Homework {
 
             });
 
-            AtomicReference<String> MyHomeworkPath = new AtomicReference<>();//学生作业的位置
+            AtomicReference<String> MyHomeworkPath = new AtomicReference<>();//保存学生待交作业的位置
 
-            //选择作业
-            typeSubmit.addActionListener(e -> {
-                flag.set(2);
+            //选择作业选项
+            typeChoose.addActionListener(e -> {
+
+                flag.set(1);//设置标志，后续可以对待交作业文件进行操作：如查重去重、压缩、提交
+
                 //默认打开时为 d盘
                 JFileChooser homeworkChooser = new JFileChooser("D:\\Java");
                 homeworkChooser.setFileSelectionMode(FILES_AND_DIRECTORIES);
+
                 //添加查看文件内容按钮
                 JLabel view = new JLabel();
                 homeworkChooser.showDialog(view, "选择");
-                try{
+                try {
                     MyHomeworkPath.set(homeworkChooser.getSelectedFile().getAbsolutePath());//得到学生作业的路径
 
-                }catch (NullPointerException ignore){}
+                } catch (NullPointerException ignore) {
+                }
             });
 
-            //退出程序
+            //退出程序选项
             typeClose.addActionListener(e -> System.exit(0));
 
             menuType.add(typeView);
-            menuType.add(typeSubmit);
+            menuType.add(typeChoose);
             menuType.add(typeClose);
 
-            //创建菜单 Process的选项，添加到菜单栏
-            Menu menuProcess = new Menu("操作", true);
-            menuBar.add(menuProcess);
+            //创建菜单 Operate，添加到菜单栏
+            Menu menuOperate = new Menu("去重[可选]", true);
+            menuBar.add(menuOperate);
 
-            //创建菜单 Process的选项
-            MenuItem fileRecheck = new MenuItem("查重并去重");
-            MenuItem fileCompress = new MenuItem("压缩并提交");
+            //创建菜单 Operate的选项
+            MenuItem operateRecheck = new MenuItem("查重并去重");
 
             //AtomicReference<String> tempFilePath = new AtomicReference<>();
-            //文件查重并去重
-            fileRecheck.addActionListener(e -> {
+            //文件查重并去重选项
+            operateRecheck.addActionListener(e -> {
 
-                //此时对要提交的作业进行查重
-                if (flag.get() == 2) {
+                String MyHomeworkPathStr = String.valueOf(MyHomeworkPath).substring(String.valueOf(MyHomeworkPath).lastIndexOf(".") + 1);
+                boolean FileTypeOk = MyHomeworkPathStr.equals("txt") || MyHomeworkPathStr.equals("doc") || MyHomeworkPathStr.equals("docx");
 
-                    flag.set(3);
+                //此时已经选择了txt文件或者word，对文件进行查重，查重对象是 students目录下的未压缩文件
+                if (flag.get() == 1 && FileTypeOk) {
 
                     File fileStorage = new File(storage);
-                    File[] fs = fileStorage.listFiles();//将 storage下的文件名和 students目录名放在 fs数组中
+                    File[] fs = fileStorage.listFiles();//将 storage下的文件和 students目录放在 fs数组中
                     assert fs != null;
 
                     //先得到所有待比较的作业文件
                     for (File file : fs) {
 
-                        //System.out.println(file.getAbsolutePath());//测试
-
-                        //所有作业文件在存储区子目录下
+                        //所有作业文件在 students子目录下
                         if (file.isDirectory()) {
 
-                            File[] packedHomework = file.listFiles();//保存所有的学生作业文件(压缩文件)
+                            File[] packedHomework = file.listFiles();//保存所有的学生作业文件(包括未压缩文件和压缩文件)
 
                             //已经有人提交过作业时才进行查重
                             if (packedHomework != null) {
 
-                                //创建临时存放解压文件的文件夹 temp
+                                //创建存放解压文件的临时文件夹 temp
                                 File tempFile = new File(storage + "\\temp");
                                 tempFile.mkdir();
                                 String tempFilePath = tempFile.getAbsolutePath();
 
-                                //遍历所有已交的作业，将其解压到临时文件夹
+                                //先遍历所有的txt文件和word文件，对待交作业进行查重去重
+                                for (File homework : packedHomework) {
+
+                                    String siFileName = homework.getAbsolutePath();
+                                    if (siFileName.endsWith("txt") || siFileName.endsWith("dox") || siFileName.endsWith("docx")) {
+                                        try {
+
+                                            String myHomework = new String(Files.readAllBytes(Path.of(MyHomeworkPath.get())));
+                                            String otherHomework = new String(Files.readAllBytes(Paths.get(homework.getAbsolutePath())));
+
+                                            //重复率过高，需要降重
+                                            if (StringCompute.SimilarDegree(otherHomework, myHomework) > 0.4) {
+
+                                                //将去重后的字符串重新写入学生要提交的作业文件中
+                                                String lastWord = StringCompute.deleteSubstring(otherHomework, myHomework);
+                                                PrintStream stream = new PrintStream(String.valueOf(MyHomeworkPath));
+                                                stream.print(lastWord);
+                                                stream.close();
+                                            }
+                                        } catch (IOException ex) {
+                                            ex.printStackTrace();
+                                        }
+                                    }
+                                }
+
+                                //再遍历所有已交的作业，将压缩文件解压到临时文件夹
                                 for (File homework : packedHomework) {
 
                                     String siFileName = homework.getAbsolutePath();
@@ -163,37 +194,40 @@ public class Homework {
                                     }
                                 }
 
-                                //保存临时文件夹下所有的作业文件
+                                //保存临时文件夹下所有的解压出来作业文件
                                 File[] Homeworks = tempFile.listFiles();
 
-                                //开始查重及去重
+                                //此时遍历临时文件中的txt文件和word文件，继续对待交作业进行查重去重
                                 assert Homeworks != null;
                                 for (File homeworks : Homeworks) {
-                                    try {
+                                    String siFileName = homeworks.getAbsolutePath();
 
-                                        String myHomework = new String(Files.readAllBytes(Path.of(MyHomeworkPath.get())));
-                                        String otherHomework = new String(Files.readAllBytes(Paths.get(homeworks.getAbsolutePath())));
+                                    if (siFileName.endsWith("txt") || siFileName.endsWith("dox") || siFileName.endsWith("docx")) {
+                                        try {
 
-                                        //重复率过高，需要降重
-                                        if (StringCompute.SimilarDegree(otherHomework, myHomework) > 0.4) {
-                                            //将去重后的字符串重新写入学生要提交的作业文件中
-                                            String lastWord = StringCompute.deleteSubstring(otherHomework, myHomework);
-                                            PrintStream stream = new PrintStream(String.valueOf(MyHomeworkPath));
-                                            stream.print(lastWord);
-                                            stream.close();
+                                            String myHomework = new String(Files.readAllBytes(Path.of(MyHomeworkPath.get())));
+                                            String otherHomework = new String(Files.readAllBytes(Paths.get(homeworks.getAbsolutePath())));
+
+                                            //重复率过高，需要降重
+                                            if (StringCompute.SimilarDegree(otherHomework, myHomework) > 0.4) {
+                                                //将去重后的字符串重新写入学生要提交的作业文件中
+                                                String lastWord = StringCompute.deleteSubstring(otherHomework, myHomework);
+                                                PrintStream stream = new PrintStream(String.valueOf(MyHomeworkPath));
+                                                stream.print(lastWord);
+                                                stream.close();
+                                            }
+                                        } catch (IOException ex) {
+                                            ex.printStackTrace();
                                         }
-                                    } catch (IOException ex) {
-                                        ex.printStackTrace();
                                     }
+
 
                                 }
 
-                                //删除临时文件夹
-                                /*if (deleteDirectory(tempFile.getAbsolutePath())) {
-                                    System.out.println("临时文件夹删除成功");
-                                } else {
-                                    System.out.println("临时文件夹删除未成功");
-                                }*/
+                                //删除查重时产生的临时文件夹
+                                if (tempFile.exists()) {
+                                    deleteDirectory(tempFile.getAbsolutePath());
+                                }
                             }
 
                         }
@@ -202,19 +236,45 @@ public class Homework {
                 }
 
             });
+            menuOperate.add(operateRecheck);
 
-            //文件压缩并提交
-            fileCompress.addActionListener(
+            //创建菜单 Submit的选项，添加到菜单栏
+            Menu menuSubmit = new Menu("提交方式", true);
+            menuBar.add(menuSubmit);
+
+            //创建菜单 Submit的选项
+            MenuItem submitDirect = new MenuItem("直接提交");
+            MenuItem submitCompress = new MenuItem("压缩提交");
+
+            String StudentFileName = storage + "\\students";//学生作业提交目录
+
+            //提交原始文件选项
+            submitDirect.addActionListener(
                     e -> {
-                        //此时要对已经去重的文件压缩
-                        if (flag.get() == 3) {
-                            compressClass.compress(String.valueOf(MyHomeworkPath), storage + "\\students");
+                        //此时已经选择了文件
+                        if (flag.get() == 1) {
+                            //此时直接提交选择的原文件到 students目录
+                            if (flag.get() == 1) {
+                                copyFile(String.valueOf(MyHomeworkPath), StudentFileName);
+                            }
+                        }
+                    });
+
+            //提交压缩文件选项
+            submitCompress.addActionListener(
+                    e -> {
+                        //此时已经选择了文件
+                        if (flag.get() == 1) {
+                            //此时先对原文件进行压缩，再保存 students目录下
+                            if (flag.get() == 1) {
+                                compressClass.compress(String.valueOf(MyHomeworkPath), StudentFileName);
+                            }
                         }
                     }
             );
 
-            menuProcess.add(fileRecheck);
-            menuProcess.add(fileCompress);
+            menuSubmit.add(submitDirect);
+            menuSubmit.add(submitCompress);
 
             setSize(300, 300);
             setVisible(true);
@@ -226,6 +286,43 @@ public class Homework {
 
     }
 
+    /**
+     * 把文件复制到指定目录下
+     *
+     * @param originalFile    源文件名
+     * @param destinationFile 目标目录名
+     */
+    private static void copyFile(String originalFile, String destinationFile) {
+
+        //在目标目录下创建同名文件
+        destinationFile = destinationFile + "\\" + new File(originalFile).getName();
+
+        try {
+            //创建输入输出流对象
+            FileInputStream fis = new FileInputStream(originalFile);
+            FileOutputStream fos = new FileOutputStream(destinationFile);
+
+            byte[] dataByte = new byte[1024 * 8];
+            int len;
+
+            //将原文件内容写入指定目录下的同名文件中，完成文件复制
+            while ((len = fis.read(dataByte)) != -1) {
+                fos.write(dataByte, 0, len);
+            }
+
+            fis.close();
+            fis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 删除单个文件
+     *
+     * @param fileName 文件名
+     * @return 删除结果
+     */
     public static boolean deleteFile(String fileName) {
         File file = new File(fileName);
         if (file.isFile() && file.exists()) {
@@ -236,28 +333,36 @@ public class Homework {
         }
     }
 
+    /**
+     * 删除目录下的所有文件及子目录
+     *
+     * @param directoryName 目录名
+     * @return 删除结果
+     */
+    public static boolean deleteDirectory(String directoryName) {
 
-    public static boolean deleteDirectory(String dir) {
-        // 如果dir不以文件分隔符结尾，自动添加文件分隔符
-        if (!dir.endsWith(File.separator)) {
-            dir = dir + File.separator;
+        //如果directoryName不以文件分隔符结尾，自动添加文件分隔符
+        if (!directoryName.endsWith(File.separator)) {
+            directoryName = directoryName + File.separator;
         }
-        File dirFile = new File(dir);
-        // 如果dir对应的文件不存在，或者不是一个目录，则退出
+        File dirFile = new File(directoryName);
+
+        //如果directoryName对应的文件不存在，或者不是一个目录，则退出
         if (!dirFile.exists() || !dirFile.isDirectory()) {
             return false;
         }
         boolean flag = true;
-        // 删除文件夹下的所有文件(包括子目录)
+
+        //删除文件夹下的所有文件及子目录
         File[] files = dirFile.listFiles();
         for (int i = 0; i < Objects.requireNonNull(files).length; i++) {
-            // 删除子文件
+            //删除文件
             if (files[i].isFile()) {
                 flag = deleteFile(files[i].getAbsolutePath());
             }
-            // 删除子目录
+            //删除子目录
             else {
-                flag = deleteDirectory(files[i].getAbsolutePath()); //如果目录下还有目录，则反复调用
+                flag = deleteDirectory(files[i].getAbsolutePath()); //如果目录下还有目录，则递归调用
             }
             if (!flag) {
                 break;
@@ -268,16 +373,22 @@ public class Homework {
             return false;
         }
 
-        // 删除当前目录
+        //删除当前目录自身
         return dirFile.delete();
     }
 
 
-    public static void SubmitHomework(String storePath) {
+    /**
+     * 提供给前端的接口
+     *
+     * @param storePath 作业区目录
+     */
+    public static void HomeworkOperation(String storePath) {
         new HomeworkMenu(storePath);
     }
 
+    //main方法仅作测试
     public static void main(String[] args) {
-        SubmitHomework("D:\\Homework");
+        HomeworkOperation("D:\\Homework");
     }
 }

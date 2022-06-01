@@ -188,7 +188,7 @@ public class Compress {
     private void writeToFile(String filename, String storePath) {
         File fr = new File(filename);//待压缩文件
         File temp = new File(filename);
-        String newFileName = storePath +"\\"+ temp.getName().replace("txt","si");//压缩文件名
+        String newFileName = storePath +"\\"+ temp.getName()+".si";//压缩文件名是在原文件的后面加.si拓展
         /*Scanner x = new Scanner(System.in);//读取输入指令
         int order ;*/
         if (!fr.exists()) {
@@ -214,7 +214,7 @@ public class Compress {
                 e.printStackTrace();
             }
         }
-        String codeFile = newFileName.replace(".si", ".code");//压缩编码文件名
+        String codeFile = newFileName.replace(".si", ".code");//压缩编码文件名和压缩文件同名，只是拓展不同
         File fc = new File(codeFile);//压缩编码文件
         ObjectOutputStream out;//对象输出流，用于将对象写入文件
         try {
@@ -315,7 +315,7 @@ public class Compress {
 
     public void writeToDeFile(String filename, String storePath) {
         File fr = new File(filename);//待解压文件
-        String newFileName = storePath+"\\"+fr.getName().replace("si", getFileExtension(fr));//解压文件名
+        String newFileName = storePath+"\\"+fr.getName().replace(".si", "");//解压文件名通过删去压缩文件名的.si拓展得到
         System.out.println(newFileName);
         //int order;
         if (!fr.exists()) {

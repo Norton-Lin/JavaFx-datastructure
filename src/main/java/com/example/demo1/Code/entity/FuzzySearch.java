@@ -12,9 +12,10 @@ public class FuzzySearch {
      *
      * @param A      目标关键字
      * @param events 所有事项
+     * @param type   排序选项：0表示默认排序，即查询结果按与关键词的匹配度排序；1表示查询结果按照时间顺序排序
      * @return 模糊查找后的排好序的所有事项
      */
-    public <T extends Event> ArrayList<T> get_FS_result(String A, ArrayList<T> events) {
+    public <T extends Event> ArrayList<T> get_FS_result(String A, ArrayList<T> events, int type) {
 
         ArrayList<T> FS_result = new ArrayList<>();//保存模糊查找结果
 
@@ -79,13 +80,17 @@ public class FuzzySearch {
         if (FS_result.size() == 0) {
             return null;
         } else {
-            return WeightSort(FS_result);//调用排序算法对模糊查询结果进行排序
+            if (type == 0) {
+                return WeightSort(FS_result);//调用排序算法对模糊查询结果进行排序
+            } else {
+                return TimeSort(FS_result);
+            }
         }
 
     }
 
     /**
-     * 对模糊查找结果进行排序
+     * 对模糊查找结果按照匹配关键词的权重进行排序
      *
      * @param events 待排序课程
      */
@@ -98,6 +103,19 @@ public class FuzzySearch {
 
         return events;
 
+    }
+
+    /**
+     * 对模糊查找的结果按照时间顺序排序
+     *
+     * @param events 待排序课程
+     * @param <T>    泛型
+     * @return 已排序结果
+     */
+    public <T extends Event> ArrayList<T> TimeSort(ArrayList<T> events) {
+
+        events.sort(Comparator.comparing(T::getM_iStartTime));
+        return events;
     }
 
     //main方法仅作测试使用
@@ -119,7 +137,7 @@ public class FuzzySearch {
         String A = sc.next();
 
         System.out.println("查询结果为：");
-        search.get_FS_result(A, Events);
+        search.get_FS_result(A, Events, 0);
     }
 
 }
