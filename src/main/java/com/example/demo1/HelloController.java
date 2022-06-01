@@ -1,5 +1,6 @@
 package com.example.demo1;
 
+import com.example.demo1.Code.Mysql.AccountDatabase;
 import com.example.demo1.Code.Util.Authority;
 import com.example.demo1.Code.entity.account.Account;
 import javafx.fxml.FXML;
@@ -24,11 +25,13 @@ public class HelloController {
     @FXML
     public Label buttonStatusText;
 
-    private Account account;
+    private final Account account;
 
     public HelloController() {
         //创建新Stage
         thisStage = new Stage();
+
+        account = new Account();
 
         //加载FXML文件
         try {
@@ -66,91 +69,26 @@ public class HelloController {
 
     private void GetSubmit() {
         //创建数据库
-//        AccountDatabase database = new AccountDatabase();
+        AccountDatabase database = new AccountDatabase();
 
         //将本类中的账户的账号密码设置为输入的账号密码
-//        account.setM_sID(usernameField.getText());
-//        account.setPassword(passwordField.getText());
+        account.setM_sID(usernameField.getText());
+        account.setPassword(passwordField.getText());
 
         //登录成功的场景
-//        if (accountDatabase.findByPassword(account)) {
-//        buttonStatusText.setText("欢迎使用捏！");
-//        MainViewPort_Controller mainViewPort_controller = new MainViewPort_Controller(this);
-//        mainViewPort_controller.showStage();
-//        }
-//       else
-//        //登陆失败的场景
-//         buttonStatusText.setText("很遗憾，密码错误了捏……");
-
-        account = new Account();
-        this.account.setM_sID(usernameField.getText());
-        this.account.setPassword(passwordField.getText());
-        this.account.setM_eAuthority(Authority.Student);
-
-        //创建主界面的Controller，它也将加载它自己的FXML文件
-        //传入的this参数允许主界面Controller访问本类中的方法
+        if (database.findByPassword(account)) {
+        buttonStatusText.setText("欢迎使用捏！");
         MainViewPort_Controller mainViewPort_controller = new MainViewPort_Controller(this);
-
-        //将第二个界面展示出来
-        mainViewPort_controller.showStage();
-
         //本页面隐藏
         thisStage.hide();
+        mainViewPort_controller.showStage();
+        }
+       else
+        //登陆失败的场景
+         buttonStatusText.setText("很遗憾，账号不存在或密码错误了捏……");
     }
 
     public Account getAccount() {
         return this.account;
     }
-
-
-//    @FXML
-//    protected void handleSubmitButtonAction() {
-//        this.account.setM_sID(usernameField.getText());
-//        this.account.setPassword(passwordField.getText());
-//        this.account.setM_eAuthority(Authority.Teacher);
-//        openMainViewController();
-//    }
-//        AccountDatabase accountDatabase = new AccountDatabase();
-//        Account account = new Account();
-//        account.setM_sID(usernameField.getText());
-//        account.setPassword(passwordField.getText());
-//        if (accountDatabase.findByPassword(account)) {
-//            buttonStatusText.setText("欢迎使用捏！");
-//            Stage stage = (Stage) submitButton.getScene().getWindow();
-//            stage.hide();
-//            try {
-//                new MainViewPort_Controller(account);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//       else
-//            buttonStatusText.setText("很遗憾，密码错误了捏……");
-//        if (passwordField.getText().equals("123")) {
-//            buttonStatusText.setText("Welcome!");
-//            Account account = new Account();
-//            account.setM_sID(usernameField.getText());
-//            account.setPassword(passwordField.getText());
-//            account.setM_eAuthority(Authority.Teacher);
-//            try {
-//                Stage stage = showMainViewPort(account);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-//    public Stage showMainViewPort(Account account)  throws IOException{
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainViewPort.fxml"));
-//        Parent root =
-//        Stage stage = new Stage();
-//        stage.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainViewPort.fxml")),
-//                ResourceBundle.getBundle("com.example.demo1.Total")), 350, 280));
-//
-//        MainViewPort_Controller controller = loader.getController();
-//        controller.setAccount(account);
-//
-//        stage.show();
-//
-//        return stage;
-//    }
 }

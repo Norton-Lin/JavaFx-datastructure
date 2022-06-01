@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<VBox xmlns:fx="http://javafx.com/fxml">
+    <HBox alignment="CENTER">
+        <Label alignment="TOP_CENTER" text="欢迎来到管理员界面~" style="-fx-font-size:15"/>
+    </HBox>
+    <HBox alignment="CENTER">
+        <Label alignment="TOP_CENTER" text="请输入课程编号以定位课程" style="-fx-font-size:15"/>
+    </HBox>
+
+    <padding>
+        <Insets left="25.0"/>
+    </padding>
+
+    <HBox alignment="CENTER">
+        <TextField fx:id="CourseNum" prefWidth="125.0"/>
+        <padding>
+            <Insets left="25.0"/>
+        </padding>
+        <Button fx:id="SearchAll" text="查  找"/>
+    </HBox>
+
+    <padding>
+        <Insets top="25.0"/>
+    </padding>
+
+    <GridPane>
+        <Label text="月" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField fx:id="Month" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <padding>
+            <Insets left="15"/>
+        </padding>
+        <Label text="星期" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        <TextField fx:id="Week" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <padding>
+            <Insets left="15"/>
+        </padding>
+        <Label text="日" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+        <TextField fx:id="Day" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+        <padding>
+            <Insets left="15"/>
+        </padding>
+        <Label text="起始小时" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+        <TextField fx:id="StartHour" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+        <padding>
+            <Insets left="15"/>
+        </padding>
+        <Label text="起始分钟" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
+        <TextField fx:id="StartMinute" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+        <padding>
+            <Insets left="15"/>
+        </padding>
+        <Label text="结束小时" GridPane.columnIndex="5" GridPane.rowIndex="0"/>
+        <TextField fx:id="EndHour" GridPane.columnIndex="5" GridPane.rowIndex="1"/>
+        <padding>
+            <Insets left="15"/>
+        </padding>
+        <Label text="结束分钟" GridPane.columnIndex="6" GridPane.rowIndex="0"/>
+        <TextField fx:id="EndMinute" GridPane.columnIndex="6" GridPane.rowIndex="1"/>
+    </GridPane>
+
+    <padding>
+        <Insets top="25.0"/>
+    </padding>
+
+    <HBox alignment="CENTER">
+        <Button fx:id="CourTime" text="发布/修改上课时间"/>
+        <padding>
+            <Insets left="25.0"/>
+        </padding>
+        <Button fx:id="ExamTime" text="布/修改考试时间"/>
+    </HBox>
+
+    <padding>
+        <Insets top="25.0"/>
+    </padding>
+
+    <GridPane>
+        <Label text="教学楼" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        <TextField fx:id="Building" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <padding>
+            <Insets left="15.0"/>
+        </padding>
+        <Label text="楼层" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+        <TextField fx:id="Floor" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+        <padding>
+        <Insets left="15.0"/>
+        </padding>
+        <Label text="房间号" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+        <TextField fx:id="Room" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+    </GridPane>
+
+    <padding>
+        <Insets top="25.0"/>
+    </padding>
+
+    <HBox alignment="CENTER">
+        <Button fx:id="CourCon" text="发布/修改上课地点"/>
+        <padding>
+            <Insets left="25.0"/>
+        </padding>
+        <Button fx:id="ExamCon" text="发布/修改考试地点"/>
+    </HBox>
+
+    <HBox alignment="CENTER">
+        <Button fx:id="BackToMain" text="回到主界面"/>
+    </HBox>
+</VBox>

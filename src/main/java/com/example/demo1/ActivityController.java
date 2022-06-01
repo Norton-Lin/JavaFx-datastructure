@@ -24,7 +24,6 @@ public class ActivityController {
     private final Stage thisStage;
     private final MainViewPort_Controller controller;
 
-
     @FXML
     public Button Search1;
     @FXML
@@ -87,6 +86,7 @@ public class ActivityController {
         this.thisStage.show();
     }
 
+    @FXML
     private void initialize() {
         //点击查询所有课程的反应
         this.Search1.setOnAction(event -> Search1ButtonClicked());

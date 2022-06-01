@@ -104,16 +104,19 @@ public class CourseChooseController {
         //实例化一个模糊查找对象
         FuzzySearch fuzzySearch = new FuzzySearch();
         //建立一个空表用于存储模糊查找结果
-        ArrayList<Course> primaryResults = new ArrayList<>();
+        ArrayList<Course> primaryResults;
         //将模糊查找结果存入 list
         primaryResults = fuzzySearch.get_FS_result(ToBeFuzzySearched.getText(), tool);
         //查询结果的list
         ArrayList<String> texts = new ArrayList<>();
         //将结果字符串化
-        for (Course course : primaryResults)
-            texts.add(course.getM_sName() + " 编号为：" + course.getM_iNum());
-        //将查询得到的结果显示在文本框中
-        ResOfSearch.setText(texts.toString());
+        if (primaryResults != null) {
+            for (Course course : primaryResults)
+                texts.add(course.getM_sName() + " 编号为：" + course.getM_iNum());
+            //将查询得到的结果显示在文本框中
+            ResOfSearch.setText(texts.toString());
+        } else
+            ResOfSearch.setText("查找失败，请重新输入");
         return primaryResults;
     }
 
@@ -178,10 +181,13 @@ public class CourseChooseController {
         //查询结果的list
         ArrayList<String> texts = new ArrayList<>();
         //将结果字符串化
-        for (Course primaryResult : primaryResults)
-            texts.add(primaryResult.getM_sName() + " 编号为：" + primaryResult.getM_iNum());
-        //将查询得到的结果显示在文本框中
-        ResOfSearch.setText(texts.toString());
+        if (primaryResults != null) {
+            for (Course course : primaryResults)
+                texts.add(course.getM_sName() + " 编号为：" + course.getM_iNum());
+            //将查询得到的结果显示在文本框中
+            ResOfSearch.setText(texts.toString());
+        } else
+            ResOfSearch.setText("查找失败，请重新输入");
         return primaryResults;
     }
 

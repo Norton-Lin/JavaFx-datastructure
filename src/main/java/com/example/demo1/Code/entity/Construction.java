@@ -22,6 +22,8 @@ public class Construction {
         super();
     }
 
+
+
     /**
      * 返回建筑物的名称
      *
@@ -87,4 +89,11 @@ public class Construction {
     }
     public void scanPlace()
     {}
+
+    @Override
+    public String toString() {
+        String Result;
+        Result = "校区：" + this.campus + "\n" + "教学楼：" + this.con_name;
+        return Result;
+    }
 }

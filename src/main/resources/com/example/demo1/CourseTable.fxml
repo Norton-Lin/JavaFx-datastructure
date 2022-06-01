@@ -1,10 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane>
 
-</BorderPane>
+<HBox xmlns:fx="http://javafx.com/fxml">
+    <HBox>
+        <TableView fx:id="courseTable">
+            <columns>
+                <TableColumn fx:id="Numbers" prefWidth="125.0" sortable="false" text="节次\星期" />
+                <TableColumn fx:id="Mon" prefWidth="125.0" sortable="false" text="Mon" />
+                <TableColumn fx:id="Tue" prefWidth="125.0" sortable="false" text="Tue" />
+                <TableColumn fx:id="Wed" prefWidth="125.0" sortable="false" text="Wed" />
+                <TableColumn fx:id="Thu" prefWidth="125.0" sortable="false" text="Thu" />
+                <TableColumn fx:id="Fri" prefWidth="125.0" sortable="false" text="Fri" />
+                <TableColumn fx:id="Sat" prefWidth="125.0" sortable="false" text="Sat" />
+                <TableColumn fx:id="Sun" prefWidth="125.0" sortable="false" text="Sun" />
+            </columns>
+        </TableView>
+
+        <Label text="                                                       "/>
+
+        <VBox alignment="CENTER">
+            <Label alignment="TOP_CENTER" text="您可以输入课程表中的课程编号" style="-fx-font-size:15"/>
+            <Label alignment="TOP_CENTER" text="以获取课程详细信息" style="-fx-font-size:15"/>
+            <HBox alignment="CENTER">
+                <TextField fx:id="ToBeSearched" prefWidth="125.0"/>
+                <padding>
+                    <Insets top="25.0"/>
+                </padding>
+            </HBox>
+            <Button fx:id="Search" text="查  找" alignment="BASELINE_CENTER"/>
+            <Button fx:id="BackToMain" text="回到主界面" alignment="BASELINE_CENTER"/>
+            <HBox alignment="CENTER" prefWidth="20">
+                <padding>
+                    <Insets top="25.0"/>
+                </padding>
+                <TextArea fx:id="Info" prefRowCount="6"/>
+            </HBox>
+        </VBox>
+    </HBox>
+</HBox>

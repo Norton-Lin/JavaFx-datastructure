@@ -1,18 +1,13 @@
 package com.example.demo1;
 
 import com.example.demo1.Code.Util.Time;
-//import com.example.demo1.Code.entity.SystemTime;
 import com.example.demo1.Code.entity.SystemTime;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class ClockController {
     //控制当前Controller的场景

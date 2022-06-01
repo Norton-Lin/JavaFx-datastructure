@@ -136,7 +136,13 @@ public class MainViewPort_Controller {
     }
 
     protected void handleCourTabButtonAction() {
-
+        if (this.helloController.getAccount().getAuthority() != Authority.Student) {
+            buttonStatusText.setText("只有学生可以查看课程表！");
+            return;
+        }
+        CourseTableController courseTableController = new CourseTableController(this);
+        thisStage.hide();
+        courseTableController.showStage();
     }
 
     protected void handleUploadButtonAction() {
@@ -155,7 +161,13 @@ public class MainViewPort_Controller {
     }
 
     protected void handleManagerButtonAction() {
-        if (this.helloController.getAccount().getAuthority() != Authority.Manager)
+        if (this.helloController.getAccount().getAuthority() != Authority.Manager) {
             buttonStatusText.setText("你不是管理员！");
+            return;
+        }
+        ManagerViewPortController managerViewPortController
+                = new ManagerViewPortController(this);
+        thisStage.hide();
+        managerViewPortController.showStage();
     }
 }
