@@ -226,6 +226,7 @@ public class StudentAccount extends Account{
         this.m_CaCourse.add(course);
         CourseDatabase courseDatabase = new CourseDatabase();
         courseDatabase.insert(course,this);
+        courseDatabase.update(course);
         LogFile.info("Student "+getID(),"添加课程");
    }
 
@@ -237,6 +238,7 @@ public class StudentAccount extends Account{
         this.m_CaCourse.remove(course);
         CourseDatabase courseDatabase = new CourseDatabase();
         courseDatabase.delete(course,this);
+        courseDatabase.update(course);
         LogFile.info("Student "+getID(),"删除课程");
     }
 

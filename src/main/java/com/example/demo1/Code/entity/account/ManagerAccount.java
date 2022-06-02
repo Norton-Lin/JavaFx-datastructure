@@ -173,4 +173,15 @@ public class ManagerAccount extends Account{
     public void setActivity(ArrayList<Activity> activity) {
         this.m_CaActivity = activity;
     }
+    /**
+    * 管理员为学生添加课程
+     */
+    public void addCourse(Course course,String ID)
+    {
+        AccountDatabase accountDatabase = new AccountDatabase();
+        CourseDatabase courseDatabase = new CourseDatabase();
+        if(accountDatabase.findStuAccount(ID))//用户存在
+           courseDatabase.insert(course,ID);
+    }
+
 }

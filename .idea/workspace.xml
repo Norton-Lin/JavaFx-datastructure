@@ -5,20 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71e31705-279e-40b4-9a73-b40e17f75272" name="变更" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d9cfdc16-66cb-4355-8281-99371dfae444.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d9cfdc16-66cb-4355-8281-99371dfae444.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/ActivityChooseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/ActivityChooseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/ActivityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/ActivityController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Interactive/MainInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Interactive/MainInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/AccountDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/AccountDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/ActivityDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/ActivityDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/ConstructionDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/ConstructionDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/CourseDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/CourseDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/ManagerAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/ManagerAccount.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/StudentAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/StudentAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/TeacherAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/TeacherAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

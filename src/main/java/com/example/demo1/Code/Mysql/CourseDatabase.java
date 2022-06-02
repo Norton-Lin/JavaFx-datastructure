@@ -80,6 +80,28 @@ public class CourseDatabase {
 
     }
     /**
+     * 向用户关联表中插入数据，实现用户已选课程的添加
+     * @param course 待添加课程
+     * @param ID 用户Id
+     */
+    public void insert(Course course,String ID)
+    {
+        Connection conn = null ; // 数据库连接
+        Statement stmt = null ; // 数据库操作
+        String sql = "INSERT INTO account_course(id_account, id_course)"
+                + " VALUES ('" + ID + "','" + course.getM_iNum() + "')";
+        try {
+            conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
+            stmt = conn.createStatement() ;// 实例化Statement对象
+            stmt.executeUpdate(sql);// 执行数据库更新操作
+            stmt.close() ; // 操作关闭f
+            conn.close() ; // 数据库关闭
+        } catch (SQLException e) {
+            e.printStackTrace();
+            LogFile.error("CourseDatabase","数据库读取错误");
+        }
+    }
+    /**
      * 修改数据库中的课程内容
      * @param course 待修改课程
      */
@@ -97,7 +119,7 @@ public class CourseDatabase {
                 + "',tstarthour='" + course.getM_cExamTime().getStartHour() +"',tstartmin='"
                 + course.getM_cExamTime().getStartMinute() +"',tendhour='"+ course.getM_cExamTime().getEndHour()
                 +"',tendmin='"+course.getM_cExamTime().getEndMinute()+"',data='"+course.getM_sData()
-                + "','totalClass" + course.getM_iTotalClass()+ "',currentClass'" + course.getM_iCurrentClass()
+                + "',totalClass='" + course.getM_iTotalClass()+ "',currentClass='" + course.getM_iCurrentClass()
                 +"',teacher='"+course.getM_sTeacher()
                 + "'WHERE id=" + course.getM_iNum() ;
         String sql1 = "UPDATE course_construction SET construction_id='"+course.getM_sConstruction().get_con_number()
