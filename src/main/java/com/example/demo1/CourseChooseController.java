@@ -111,30 +111,48 @@ public class CourseChooseController {
         StringBuilder texts = new StringBuilder();
         //若精确查找框内有内容，优先查找此部分
         try {
-            if (this.ToBeBinarySearched.getText() != null) {
+            if (!this.ToBeBinarySearched.getText().isEmpty()) {
                 int Num = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), tool);
                 Course course_ex = tool.get(Num);
                 texts.append(course_ex.getM_sName()).append("\t")
                         .append("教师为：").append(course_ex.getM_sTeacher()).append("\t")
                         .append("编号为：").append(course_ex.getM_iNum()).append("\t")
+                        .append("上课时间为：").append("星期").append(course_ex.getM_tTime().getWeek())
+                        .append(course_ex.getM_tTime().getStartHour()).append("时")
+                        .append(course_ex.getM_tTime().getStartMinute()).append("分").append("~")
+                        .append(course_ex.getM_tTime().getEndHour()).append("时")
+                        .append(course_ex.getM_tTime().getEndMinute()).append("分").append("\t")
                         .append("上课地点为：").append(course_ex.getM_sConstruction())
                         .append(course_ex.getM_iFloor()).append("层")
                         .append(course_ex.getM_iRoom()).append("室").append("\t")
-                        .append("课程群号：").append(course_ex.getM_sCurGroup()).append("\n")
-                        .append("考试时间：").append(course_ex.getM_cExamTime())
-                        .append("考试地点：").append(course_ex.getM_cExamConstruction())
-                        .append(course_ex.getM_iExamFloor()).append("层")
-                        .append(course_ex.getM_iExamRoom()).append("室").append("\t");
+                        .append("课程群号：").append(course_ex.getM_sCurGroup()).append("\n");
+                if (course_ex.getM_cExamTime().getWeek() != -1) {
+                    texts.append("考试时间：").append("星期").append(course_ex.getM_cExamTime().getWeek())
+                            .append(course_ex.getM_cExamTime().getStartHour()).append("时")
+                            .append(course_ex.getM_cExamTime().getStartMinute()).append("分").append("~")
+                            .append(course_ex.getM_cExamTime().getEndHour()).append("时")
+                            .append(course_ex.getM_cExamTime().getEndMinute()).append("分");
+                } else {
+                    texts.append("考试时间未公布\t");
+                }
+                if (!course_ex.getM_cExamConstruction().toString().equals("")) {
+                    texts.append("考试地点：").append(course_ex.getM_cExamConstruction())
+                            .append(course_ex.getM_iExamFloor()).append("层")
+                            .append(course_ex.getM_iExamRoom()).append("室");
+                } else {
+                    texts.append("考试地点未公布");
+                }
                 this.ResOfSearch.setText(texts.toString());
+
                 //若精确查找框内不存在内容，则进行模糊查找，否则不进行模糊查找
-            } else if (this.ToBeFuzzySearched.getText() != null) {
+            } else if (!this.ToBeFuzzySearched.getText().isEmpty()) {
                 //将模糊查找结果存入 list
                 primaryResults = fuzzySearch.get_FS_result(ToBeFuzzySearched.getText(), tool);
                 if (primaryResults != null) {
                     for (Course course : primaryResults)
                         texts.append(course.getM_sName()).append("\t")
                                 .append("教师为：").append(course.getM_sTeacher()).append("\t")
-                                .append("编号为：").append(course.getM_iNum())
+                                .append("编号为：").append(course.getM_iNum()).append("\t")
                                 .append("上课地点为：").append(course.getM_sConstruction())
                                 .append(course.getM_iFloor()).append("层").append(course.getM_iRoom()).append("室")
                                 .append("\n");
@@ -162,36 +180,38 @@ public class CourseChooseController {
         courseDatabase.find(tool);
         //实例化查找类型对象
         Search search = new Search();
+        //存储查询结果
+        ArrayList<Course> temp = Search1ButtonClicked();
         //标记查找是否成功
         boolean mark = false;
         try {
             //存储精确查询结果
-            int fin = 0;
+            Course fin = new Course();
 
-            if (Search1ButtonClicked() == null) {
+            if (temp.isEmpty()) {
                 search.QuickSort(tool, 0, tool.size() - 1);
                 //模糊查找失败或未进行模糊查找，在所有课程列表中查询
                 int Num1 = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), tool);
                 if (Num1 != tool.size()) {
                     mark = true;
-                    fin = Num1;
+                    fin = tool.get(Num1);
                 }
             }
             else {
-                search.QuickSort(Search1ButtonClicked(), 0, Search2ButtonClicked().size() - 1);
+                search.QuickSort(temp, 0, temp.size() - 1);
                 //查找成功后在模糊查找得到的列表中精确查找
-                int Num2 = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), Search1ButtonClicked());
-                if (Num2 != Search1ButtonClicked().size()) {
+                int Num2 = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), temp);
+                if (Num2 != temp.size()) {
                     mark = true;
-                    fin = Num2;
+                    fin = temp.get(Num2);
                 }
             }
 
             if (mark) {
                 //展示查找到的课程名称
-                SearchResult_Name.setText(tool.get(fin).getM_sName() + " 编号为：" + tool.get(fin).getM_iNum());
+                SearchResult_Name.setText(fin.getM_sName() + " 编号为：" + fin.getM_iNum());
                 //将课程添加到课表
-                SearchResult_Boolean.setText(this.studentAccount.registerCourse(tool.get(fin)));
+                SearchResult_Boolean.setText(this.studentAccount.registerCourse(fin));
             }
             else
                 SearchResult_Boolean.setText("查找失败……检查一下操作吧！");
@@ -214,30 +234,52 @@ public class CourseChooseController {
 
         //若精确查找框内有内容，优先查找此部分
         try {
-            if (this.ToBeBinarySearched.getText() != null) {
+            if (!this.ToBeBinarySearched.getText().isEmpty()) {
                 int Num = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), this.courses);
                 Course course_ex = this.courses.get(Num);
                 texts.append(course_ex.getM_sName()).append("\t")
                         .append("教师为：").append(course_ex.getM_sTeacher()).append("\t")
                         .append("编号为：").append(course_ex.getM_iNum()).append("\t")
+                        .append("上课时间为：").append("星期").append(course_ex.getM_tTime().getWeek())
+                        .append(course_ex.getM_tTime().getStartHour()).append("时")
+                        .append(course_ex.getM_tTime().getStartMinute()).append("分").append("~")
+                        .append(course_ex.getM_tTime().getEndHour()).append("时")
+                        .append(course_ex.getM_tTime().getEndMinute()).append("分").append("\t")
                         .append("上课地点为：").append(course_ex.getM_sConstruction())
                         .append(course_ex.getM_iFloor()).append("层")
                         .append(course_ex.getM_iRoom()).append("室").append("\t")
-                        .append("课程群号：").append(course_ex.getM_sCurGroup()).append("\n")
-                        .append("考试时间：").append(course_ex.getM_cExamTime())
-                        .append("考试地点：").append(course_ex.getM_cExamConstruction())
-                        .append(course_ex.getM_iExamFloor()).append("层")
-                        .append(course_ex.getM_iExamRoom()).append("室").append("\t");
+                        .append("课程群号：").append(course_ex.getM_sCurGroup()).append("\n");
+                if (course_ex.getM_cExamTime().getWeek() != -1) {
+                    texts.append("考试时间：").append("星期").append(course_ex.getM_cExamTime().getWeek())
+                            .append(course_ex.getM_cExamTime().getStartHour()).append("时")
+                            .append(course_ex.getM_cExamTime().getStartMinute()).append("分").append("~")
+                            .append(course_ex.getM_cExamTime().getEndHour()).append("时")
+                            .append(course_ex.getM_cExamTime().getEndMinute()).append("分");
+                } else {
+                    texts.append("考试时间未公布\t");
+                }
+                if (!course_ex.getM_cExamConstruction().toString().equals("")) {
+                    texts.append("考试地点：").append(course_ex.getM_cExamConstruction())
+                            .append(course_ex.getM_iExamFloor()).append("层")
+                            .append(course_ex.getM_iExamRoom()).append("室").append("\t");
+                } else {
+                    texts.append("考试地点未公布");
+                }
                 this.ResOfSearch.setText(texts.toString());
                 //若精确查找框内不存在内容，则进行模糊查找，否则不进行模糊查找
-            } else if (this.ToBeFuzzySearched.getText() != null) {
+            } else if (!this.ToBeFuzzySearched.getText().isEmpty()) {
                 //将模糊查找结果存入 list
                 primaryResults = fuzzySearch.get_FS_result(ToBeFuzzySearched.getText(), this.courses);
                 if (primaryResults != null) {
                     for (Course course : primaryResults)
                         texts.append(course.getM_sName()).append("\t")
                                 .append("教师为：").append(course.getM_sTeacher()).append("\t")
-                                .append("编号为：").append(course.getM_iNum())
+                                .append("编号为：").append(course.getM_iNum()).append("\t")
+                                .append("上课时间为：").append("星期").append(course.getM_tTime().getWeek())
+                                .append(course.getM_tTime().getStartHour()).append("时")
+                                .append(course.getM_tTime().getStartMinute()).append("分").append("~")
+                                .append(course.getM_tTime().getEndHour()).append("时")
+                                .append(course.getM_tTime().getEndMinute()).append("分").append("\t")
                                 .append("上课地点为：").append(course.getM_sConstruction())
                                 .append(course.getM_iFloor()).append("层").append(course.getM_iRoom()).append("室")
                                 .append("\n");
@@ -256,34 +298,37 @@ public class CourseChooseController {
     private void Assure2ButtonClicked() {
         //实例化查找类型对象
         Search search = new Search();
+        //存储查找2结果
+        ArrayList<Course> temp = Search2ButtonClicked();
         boolean mark = false;
         try {
             //存储精确查询结果
-            int fin = 0;
+            Course fin = new Course();
 
-            if (Search2ButtonClicked() == null) {
+            if (temp.isEmpty()) {
+                search.QuickSort(this.courses, 0, this.courses.size() - 1);
                 //模糊查找失败或未进行模糊查找，在所有课程列表中查询
                 int Num1 = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), this.courses);
                 if (Num1 != this.courses.size()) {
                     mark = true;
-                    fin = Num1;
+                    fin = this.courses.get(Num1);
                 }
             }
             else {
+                search.QuickSort(temp, 0, temp.size() - 1);
                 //查找成功后在模糊查找得到的列表中精确查找
-                int Num2 = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), Search2ButtonClicked());
-                if (Num2 != Search2ButtonClicked().size()) {
+                int Num2 = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), temp);
+                if (Num2 != temp.size()) {
                     mark = true;
-                    fin = Num2;
+                    fin = temp.get(Num2);
                 }
             }
 
             if (mark) {
                 //展示查找到的课程名称
-                SearchResult_Name.setText(this.courses.get(fin).getM_sName() + " 编号为：" + this.courses.get(fin).getM_iNum());
-                //根据账号类型将课程从课表中删除
-                this.studentAccount.decCourse(this.courses.get(fin));
-                SearchResult_Boolean.setText("查找并删除成功！好耶！");
+                SearchResult_Name.setText(fin.getM_sName() + " 编号为：" + fin.getM_iNum());
+                //根据账号类型将课程从课表中删除;
+                SearchResult_Boolean.setText(this.studentAccount.exitCourse(fin));
             }
             else
                 SearchResult_Boolean.setText("查找失败……检查一下操作吧！");

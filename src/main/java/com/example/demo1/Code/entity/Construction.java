@@ -92,8 +92,13 @@ public class Construction {
 
     @Override
     public String toString() {
-        String Result;
-        Result = "校区：" + this.campus + "\n" + "教学楼：" + this.con_name;
+        String Result = "";
+        if (this.con_name != null) {
+            if (this.campus == 0)
+                Result = "校区：沙河校区" + "\t" + "教学楼：" + this.con_name;
+            else if (this.campus == 1)
+                Result = "校区：西土城校区" + "\t" + "教学楼：" + this.con_name;
+        }
         return Result;
     }
 }

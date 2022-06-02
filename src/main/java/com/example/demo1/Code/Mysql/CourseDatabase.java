@@ -97,7 +97,7 @@ public class CourseDatabase {
                 + "',tstarthour='" + course.getM_cExamTime().getStartHour() +"',tstartmin='"
                 + course.getM_cExamTime().getStartMinute() +"',tendhour='"+ course.getM_cExamTime().getEndHour()
                 +"',tendmin='"+course.getM_cExamTime().getEndMinute()+"',data='"+course.getM_sData()
-                + "','totalClass" + course.getM_iTotalClass()+ "',currentClass'" + course.getM_iCurrentClass()
+                + "',totalClass='" + course.getM_iTotalClass()+ "',currentClass='" + course.getM_iCurrentClass()
                 +"',teacher='"+course.getM_sTeacher()
                 + "'WHERE id=" + course.getM_iNum() ;
         String sql1 = "UPDATE course_construction SET construction_id='"+course.getM_sConstruction().get_con_number()

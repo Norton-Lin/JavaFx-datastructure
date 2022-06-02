@@ -12,13 +12,13 @@ public class Time {
     private int startDate;//开始日期
     private int week;//星期
     public Time() {
-        startHour = 0;
-        startMinute = 0;
-        endHour = 0;
-        endMinute = 0;
-        startDate = 0;
-        startMonth = 0;
-        week =0;
+        startHour = -1;
+        startMinute = -1;
+        endHour = -1;
+        endMinute = -1;
+        startDate = -1;
+        startMonth = -1;
+        week = -1;
     }
 
     public Time(int startHour, int startMinute, int endHour, int endMinute) {
