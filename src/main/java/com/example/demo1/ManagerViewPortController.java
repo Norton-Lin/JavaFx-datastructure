@@ -23,7 +23,7 @@ public class ManagerViewPortController {
     private final MainViewPort_Controller controller;
 
     //存储所有课程的ArrayList
-    private ArrayList<Course> courses;
+    private ArrayList<Course> courses = new ArrayList<>();
 
     //存储查找到的课程
     Course course;

@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class HelloApplication extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         //实例化第一个Controller，它加载hello-view.fxml
         HelloController controller = new HelloController();
 

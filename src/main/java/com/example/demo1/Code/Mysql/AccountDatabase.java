@@ -4,6 +4,7 @@ import com.example.demo1.Code.Util.Authority;
 import com.example.demo1.Code.Util.Property;
 import com.example.demo1.Code.entity.Activity;
 import com.example.demo1.Code.entity.Course;
+import com.example.demo1.Code.entity.EventClock;
 import com.example.demo1.Code.entity.account.Account;
 import com.example.demo1.Code.entity.account.ManagerAccount;
 import com.example.demo1.Code.entity.account.StudentAccount;
@@ -152,6 +153,7 @@ public class AccountDatabase {
         String sql1 = "SELECT id_account,id_course FROM account_course where id_account = '"+studentAccount.getID()+"'";
         //读取对应活动
         String sql2 = "SELECT id_account,id_activity FROM account_activity where id_account = '"+studentAccount.getID()+"'";
+        String sql3 = "SELECT * FROM account_clock where account_id ="+studentAccount.getID();
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
             stmt = conn.createStatement();// 实例化Statement对象
@@ -173,8 +175,20 @@ public class AccountDatabase {
                 studentAccount.getActivity().add(activity);//向ArrayList中添加
             }
             rs.close();// 关闭活动结果集
-            stmt.close(); // 操作关闭
-            conn.close(); // 数据库关闭
+            rs = stmt.executeQuery(sql3);// 实例化ResultSet对象
+            while(rs.next()){
+                EventClock eventClock = new EventClock();
+                eventClock.setClockName(rs.getString("clock_name"));
+                eventClock.setClockType(rs.getInt("type"));
+                eventClock.getClockTime().setStartMonth(rs.getInt("month"));
+                eventClock.getClockTime().setStartDate(rs.getInt("day"));
+                eventClock.getClockTime().setWeek(rs.getInt("week"));
+                eventClock.getClockTime().setStartHour(rs.getInt("hour"));
+                eventClock.getClockTime().setStartMinute(rs.getInt("min"));
+                studentAccount.getM_CaEventClock().add(eventClock);
+            }
+            stmt.close();
+            conn.close();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
             LogFile.error("AccountDatabase","数据库读取错误");

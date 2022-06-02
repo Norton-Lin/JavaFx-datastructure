@@ -6,11 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="71e31705-279e-40b4-9a73-b40e17f75272" name="变更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/demo.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/AccountDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/AccountDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/StudentAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/StudentAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/HelloApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/ManagerViewPortController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/ManagerViewPortController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/Mysql/AccountDatabase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/Mysql/AccountDatabase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/compress/Compress.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/compress/Compress.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/recheck/StringCompute.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/recheck/StringCompute.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,6 +173,7 @@
       <workItem from="1652861154810" duration="82000" />
       <workItem from="1652861263594" duration="904000" />
       <workItem from="1653010985822" duration="8591000" />
+      <workItem from="1654136871203" duration="4709000" />
     </task>
     <servers />
   </component>
@@ -202,12 +203,22 @@
           <line>144</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo1/ManagerViewPortController.java</url>
+          <line>122</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.ClassNotFoundException" package="java.lang" />
           <option name="timeStamp" value="18" />
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="this.courses.get(0)" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
