@@ -119,8 +119,9 @@ public class AccountDatabase {
         Statement stmt = null ; // 数据库操作
         ResultSet rs = null; // 保存查询结果
         Account temp = new Account();
-        String sql1 = "SELECT id,password,authority FROM account where id = '"+account.getID()+"'and password ="+account.getPassword();
+        String sql1 = "SELECT id,password,authority FROM account where id = '"+account.getID()+"'and password ='"+account.getPassword()+"'";
         try {
+            Class.forName(m_sDriver) ; // 加载驱动程序
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
             stmt = conn.createStatement();// 实例化Statement对象
             rs = stmt.executeQuery(sql1);// 实例化ResultSet对象
@@ -132,7 +133,7 @@ public class AccountDatabase {
             stmt.close(); // 操作关闭
             conn.close(); // 数据库关闭
 
-        } catch (SQLException throwable) {
+        } catch (SQLException | ClassNotFoundException throwable) {
             throwable.printStackTrace();
         }
        /* if(temp.getAuthority() != account.getAuthority())
