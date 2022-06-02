@@ -47,7 +47,7 @@ public class CourseChooseController {
     StudentAccount studentAccount;
 
     //存放本账号的课程表
-    ArrayList<Course> courses;
+    ArrayList<Course> courses = new ArrayList<>();
 
     public CourseChooseController(MainViewPort_Controller mainViewPort_controller) {
         //得到新Controller
@@ -64,7 +64,7 @@ public class CourseChooseController {
             //加载FXML文件
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseChoose.fxml"));
             loader.setController(this);
-            thisStage.setScene(new Scene(loader.load(), 450, 400));
+            thisStage.setScene(new Scene(loader.load(), 650, 400));
             thisStage.setTitle("欢迎来到选课界面~");
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,16 +107,21 @@ public class CourseChooseController {
         ArrayList<Course> primaryResults;
         //将模糊查找结果存入 list
         primaryResults = fuzzySearch.get_FS_result(ToBeFuzzySearched.getText(), tool);
-        //查询结果的list
-        ArrayList<String> texts = new ArrayList<>();
+        //查询结果
+        StringBuilder texts = new StringBuilder();
         //将结果字符串化
-        if (primaryResults != null) {
-            for (Course course : primaryResults)
-                texts.add(course.getM_sName() + " 编号为：" + course.getM_iNum());
-            //将查询得到的结果显示在文本框中
-            ResOfSearch.setText(texts.toString());
-        } else
-            ResOfSearch.setText("查找失败，请重新输入");
+        if (this.ToBeFuzzySearched.getText() != null) {
+            if (primaryResults != null) {
+                for (Course course : primaryResults)
+                    texts.append(course.getM_sName()).append("\t")
+                            .append("教师为：").append(course.getM_sTeacher()).append("\t")
+                            .append(" 编号为：").append(course.getM_iNum())
+                            .append("\n");
+                //将查询得到的结果显示在文本框中
+                ResOfSearch.setText(texts.toString());
+            } else
+                ResOfSearch.setText("查找失败，请重新输入");
+        }
         return primaryResults;
     }
 
@@ -158,9 +163,8 @@ public class CourseChooseController {
             if (mark) {
                 //展示查找到的课程名称
                 SearchResult_Name.setText(tool.get(fin).getM_sName() + " 编号为：" + tool.get(fin).getM_iNum());
-                //根据账号类型将课程添加到课表
-                this.studentAccount.addCourse(tool.get(fin));
-                SearchResult_Boolean.setText("查找并添加成功！好耶！");
+                //将课程添加到课表
+                SearchResult_Boolean.setText(this.studentAccount.registerCourse(tool.get(fin)));
             }
             else
                 SearchResult_Boolean.setText("查找失败……检查一下操作吧！");
@@ -179,15 +183,21 @@ public class CourseChooseController {
         //将模糊查找结果存入 list
         primaryResults = fuzzySearch.get_FS_result(ToBeFuzzySearched.getText(), this.courses);
         //查询结果的list
-        ArrayList<String> texts = new ArrayList<>();
+        StringBuilder texts = new StringBuilder();
         //将结果字符串化
-        if (primaryResults != null) {
-            for (Course course : primaryResults)
-                texts.add(course.getM_sName() + " 编号为：" + course.getM_iNum());
-            //将查询得到的结果显示在文本框中
-            ResOfSearch.setText(texts.toString());
-        } else
-            ResOfSearch.setText("查找失败，请重新输入");
+
+        if (this.ToBeFuzzySearched.getText() != null) {
+            if (primaryResults != null) {
+                for (Course course : primaryResults)
+                    texts.append(course.getM_sName()).append("\t")
+                            .append("教师为：").append(course.getM_sTeacher()).append("\t")
+                            .append(" 编号为：").append(course.getM_iNum())
+                            .append("\n");
+                //将查询得到的结果显示在文本框中
+                ResOfSearch.setText(texts.toString());
+            } else
+                ResOfSearch.setText("查找失败，请重新输入");
+        }
         return primaryResults;
     }
 
@@ -199,7 +209,7 @@ public class CourseChooseController {
             //存储精确查询结果
             int fin = 0;
 
-            if (Search1ButtonClicked() == null) {
+            if (Search2ButtonClicked() == null) {
                 //模糊查找失败或未进行模糊查找，在所有课程列表中查询
                 int Num1 = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), this.courses);
                 if (Num1 != this.courses.size()) {

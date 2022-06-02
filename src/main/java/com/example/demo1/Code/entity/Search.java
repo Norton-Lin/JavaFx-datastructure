@@ -11,6 +11,7 @@ public class Search {
      * @param events 具体事项
      */
     public  <T extends Event>int BinaryCourseSearch(int m_iNum, ArrayList<T> events) {
+        QuickSort(events, 0, events.size() - 1);
         int low = 0;
         int high = events.size() - 1;
         while (low <= high) {
