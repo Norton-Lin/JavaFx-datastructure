@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71e31705-279e-40b4-9a73-b40e17f75272" name="变更" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/ClockController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/ClockController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo1/ClockController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo1/ClockController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Course.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/StudentAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/StudentAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/CourseChooseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/CourseChooseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/demo1/CourseChoose.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/demo1/CourseChoose.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +65,9 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Desktop\program design\JavaFx-datastructure\src\main\java\com\example\demo1" />
       <recent name="D:\Desktop\program design\JavaFx-datastructure\src\main\java\com\example\demo1\Code" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Desktop\program design\JavaFx-datastructure\src\main\resources\com\example\demo1" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.example.demo1" />
@@ -171,7 +177,7 @@
       <workItem from="1652861263594" duration="904000" />
       <workItem from="1653010985822" duration="8591000" />
       <workItem from="1654136871203" duration="5831000" />
-      <workItem from="1654143114387" duration="5735000" />
+      <workItem from="1654143114387" duration="9387000" />
     </task>
     <servers />
   </component>
@@ -207,11 +213,6 @@
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/CourseDatabase.java</url>
-          <line>263</line>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Navigate.java</url>
           <line>46</line>
           <option name="timeStamp" value="22" />
@@ -220,6 +221,14 @@
           <properties class="java.lang.ClassNotFoundException" package="java.lang" />
           <option name="timeStamp" value="18" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/StudentAccount.java</url>
+          <line>105</line>
+          <properties class="com.example.demo1.Code.entity.account.StudentAccount" method="checkTime">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
