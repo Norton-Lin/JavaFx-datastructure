@@ -104,23 +104,48 @@ public class CourseChooseController {
         //实例化一个模糊查找对象
         FuzzySearch fuzzySearch = new FuzzySearch();
         //建立一个空表用于存储模糊查找结果
-        ArrayList<Course> primaryResults;
-        //将模糊查找结果存入 list
-        primaryResults = fuzzySearch.get_FS_result(ToBeFuzzySearched.getText(), tool);
+        ArrayList<Course> primaryResults = new ArrayList<>();
+        //实例化查找类
+        Search search = new Search();
         //查询结果
         StringBuilder texts = new StringBuilder();
-        //将结果字符串化
-        if (this.ToBeFuzzySearched.getText() != null) {
-            if (primaryResults != null) {
-                for (Course course : primaryResults)
-                    texts.append(course.getM_sName()).append("\t")
-                            .append("教师为：").append(course.getM_sTeacher()).append("\t")
-                            .append(" 编号为：").append(course.getM_iNum())
-                            .append("\n");
-                //将查询得到的结果显示在文本框中
-                ResOfSearch.setText(texts.toString());
-            } else
-                ResOfSearch.setText("查找失败，请重新输入");
+        //若精确查找框内有内容，优先查找此部分
+        try {
+            if (this.ToBeBinarySearched.getText() != null) {
+                int Num = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), tool);
+                Course course_ex = tool.get(Num);
+                texts.append(course_ex.getM_sName()).append("\t")
+                        .append("教师为：").append(course_ex.getM_sTeacher()).append("\t")
+                        .append("编号为：").append(course_ex.getM_iNum()).append("\t")
+                        .append("上课地点为：").append(course_ex.getM_sConstruction())
+                        .append(course_ex.getM_iFloor()).append("层")
+                        .append(course_ex.getM_iRoom()).append("室").append("\t")
+                        .append("课程群号：").append(course_ex.getM_sCurGroup()).append("\n")
+                        .append("考试时间：").append(course_ex.getM_cExamTime())
+                        .append("考试地点：").append(course_ex.getM_cExamConstruction())
+                        .append(course_ex.getM_iExamFloor()).append("层")
+                        .append(course_ex.getM_iExamRoom()).append("室").append("\t");
+                this.ResOfSearch.setText(texts.toString());
+                //若精确查找框内不存在内容，则进行模糊查找，否则不进行模糊查找
+            } else if (this.ToBeFuzzySearched.getText() != null) {
+                //将模糊查找结果存入 list
+                primaryResults = fuzzySearch.get_FS_result(ToBeFuzzySearched.getText(), tool);
+                if (primaryResults != null) {
+                    for (Course course : primaryResults)
+                        texts.append(course.getM_sName()).append("\t")
+                                .append("教师为：").append(course.getM_sTeacher()).append("\t")
+                                .append("编号为：").append(course.getM_iNum())
+                                .append("上课地点为：").append(course.getM_sConstruction())
+                                .append(course.getM_iFloor()).append("层").append(course.getM_iRoom()).append("室")
+                                .append("\n");
+                    //将查询得到的结果显示在文本框中
+                    ResOfSearch.setText(texts.toString());
+                } else
+                    ResOfSearch.setText("查找失败，请重新输入");
+            }
+        } catch (Exception e) {
+            System.out.println("用户输入异常");
+            SearchResult_Name.setText("右侧输入框中应该输入数字哦~");
         }
         return primaryResults;
     }
@@ -144,6 +169,7 @@ public class CourseChooseController {
             int fin = 0;
 
             if (Search1ButtonClicked() == null) {
+                search.QuickSort(tool, 0, tool.size() - 1);
                 //模糊查找失败或未进行模糊查找，在所有课程列表中查询
                 int Num1 = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), tool);
                 if (Num1 != tool.size()) {
@@ -152,6 +178,7 @@ public class CourseChooseController {
                 }
             }
             else {
+                search.QuickSort(Search1ButtonClicked(), 0, Search2ButtonClicked().size() - 1);
                 //查找成功后在模糊查找得到的列表中精确查找
                 int Num2 = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), Search1ButtonClicked());
                 if (Num2 != Search1ButtonClicked().size()) {
@@ -179,24 +206,49 @@ public class CourseChooseController {
         //实例化模糊查找对象
         FuzzySearch fuzzySearch = new FuzzySearch();
         //建立一个空表用于存储模糊查找结果
-        ArrayList<Course> primaryResults;
-        //将模糊查找结果存入 list
-        primaryResults = fuzzySearch.get_FS_result(ToBeFuzzySearched.getText(), this.courses);
+        ArrayList<Course> primaryResults = new ArrayList<>();
         //查询结果的list
         StringBuilder texts = new StringBuilder();
-        //将结果字符串化
+        //实例化查找类
+        Search search = new Search();
 
-        if (this.ToBeFuzzySearched.getText() != null) {
-            if (primaryResults != null) {
-                for (Course course : primaryResults)
-                    texts.append(course.getM_sName()).append("\t")
-                            .append("教师为：").append(course.getM_sTeacher()).append("\t")
-                            .append(" 编号为：").append(course.getM_iNum())
-                            .append("\n");
-                //将查询得到的结果显示在文本框中
-                ResOfSearch.setText(texts.toString());
-            } else
-                ResOfSearch.setText("查找失败，请重新输入");
+        //若精确查找框内有内容，优先查找此部分
+        try {
+            if (this.ToBeBinarySearched.getText() != null) {
+                int Num = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), this.courses);
+                Course course_ex = this.courses.get(Num);
+                texts.append(course_ex.getM_sName()).append("\t")
+                        .append("教师为：").append(course_ex.getM_sTeacher()).append("\t")
+                        .append("编号为：").append(course_ex.getM_iNum()).append("\t")
+                        .append("上课地点为：").append(course_ex.getM_sConstruction())
+                        .append(course_ex.getM_iFloor()).append("层")
+                        .append(course_ex.getM_iRoom()).append("室").append("\t")
+                        .append("课程群号：").append(course_ex.getM_sCurGroup()).append("\n")
+                        .append("考试时间：").append(course_ex.getM_cExamTime())
+                        .append("考试地点：").append(course_ex.getM_cExamConstruction())
+                        .append(course_ex.getM_iExamFloor()).append("层")
+                        .append(course_ex.getM_iExamRoom()).append("室").append("\t");
+                this.ResOfSearch.setText(texts.toString());
+                //若精确查找框内不存在内容，则进行模糊查找，否则不进行模糊查找
+            } else if (this.ToBeFuzzySearched.getText() != null) {
+                //将模糊查找结果存入 list
+                primaryResults = fuzzySearch.get_FS_result(ToBeFuzzySearched.getText(), this.courses);
+                if (primaryResults != null) {
+                    for (Course course : primaryResults)
+                        texts.append(course.getM_sName()).append("\t")
+                                .append("教师为：").append(course.getM_sTeacher()).append("\t")
+                                .append("编号为：").append(course.getM_iNum())
+                                .append("上课地点为：").append(course.getM_sConstruction())
+                                .append(course.getM_iFloor()).append("层").append(course.getM_iRoom()).append("室")
+                                .append("\n");
+                    //将查询得到的结果显示在文本框中
+                    ResOfSearch.setText(texts.toString());
+                } else
+                    ResOfSearch.setText("查找失败，请重新输入");
+            }
+        } catch (Exception e) {
+            System.out.println("用户输入异常");
+            SearchResult_Name.setText("右侧输入框中应该输入数字哦~");
         }
         return primaryResults;
     }

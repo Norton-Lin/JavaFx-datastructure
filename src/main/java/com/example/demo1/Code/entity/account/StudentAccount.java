@@ -119,11 +119,16 @@ public class StudentAccount extends Account{
      * @return 存在冲突则为false
      */
     public boolean checkTime(Activity activity){
-        boolean result = false;
+        boolean result = true;
         for (Course c : m_CaCourse) {//foreach 对每门课进行检查
             Time time = c.getM_tTime();
             if(time.checkTime(activity.getM_tTime()))
-                result=true;
+                result=false;
+        }
+        for (Activity c : m_CaActivity) {//foreach 对每个活动进行检查
+            Time time = c.getM_tTime();
+            if(time.checkTime(activity.getM_tTime()))
+                result=false;
         }
         return result;
     }
