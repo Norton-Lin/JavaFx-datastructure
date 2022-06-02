@@ -104,11 +104,11 @@ public class StudentAccount extends Account{
      * @return  存在冲突则为false
      */
     public boolean checkTime(Course course){
-        boolean result = false;
+        boolean result = true;
         for (Course c : m_CaCourse) {//foreach 对已选的每门课进行检查
             Time time = c.getM_tTime();
-            if(time.checkTime(course.getM_tTime()))
-                result=true;
+            if(!time.checkTime(course.getM_tTime()))
+                result=false;
         }
         return result;
     }
@@ -136,12 +136,13 @@ public class StudentAccount extends Account{
     public String registerCourse(Course course){
         String message = null;
         if(!checkTime(course)){
-            m_CaCourse.add(course);
             message="报名失败,存在时间冲突";
         }
-        if(course.joinCourse()) {
-            message = "报名成功！";
-            addCourse(course);
+        else {
+            if (course.joinCourse()) {
+                message = "报名成功！";
+                addCourse(course);
+            }
         }
         return message;
     }

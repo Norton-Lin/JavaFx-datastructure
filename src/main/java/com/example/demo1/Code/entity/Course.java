@@ -125,7 +125,7 @@ public class Course extends Event{
     }
 
     public boolean joinCourse() {
-        return true;
+        return addM_iPle();
     }
 
     public boolean exitCourse() {
