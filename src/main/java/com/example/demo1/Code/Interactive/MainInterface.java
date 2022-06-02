@@ -99,7 +99,7 @@ public class MainInterface {
         CourseDatabase courseDatabase = new CourseDatabase();
         ActivityDatabase activityDatabase =new ActivityDatabase();
         courseDatabase.find(allCourses);
-        activityDatabase.find(allActivities);
+        activityDatabase.find(allActivities,account.getID());
         int choice = 1;
         Scanner in = new Scanner(System.in);
         while (choice <= 3 && choice >= 1) {
@@ -128,7 +128,7 @@ public class MainInterface {
         CourseDatabase courseDatabase = new CourseDatabase();
         ActivityDatabase activityDatabase =new ActivityDatabase();
         courseDatabase.find(allCourses);
-        activityDatabase.find(allActivities);
+        activityDatabase.find(allActivities,account.getID());
         int choice = 1;
         Scanner in = new Scanner(System.in);
         while (choice <= 3 && choice >= 1) {

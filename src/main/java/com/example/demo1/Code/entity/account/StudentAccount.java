@@ -249,7 +249,7 @@ public class StudentAccount extends Account{
     public void addActivity(Activity activity){
         this.m_CaActivity.add(activity);
         ActivityDatabase activityDatabase = new ActivityDatabase();
-        activityDatabase.insert(activity,this);
+        activityDatabase.insert(activity,this.getID());
         LogFile.info("Student "+getID(),"添加活动");
    }
 
@@ -260,7 +260,7 @@ public class StudentAccount extends Account{
     public void decActivity(Activity activity){
         this.m_CaActivity.remove(activity);
         ActivityDatabase activityDatabase = new ActivityDatabase();
-        activityDatabase.delete(activity,this);
+        activityDatabase.delete(activity,this.getID());
         LogFile.info("Student "+getID(),"删除活动");
    }
 }
