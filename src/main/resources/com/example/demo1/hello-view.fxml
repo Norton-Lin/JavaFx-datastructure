@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 
+<?import javafx.geometry.Insets?>
 <BorderPane xmlns:fx="http://javafx.com/fxml">
     <top>
         <StackPane>
@@ -21,9 +22,15 @@
             <PasswordField fx:id="passwordField" prefColumnCount="10" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
             <Button fx:id="submitButton" text="登  录" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
-            <Label fx:id="buttonStatusText" GridPane.columnIndex="1" GridPane.rowIndex="4"
-                   style="-fx-text-fill:#B8860B"/>
         </GridPane>
     </center>
+    <bottom>
+        <HBox alignment="CENTER">
+            <Label fx:id="buttonStatusText" GridPane.columnIndex="1" GridPane.rowIndex="4"
+                   style="-fx-text-fill:#B8860B"/>
+            <padding>
+                <Insets bottom="250.0"/>
+            </padding>
+        </HBox>
+    </bottom>
 </BorderPane>

@@ -55,6 +55,9 @@ public class CourseTableController {
 
         search = new Search();
 
+        //设置课程表不可编辑
+        this.courseTable.setEditable(false);
+
         //学生账号
         StudentAccount studentAccount = new StudentAccount(this.controller.getAccount());
 
@@ -79,7 +82,7 @@ public class CourseTableController {
         //点击查找按钮后的反应
         this.Search.setOnAction(event -> handleSearch());
         //向TableView中添加元素
-        courseTable.setItems(getSections());
+//        courseTable.setItems(getSections());
     }
 
     public void showStage() {
@@ -104,13 +107,13 @@ public class CourseTableController {
             //第二步筛选，用来对每一行分配对应星期的课
             for (Course course : tool)
                 switch (course.getM_tTime().getWeek()) {
-                    case 1 -> temp.Mon_Cour = course;
-                    case 2 -> temp.Tue_Cour = course;
-                    case 3 -> temp.Wed_Cour = course;
-                    case 4 -> temp.Thu_Cour = course;
-                    case 5 -> temp.Fri_Cour = course;
-                    case 6 -> temp.Sat_Cour = course;
-                    case 7 -> temp.Sun_Cour = course;
+                    case 1 -> temp.Mon_Cour = course.getM_sName() + course.getM_iNum();
+                    case 2 -> temp.Tue_Cour = course.getM_sName() + course.getM_iNum();
+                    case 3 -> temp.Wed_Cour = course.getM_sName() + course.getM_iNum();
+                    case 4 -> temp.Thu_Cour = course.getM_sName() + course.getM_iNum();
+                    case 5 -> temp.Fri_Cour = course.getM_sName() + course.getM_iNum();
+                    case 6 -> temp.Sat_Cour = course.getM_sName() + course.getM_iNum();
+                    case 7 -> temp.Sun_Cour = course.getM_sName() + course.getM_iNum();
                 }
 
             //根据当前循环次数判断当前为第几行，并将其加入temp中
@@ -203,11 +206,11 @@ public class CourseTableController {
 
 class EverySection {
     String Sec;
-    Course Mon_Cour;
-    Course Tue_Cour;
-    Course Wed_Cour;
-    Course Thu_Cour;
-    Course Fri_Cour;
-    Course Sat_Cour;
-    Course Sun_Cour;
+    String Mon_Cour;
+    String Tue_Cour;
+    String Wed_Cour;
+    String Thu_Cour;
+    String Fri_Cour;
+    String Sat_Cour;
+    String Sun_Cour;
 }
