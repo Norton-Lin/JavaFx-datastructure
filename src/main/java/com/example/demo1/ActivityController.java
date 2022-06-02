@@ -109,7 +109,7 @@ public class ActivityController {
         //实例化数据库
         ActivityDatabase ActivityDatabase = new ActivityDatabase();
         //从数据库中得到课程列表
-        ActivityDatabase.find(tool);
+      //  ActivityDatabase.find(tool);
         //实例化一个模糊查找对象
         FuzzySearch fuzzySearch = new FuzzySearch();
         //建立一个空表用于存储模糊查找结果
@@ -135,7 +135,7 @@ public class ActivityController {
         //实例化数据库
         ActivityDatabase ActivityDatabase = new ActivityDatabase();
         //从数据库中得到课程列表
-        ActivityDatabase.find(tool);
+       // ActivityDatabase.find(tool);
         //实例化查找类型对象
         Search search = new Search();
         //标记查找是否成功

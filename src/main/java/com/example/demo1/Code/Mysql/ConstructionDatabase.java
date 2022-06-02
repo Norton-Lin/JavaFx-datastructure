@@ -211,30 +211,10 @@ public class ConstructionDatabase {
         }
     }
     public void findByActivity(Activity activity){
-        ResultSet rs = null; // 保存查询结果
-        Connection conn = null; // 数据库连接
-        Statement stmt = null; // 数据库操作
-        String sql = "SELECT * FROM activity_construction WHERE activity_id = " + activity.getM_iNum();
         Construction construction = new Construction();
-        try {
-            conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement();// 实例化Statement对象
-            rs = stmt.executeQuery(sql);// 实例化ResultSet对象
-            while (rs.next()) { // 指针向下移动
-                activity.setM_iFloor(rs.getInt("floor"));
-                activity.setM_iRoom(rs.getInt("room"));
-                construction.set_con_number(rs.getInt("construction_id"));
-                find(construction);
-                activity.setM_sConstruction(construction);
-            }
-            rs.close();// 关闭结果集
-            rs.close();// 关闭结果集
-            stmt.close(); // 操作关闭
-            conn.close(); // 数据库关闭
-        } catch (SQLException e) {
-            e.printStackTrace();
-            LogFile.error("ConstructionDatabase", "数据库读取错误");
-        }
+        construction.set_con_number(activity.getM_sConstruction().get_con_number());
+        find(construction);
+        activity.setM_sConstruction(construction);
     }
     public static void main(String argc[]){
 

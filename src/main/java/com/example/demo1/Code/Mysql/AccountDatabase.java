@@ -152,7 +152,7 @@ public class AccountDatabase {
         //读取对应课程
         String sql1 = "SELECT id_account,id_course FROM account_course where id_account = '"+studentAccount.getID()+"'";
         //读取对应活动
-        String sql2 = "SELECT id_account,id_activity FROM account_activity where id_account = '"+studentAccount.getID()+"'";
+        String sql2 = "SELECT *FROM activity where account_id= '"+studentAccount.getID()+"'";
         String sql3 = "SELECT * FROM account_clock where account_id ="+studentAccount.getID();
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
@@ -169,9 +169,9 @@ public class AccountDatabase {
             rs = stmt.executeQuery(sql2);// 实例化ResultSet对象
             while (rs.next()) { // 指针向下移动
                 Activity activity = new Activity();
-                activity.setM_iNum(rs.getInt("id_activity"));
+                activity.setM_sName(rs.getString("name"));
                 ActivityDatabase activityDatabase = new ActivityDatabase();
-                activityDatabase.find(activity);//这边要读course数据
+                activityDatabase.find(activity,studentAccount.getID());//这边要读course数据
                 studentAccount.getActivity().add(activity);//向ArrayList中添加
             }
             rs.close();// 关闭活动结果集
@@ -202,7 +202,7 @@ public class AccountDatabase {
         //读取对应课程
         String sql1 = "SELECT id_account,id_course FROM account_course where id_account = "+teacherAccount.getID();
         //读取对应活动
-        String sql2 = "SELECT id_account,id_activity FROM account_activity where id_account = "+teacherAccount.getID();
+        String sql2 = "SELECT * FROM activity where account_id= '"+teacherAccount.getID()+"'";
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
             stmt = conn.createStatement();// 实例化Statement对象
@@ -218,9 +218,9 @@ public class AccountDatabase {
             rs = stmt.executeQuery(sql2);// 实例化ResultSet对象
             while (rs.next()) { // 指针向下移动
                 Activity activity = new Activity();
-                activity.setM_iNum(rs.getInt("id_account"));
+                activity.setM_sName(rs.getString("name"));
                 ActivityDatabase activityDatabase = new ActivityDatabase();
-                activityDatabase.find(activity);//这边要读course数据
+                activityDatabase.find(activity,teacherAccount.getID());//这边要读course数据
                 teacherAccount.getActivity().add(activity);//向ArrayList中添加
             }
             rs.close();// 关闭结果集
@@ -238,7 +238,7 @@ public class AccountDatabase {
         CourseDatabase courseDatabase = new CourseDatabase();
         ActivityDatabase activityDatabase = new ActivityDatabase();
         courseDatabase.find(course);//这边要读course数据
-        activityDatabase.find(activity);
+        activityDatabase.find(activity,managerAccount.getID());
         managerAccount.setCourse(course);
         managerAccount.setActivity(activity);
 

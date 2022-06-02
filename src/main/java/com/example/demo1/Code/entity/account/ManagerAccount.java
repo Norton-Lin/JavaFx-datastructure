@@ -21,7 +21,7 @@ public class ManagerAccount extends Account{
         CourseDatabase courseDatabase = new CourseDatabase();
         ActivityDatabase activityDatabase = new ActivityDatabase();
         courseDatabase.find(this.m_CaCourse);//从数据库内读取所有课程信息
-        activityDatabase.find(this.m_CaActivity);//从数据库内读取所有活动信息
+        activityDatabase.find(this.m_CaActivity,Id);//从数据库内读取所有活动信息
     }
 
     public ManagerAccount(Account account) {
@@ -108,7 +108,7 @@ public class ManagerAccount extends Account{
     public void addActivity(Activity activity){
         this.m_CaActivity.add(activity);
         ActivityDatabase activityDatabase = new ActivityDatabase();
-        activityDatabase.insert(activity);
+      //  activityDatabase.insert(activity);
         LogFile.info("Manager"+getID(),"管理员添加活动 "+activity.getM_sName());
     }
 
@@ -130,7 +130,7 @@ public class ManagerAccount extends Account{
     public void deleteActivity(Activity activity){
         this.m_CaActivity.remove(activity);
         ActivityDatabase activityDatabase = new ActivityDatabase();
-        activityDatabase.delete(activity);
+        activityDatabase.delete(activity,this.getID());
         LogFile.info("Manager"+getID(),"管理员删除活动 "+activity.getM_sName());
     }
 
@@ -154,7 +154,7 @@ public class ManagerAccount extends Account{
     public void changeActivity(int location,Activity activity){
         this.m_CaActivity.set(location,activity);
         ActivityDatabase activityDatabase = new ActivityDatabase();
-        activityDatabase.update(activity);
+        //activityDatabase.update(activity);
         LogFile.info("Manager"+getID(),"管理员修改课程 "+activity.getM_sName());
     }
 
