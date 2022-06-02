@@ -28,15 +28,15 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="ecb3f5bb-ad1d-489a-95be-e8ab1b02ae6e">
-      <console name="informationmanagement" type="STANDARD" schema="mysql" session="Main" />
+    <connection id="6474273f-1d6a-4c79-a7cf-7a03a9c8b57f">
+      <console name="informationmanagement" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="ecb3f5bb-ad1d-489a-95be-e8ab1b02ae6e" />
+    <connection id="6474273f-1d6a-4c79-a7cf-7a03a9c8b57f" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -67,7 +67,7 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="ecb3f5bb-ad1d-489a-95be-e8ab1b02ae6e" active="true" signed="true">
+      <connection id="6474273f-1d6a-4c79-a7cf-7a03a9c8b57f" active="true" signed="true">
         <database>
           <name value="informationmanagement" />
           <description value="" />
