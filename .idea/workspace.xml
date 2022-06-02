@@ -6,11 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="71e31705-279e-40b4-9a73-b40e17f75272" name="变更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/AccountDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/AccountDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/StudentAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/StudentAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/HelloApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/ManagerViewPortController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/ManagerViewPortController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/Mysql/AccountDatabase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/Mysql/AccountDatabase.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/ClockController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/ClockController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo1/ClockController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo1/ClockController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +53,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Item/mysql-connector-java-8.0.27.jar" />
-    <property name="project.structure.last.edited" value="模块" />
+    <property name="project.structure.last.edited" value="SDK" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.57471263" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
@@ -173,7 +170,8 @@
       <workItem from="1652861154810" duration="82000" />
       <workItem from="1652861263594" duration="904000" />
       <workItem from="1653010985822" duration="8591000" />
-      <workItem from="1654136871203" duration="4709000" />
+      <workItem from="1654136871203" duration="5831000" />
+      <workItem from="1654143114387" duration="5735000" />
     </task>
     <servers />
   </component>
@@ -207,6 +205,16 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/example/demo1/ManagerViewPortController.java</url>
           <line>122</line>
           <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/CourseDatabase.java</url>
+          <line>263</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Navigate.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.ClassNotFoundException" package="java.lang" />

@@ -2,6 +2,7 @@ package com.example.demo1;
 
 import com.example.demo1.Code.Util.Time;
 import com.example.demo1.Code.entity.SystemTime;
+import com.example.demo1.Code.entity.account.StudentAccount;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,6 +19,8 @@ public class ClockController {
 
     //建立闹钟的实例化
     SystemTime systemTime;
+
+    StudentAccount studentAccount;
 
     @FXML
     public Button pause;
@@ -73,6 +76,9 @@ public class ClockController {
         this.systemTime = new SystemTime();
         this.systemTime.start();
 
+        //创建当前闹钟的学生账户
+        this.studentAccount = new StudentAccount(this.controller.getAccount());
+
         try {
             //加载FXML文件
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Clock.fxml"));
@@ -117,7 +123,7 @@ public class ClockController {
             }
         });
 
-        this.systemTime.setClock(time, this.NameOfClock.getText(), type[0], null);
+        this.systemTime.setClock(time, this.NameOfClock.getText(), type[0], this.studentAccount.getM_CaEventClock());
 //        this.systemTime.setClock(time, this.NameOfClock.getText(), type[0]);
     }
 
