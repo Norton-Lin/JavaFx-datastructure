@@ -107,8 +107,10 @@ public class StudentAccount extends Account{
         boolean result = true;
         for (Course c : m_CaCourse) {//foreach 对已选的每门课进行检查
             Time time = c.getM_tTime();
-            if(!time.checkTime(course.getM_tTime()))
-                result=false;
+            if(!time.checkTime(course.getM_tTime())) {
+                result = false;
+                break;
+            }
         }
         return result;
     }
@@ -129,6 +131,17 @@ public class StudentAccount extends Account{
             Time time = c.getM_tTime();
             if(time.checkTime(activity.getM_tTime()))
                 result=false;
+            if(time.checkTime(activity.getM_tTime())) {
+                result = false;
+                break;
+            }
+        }
+        for (Activity c : m_CaActivity) {//foreach 对每个活动进行检查
+            Time time = c.getM_tTime();
+            if(time.checkTime(activity.getM_tTime())) {
+                result = false;
+                break;
+            }
         }
         return result;
     }
