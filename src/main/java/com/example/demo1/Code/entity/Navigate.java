@@ -14,7 +14,7 @@ public class Navigate {
     public MapDatabase mapDatabase = new MapDatabase();
     public ConstructionDatabase constructionDatabase = new ConstructionDatabase();
     public int constructionNumber;//建筑数量
-    public ArrayList<Double> Speed;
+    public ArrayList<Double> Speed = new ArrayList<>();
 
     /**
      * 初始化交通工具速度
@@ -47,7 +47,7 @@ public class Navigate {
      * @return 数量
      */
     public int getConstructionNumber() {
-        return constructionNumber;
+        return constructionNumber + 1;
     }
 
     /**
@@ -162,18 +162,18 @@ public class Navigate {
             return Result;
         }
 
-        for (int navigate_type = 0; navigate_type < 2; navigate_type++) {
+        //混合模式导航
+        if (traffic_type == -1) {
 
-            ArrayList<Construction> target_road = new ArrayList<>();//保存导航给出的道路
+            double[][] timeMatrix = getHybridMatrix(line, currentHour);
+            floydAlgorithm(timeMatrix);
 
-            double[][] matrix = getMatrix(line, traffic_type, navigate_type, currentHour);//获得指定当时时间对应的地图
-
-            floydAlgorithm(matrix);//弗洛伊德算法求最短路径
-
-            if (matrix[start_number][end_number] == 10000.0) {
+            if (timeMatrix[start_number][end_number] == 999999.0) {
                 Result.append("无有效路径");
             } else {
-                double min_length = matrix[start_number][end_number];//保存最短路径长度
+                ArrayList<Construction> target_road = new ArrayList<>();//保存导航给出的道路
+
+                double min_time = timeMatrix[start_number][end_number];//保存最短时间
 
                 target_road.add(Start);//第一个元素保存起始点
 
@@ -181,60 +181,34 @@ public class Navigate {
 
                 target_road.add(End);//最后一个元素保存终止点
 
-                showWay(target_road, min_length, traffic_type, navigate_type, matrix, Result);//打印路径
+                showHybridWay(target_road, timeMatrix, Result, min_time);//打印路径
             }
-        }
-        return Result;
-    }
 
-    public StringBuilder toHybridNavigate(String start_name, String end_name, int currentHour) {
-
-        ArrayList<Line> line = new ArrayList<>();
-        ArrayList<Construction> Constructions = new ArrayList<>();
-        //ArrayList<Construction> target_road = new ArrayList<>();//保存导航给出的道路
-
-        initSpeed();
-
-        StringBuilder Result = new StringBuilder();
-
-        Construction Start = getConstruction(start_name);
-        Construction End = getConstruction(end_name);
-
-        mapDatabase.find(line);//从地图数据库获取所有道路类
-        constructionDatabase.find(Constructions);//从建筑数据库获得所有建筑类
-        setConstructionNumber(Constructions.size() + 1);
-
-        int start_number, end_number;
-
-        //得到起止建筑在地图上的编号
-        try {
-
-            start_number = Start.get_con_number();
-            end_number = End.get_con_number();
-
-        } catch (NullPointerException e) {
-
-            Result.append("建筑物不存在，请重试...");
-            return Result;
-        }
-
-        double[][] timeMatrix = getHybridMatrix(line, currentHour);
-        floydAlgorithm(timeMatrix);
-
-        if (timeMatrix[start_number][end_number] == 999999.0) {
-            Result.append("无有效路径");
         } else {
-            ArrayList<Construction> target_road = new ArrayList<>();//保存导航给出的道路
 
-            double min_time = timeMatrix[start_number][end_number];//保存最短时间
+            //单一交通工具模式导航
+            for (int navigate_type = 0; navigate_type < 2; navigate_type++) {
 
-            target_road.add(Start);//第一个元素保存起始点
+                ArrayList<Construction> target_road = new ArrayList<>();//保存导航给出的道路
 
-            findPath(start_number, end_number, target_road, Constructions);//保存最短路径的中间结点
+                double[][] matrix = getMatrix(line, traffic_type, navigate_type, currentHour);//获得指定当时时间对应的地图
 
-            target_road.add(End);//最后一个元素保存终止点
+                floydAlgorithm(matrix);//弗洛伊德算法求最短路径
 
-            showHybridWay(target_road, timeMatrix, Result, min_time);//打印路径
+                if (matrix[start_number][end_number] == 10000.0) {
+                    Result.append("无有效路径");
+                } else {
+                    double min_length = matrix[start_number][end_number];//保存最短路径长度
+
+                    target_road.add(Start);//第一个元素保存起始点
+
+                    findPath(start_number, end_number, target_road, Constructions);//保存最短路径的中间结点
+
+                    target_road.add(End);//最后一个元素保存终止点
+
+                    showWay(target_road, min_length, traffic_type, navigate_type, matrix, Result);//打印路径
+                }
+            }
         }
 
         return Result;
