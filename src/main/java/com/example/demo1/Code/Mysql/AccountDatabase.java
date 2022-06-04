@@ -280,4 +280,76 @@ public class AccountDatabase {
         }
         return result;
     }
+    /**
+     * 更新已有闹钟信息
+     */
+    public void updateClock(Account account,EventClock clock){
+        Connection conn = null ; // 数据库连接
+        Statement stmt = null ; // 数据库操作
+        String id = account.getID();
+        String password = account.getPassword();
+        // 拼凑出一个完整的SQL语句
+        String sql = "UPDATE account_clock SET month='" + clock.getClockTime().getStartMonth()+
+                "',day='"+clock.getClockTime().getStartDate()+
+                "',week='"+clock.getClockTime().getWeek()+
+                "',hour='"+clock.getClockTime().getStartHour()+
+                "',min='"+clock.getClockTime().getStartMinute()+
+                "',type'"+clock.getClockType()+
+                 "'WHERE account_id='" + account.getID()+"'and clock_name="+clock.getClockName() ;
+        try {
+            Class.forName(m_sDriver) ; // 加载驱动程序
+            conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
+            stmt = conn.createStatement() ;// 实例化Statement对象
+            stmt.executeUpdate(sql);// 执行数据库更新操作
+            stmt.close() ; // 操作关闭
+            conn.close() ; // 数据库关闭
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            LogFile.error("AccountDatabase","数据库读取错误");
+        }
+    }
+    /**
+     * 删除已有闹钟
+     */
+    public void deleteClock(Account account,EventClock clock){
+        Connection conn = null ; // 数据库连接
+        Statement stmt = null ; // 数据库操作
+        String id = account.getID(); // id
+        // 拼凑出一个完整的SQL语句
+        String sql = "DELETE FROM account_clock WHERE account_id='" + account.getID()+
+                "'and clock_name="+clock.getClockName();
+        try {
+            Class.forName(m_sDriver) ; // 加载驱动程序
+            conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
+            stmt = conn.createStatement() ;// 实例化Statement对象
+            stmt.executeUpdate(sql);// 执行数据库更新操作
+            stmt.close() ; // 操作关闭
+            conn.close() ; // 数据库关闭
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            LogFile.error("AccountDatabase","数据库读取错误");
+        }
+    }
+    /**
+     * 插入新闹钟
+     */
+    public void insertClock(Account account,EventClock clock){
+        Connection conn = null ; // 数据库连接
+        Statement stmt = null ; // 数据库操作
+        String sql = "INSERT INTO account_clock(account_id, clock_name, month, day, week, hour, min, type)"+
+                " VALUES ('" + account.getID() + "','" + clock.getClockName() +
+                "','" + clock.getClockTime().getStartMonth()+"','" +clock.getClockTime().getStartDate()
+                +"','" +clock.getClockTime().getWeek()+"','" +clock.getClockTime().getStartHour()
+                + "','" +clock.getClockTime().getStartMinute()+ "','" +clock.getClockType()+"')";
+        try {
+            conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
+            stmt = conn.createStatement() ;// 实例化Statement对象
+            stmt.executeUpdate(sql);// 执行数据库更新操作
+            stmt.close() ; // 操作关闭
+            conn.close() ; // 数据库关闭
+        } catch (SQLException e) {
+            e.printStackTrace();
+            LogFile.error("AccountDatabase","数据库读取错误");
+        }
+    }
 }

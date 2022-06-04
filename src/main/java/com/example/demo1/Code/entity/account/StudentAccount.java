@@ -191,12 +191,22 @@ public class StudentAccount extends Account{
      */
     public String registerActivity(Activity activity){
         String message="报名失败,存在时间冲突";
-        if(checkTime(activity)){
+        if(checkTime(activity)&&checkActivityName(activity)){
             m_CaActivity.add(activity);
             message="报名成功！";
             addActivity(activity);
         }
         return message;
+    }
+    /**
+     * 检查是否有同名活动
+     */
+    public boolean checkActivityName(Activity activity) {
+        for(Activity a:m_CaActivity) {
+            if (Objects.equals(a.getM_sName(), activity.getM_sName()))
+                return false;
+        }
+        return true;
     }
 
     /**
@@ -208,9 +218,8 @@ public class StudentAccount extends Account{
         String message=null;
         int location=getCourseById(activity.getM_iNum());
         if(location==m_CaActivity.size())
-            message="退出失败，未参与该课程";
+            message="退出失败，未参与该活动";
         else {
-            if( activity.delM_iPle())//退出活动，活动当前人数-1
                 message="退出成功";
         }
         if(Objects.equals(message, "退出成功"))
