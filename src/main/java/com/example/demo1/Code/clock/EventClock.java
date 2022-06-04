@@ -1,4 +1,4 @@
-package com.example.demo1.Code.entity;
+package com.example.demo1.Code.clock;
 
 import com.example.demo1.Code.Util.Time;
 
@@ -7,17 +7,19 @@ import com.example.demo1.Code.Util.Time;
  */
 public class EventClock {
 
-    Time clockTime;//闹钟的时间
-    String clockName;//闹钟的名字
-    int clockType;//闹钟的类型
+    private Time clockTime;//闹钟的时间
+    private String clockName;//闹钟的名字
+    private int clockType;//闹钟的类型
 
-    public EventClock(){}
+    public EventClock() {
+    }
 
     public EventClock(Time time, String name, int type) {
         this.clockTime = time;
         this.clockName = name;
         this.clockType = type;
     }
+
     public Time getClockTime() {
         return clockTime;
     }
