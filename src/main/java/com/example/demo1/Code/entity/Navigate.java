@@ -14,17 +14,17 @@ public class Navigate {
     public MapDatabase mapDatabase = new MapDatabase();
     public ConstructionDatabase constructionDatabase = new ConstructionDatabase();
     public int constructionNumber;//建筑数量
-    public ArrayList<Double> Speed;
+    public ArrayList<double> Speed;
 
     /**
      * 初始化交通工具速度
      */
     public void initSpeed() {
 
-        Speed.add(1.0);//步行速度     traffic_type=0
-        Speed.add(3.0);//自行车速度    traffic_type=1
-        Speed.add(5.0);//电动车速度    traffic_type=2
-        Speed.add(10.0);//汽车速度    traffic_type=3
+        Speed.add(1);//步行速度     traffic_type=0
+        Speed.add(3);//自行车速度    traffic_type=1
+        Speed.add(5);//电动车速度    traffic_type=2
+        Speed.add(10);//汽车速度    traffic_type=3
 
     }
 
