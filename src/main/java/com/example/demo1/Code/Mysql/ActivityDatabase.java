@@ -32,8 +32,8 @@ public class ActivityDatabase {
                 activity.getM_tTime().getStartMonth()+ "','" +activity.getM_tTime().getStartDate()+ "','" +
                 activity.getM_tTime().getStartHour()+ "','" +activity.getM_tTime().getStartMinute()+ 
                 "','" + activity.getM_tTime().getEndHour()+ "','" + activity.getM_tTime().getEndMinute()
-                + "','" + activity.getM_eProperty()+ "','" +activity.getM_iPle()+ "','" 
-                +activity.getM_iMaxPle()+ "','" +activity.getM_iFloor() +"','"+activity.getM_iRoom()
+                + "','" + activity.getM_eProperty(1)+ "','" +activity.getM_iPle()+ "','"
+                +activity.getM_iMaxPle()+ "','" +activity.getM_iFloor() +"','"+activity.getM_iRoom() +"','"
                 +activity.getM_sConstruction().get_con_number()+"')";
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
@@ -105,7 +105,7 @@ public class ActivityDatabase {
         ResultSet rs = null; // 保存查询结果
         String sql = "SELECT id, name, startmonth,startdate,starthour, startmin, endhour," +
                 " endmin, property, num, maxnum,floor,room,construction_id " +
-                "FROM activity WHERE name='"+activity.getM_sName()+"'account_id ='" + ID+"'";
+                "FROM activity WHERE name='"+activity.getM_sName()+"'AND account_id ='" + ID+"'";
         Connection conn = null; // 数据库连接
         Statement stmt = null; // 数据库操作
         ConstructionDatabase constructionDatabase = new ConstructionDatabase();

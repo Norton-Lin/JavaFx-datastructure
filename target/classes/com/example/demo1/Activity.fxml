@@ -73,11 +73,11 @@
                 <fx:define>
                     <ToggleGroup fx:id="toggleGroup2"/>
                 </fx:define>
-                <RadioButton fx:id="ShaHe" text="沙河校区" toggleGroup="$toggleGroup1"/>
+                <RadioButton fx:id="ShaHe" text="沙河校区" toggleGroup="$toggleGroup2"/>
                 <padding>
                     <Insets left="5"/>
                 </padding>
-                <RadioButton fx:id="XiTuCheng" text="西土城校区" toggleGroup="$toggleGroup1"/>
+                <RadioButton fx:id="XiTuCheng" text="西土城校区" toggleGroup="$toggleGroup2"/>
                 <padding>
                     <Insets bottom="5.0"/>
                 </padding>
