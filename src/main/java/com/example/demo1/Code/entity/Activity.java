@@ -10,6 +10,11 @@ public class Activity extends Event{
      public Activity(){
 
      }
+
+     public Activity(String m_sName, Time m_tTime, Property m_eProperty, Construction m_sConstruction, int m_iFloor, int m_iRoom, int m_iNum) {
+          super(m_sName, m_tTime, m_eProperty, m_sConstruction, m_iFloor, m_iRoom, m_iNum);
+     }
+
      public boolean exit() {
           return true;
      }

@@ -6,85 +6,102 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.geometry.Insets?>
 <BorderPane xmlns:fx="http://javafx.com/fxml">
     <top>
-        <BorderPane>
-            <top>
-                <BorderPane>
-                    <center>
-                        <Label text="请在左侧根据名字模糊查找活动" style="-fx-font-size:18" alignment="TOP_CENTER"/>
-                    </center>
-                    <bottom>
-                        <BorderPane>
-                            <center>
-                                <Label text="得到精确活动编号后在右侧输入" style="-fx-font-size:18" alignment="TOP_CENTER"/>
-                            </center>
-                        </BorderPane>
-                    </bottom>
-                </BorderPane>
-            </top>
-            <center>
-                <Label text="得到精确结果后按下对应按钮即可~" style="-fx-font-size:18" alignment="TOP_CENTER"/>
-            </center>
-            <bottom>
-                <BorderPane>
-                    <left>
-                        <Label text="     "/>
-                    </left>
-                    <center>
-                        <BorderPane>
-                            <left>
-                                <TextField fx:id="ToBeFuzzySearched" prefColumnCount="10" alignment="TOP_CENTER"/>
-                            </left>
-                            <right>
-                                <TextField fx:id="ToBeBinarySearched" prefColumnCount="10" alignment="TOP_CENTER"/>
-                            </right>
-                        </BorderPane>
-                    </center>
-                    <right>
-                        <Label text="     "/>
-                    </right>
-                </BorderPane>
-            </bottom>
-        </BorderPane>
+        <VBox alignment="CENTER">
+            <Label text="请输入您想添加的活动的各种信息~"/>
+            <Label text="按确定键即可添加活动至列表"/>
+            <Label fx:id="ErrorInfo"/>
+        </VBox>
     </top>
     <center>
-        <BorderPane>
-            <center>
-                <GridPane>
-                    <Label text="查询结果如下：" GridPane.columnIndex="0" GridPane.rowIndex="0"
-                           style="-fx-font-size:18"/>
-                    <TextArea  fx:id="ResOfSearch" GridPane.rowIndex="1"
-                               GridPane.columnIndex="0" prefColumnCount="10"/>
-                </GridPane>
-            </center>
-            <right>
-                <Label fx:id="SearchResult"/>
-            </right>
-        </BorderPane>
+        <VBox alignment="CENTER">
+
+            <Label text="请输入活动名"/>
+            <HBox alignment="CENTER">
+                <Label text="活动名：" labelFor="$Name"/>
+                <TextField fx:id="Name" prefWidth="75"/>
+                <padding>
+                    <Insets bottom="15.0"/>
+                </padding>
+            </HBox>
+
+            <Label text="请输入活动时间"/>
+            <HBox alignment="CENTER">
+                <Label text="月：" labelFor="$Month"/>
+                <TextField fx:id="Month" prefWidth="35.0"/>
+                <Label text="日：" labelFor="$Date"/>
+                <TextField fx:id="Date" prefWidth="35.0"/>
+                <Label text="周：" labelFor="$Week"/>
+                <TextField fx:id="Week" prefWidth="35.0"/>
+            </HBox>
+
+            <HBox alignment="CENTER">
+                <Label text="起始时：" labelFor="$STH"/>
+                <TextField fx:id="STH" prefWidth="35.0"/>
+                <Label text="起始分：" labelFor="$STM"/>
+                <TextField fx:id="STM" prefWidth="35.0"/>
+                <Label text="结束时：" labelFor="$ENH"/>
+                <TextField fx:id="ENH" prefWidth="35.0"/>
+                <Label text="结束分：" labelFor="$ENM"/>
+                <TextField fx:id="ENM" prefWidth="35.0"/>
+                <padding>
+                    <Insets bottom="15.0"/>
+                </padding>
+            </HBox>
+
+            <Label text="请选择活动类型~"/>
+            <HBox alignment="CENTER">
+                <fx:define>
+                    <ToggleGroup fx:id="toggleGroup1"/>
+                </fx:define>
+                <RadioButton fx:id="Solo" text="个人活动" toggleGroup="$toggleGroup1"/>
+                <padding>
+                    <Insets left="5"/>
+                </padding>
+                <RadioButton fx:id="Group" text="集体活动" toggleGroup="$toggleGroup1"/>
+                <padding>
+                    <Insets bottom="15.0"/>
+                </padding>
+            </HBox>
+
+            <Label text="请输入活动地点~"/>
+            <HBox alignment="CENTER">
+                <fx:define>
+                    <ToggleGroup fx:id="toggleGroup2"/>
+                </fx:define>
+                <RadioButton fx:id="ShaHe" text="沙河校区" toggleGroup="$toggleGroup1"/>
+                <padding>
+                    <Insets left="5"/>
+                </padding>
+                <RadioButton fx:id="XiTuCheng" text="西土城校区" toggleGroup="$toggleGroup1"/>
+                <padding>
+                    <Insets bottom="5.0"/>
+                </padding>
+            </HBox>
+
+            <HBox alignment="CENTER">
+                <Label text="建筑物：" labelFor="$Building"/>
+                <TextField fx:id="Building" prefWidth="65"/>
+                <Label text="楼层：" labelFor="$Floor"/>
+                <TextField fx:id="Floor" prefWidth="35"/>
+                <Label text="房间：" labelFor="$Room"/>
+                <TextField fx:id="Room" prefWidth="35"/>
+            </HBox>
+        </VBox>
     </center>
     <bottom>
-        <BorderPane>
-            <left>
-                <Button fx:id="Search1" text="查询所有活动" alignment="CENTER"/>
-            </left>
-            <center>
-                <BorderPane>
-                    <left>
-                        <Button fx:id="Assure1" text="添加未选活动" alignment="CENTER"/>
-                    </left>
-                    <center>
-                        <Button fx:id="backToMain" text="回到主界面" alignment="CENTER"/>
-
-                    </center>
-                    <right>
-                        <Button fx:id="Search2" text="查询自己活动" alignment="CENTER"/>
-                    </right>
-                </BorderPane>
-            </center>
-            <right>
-                <Button fx:id="Assure2" text="删除已有活动" alignment="CENTER"/>
-            </right>
-        </BorderPane>
+        <HBox alignment="CENTER">
+            <Button fx:id="Assure" text="添加活动"/>
+            <padding>
+                <Insets left="10.0"/>
+            </padding>
+            <Button fx:id="BackToMain" text="返回主界面"/>
+            <padding>
+                <Insets left="10.0"/>
+            </padding>
+            <Button fx:id="Delete" text="删除活动"/>
+        </HBox>
     </bottom>
 </BorderPane>

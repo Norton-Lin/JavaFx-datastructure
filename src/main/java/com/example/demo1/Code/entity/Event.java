@@ -32,11 +32,14 @@ public class Event {
         this.m_iNum = m_iNum;
     }
 
-    public Event(String m_sName, Time m_tTime, Property m_eProperty, Construction m_sConstruction) {
+    public Event(String m_sName, Time m_tTime, Property m_eProperty, Construction m_sConstruction, int m_iFloor, int m_iRoom, int m_iNum) {
         this.m_sName = m_sName;
         this.m_tTime = m_tTime;
         this.m_eProperty = m_eProperty;
         this.m_sConstruction = m_sConstruction;
+        this.m_iFloor = m_iFloor;
+        this.m_iRoom = m_iRoom;
+        this.m_iNum = m_iNum;
     }
 
     /**

@@ -22,7 +22,10 @@ public class Construction {
         super();
     }
 
-
+    public Construction(String con_name, int campus) {
+        this.con_name = con_name;
+        this.campus = campus;
+    }
 
     /**
      * 返回建筑物的名称
