@@ -96,7 +96,7 @@ public class NavController {
         }
 
         Navigate navigate = new Navigate();
-        ResOfNav.setText(navigate.toNavigate(traffic, StartPoint.getText(), EndPoint.getText()).toString());
+        ResOfNav.setText(navigate.toNavigate(traffic, StartPoint.getText(), EndPoint.getText(),0).toString());
 //        ResOfNav.setText(test.toString());
     }
 
