@@ -92,13 +92,13 @@ public class MapDatabase {
         Connection conn = null ; // 数据库连接
         Statement stmt = null ; // 数据库操作
         String sql = "SELECT * FROM map ";
-        Line line = new Line();
         double[] degree=new double[3];
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
             stmt = conn.createStatement() ;// 实例化Statement对象
             rs = stmt.executeQuery(sql);// 执行数据库更新操作
             while(rs.next()){
+                Line line = new Line();
                 line.setM_i_stp(rs.getInt("start_id"));
                 line.setM_i_enp(rs.getInt("end_id"));
                 line.setM_s_name(rs.getString("name"));
@@ -106,6 +106,7 @@ public class MapDatabase {
                 degree[1] = rs.getDouble("crowded2");
                 degree[2] = rs.getDouble("crowded3");
                 line.setM_d_congestion(degree);
+                line.setDegree(rs.getInt("degree"));
                 line.setM_i_length(rs.getInt("len"));
                 lines.add(line);
             }

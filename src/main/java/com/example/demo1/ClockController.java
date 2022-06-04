@@ -1,8 +1,8 @@
 package com.example.demo1;
 
 import com.example.demo1.Code.Util.Time;
-import com.example.demo1.Code.entity.SystemTime;
 import com.example.demo1.Code.entity.account.StudentAccount;
+import com.example.demo1.Code.systemtime.SystemTime;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -72,13 +72,11 @@ public class ClockController {
 
         //创建按钮
 
-        //获取系统时间
-        this.systemTime = new SystemTime();
-        this.systemTime.start();
-
         //创建当前闹钟的学生账户
         this.studentAccount = new StudentAccount(this.controller.getAccount());
-
+        //获取系统时间
+        this.systemTime = new SystemTime(this.studentAccount);
+        this.systemTime.SystemTimeStart();
         try {
             //加载FXML文件
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Clock.fxml"));
@@ -123,7 +121,7 @@ public class ClockController {
             }
         });
 
-        this.systemTime.setClock(time, this.NameOfClock.getText(), type[0], this.studentAccount.getM_CaEventClock());
+ //       this.systemTime.setClock(time, this.NameOfClock.getText(), type[0], this.studentAccount.getM_CaEventClock());
 //        this.systemTime.setClock(time, this.NameOfClock.getText(), type[0]);
     }
 

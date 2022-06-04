@@ -47,7 +47,7 @@ public class CourseChooseController {
     StudentAccount studentAccount;
 
     //存放本账号的课程表
-    ArrayList<Course> courses = new ArrayList<>();
+    ArrayList<Course> courses;
 
     public CourseChooseController(MainViewPort_Controller mainViewPort_controller) {
         //得到新Controller
@@ -304,7 +304,7 @@ public class CourseChooseController {
     private void Assure2ButtonClicked() {
         //实例化查找类型对象
         Search search = new Search();
-        //存储查找2结果
+        //存储查找2的结果
         ArrayList<Course> temp = Search2ButtonClicked();
         boolean mark = false;
         try {

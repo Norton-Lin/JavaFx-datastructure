@@ -4,6 +4,7 @@ import com.example.demo1.Code.Util.Property;
 import com.example.demo1.Code.Util.Time;
 import com.example.demo1.Code.entity.Activity;
 import com.example.demo1.Code.entity.Construction;
+import com.example.demo1.Code.entity.FuzzySearch;
 import com.example.demo1.Code.entity.account.StudentAccount;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ActivityController {
 
@@ -55,6 +57,14 @@ public class ActivityController {
     @FXML
     public Button Assure;
     @FXML
+    public TextField ToBe;
+    @FXML
+    public Button Search;
+    @FXML
+    public Button Delete;
+    @FXML
+    public TextArea Info;
+    @FXML
     public Button BackToMain;
 
     public ActivityController(MainViewPort_Controller mainViewPort_controller) {
@@ -70,8 +80,8 @@ public class ActivityController {
             //加载FXML文件
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Activity.fxml"));
             loader.setController(this);
-            thisStage.setScene(new Scene(loader.load(), 450, 350));
-            thisStage.setTitle("欢迎来到选课界面~");
+            thisStage.setScene(new Scene(loader.load(), 1000, 400));
+            thisStage.setTitle("欢迎来到活动界面~");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,9 +95,14 @@ public class ActivityController {
 
     @FXML
     private void initialize() {
+        //点击添加活动按钮后的反应
         this.Assure.setOnAction(event -> AssureClicked());
         //点击回到主菜单后的反应
         this.BackToMain.setOnAction(event -> BackToMainClicked());
+        //点击查找按钮后的反应
+        this.Search.setOnAction(event -> SearchClicked());
+        //点击删除按钮后的反应
+        this.Delete.setOnAction(event -> DeleteClicked());
     }
 
     private void BackToMainClicked() {
@@ -122,7 +137,7 @@ public class ActivityController {
                 Num = 3000;
             }
 
-            int campus = 0;
+            int campus = -1;
             if (this.ShaHe.isSelected()) {
                 campus = 0;
             } else if (this.XiTuCheng.isSelected()) {
@@ -140,6 +155,103 @@ public class ActivityController {
             this.ErrorInfo.setText(this.studentAccount.registerActivity(activity));
         } catch (Exception e) {
             this.ErrorInfo.setText("输入错误！\n月日周楼层房间都请输入数字！");
+        }
+    }
+
+    /**
+     * 查找功能
+     */
+    private void SearchClicked() {
+        //从学生账户中获得所有活动信息
+        ArrayList<Activity> activities = this.studentAccount.getActivity();
+        //存储要输出在文本框中的信息的字符串
+        StringBuilder text = new StringBuilder();
+
+        if (this.ToBe.getText().isEmpty()) {
+            if (!activities.isEmpty()) {
+                for (Activity activity : activities) {
+                    Time time = activity.getM_tTime();
+                    text.append(activity.getM_sName()).append("\t")
+                            .append("时间为：").append(time.getStartMonth()).append("月")
+                            .append(time.getStartDate()).append("日").append("星期").append(time.getWeek())
+                            .append("\t");
+
+                    if (activity.getM_eProperty() == Property.SELF) {
+                        text.append("课程属性：").append("个人活动").append("\t");
+                    } else if (activity.getM_eProperty() == Property.GROUP) {
+                        text.append("课程属性：").append("集体活动").append("\t");
+                    }
+
+                    text.append("活动地点：");
+
+                    if (activity.getM_sConstruction().getCampus() == 0) {
+                        text.append("校区为：").append("沙河校区").append("\t");
+                    } else if (activity.getM_sConstruction().getCampus() == 1) {
+                        text.append("校区为：").append("西土城校区").append("\t");
+                    }
+
+                    text.append(activity.getM_sConstruction().get_con_name())
+                            .append(activity.getM_iFloor()).append("层")
+                            .append(activity.getM_iRoom()).append("室");
+
+                    text.append("\n");
+                }
+            } else {
+                text.append("活动列表为空~");
+            }
+        } else {
+            //实例化模糊查找对象
+            FuzzySearch fuzzySearch = new FuzzySearch();
+            //根据输入框中内容查找获得结果
+            ArrayList<Activity> results = fuzzySearch.get_FS_result(this.ToBe.getText(), activities);
+            if (results != null) {
+                for (Activity activity : activities) {
+                    Time time = activity.getM_tTime();
+                    text.append(activity.getM_sName()).append("\t")
+                            .append("时间为：").append(time.getStartMonth()).append("月")
+                            .append(time.getStartDate()).append("日").append("星期").append(time.getWeek())
+                            .append("\t");
+
+                    if (activity.getM_eProperty() == Property.SELF) {
+                        text.append("课程属性：").append("个人活动").append("\t");
+                    } else if (activity.getM_eProperty() == Property.GROUP) {
+                        text.append("课程属性：").append("集体活动").append("\t");
+                    }
+
+                    text.append("活动地点：");
+
+                    if (activity.getM_sConstruction().getCampus() == 0) {
+                        text.append("校区为：").append("沙河校区").append("\t");
+                    } else if (activity.getM_sConstruction().getCampus() == 1) {
+                        text.append("校区为：").append("西土城校区").append("\t");
+                    }
+
+                    text.append(activity.getM_sConstruction().get_con_name())
+                            .append(activity.getM_iFloor()).append("层")
+                            .append(activity.getM_iRoom()).append("室");
+
+                    text.append("\n");
+                }
+            } else {
+                text.append("查找失败，请重新输入");
+            }
+        }
+        this.Info.setText(text.toString());
+    }
+
+    private void DeleteClicked() {
+        Activity activity = new Activity();
+        if (this.ToBe.getText().isEmpty())
+            this.ErrorInfo.setText("请输入要删除的课程信息！");
+        else {
+            FuzzySearch fuzzySearch = new FuzzySearch();
+            ArrayList<Activity> results = fuzzySearch.get_FS_result(this.ToBe.getText(), this.studentAccount.getActivity());
+            if (results != null) {
+                activity = results.get(0);
+                this.ErrorInfo.setText(this.studentAccount.exitActivity(activity));
+            } else {
+                this.ErrorInfo.setText("活动列表中没有活动");
+            }
         }
     }
 }

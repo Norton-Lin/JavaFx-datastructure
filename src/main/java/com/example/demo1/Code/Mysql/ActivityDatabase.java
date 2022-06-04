@@ -27,14 +27,14 @@ public class ActivityDatabase {
         Connection conn = null ; // 数据库连接
         Statement stmt = null ; // 数据库操作
         String sql = "INSERT INTO activity(id,account_id,name,startmonth,startdate,starthour,startmin" +
-                ",endhour,endmin,property,num,maxnum,floor,room,construction_id)"
+                ",endhour,endmin,property,num,maxnum,floor,room,construction)"
                 + " VALUES ('" + activity.getM_iNum() + "','" + ID +"','" +activity.getM_sName() + "','" +
                 activity.getM_tTime().getStartMonth()+ "','" +activity.getM_tTime().getStartDate()+ "','" +
                 activity.getM_tTime().getStartHour()+ "','" +activity.getM_tTime().getStartMinute()+ 
                 "','" + activity.getM_tTime().getEndHour()+ "','" + activity.getM_tTime().getEndMinute()
-                + "','" + activity.getM_eProperty()+ "','" +activity.getM_iPle()+ "','" 
-                +activity.getM_iMaxPle()+ "','" +activity.getM_iFloor() +"','"+activity.getM_iRoom()
-                +activity.getM_sConstruction().get_con_number()+"')";
+                + "','" + activity.getM_eProperty(1)+ "','" +activity.getM_iPle()+ "','"
+                +activity.getM_iMaxPle()+ "','" +activity.getM_iFloor() +"','"+activity.getM_iRoom()+"','"
+                +activity.getM_sConstruction().get_con_name()+"')";
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
             stmt = conn.createStatement() ;// 实例化Statement对象
@@ -62,7 +62,7 @@ public class ActivityDatabase {
                 activity.getM_tTime().getEndMinute() + "',property='" + activity.getM_eProperty() 
                 +"',num='" + activity.getM_iPle() + "',maxnum='" + activity.getM_iMaxPle()
                 +"',floor='" + activity.getM_iFloor()+"',room='" +activity.getM_iRoom()
-                +"',construction_id'"+activity.getM_sConstruction().get_con_number()
+                +"',construction'"+activity.getM_sConstruction().get_con_name()
                 + "'WHERE name='" + activity.getM_sName() +"'and account_id ='"+ID+"'" ;
         try {
             Class.forName(m_sDriver) ; // 加载驱动程序
@@ -104,8 +104,8 @@ public class ActivityDatabase {
     public void find(Activity activity,String ID) {
         ResultSet rs = null; // 保存查询结果
         String sql = "SELECT id, name, startmonth,startdate,starthour, startmin, endhour," +
-                " endmin, property, num, maxnum,floor,room,construction_id " +
-                "FROM activity WHERE name='"+activity.getM_sName()+"'account_id ='" + ID+"'";
+                " endmin, property, num, maxnum,floor,room,construction " +
+                "FROM activity WHERE name='"+activity.getM_sName()+"'and account_id ='" + ID+"'";
         Connection conn = null; // 数据库连接
         Statement stmt = null; // 数据库操作
         ConstructionDatabase constructionDatabase = new ConstructionDatabase();
@@ -126,7 +126,7 @@ public class ActivityDatabase {
                 activity.setM_iMaxPle(rs.getInt("maxnum"));
                 activity.setM_iFloor(rs.getInt("floor"));
                 activity.setM_iRoom(rs.getInt("room"));
-                activity.getM_sConstruction().set_con_number(rs.getInt("construction_id"));
+                activity.getM_sConstruction().set_con_name(rs.getString("construction"));
             }
             rs.close();// 关闭结果集
             stmt.close(); // 操作关闭
@@ -135,16 +135,14 @@ public class ActivityDatabase {
             e.printStackTrace();
             LogFile.error("ActivityDatabase","数据库读取错误");
         }
-        constructionDatabase.findByActivity(activity);
     }
     public void find(ArrayList<Activity> activity,String ID) {
         ResultSet rs = null; // 保存查询结果
-        String sql = "SELECT id, name,startmonth,startdate ,starthour, startmin, endhour," +
-                " endmin, property, num, maxnum,floor,room,floor,room,construction_id " +
-                "FROM activity WHERE account_id="+ID ;
+        String sql = "SELECT id, name, startmonth,startdate,starthour, startmin, endhour," +
+                " endmin, property, num, maxnum,floor,room,construction " +
+                "FROM activity WHERE account_id ='" + ID+"'";
         Connection conn = null; // 数据库连接
         Statement stmt = null; // 数据库操作
-        ConstructionDatabase constructionDatabase = new ConstructionDatabase();
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
             stmt = conn.createStatement();// 实例化Statement对象
@@ -163,7 +161,7 @@ public class ActivityDatabase {
                 a.setM_iMaxPle(rs.getInt("maxnum"));
                 a.setM_iFloor(rs.getInt("floor"));
                 a.setM_iRoom(rs.getInt("room"));
-                a.getM_sConstruction().set_con_number(rs.getInt("construction_id"));
+                a.getM_sConstruction().set_con_name(rs.getString("construction"));
                 activity.add(a);
             }
             rs.close();// 关闭结果集
@@ -173,11 +171,5 @@ public class ActivityDatabase {
             e.printStackTrace();
             LogFile.error("ActivityDatabase","数据库读取错误");
         }
-        for(int i =0;i<activity.size();i++) {
-            Activity activity1 = activity.get(i);
-            constructionDatabase.findByActivity(activity1);
-            activity.set(i,activity1);
-        }
-
     }
 }
