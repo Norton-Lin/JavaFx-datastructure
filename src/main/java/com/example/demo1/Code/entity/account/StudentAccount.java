@@ -125,21 +125,12 @@ public class StudentAccount extends Account{
         boolean result = true;
         for (Course c : m_CaCourse) {//foreach 对每门课进行检查
             Time time = c.getM_tTime();
-            if(time.checkTime(activity.getM_tTime()))
+            if(!time.checkTime(activity.getM_tTime()))
                 result=false;
         }
         for (Activity c : m_CaActivity) {//foreach 对每个活动进行检查
             Time time = c.getM_tTime();
-            if(time.checkTime(activity.getM_tTime()))
-                result=false;
-            if(time.checkTime(activity.getM_tTime())) {
-                result = false;
-                break;
-            }
-        }
-        for (Activity c : m_CaActivity) {//foreach 对每个活动进行检查
-            Time time = c.getM_tTime();
-            if(time.checkTime(activity.getM_tTime())) {
+            if(!time.checkTime(activity.getM_tTime())) {
                 result = false;
                 break;
             }
@@ -193,7 +184,6 @@ public class StudentAccount extends Account{
     public String registerActivity(Activity activity){
         String message="报名失败,存在时间冲突";
         if(checkTime(activity)&&checkActivityName(activity)){
-            m_CaActivity.add(activity);
             message="报名成功！";
             addActivity(activity);
         }
