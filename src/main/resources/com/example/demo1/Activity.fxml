@@ -10,12 +10,14 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml">
     <top>
         <VBox alignment="CENTER">
-            <Label text="请输入您想添加的活动的各种信息~"/>
-            <Label text="按确定键即可添加活动至列表"/>
+            <Label text="请输入您想添加的活动的各种信息~" style="-fx-font-size:15"/>
+            <Label text="按添加按钮可将活动添加至列表" style="-fx-font-size:15"/>
+            <Label text="按查询和删除按钮可以从自己的活动列表中查询或删除活动" style="-fx-font-size:15"/>
+            <Label text="注意活动名称需不同哦" style="-fx-font-size:15"/>
             <Label fx:id="ErrorInfo"/>
         </VBox>
     </top>
-    <center>
+    <left>
         <VBox alignment="CENTER">
 
             <Label text="请输入活动名"/>
@@ -71,11 +73,11 @@
                 <fx:define>
                     <ToggleGroup fx:id="toggleGroup2"/>
                 </fx:define>
-                <RadioButton fx:id="ShaHe" text="沙河校区" toggleGroup="$toggleGroup1"/>
+                <RadioButton fx:id="ShaHe" text="沙河校区" toggleGroup="$toggleGroup2"/>
                 <padding>
                     <Insets left="5"/>
                 </padding>
-                <RadioButton fx:id="XiTuCheng" text="西土城校区" toggleGroup="$toggleGroup1"/>
+                <RadioButton fx:id="XiTuCheng" text="西土城校区" toggleGroup="$toggleGroup2"/>
                 <padding>
                     <Insets bottom="5.0"/>
                 </padding>
@@ -89,19 +91,39 @@
                 <Label text="房间：" labelFor="$Room"/>
                 <TextField fx:id="Room" prefWidth="35"/>
             </HBox>
+
+            <Button fx:id="Assure" text="添加活动"/>
+
+            <padding>
+                <Insets left="25"/>
+            </padding>
         </VBox>
-    </center>
+    </left>
+
+    <right>
+        <VBox alignment="CENTER">
+            <HBox alignment="CENTER">
+                <TextField fx:id="ToBe" prefWidth="100"/>
+            </HBox>
+            <HBox alignment="CENTER">
+                <Button fx:id="Search" text="查询活动"/>
+                <padding>
+                    <Insets left="10.0"/>
+                </padding>
+                <Button fx:id="Delete" text="删除活动"/>
+            </HBox>
+            <HBox alignment="CENTER">
+                <TextArea fx:id="Info" prefRowCount="15"/>
+            </HBox>
+            <padding>
+                <Insets right="25"/>
+            </padding>
+        </VBox>
+    </right>
+
     <bottom>
         <HBox alignment="CENTER">
-            <Button fx:id="Assure" text="添加活动"/>
-            <padding>
-                <Insets left="10.0"/>
-            </padding>
             <Button fx:id="BackToMain" text="返回主界面"/>
-            <padding>
-                <Insets left="10.0"/>
-            </padding>
-            <Button fx:id="Delete" text="删除活动"/>
         </HBox>
     </bottom>
 </BorderPane>
