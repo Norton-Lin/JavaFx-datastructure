@@ -80,7 +80,7 @@ public class ActivityController {
             //加载FXML文件
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Activity.fxml"));
             loader.setController(this);
-            thisStage.setScene(new Scene(loader.load(), 1000, 350));
+            thisStage.setScene(new Scene(loader.load(), 1000, 400));
             thisStage.setTitle("欢迎来到活动界面~");
         } catch (IOException e) {
             e.printStackTrace();
@@ -137,7 +137,7 @@ public class ActivityController {
                 Num = 3000;
             }
 
-            int campus = 0;
+            int campus = -1;
             if (this.ShaHe.isSelected()) {
                 campus = 0;
             } else if (this.XiTuCheng.isSelected()) {
@@ -168,13 +168,13 @@ public class ActivityController {
         StringBuilder text = new StringBuilder();
 
         if (this.ToBe.getText().isEmpty()) {
-            if (activities != null)
+            if (!activities.isEmpty()) {
                 for (Activity activity : activities) {
                     Time time = activity.getM_tTime();
                     text.append(activity.getM_sName()).append("\t")
-                        .append("时间为：").append(time.getStartMonth()).append("月")
-                        .append(time.getStartDate()).append("日").append("星期").append(time.getWeek())
-                        .append("\t");
+                            .append("时间为：").append(time.getStartMonth()).append("月")
+                            .append(time.getStartDate()).append("日").append("星期").append(time.getWeek())
+                            .append("\t");
 
                     if (activity.getM_eProperty() == Property.SELF) {
                         text.append("课程属性：").append("个人活动").append("\t");
@@ -191,12 +191,12 @@ public class ActivityController {
                     }
 
                     text.append(activity.getM_sConstruction().get_con_name())
-                        .append(activity.getM_iFloor()).append("层")
-                        .append(activity.getM_iRoom()).append("室");
+                            .append(activity.getM_iFloor()).append("层")
+                            .append(activity.getM_iRoom()).append("室");
 
                     text.append("\n");
                 }
-            else {
+            } else {
                 text.append("活动列表为空~");
             }
         } else {
@@ -204,7 +204,7 @@ public class ActivityController {
             FuzzySearch fuzzySearch = new FuzzySearch();
             //根据输入框中内容查找获得结果
             ArrayList<Activity> results = fuzzySearch.get_FS_result(this.ToBe.getText(), activities);
-            if (!results.isEmpty()) {
+            if (results != null) {
                 for (Activity activity : activities) {
                     Time time = activity.getM_tTime();
                     text.append(activity.getM_sName()).append("\t")
@@ -240,13 +240,18 @@ public class ActivityController {
     }
 
     private void DeleteClicked() {
+        Activity activity = new Activity();
         if (this.ToBe.getText().isEmpty())
             this.ErrorInfo.setText("请输入要删除的课程信息！");
         else {
             FuzzySearch fuzzySearch = new FuzzySearch();
             ArrayList<Activity> results = fuzzySearch.get_FS_result(this.ToBe.getText(), this.studentAccount.getActivity());
-            Activity activity = results.get(0);
-            this.ErrorInfo.setText(this.studentAccount.exitActivity(activity));
+            if (results != null) {
+                activity = results.get(0);
+                this.ErrorInfo.setText(this.studentAccount.exitActivity(activity));
+            } else {
+                this.ErrorInfo.setText("活动列表中没有活动");
+            }
         }
     }
 }
