@@ -5,7 +5,6 @@ import com.example.demo1.Code.Mysql.MapDatabase;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class Navigate {
@@ -13,13 +12,13 @@ public class Navigate {
     public static int[][] path;//路径矩阵
     public MapDatabase mapDatabase = new MapDatabase();
     public ConstructionDatabase constructionDatabase = new ConstructionDatabase();
+<<<<<<< HEAD
     public int constructionNumber;//建筑数量
     public ArrayList<Double> Speed;
+=======
+>>>>>>> 61729f7a11ed97f3c18aafabd14161235b8af2ea
 
-    /**
-     * 初始化交通工具速度
-     */
-    public void initSpeed() {
+    public void setSpeed(ArrayList<Integer> Speed) {
 
         Speed.add(1.0);//步行速度     traffic_type=0
         Speed.add(3.0);//自行车速度    traffic_type=1
@@ -28,71 +27,38 @@ public class Navigate {
 
     }
 
-    public double getSpeed(int i) {
-        return Speed.get(i);
-    }
-
-    /**
-     * 保存所有建筑物数量
-     *
-     * @param constructionNumber 数量
-     */
-    public void setConstructionNumber(int constructionNumber) {
-        this.constructionNumber = constructionNumber;
-    }
-
-    /**
-     * 获取所有建筑物数量
-     *
-     * @return 数量
-     */
-    public int getConstructionNumber() {
-        return constructionNumber;
-    }
-
     /**
      * 获得给定交通工具对应的地图
      * navigate_type=0:最短路径导航
      * navigate_type=1:最短时间导航
      *
+     * @param traffic_type  交通工具类型
      * @param line          保存所有道路类
      * @param navigate_type 导航类型
      * @return 该交通工具的地图
      */
-    public double[][] getMatrix(ArrayList<Line> line, int navigate_type, int currentHour) {
+    public double[][] getMatrix(int traffic_type, ArrayList<Line> line, int navigate_type) {
 
-        double[][] matrix = new double[getConstructionNumber()][getConstructionNumber()];
-
-        //初始化邻接矩阵
-        for (double[] doubles : matrix) {
-            Arrays.fill(doubles, 10000.0);
-        }
+        double[][] matrix = new double[line.size()][line.size()];
         int road_type;
 
-        //时间和道路拥挤度的对应关系，三个时间段对应三个拥挤度
-        if (currentHour <= 7 || currentHour >= 20) {
-            road_type = 1;
-        } else if (currentHour <= 9 || currentHour >= 12 && currentHour <= 13 || currentHour >= 18) {
-            road_type = 2;
-        } else {
-            road_type = 3;
-        }
-        /*switch (traffic_type) {
+        //建立交通工具类型和道路类型的对应关系，汽车有四种，道路有三种
+        switch (traffic_type) {
             case 1, 2 -> road_type = 1;//电动车和自行车共用道路
             case 3 -> road_type = 2;
             default -> road_type = 0;
-        }*/
+        }
 
         for (Line l : line) {
 
-            double[] congestion = l.getM_d_congestion();//这里的功能需要修改
+            double[] congestion = l.getM_d_congestion();
 
             if (l.getDegree() == road_type) {
                 switch (navigate_type) {
                     //最短路径算法
                     case 0 -> matrix[l.getM_i_stp()][l.getM_i_enp()] = l.getM_i_length();
                     //最短时间算法
-                    case 1 -> matrix[l.getM_i_stp()][l.getM_i_enp()] = l.getM_i_length() / (1 - congestion[road_type]);
+                    case 1 -> matrix[l.getM_i_stp()][l.getM_i_enp()] = l.getM_i_length() * congestion[road_type];
                 }
 
             }
@@ -110,7 +76,7 @@ public class Navigate {
      */
     public String[][] getLoadName(ArrayList<Line> line) {
 
-        String[][] LoadName = new String[getConstructionNumber()][getConstructionNumber()];
+        String[][] LoadName = new String[line.size()][line.size()];
         for (Line l : line) {
             LoadName[l.getM_i_stp()][l.getM_i_enp()] = l.getM_s_name();
         }
@@ -125,24 +91,21 @@ public class Navigate {
      * @param end_name     终点建筑物名字
      * @return Result 导航结果
      */
-    public StringBuilder toNavigate(int traffic_type, String start_name, String end_name, int currentHour) {
+    public ArrayList<String> toNavigate(int traffic_type, String start_name, String end_name) {
 
         ArrayList<Line> line = new ArrayList<>();
         ArrayList<Construction> Constructions = new ArrayList<>();
-        //ArrayList<Construction> target_road = new ArrayList<>();//保存导航给出的道路
+        ArrayList<Construction> target_road = new ArrayList<>();//保存导航给出的道路
 
-        initSpeed();
-
-        StringBuilder Result = new StringBuilder();
+        ArrayList<String> Result = new ArrayList<>();
 
         Construction Start = getConstruction(start_name);
         Construction End = getConstruction(end_name);
 
         mapDatabase.find(line);//从地图数据库获取所有道路类
         constructionDatabase.find(Constructions);//从建筑数据库获得所有建筑类
-        setConstructionNumber(Constructions.size());
 
-        int start_number, end_number;
+        int start_number = 0, end_number = 0;
 
         //得到起止建筑在地图上的编号
         try {
@@ -152,15 +115,14 @@ public class Navigate {
 
         } catch (NullPointerException e) {
 
-            Result.append("建筑物不存在，请重试...");
-            return Result;
+            Result.add("建筑物不存在，请重试...");
+            System.exit(0);
+
         }
 
         for (int navigate_type = 0; navigate_type < 2; navigate_type++) {
 
-            ArrayList<Construction> target_road = new ArrayList<>();//保存导航给出的道路
-
-            double[][] matrix = getMatrix(line, navigate_type, currentHour);//获得指定当时时间对应的地图
+            double[][] matrix = getMatrix(traffic_type, line, navigate_type);//获得指定交通工具对应的地图
 
             floydAlgorithm(matrix);//弗洛伊德算法求最短路径
 
@@ -172,7 +134,7 @@ public class Navigate {
 
             target_road.add(End);//最后一个元素保存终止点
 
-            showWay(target_road, min_length, traffic_type, navigate_type, matrix, Result);//打印路径
+            Result = showWay(target_road, min_length, traffic_type, navigate_type, matrix);//打印路径
         }
         return Result;
     }
@@ -186,14 +148,13 @@ public class Navigate {
 
         path = new int[matrix.length][matrix.length];//路径数组
 
-        //初始化路径数组
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix.length; j++) {
                 path[i][j] = -1;
             }
         }
 
-        //更新计算路径数组
+        //初计算路径数组
         for (int m = 0; m < matrix.length; m++) {
             for (int i = 0; i < matrix.length; i++) {
                 for (int j = 0; j < matrix.length; j++) {
@@ -217,22 +178,19 @@ public class Navigate {
      */
     public void findPath(int i, int j, ArrayList<Construction> target_road, ArrayList<Construction> Constructions) {
 
-        if (i != j) {
-            int m = path[i][j];
+        int m = path[i][j];
 
-            if (m == -1) {
-                return;
-            }
-
-            findPath(i, m, target_road, Constructions);
-
-            Construction Transit = getNameBS(m, Constructions);//找到最短路径的中间结点对应的建筑物
-
-            target_road.add(Transit);//保存中间结点对应的建筑物结点
-
-            findPath(m, j, target_road, Constructions);
+        if (m == -1) {
+            return;
         }
 
+        findPath(i, m, target_road, Constructions);
+
+        Construction Transit = getNameBS(m, Constructions);//找到最短路径的中间结点对应的建筑物
+
+        target_road.add(Transit);//保存中间结点对应的建筑物结点
+
+        findPath(m, j, target_road, Constructions);
     }
 
     /**
@@ -264,7 +222,7 @@ public class Navigate {
     }
 
     /**
-     * 通过建筑物的名字查找该建筑物
+     * 通过建筑物的名字查找该建筑物的名字
      *
      * @param name 目标建筑物的名字
      * @return 目标建筑物
@@ -290,61 +248,49 @@ public class Navigate {
      * @param traffic_type  指定的交通工具
      * @param navigate_type 指定的导航类型
      */
-    public void showWay(ArrayList<Construction> target_road, double min_length, int traffic_type, int navigate_type, double[][] matrix, StringBuilder result) {
+    public ArrayList<String> showWay(ArrayList<Construction> target_road, double min_length, int traffic_type, int navigate_type, double[][] matrix) {
 
+        ArrayList<Integer> Speed = new ArrayList<>();//交通工具的速度
         ArrayList<Line> line = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
+
+        setSpeed(Speed);//设置四种交通工具的速度
         mapDatabase.find(line);
 
         String[][] LoadName = getLoadName(line);
 
-        result.append("\n从").append(target_road.get(0).get_con_name());
-        result.append("到");
-        result.append(target_road.get(target_road.size() - 1).get_con_name());
+        result.add("\n从" + target_road.get(0).get_con_name());
+        result.add("到");
+        result.add(target_road.get(target_road.size() - 1).get_con_name());
 
         switch (navigate_type) {
 
-            case 0 -> result.append("的最短路径长度是：").append(min_length).append("米");
+            case 0 -> result.add("的最短路径长度是：" + min_length);
 
             case 1 -> {
 
                 NumberFormat nf = NumberFormat.getNumberInstance();
                 nf.setMaximumFractionDigits(1);//输入小数点后一位
                 double t = min_length / Speed.get(traffic_type);
-                result.append("的最短时间是：").append(nf.format(t)).append("秒");
+                result.add("的最短时间是：" + nf.format(t));
 
             }
         }
 
-        result.append(".路径导航为：\n");
-        result.append("从").append(target_road.get(0).get_con_name()).append("出发，");
+        result.add("路径导航为：");
+        result.add("从" + target_road.get(0).get_con_name() + "出发");
 
-        switch (navigate_type){
-            case 0 ->{
-                for (int i = 0; i < target_road.size() - 1; i++) {
+        for (int i = 0; i < target_road.size() - 2; i++) {
 
-                    result.append("沿").append(LoadName[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()]);
-                    result.append("走").append(matrix[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()]).append("米，");
-                    result.append("到达").append(target_road.get(i + 1).get_con_name()).append("\n");
+            result.add("沿" + LoadName[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()]);
+            result.add("走" + matrix[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()] + "米");
+            result.add("到达" + target_road.get(i + 1).get_con_name());
 
-                }
-            }
-            case 1 ->{
-                for (int i = 0; i < target_road.size() - 1; i++) {
-
-                    result.append("沿").append(LoadName[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()]);
-                    result.append("走").append(matrix[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()]/getSpeed(traffic_type)).append("秒，");
-                    result.append("到达").append(target_road.get(i + 1).get_con_name()).append("\n");
-
-                }
-            }
         }
 
+        result.add("此次导航结束...\n");
 
-
-        //result.add(target_road.get(target_road.size()-1).get_con_name());
-        result.append("\n此次导航结束...\n");
-
-        //return result;
+        return result;
     }
 
 }
