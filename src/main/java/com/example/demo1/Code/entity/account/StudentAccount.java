@@ -6,6 +6,7 @@ import com.example.demo1.Code.Mysql.ActivityDatabase;
 import com.example.demo1.Code.Mysql.CourseDatabase;
 import com.example.demo1.Code.Util.Authority;
 import com.example.demo1.Code.Util.Time;
+import com.example.demo1.Code.clock.EventClock;
 import com.example.demo1.Code.entity.*;
 
 import java.util.ArrayList;
@@ -262,4 +263,49 @@ public class StudentAccount extends Account{
         activityDatabase.delete(activity,this.getID());
         LogFile.info("Student "+getID(),"删除活动");
    }
+
+    /**
+     * 添加闹钟
+     * @param clock 新闹钟
+     * @return 返回是否添加成功
+     */
+    public boolean addClock(EventClock clock){
+        boolean result = true;
+        for(EventClock c:m_CaEventClock)
+        {
+            if(Objects.equals(c.getClockName(), clock.getClockName())) {
+                result = false;
+                break;
+            }
+        }
+        if(result)
+        {
+            AccountDatabase accountDatabase = new AccountDatabase();
+            accountDatabase.insertClock(this,clock);
+        }
+        return result;
+    }
+
+    /**
+     * 删除闹钟
+     * @param clock 闹钟
+     */
+    public boolean decClock(String clock)
+    {
+        boolean result = false;
+        for(int i =0;i<m_CaEventClock.size();i++)
+        {
+            if(Objects.equals(m_CaEventClock.get(i).getClockName(), clock)) {
+                result = true;
+                m_CaEventClock.remove(i);//删除闹钟
+                break;
+            }
+        }
+        if(result)
+        {
+            AccountDatabase accountDatabase = new AccountDatabase();
+            accountDatabase.deleteClock(this,clock);
+        }
+        return result;
+    }
 }

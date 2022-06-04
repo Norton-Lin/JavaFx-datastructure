@@ -1,42 +1,46 @@
 
-package com.example.demo1.Code.entity;
+package com.example.demo1.Code.systemtime;
 
 import com.example.demo1.Code.Util.Time;
-import com.example.demo1.Code.entity.EventClock;
+import com.example.demo1.Code.clock.ClockThread;
+import com.example.demo1.Code.clock.EventClock;
+import com.example.demo1.Code.entity.account.StudentAccount;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Timer;
 import java.util.*;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
-import static com.example.demo1.Code.entity.SystemTime.*;
+import static com.example.demo1.Code.systemtime.SystemTime.*;
 
 /**
- * 模拟系统时间+设置闹钟
- * 存在以下的问题：
- * 1.时钟图形化界面应该交给前端完成，而不是体现在这个类中
- * 2.当闹钟响了的时候不应该使用print打印字符串，而是应该再前端显示出来，也要和前端再沟通
- * 3.模拟实践系统的起始时间应该是用户开始使用系统的时候的计算机系统时间，这个也和前端有关
- * 接口：
- * 数据库接口 :在setClock()方法中调用闹钟的数据库
- * 前端接口 :1.暂停系统时间推进 2.设置闹钟接口为 SystemTime.setClock()
+ * 模拟系统时间
+ * 前端接口 :
+ * 1.启动系统时间接口为 SystemTimeStart()
+ * 2.设置快进速度接口为 setSpeed()
+ * 3.暂停系统时间接口为 stopTime()
+ *
  */
 public class SystemTime {
 
+    private final StudentAccount studentAccount;
     private static int speed;//时间快进速度
     private static String StartTime;//开始计时时间
+
+    public SystemTime(StudentAccount studentAccount) {
+        this.studentAccount = studentAccount;
+    }
 
     /**
      * 设置模拟系统时间快进速度
      *
      * @param speed 目标快进速度
      */
-    public void setSpeed(int speed) {
+    public static void setSpeed(int speed) {
         SystemTime.speed = speed;
     }
 
@@ -52,14 +56,14 @@ public class SystemTime {
     /**
      * 暂停系统时间推进
      */
-    public void stopTime() {
+    public static void stopTime() {
         SystemTime.speed = 0;
     }
 
     /**
      * 系统运行时调用该方法，将此时的计算机系统时间设置为模拟系统的开始时间
      */
-    public void setStartTime() {
+    public static void setStartTime() {
         Date current_time = new Date();//当前系统时间
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         StartTime = sdf.format(current_time);
@@ -67,6 +71,7 @@ public class SystemTime {
 
     /**
      * 获得模拟系统时间的开始时间
+     *
      * @return 开始时间
      */
     public static String getStartTime() {
@@ -109,20 +114,17 @@ public class SystemTime {
         return calendar;
     }
 
+    public void setClock(Time time, String name, int type){
+        //studentAccount.
+    }
+
     /**
-     * 根据传入的参数设置指定闹钟
-     *
-     * @param clockTime 闹钟时间
-     * @param clockName 闹钟名字
-     * @param clockType 闹钟类型
-     * @param allClock  该用户的所有闹钟列表，应该由数据库读出，此处仅为临时写法
+     * 启动该用户的所有闹钟
      */
-    public void setClock(Time clockTime, String clockName, int clockType, ArrayList<EventClock> allClock) {
+    public void startClock() {
 
-        //此处应该从数据库中得到该用户的所有闹钟
-
-        EventClock tool = new EventClock(clockTime, clockName, clockType);
-        allClock.add(tool);//更新用户的闹钟列表
+        //得到该用户名下的所有闹钟
+        ArrayList<EventClock> allClock = studentAccount.getM_CaEventClock();
 
         //创建闹钟线程列表并为所有闹钟添加闹钟线程
         ArrayList<Runnable> clockThread = new ArrayList<>();
@@ -143,47 +145,28 @@ public class SystemTime {
 
     }
 
+    /**
+     * 和前端的接口
+     */
+    public void SystemTimeStart() {
 
-    public void start() {
-        SystemTime test_1 = new SystemTime();
-        test_1.setSpeed(1);//设置快进速度
-        test_1.setStartTime();//设置模拟系统开始计时时间
+        setSpeed(1);//设置模拟系统快进速度
+        setStartTime();//设置模拟系统开始计时时间
 
-        ArrayList<EventClock> allClock = new ArrayList<>();
-
-        Time time_1 = new Time();
-        time_1.setStartMonth(5);//活动时间对应的月份
-        time_1.setStartDate(11);//活动时间对应的日期
-        time_1.setWeek(3);//活动时间对应的星期
-        time_1.setStartHour(18);//活动时间对应的小时
-        time_1.setStartMinute(25);//活动时间对应的分钟
-        String name_1 = "第一个活动";
-        int type_1 = 1;
-
-        Time time_2 = new Time();
-        time_2.setStartMonth(5);//活动时间对应的月份
-        time_2.setStartDate(11);//活动时间对应的日期
-        time_2.setWeek(3);//活动时间对应的星期
-        time_2.setStartHour(19);//活动时间对应的小时
-        time_2.setStartMinute(0);//活动时间对应的分钟
-        String name_2 = "第二个活动";
-        int type_2 = 1;
-
-        allClock.add(new EventClock(time_1, name_1, type_1));
-
-        test_1.setClock(time_2, name_2, type_2, allClock);
-
-        //模拟系统时间图形化
+        //开始模拟系统时间
         SimulatedTime simulatedTime = new SimulatedTime();
         simulatedTime.setLocationRelativeTo(null);//时钟窗体显示在屏幕中央
         simulatedTime.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         simulatedTime.setVisible(true);
+
+        startClock();//启动该用户名下的所有闹钟
+
     }
 
     //main方法仅作测试用
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
 
-        SystemTime test_1 = new SystemTime();
+        SystemTime test_1 = new SystemTime(StudentAccount student);
         test_1.setSpeed(1);//设置快进速度
         test_1.setStartTime();//设置模拟系统开始计时时间
 
@@ -209,7 +192,7 @@ public class SystemTime {
 
         allClock.add(new EventClock(time_1, name_1, type_1));
 
-        test_1.setClock(time_2, name_2, type_2, allClock);
+        test_1.startClock(time_2, name_2, type_2, allClock);
 
         //模拟系统时间图形化
         SimulatedTime simulatedTime = new SimulatedTime();
@@ -217,131 +200,7 @@ public class SystemTime {
         simulatedTime.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         simulatedTime.setVisible(true);
 
-    }
-}
-
-/**
- * 闹钟线程
- */
-class ClockThread implements Runnable {
-
-    public EventClock eventclock;
-
-    public ClockThread(EventClock eventclock) {
-        this.eventclock = eventclock;
-    }
-
-    @Override
-    public void run() {
-
-        Clock t = new Clock(this.eventclock);
-
-    }
-}
-
-/**
- * 用于后端实现算法的闹钟
- */
-class Clock {
-
-    GregorianCalendar calendar;
-
-    //计算机系统实时时间的信息
-    int year;
-    int month;
-    int date;
-    int week;
-    int hour;
-    int minute;
-    int second;
-
-    public Clock(EventClock eventClock) {
-
-        Timer t = new Timer();
-        Task task = new Task(eventClock);
-
-        t.schedule(task, 0, 1); //闹钟刷新时间间隔(单位：ms)
-
-    }
-
-    //模拟时间流逝
-    class Task extends TimerTask {
-
-        public EventClock eventClock;
-        public int setDate;
-        public int setWeek;
-        public int setMonth;
-        public int setHour;
-        public int setMinute;
-        public int setSecond;
-        public String setName;
-        public int setType;
-
-        public Task(EventClock eventClock) {
-            this.eventClock = eventClock;
-        }
-
-        public void run() {
-
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String i_t = getStartTime();
-            Calendar initial_time = shiftDate(i_t);
-
-            //模拟系统的当前时间及基本时间信息
-            calendar = (GregorianCalendar) shiftDate(df.format(showSimulateTime(initial_time)));
-
-            year = calendar.get(Calendar.YEAR);
-            month = calendar.get(Calendar.MONTH);
-            date = calendar.get(Calendar.DATE);
-            week = calendar.get(Calendar.DAY_OF_WEEK);
-            hour = calendar.get(Calendar.HOUR_OF_DAY);
-            minute = calendar.get(Calendar.MINUTE);
-            second = calendar.get(Calendar.SECOND);
-
-            //获取闹钟的所有信息信息
-            setMonth = eventClock.clockTime.getStartMonth();
-            setDate = eventClock.clockTime.getStartDate();
-            setWeek = eventClock.clockTime.getWeek();
-            setHour = eventClock.clockTime.getStartHour();
-            setMinute = eventClock.clockTime.getStartMinute();
-            setSecond = 0;
-            setName = eventClock.clockName;
-            setType = eventClock.clockType;
-
-            //Calendar.WEEK从周日开始
-            if (week == 1) {
-                week = 7;
-            } else {
-                week = week - 1;
-            }
-
-            month = month + 1;//Calendar.MONTH从0开始
-
-            switch (setType) {
-
-                //一次性闹钟
-                case 0 -> {
-                    if (setMonth == month && setDate == date && setHour == hour && setMinute == minute && setSecond == second) {
-                        System.out.println(this.setName + " time!");
-                    }
-                }
-                //每天一次闹钟
-                case 1 -> {
-                    if (setHour == hour && setMinute == minute && setSecond == second) {
-                        System.out.println(this.setName + " time!");
-                    }
-                }
-                //每周一次闹钟
-                case 7 -> {
-                    if (setWeek == week && setHour == hour && setMinute == minute && setSecond == second) {
-                        System.out.println(this.setName + " time!");
-                    }
-                }
-            }
-
-        }
-    }
-
+    }*/
 }
 
 /**
