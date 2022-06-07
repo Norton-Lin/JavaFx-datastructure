@@ -1,11 +1,6 @@
 
 package com.example.demo1.Code.systemtime;
 
-import com.example.demo1.Code.Util.Time;
-import com.example.demo1.Code.clock.ClockThread;
-import com.example.demo1.Code.clock.EventClock;
-import com.example.demo1.Code.entity.account.StudentAccount;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -23,17 +18,15 @@ import static com.example.demo1.Code.systemtime.SystemTime.*;
  * 1.启动系统时间接口为 SystemTimeStart()
  * 2.设置快进速度接口为 setSpeed()
  * 3.暂停系统时间接口为 stopTime()
- *
+ * 4.获得当前系统时间接口为 getCurrentTime()
  */
 public class SystemTime {
 
-    private final StudentAccount studentAccount;
     private static int speed;//时间快进速度
     private static String StartTime;//开始计时时间
-
-    public SystemTime(StudentAccount studentAccount) {
-        this.studentAccount = studentAccount;
-    }
+    private static Calendar CurrentTime;//当前时间
+    private static boolean flag = true;//时间推进状况
+    private static String currentTime;//当前时间，String类型
 
     /**
      * 设置模拟系统时间快进速度
@@ -57,13 +50,30 @@ public class SystemTime {
      * 暂停系统时间推进
      */
     public static void stopTime() {
-        SystemTime.speed = 0;
+        SystemTime.flag = false;
+    }
+
+    /**
+     * 继续系统时间推进
+     */
+    public static void restartTime() {
+        SystemTime.flag = true;
+        StartTime = currentTime;
+    }
+
+    /**
+     * 获取当前系统时间推进情况
+     *
+     * @return 标志
+     */
+    public static boolean getFlag() {
+        return SystemTime.flag;
     }
 
     /**
      * 系统运行时调用该方法，将此时的计算机系统时间设置为模拟系统的开始时间
      */
-    public static void setStartTime() {
+    public static void findStartTime() {
         Date current_time = new Date();//当前系统时间
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         StartTime = sdf.format(current_time);
@@ -95,6 +105,44 @@ public class SystemTime {
     }
 
     /**
+     * 设置当前系统时间，Calendar类型
+     *
+     * @param calendar 计算得到的时间
+     */
+    public static void setCurrentTime(Calendar calendar) {
+        //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        CurrentTime = calendar;
+    }
+
+    /**
+     * 获取当前系统时间，Calendar类型
+     *
+     * @return Calendar类型的当前系统时间
+     */
+    public static Calendar getCurrentTime() {
+        return CurrentTime;
+    }
+
+    /**
+     * 设置当前系统时间，String类型
+     *
+     * @param CurrentTime Calendar类型的当前系统时间
+     */
+    public static void setStringCurrentTime(Calendar CurrentTime) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        currentTime = sdf.format(CurrentTime.getTime());
+    }
+
+    /**
+     * 获取当前系统时间，String类型
+     *
+     * @return String类型的当前系统时间
+     */
+    public static String getStringCurrentTime() {
+        return currentTime;
+    }
+
+    /**
      * 将规定格式的时间字符串转换为Calendar类型
      *
      * @param t 字符串类型的时间
@@ -114,44 +162,13 @@ public class SystemTime {
         return calendar;
     }
 
-    public void setClock(Time time, String name, int type){
-        //studentAccount.
-    }
-
-    /**
-     * 启动该用户的所有闹钟
-     */
-    public void startClock() {
-
-        //得到该用户名下的所有闹钟
-        ArrayList<EventClock> allClock = studentAccount.getM_CaEventClock();
-
-        //创建闹钟线程列表并为所有闹钟添加闹钟线程
-        ArrayList<Runnable> clockThread = new ArrayList<>();
-        for (EventClock ec : allClock) {
-            clockThread.add(new ClockThread(ec));
-        }
-
-        //创建线程列表并将所有的闹钟线程添加线程
-        ArrayList<Thread> Threads = new ArrayList<>();
-        for (Runnable ct : clockThread) {
-            Threads.add(new Thread(ct));
-        }
-
-        //启动所有线程
-        for (Thread t : Threads) {
-            t.start();
-        }
-
-    }
-
     /**
      * 和前端的接口
      */
     public void SystemTimeStart() {
 
-        setSpeed(1);//设置模拟系统快进速度
-        setStartTime();//设置模拟系统开始计时时间
+        setSpeed(1);//设置模拟系统初始快进速度
+        findStartTime();//设置模拟系统开始计时时间
 
         //开始模拟系统时间
         SimulatedTime simulatedTime = new SimulatedTime();
@@ -159,48 +176,7 @@ public class SystemTime {
         simulatedTime.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         simulatedTime.setVisible(true);
 
-        startClock();//启动该用户名下的所有闹钟
-
     }
-
-    //main方法仅作测试用
-    /*public static void main(String[] args) {
-
-        SystemTime test_1 = new SystemTime(StudentAccount student);
-        test_1.setSpeed(1);//设置快进速度
-        test_1.setStartTime();//设置模拟系统开始计时时间
-
-        ArrayList<EventClock> allClock = new ArrayList<>();
-
-        Time time_1 = new Time();
-        time_1.setStartMonth(5);//活动时间对应的月份
-        time_1.setStartDate(11);//活动时间对应的日期
-        time_1.setWeek(3);//活动时间对应的星期
-        time_1.setStartHour(18);//活动时间对应的小时
-        time_1.setStartMinute(25);//活动时间对应的分钟
-        String name_1 = "第一个活动";
-        int type_1 = 1;
-
-        Time time_2 = new Time();
-        time_2.setStartMonth(5);//活动时间对应的月份
-        time_2.setStartDate(11);//活动时间对应的日期
-        time_2.setWeek(3);//活动时间对应的星期
-        time_2.setStartHour(19);//活动时间对应的小时
-        time_2.setStartMinute(0);//活动时间对应的分钟
-        String name_2 = "第二个活动";
-        int type_2 = 1;
-
-        allClock.add(new EventClock(time_1, name_1, type_1));
-
-        test_1.startClock(time_2, name_2, type_2, allClock);
-
-        //模拟系统时间图形化
-        SimulatedTime simulatedTime = new SimulatedTime();
-        simulatedTime.setLocationRelativeTo(null);//时钟窗体显示在屏幕中央
-        simulatedTime.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        simulatedTime.setVisible(true);
-
-    }*/
 }
 
 /**
@@ -209,7 +185,6 @@ public class SystemTime {
 class SimulatedTime extends JFrame {
 
     MyPanel clockPanel;
-
     Ellipse2D.Double e;
     Line2D.Double hourLine;
     Line2D.Double minLine;
@@ -224,7 +199,7 @@ class SimulatedTime extends JFrame {
     int hour;
     int minute;
     int second;
-    String timeStr = "";
+    String display = "";
 
     public static final int X = 60;
     public static final int Y = 60;
@@ -233,12 +208,13 @@ class SimulatedTime extends JFrame {
 
     public SimulatedTime() {
 
+        //时钟图形化界面
         setSize(300, 200);
         setTitle("Clock");
-
         clockPanel = new MyPanel();
         add(clockPanel);
 
+        //模拟时间
         Timer t = new Timer();
         Task task = new Task();
 
@@ -252,18 +228,25 @@ class SimulatedTime extends JFrame {
         public void run() {
 
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String i_t = getStartTime();
-            Calendar initial_time = shiftDate(i_t);
+            String startTime = getStartTime();
+            Calendar initialTime = shiftDate(startTime);
 
             //模拟系统的当前时间及基本时间信息
-            calendar = (GregorianCalendar) shiftDate(df.format(showSimulateTime(initial_time)));
-            year = calendar.get(Calendar.YEAR);
-            month = calendar.get(Calendar.MONTH);
-            date = calendar.get(Calendar.DATE);
-            week = calendar.get(Calendar.DAY_OF_WEEK);
-            hour = calendar.get(Calendar.HOUR_OF_DAY);
-            minute = calendar.get(Calendar.MINUTE);
-            second = calendar.get(Calendar.SECOND);
+            calendar = (GregorianCalendar) shiftDate(df.format(showSimulateTime(initialTime)));
+
+            //如果系统时间未暂停，则更新当前系统模拟时间
+            if (getFlag()) {
+                setCurrentTime(calendar);
+                setStringCurrentTime(getCurrentTime());
+            }
+
+            year = getCurrentTime().get(Calendar.YEAR);
+            month = getCurrentTime().get(Calendar.MONTH);
+            date = getCurrentTime().get(Calendar.DATE);
+            week = getCurrentTime().get(Calendar.DAY_OF_WEEK);
+            hour = getCurrentTime().get(Calendar.HOUR_OF_DAY);
+            minute = getCurrentTime().get(Calendar.MINUTE);
+            second = getCurrentTime().get(Calendar.SECOND);
 
             //Calendar.WEEK从周日开始
             if (week == 1) {
@@ -274,7 +257,7 @@ class SimulatedTime extends JFrame {
 
             month = month + 1;//Calendar.MONTH从0开始
 
-            timeStr = year + "年" + month + "月" + date + "日 " + "星期" + week + " " + hour + " : " + minute + " : " + second;
+            display = year + "年" + month + "月" + date + "日 " + "星期" + week + " " + hour + " : " + minute + " : " + second;
 
             hourLine.x2 = X + 40 * Math.cos(hour * (Math.PI / 6) - Math.PI / 2);
             hourLine.y2 = Y + 40 * Math.sin(hour * (Math.PI / 6) - Math.PI / 2);
@@ -316,7 +299,7 @@ class SimulatedTime extends JFrame {
 
             g2.drawString("3", 100, 65);
 
-            g2.drawString(timeStr, 0, 130);
+            g2.drawString(display, 0, 130);
 
             g2.draw(e);
 
