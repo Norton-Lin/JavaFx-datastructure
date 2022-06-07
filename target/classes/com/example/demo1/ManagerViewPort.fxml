@@ -4,109 +4,192 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.geometry.Insets?>
-<VBox xmlns:fx="http://javafx.com/fxml">
-    <HBox alignment="CENTER">
-        <Label alignment="TOP_CENTER" text="欢迎来到管理员界面~" style="-fx-font-size:15"/>
-    </HBox>
-    <HBox alignment="CENTER">
-        <Label alignment="TOP_CENTER" text="请输入课程编号以定位课程" style="-fx-font-size:15"/>
-    </HBox>
+<HBox xmlns:fx="http://javafx.com/fxml">
+    <VBox alignment="CENTER_LEFT">
+        <HBox alignment="CENTER">
+            <Label alignment="TOP_CENTER" text="欢迎来到管理员界面~" style="-fx-font-size:15"/>
+        </HBox>
+        <HBox alignment="CENTER">
+            <Label alignment="TOP_CENTER" text="请输入课程编号以定位课程" style="-fx-font-size:15"/>
+        </HBox>
+        <HBox alignment="CENTER">
+            <TextField fx:id="CourseNum" prefWidth="125.0"/>
+            <padding>
+                <Insets left="25.0"/>
+            </padding>
+            <Button fx:id="SearchAll" text="查找并选中"/>
+        </HBox>
 
-    <padding>
-        <Insets left="25.0"/>
-    </padding>
-
-    <HBox alignment="CENTER">
-        <TextField fx:id="CourseNum" prefWidth="125.0"/>
-        <padding>
-            <Insets left="25.0"/>
-        </padding>
-        <Button fx:id="SearchAll" text="查  找"/>
-    </HBox>
-
-    <padding>
-        <Insets top="25.0"/>
-    </padding>
-
-    <GridPane>
-        <Label text="月" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <TextField fx:id="Month" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-        <padding>
-            <Insets left="15"/>
-        </padding>
-        <Label text="星期" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-        <TextField fx:id="Week" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-        <padding>
-            <Insets left="15"/>
-        </padding>
-        <Label text="日" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-        <TextField fx:id="Day" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-        <padding>
-            <Insets left="15"/>
-        </padding>
-        <Label text="起始小时" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
-        <TextField fx:id="StartHour" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
-        <padding>
-            <Insets left="15"/>
-        </padding>
-        <Label text="起始分钟" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
-        <TextField fx:id="StartMinute" GridPane.columnIndex="4" GridPane.rowIndex="1"/>
-        <padding>
-            <Insets left="15"/>
-        </padding>
-        <Label text="结束小时" GridPane.columnIndex="5" GridPane.rowIndex="0"/>
-        <TextField fx:id="EndHour" GridPane.columnIndex="5" GridPane.rowIndex="1"/>
-        <padding>
-            <Insets left="15"/>
-        </padding>
-        <Label text="结束分钟" GridPane.columnIndex="6" GridPane.rowIndex="0"/>
-        <TextField fx:id="EndMinute" GridPane.columnIndex="6" GridPane.rowIndex="1"/>
-    </GridPane>
-
-    <padding>
-        <Insets top="25.0"/>
-    </padding>
-
-    <HBox alignment="CENTER">
-        <Button fx:id="CourTime" text="发布/修改上课时间"/>
-        <padding>
-            <Insets left="25.0"/>
-        </padding>
-        <Button fx:id="ExamTime" text="布/修改考试时间"/>
-    </HBox>
-
-    <padding>
-        <Insets top="25.0"/>
-    </padding>
-
-    <GridPane>
-        <Label text="教学楼" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-        <TextField fx:id="Building" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-        <padding>
+        <HBox alignment="CENTER">
+            <VBox>
+                <Label text="月"/>
+                <TextField fx:id="Month" prefWidth="50"/>
+            </VBox>
+            <VBox>
+                <Label text="日"/>
+                <TextField fx:id="Day" prefWidth="50"/>
+            </VBox>
+            <VBox>
+                <Label text="星期"/>
+                <TextField fx:id="Week" prefWidth="50"/>
+            </VBox>
+            <VBox>
+                <Label text="起始小时"/>
+                <TextField fx:id="StartHour" prefWidth="50"/>
+            </VBox>
+            <VBox>
+                <Label text="起始分钟"/>
+                <TextField fx:id="StartMinute" prefWidth="50"/>
+            </VBox>
+            <VBox>
+                <Label text="结束小时"/>
+                <TextField fx:id="EndHour" prefWidth="50"/>
+            </VBox>
+            <VBox>
+                <Label text="结束分钟"/>
+                <TextField fx:id="EndMinute" prefWidth="50"/>
+            </VBox>
+        </HBox>
+        <HBox alignment="CENTER">
+            <Button fx:id="CourTime" text="发布/修改上课时间"/>
+            <padding>
+                <Insets left="25.0"/>
+            </padding>
+            <Button fx:id="ExamTime" text="发布/修改考试时间"/>
+        </HBox>
+        <HBox alignment="CENTER">
+            <fx:define>
+                <ToggleGroup fx:id="toggleGroup0"/>
+            </fx:define>
+            <RadioButton fx:id="ShaHe0" text="沙河校区" toggleGroup="$toggleGroup0"/>
+            <RadioButton fx:id="XiTuCheng0" text="西土城校区" toggleGroup="$toggleGroup0"/>
+        </HBox>
+        <GridPane alignment="CENTER">
+            <Label text="教学楼" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            <TextField fx:id="Building" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <padding>
+                <Insets left="15.0"/>
+            </padding>
+            <Label text="楼层" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+            <TextField fx:id="Floor" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+            <padding>
             <Insets left="15.0"/>
-        </padding>
-        <Label text="楼层" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-        <TextField fx:id="Floor" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-        <padding>
-        <Insets left="15.0"/>
-        </padding>
-        <Label text="房间号" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
-        <TextField fx:id="Room" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
-    </GridPane>
+            </padding>
+            <Label text="房间号" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+            <TextField fx:id="Room" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+        </GridPane>
+        <HBox alignment="CENTER">
+            <Button fx:id="CourCon" text="发布/修改上课地点"/>
+            <Button fx:id="ExamCon" text="发布/修改考试地点"/>
+        </HBox>
+    </VBox>
 
-    <padding>
-        <Insets top="25.0"/>
-    </padding>
+    <VBox>
+        <Label text="                                                  "/>
+    </VBox>
 
-    <HBox alignment="CENTER">
-        <Button fx:id="CourCon" text="发布/修改上课地点"/>
-        <padding>
-            <Insets left="25.0"/>
-        </padding>
-        <Button fx:id="ExamCon" text="发布/修改考试地点"/>
-    </HBox>
+    <VBox alignment="CENTER">
+        <HBox alignment="CENTER">
+            <Label alignment="TOP_CENTER" text="这里可以向库中添加课程~" style="-fx-font-size:15"/>
+        </HBox>
+        <HBox alignment="CENTER">
+            <Label alignment="TOP_CENTER" text="请在构建课程结束后按确定键" style="-fx-font-size:15"/>
+        </HBox>
 
-    <HBox alignment="CENTER">
-        <Button fx:id="BackToMain" text="回到主界面"/>
-    </HBox>
-</VBox>
+        <HBox alignment="CENTER">
+            <Label text="课程名" labelFor="$Name"/>
+            <TextField fx:id="Name" prefWidth="75"/>
+            <Label text="任课教师：" labelFor="$Teacher"/>
+            <TextField fx:id="Teacher" prefWidth="60"/>
+        </HBox>
+
+        <HBox alignment="CENTER">
+            <fx:define>
+                <ToggleGroup fx:id="toggleGroup1"/>
+            </fx:define>
+            <RadioButton fx:id="Theory" text="理论课" toggleGroup="$toggleGroup1"/>
+            <RadioButton fx:id="Practice" text="实践课" toggleGroup="$toggleGroup1"/>
+            <RadioButton fx:id="PE" text="体育课" toggleGroup="$toggleGroup1"/>
+        </HBox>
+
+        <HBox alignment="CENTER">
+            <VBox>
+                <Label text="星期" labelFor="$Week_Alter"/>
+                <TextField fx:id="Week_Alter" prefWidth="50"/>
+            </VBox>
+            <VBox>
+                <Label text="起始小时"/>
+                <TextField fx:id="StartHour_Alter" prefWidth="50"/>
+            </VBox>
+            <VBox>
+                <Label text="起始分钟"/>
+                <TextField fx:id="StartMinute_Alter" prefWidth="50"/>
+            </VBox>
+            <VBox>
+                <Label text="结束小时"/>
+                <TextField fx:id="EndHour_Alter" prefWidth="50"/>
+            </VBox>
+            <VBox>
+                <Label text="结束分钟"/>
+                <TextField fx:id="EndMinute_Alter" prefWidth="50"/>
+            </VBox>
+        </HBox>
+
+        <HBox alignment="CENTER">
+            <fx:define>
+                <ToggleGroup fx:id="toggleGroup2"/>
+            </fx:define>
+            <RadioButton fx:id="ShaHe" text="沙河校区" toggleGroup="$toggleGroup2"/>
+            <RadioButton fx:id="XiTuCheng" text="西土城校区" toggleGroup="$toggleGroup2"/>
+        </HBox>
+
+        <GridPane alignment="CENTER">
+            <Label text="教学楼" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            <TextField fx:id="Building_Alter" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <Label text="楼层" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+            <TextField fx:id="Floor_Alter" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+            <Label text="房间号" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+            <TextField fx:id="Room_Alter" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+        </GridPane>
+
+        <HBox alignment="CENTER">
+            <Label text="课程群：" labelFor="$Group"/>
+            <TextField fx:id="Group"/>
+            <Label text="最大人数" labelFor="$MaxPle"/>
+            <TextField fx:id="MaxPle"/>
+        </HBox>
+
+        <HBox alignment="CENTER">
+            <Button fx:id="PreView1" text="预览课程"/>
+            <Button fx:id="Assure1" text="确定添加"/>
+        </HBox>
+
+        <HBox alignment="CENTER">
+            <VBox alignment="CENTER">
+                <Button fx:id="BackToMain" text="回到主界面"/>
+                <Label fx:id="Info"/>
+                <Label fx:id="ErrorInfo"/>
+            </VBox>
+        </HBox>
+    </VBox>
+
+    <Label text="                                 "/>
+
+    <VBox alignment="CENTER_RIGHT">
+        <HBox alignment="CENTER">
+            <Label text="学生账户名：" labelFor="$Stu_ID"/>
+            <TextField fx:id="Stu_ID"/>
+        </HBox>
+        <HBox alignment="CENTER">
+            <Label text="课程ID" labelFor="$Course_ID"/>
+            <TextField fx:id="Course_ID"/>
+        </HBox>
+        <HBox alignment="CENTER">
+            <Button fx:id="PreView2" text="预览"/>
+            <Button fx:id="Assure2" text="添加"/>
+        </HBox>
+        <HBox alignment="CENTER">
+            <TextArea fx:id="AllCourses"/>
+        </HBox>
+    </VBox>
+</HBox>
