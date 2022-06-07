@@ -6,30 +6,18 @@
 
 <HBox xmlns:fx="http://javafx.com/fxml">
     <HBox>
-        <GridPane>
-            <Label text="节次\星期" style="-fx-font-size:18" GridPane.columnIndex="0" GridPane.rowIndex="0" prefWidth="125"/>
-            <Label text="星期一" style="-fx-font-size:18" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="125"/>
-            <Label text="星期二" style="-fx-font-size:18" GridPane.columnIndex="2" GridPane.rowIndex="0" prefWidth="125"/>
-            <Label text="星期三" style="-fx-font-size:18" GridPane.columnIndex="3" GridPane.rowIndex="0" prefWidth="125"/>
-            <Label text="星期四" style="-fx-font-size:18" GridPane.columnIndex="4" GridPane.rowIndex="0" prefWidth="125"/>
-            <Label text="星期五" style="-fx-font-size:18" GridPane.columnIndex="5" GridPane.rowIndex="0" prefWidth="125"/>
-            <Label text="星期六" style="-fx-font-size:18" GridPane.columnIndex="6" GridPane.rowIndex="0" prefWidth="125"/>
-            <Label text="星期日" style="-fx-font-size:18" GridPane.columnIndex="7" GridPane.rowIndex="0" prefWidth="125"/>
-            <Label text="一" style="-fx-font-size:18" GridPane.columnIndex="0" GridPane.rowIndex="1" prefWidth="125"/>
-            <Label text="二" style="-fx-font-size:18" GridPane.columnIndex="0" GridPane.rowIndex="2" prefWidth="125"/>
-            <Label text="三" style="-fx-font-size:18" GridPane.columnIndex="0" GridPane.rowIndex="3" prefWidth="125"/>
-            <Label text="四" style="-fx-font-size:18" GridPane.columnIndex="0" GridPane.rowIndex="4" prefWidth="125"/>
-            <Label text="五" style="-fx-font-size:18" GridPane.columnIndex="0" GridPane.rowIndex="5" prefWidth="125"/>
-            <Label text="六" style="-fx-font-size:18" GridPane.columnIndex="0" GridPane.rowIndex="6" prefWidth="125"/>
-            <Label text="七" style="-fx-font-size:18" GridPane.columnIndex="0" GridPane.rowIndex="7" prefWidth="125"/>
-            <Label text="八" style="-fx-font-size:18" GridPane.columnIndex="0" GridPane.rowIndex="8" prefWidth="125"/>
-            <Label text="九" style="-fx-font-size:18" GridPane.columnIndex="0" GridPane.rowIndex="9" prefWidth="125"/>
-            <Label text="十" style="-fx-font-size:18" GridPane.columnIndex="0" GridPane.rowIndex="10" prefWidth="125"/>
-            <Label text="十一" style="-fx-font-size:18" GridPane.columnIndex="0" GridPane.rowIndex="11" prefWidth="125"/>
-            <Label text="十二" style="-fx-font-size:18" GridPane.columnIndex="0" GridPane.rowIndex="12" prefWidth="125"/>
-            <Label text="十三" style="-fx-font-size:18" GridPane.columnIndex="0" GridPane.rowIndex="13" prefWidth="125"/>
-            <Label text="十四" style="-fx-font-size:18" GridPane.columnIndex="0" GridPane.rowIndex="14" prefWidth="125"/>
-        </GridPane>
+        <TableView fx:id="courseTable">
+            <columns>
+                <TableColumn fx:id="Numbers" prefWidth="125.0" sortable="false" text="节次\星期" />
+                <TableColumn fx:id="Mon" prefWidth="125.0" sortable="false" text="Mon" />
+                <TableColumn fx:id="Tue" prefWidth="125.0" sortable="false" text="Tue" />
+                <TableColumn fx:id="Wed" prefWidth="125.0" sortable="false" text="Wed" />
+                <TableColumn fx:id="Thu" prefWidth="125.0" sortable="false" text="Thu" />
+                <TableColumn fx:id="Fri" prefWidth="125.0" sortable="false" text="Fri" />
+                <TableColumn fx:id="Sat" prefWidth="125.0" sortable="false" text="Sat" />
+                <TableColumn fx:id="Sun" prefWidth="125.0" sortable="false" text="Sun" />
+            </columns>
+        </TableView>
 
         <Label text="                                                       "/>
 

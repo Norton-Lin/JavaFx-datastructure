@@ -137,37 +137,11 @@ public class AccountDatabase {
         } catch (SQLException | ClassNotFoundException throwable) {
             throwable.printStackTrace();
         }
-        return true;
-    }
-
-    /**
-     * 根据用户名查询账号信息
-     * @param account 账户
-     * @return Boolean
-     */
-    public boolean findByName(Account account){
-        Connection conn = null ; // 数据库连接
-        Statement stmt = null ; // 数据库操作
-        ResultSet rs = null; // 保存查询结果
-        String sql1 = "SELECT id,password,authority FROM account where id = '"+account.getID()+"'";
-        try {
-            Class.forName(m_sDriver) ; // 加载驱动程序
-            conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement();// 实例化Statement对象
-            rs = stmt.executeQuery(sql1);// 实例化ResultSet对象
-            if(!rs.next())
-                return false;
-            else {
-                account.setPassword(rs.getString("password"));
-                account.setM_eAuthority(rs.getInt("authority"));//取得authority
-            }
-            rs.close();// 关闭结果集
-            stmt.close(); // 操作关闭
-            conn.close(); // 数据库关闭
-
-        } catch (SQLException | ClassNotFoundException throwable) {
-            throwable.printStackTrace();
-        }
+       /* if(temp.getAuthority() != account.getAuthority())
+        {
+            System.out.println("无权限");
+            return false ;
+        }*/
         return true;
     }
     //读取学生对应的数据

@@ -1,6 +1,8 @@
 package com.example.demo1;
 
-import com.example.demo1.Code.entity.account.StudentAccount;
+import com.example.demo1.Code.Util.Traffic;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,7 +11,6 @@ import com.example.demo1.Code.entity.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class NavController {
     //从主界面继承而来的信息
@@ -18,19 +19,14 @@ public class NavController {
     //本界面
     private final Stage thisStage;
 
+    //单选组
+    final ToggleGroup toggleGroup;
+
     //本页面中的各种元素
     @FXML
     public TextField StartPoint;
     @FXML
     public TextField EndPoint;
-    @FXML
-    public TextField Course;
-    @FXML
-    public TextField Week;
-    @FXML
-    public TextField Hour;
-    @FXML
-    public TextField Minute;
     @FXML
     public RadioButton Walk = new RadioButton();
     @FXML
@@ -46,17 +42,12 @@ public class NavController {
     @FXML
     public Button backToMain;
 
-    //某账户全部课程信息
-    ArrayList<Course> courses;
-
-    //学生账户
-    StudentAccount studentAccount;
-
     public NavController(MainViewPort_Controller mainController) {
         //将主界面的信息继承来
         this.mainViewPort_controller = mainController;
 
-        studentAccount = new StudentAccount(this.mainViewPort_controller.getAccount());
+        //为本界面的单选按钮创建组
+        this.toggleGroup = new ToggleGroup();
 
         //本界面的展开
         thisStage = new Stage();
@@ -70,8 +61,6 @@ public class NavController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        this.courses = this.studentAccount.getCourse();
     }
 
     /**
@@ -88,6 +77,12 @@ public class NavController {
     }
 
     protected void handleSubmitButtonAction() {
+//        ArrayList<String> test = new ArrayList<>();
+//        test.add("你好啊\n");
+//        test.add("我是不烂尾石上超\n");
+//        test.add("我是一个原批，舟批，π批\n");
+//        test.add("希望你能喜欢我\n");
+//        test.add("想找1\n");
 
         //默认交通方式为步行
         int traffic = 0;
@@ -100,32 +95,9 @@ public class NavController {
             traffic = 3;
         }
 
-        //起点信息
-        String start = this.StartPoint.getText();
-        //终点信息
-        String end = this.EndPoint.getText();
-        //实例化导航类
         Navigate navigate = new Navigate();
-        if (end.isEmpty()) {
-            if (!this.Course.getText().isEmpty()) {
-                //课程信息
-                String course = this.Course.getText();
-                try {
-                    int Num = Integer.parseInt(course);
-
-                } catch (NumberFormatException e) {
-                    String course_info = this.Course.getText();
-                    FuzzySearch fuzzySearch = new FuzzySearch();
-                    ArrayList<Course> results = fuzzySearch.get_FS_result(course_info, this.courses);
-                    end = results.get(0).getM_sConstruction().get_con_name();
-                }
-            } else if (!this.Week.getText().isEmpty() && !this.Hour.getText().isEmpty() && !this.Minute.getText().isEmpty()) {
-
-            } else {
-                ResOfNav.setText("输入异常，请重新输入");
-            }
-        }
-        ResOfNav.setText(navigate.toNavigate(traffic, start, end, 0).toString());
+        ResOfNav.setText(navigate.toNavigate(traffic, StartPoint.getText(), EndPoint.getText(),0).toString());
+//        ResOfNav.setText(test.toString());
     }
 
     protected void handleBackAction() {

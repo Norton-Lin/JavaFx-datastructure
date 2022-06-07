@@ -176,8 +176,4 @@ public class Course extends Event{
         System.out.println("课程资料区路径："+this.getM_sData());
     }
 
-    @Override
-    public String toString() {
-        return this.getM_sName() + "-" + this.getM_iNum();
-    }
 }

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.text.Text?>
 <BorderPane xmlns:fx="http://javafx.com/fxml">
     <top>
-        <VBox alignment="CENTER">
+        <StackPane>
             <Label text="请根据指示填写下列空格及选项~" style="-fx-font-size:18"/>
-            <Label text="起点请输入当前位置，请在终点、课程、时间中选择一项输入" style="-fx-font-size:18"/>
-            <Label text="若全部输入，将优先按终点处理哦" style="-fx-font-size:18"/>
-        </VBox>
+        </StackPane>
     </top>
 
     <center>
@@ -20,17 +22,6 @@
             <Label text="终点：" labelFor="$EndPoint" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
             <TextField fx:id="EndPoint" prefColumnCount="10" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
 
-            <Label text="课程名" labelFor="$Course" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
-            <TextField fx:id="Course" GridPane.columnIndex="5" GridPane.rowIndex="0"/>
-
-            <Label text="星期：" labelFor="$Week" GridPane.columnIndex="6" GridPane.rowIndex="0"/>
-            <TextField fx:id="Week" GridPane.columnIndex="7" GridPane.rowIndex="0"/>
-
-            <Label text="小时：" labelFor="$Hour" GridPane.columnIndex="8" GridPane.rowIndex="0"/>
-            <TextField fx:id="Hour" GridPane.columnIndex="9" GridPane.rowIndex="0"/>
-
-            <Label text="分钟：" labelFor="$Minute" GridPane.columnIndex="10" GridPane.rowIndex="0"/>
-            <TextField fx:id="Minute" GridPane.columnIndex="11" GridPane.rowIndex="0"/>
 
             <Label text="请选择您想使用的交通工具"  GridPane.columnIndex="0" GridPane.rowIndex="1"/>
             <fx:define>
