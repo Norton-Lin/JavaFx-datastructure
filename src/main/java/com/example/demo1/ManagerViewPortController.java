@@ -426,15 +426,19 @@ public class ManagerViewPortController {
     protected void DeleteFromDatabase() {
         CourseDatabase courseDatabase = new CourseDatabase();
         Search search = new Search();
-        int Num = Integer.parseInt(this.CourseNum.getText());
-        ArrayList<Course> courses0 = new ArrayList<>();
-        courseDatabase.find(courses0);
-        int tool = search.BinaryCourseSearch(Num, courses0);
-        if (tool != courses0.size()) {
-            courseDatabase.delete(courses0.get(tool));
-            this.Info.setText(courses0.get(tool).getM_sName() + "编号为" + courses0.get(tool).getM_iNum() + "删除成功");
-        } else {
-            this.Info.setText("查找与删除失败");
+        try {
+            int Num = Integer.parseInt(this.Name.getText());
+            ArrayList<Course> courses0 = new ArrayList<>();
+            courseDatabase.find(courses0);
+            int tool = search.BinaryCourseSearch(Num, courses0);
+            if (tool != courses0.size()) {
+                courseDatabase.delete(courses0.get(tool));
+                this.Info.setText(courses0.get(tool).getM_sName() + "编号为" + courses0.get(tool).getM_iNum() + "删除成功");
+            } else {
+                this.Info.setText("查找与删除失败");
+            }
+        } catch (NumberFormatException e) {
+            this.ErrorInfo.setText("若要删除课程请在课程名一栏输入编号！");
         }
     }
 

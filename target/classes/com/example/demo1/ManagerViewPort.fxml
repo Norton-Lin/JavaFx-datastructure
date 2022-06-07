@@ -90,10 +90,13 @@
 
     <VBox alignment="CENTER">
         <HBox alignment="CENTER">
-            <Label alignment="TOP_CENTER" text="这里可以向库中添加课程~" style="-fx-font-size:15"/>
+            <Label alignment="TOP_CENTER" text="这里可以向库中添加或删除课程课程~" style="-fx-font-size:15"/>
         </HBox>
         <HBox alignment="CENTER">
             <Label alignment="TOP_CENTER" text="请在构建课程结束后按确定键" style="-fx-font-size:15"/>
+        </HBox>
+        <HBox>
+            <Label text="删除课程只需输入课程编号即可" style="-fx-font-size:15"/>
         </HBox>
 
         <HBox alignment="CENTER">
@@ -162,6 +165,7 @@
         <HBox alignment="CENTER">
             <Button fx:id="PreView1" text="预览课程"/>
             <Button fx:id="Assure1" text="确定添加"/>
+            <Button fx:id="Delete1" text="确定删除"/>
         </HBox>
 
         <HBox alignment="CENTER">
@@ -187,6 +191,7 @@
         <HBox alignment="CENTER">
             <Button fx:id="PreView2" text="预览"/>
             <Button fx:id="Assure2" text="添加"/>
+            <Button fx:id="Delete2" text="删除"/>
         </HBox>
         <HBox alignment="CENTER">
             <TextArea fx:id="AllCourses"/>

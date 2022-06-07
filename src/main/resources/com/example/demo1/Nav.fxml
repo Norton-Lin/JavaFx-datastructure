@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.geometry.Insets?>
 <BorderPane xmlns:fx="http://javafx.com/fxml">
     <top>
         <VBox alignment="CENTER">
@@ -20,8 +21,8 @@
             <Label text="终点：" labelFor="$EndPoint" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
             <TextField fx:id="EndPoint" prefColumnCount="10" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
 
-            <Label text="课程名" labelFor="$Course" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
-            <TextField fx:id="Course" GridPane.columnIndex="5" GridPane.rowIndex="0"/>
+            <Label text="课程名" labelFor="$Course_Name" GridPane.columnIndex="4" GridPane.rowIndex="0"/>
+            <TextField fx:id="Course_Name" GridPane.columnIndex="5" GridPane.rowIndex="0"/>
 
             <Label text="星期：" labelFor="$Week" GridPane.columnIndex="6" GridPane.rowIndex="0"/>
             <TextField fx:id="Week" GridPane.columnIndex="7" GridPane.rowIndex="0"/>
@@ -44,15 +45,18 @@
     </center>
 
     <bottom>
-        <BorderPane>
-            <center>
+        <HBox alignment="CENTER">
+            <VBox alignment="CENTER">
                 <GridPane>
                     <Label text="导航结果为：" labelFor="$ResOfNav" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
                     <TextArea  fx:id="ResOfNav" GridPane.rowIndex="1"
                                GridPane.columnIndex="1" prefColumnCount="30" prefRowCount="15" />
                 </GridPane>
-            </center>
-            <right>
+                <padding>
+                    <Insets bottom="50"/>
+                </padding>
+            </VBox>
+            <VBox alignment="CENTER">
                 <GridPane>
                     <Button fx:id="submitButton" text="确  定" alignment="CENTER"
                             GridPane.columnIndex="2" GridPane.rowIndex="0"/>
@@ -60,11 +64,8 @@
                     <Button fx:id="backToMain" text="回到主界面" alignment="CENTER"
                             GridPane.rowIndex="2" GridPane.columnIndex="2"/>
                 </GridPane>
-            </right>
-            <bottom>
-                <Label text="               "/>
-            </bottom>
-        </BorderPane>
+            </VBox>
+        </HBox>
 
     </bottom>
 </BorderPane>

@@ -1,5 +1,6 @@
 package com.example.demo1;
 
+import com.example.demo1.Code.Util.Time;
 import com.example.demo1.Code.entity.account.StudentAccount;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import com.example.demo1.Code.entity.*;
 import javafx.stage.Stage;
+import com.example.demo1.Code.entity.Course;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class NavController {
     @FXML
     public TextField EndPoint;
     @FXML
-    public TextField Course;
+    public TextField Course_Name;
     @FXML
     public TextField Week;
     @FXML
@@ -65,7 +67,7 @@ public class NavController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Nav.fxml"));
             loader.setController(this);
-            thisStage.setScene(new Scene(loader.load(), 600, 400));
+            thisStage.setScene(new Scene(loader.load(), 1500, 400));
             thisStage.setTitle("欢迎使用导航系统~");
         } catch (IOException e) {
             e.printStackTrace();
@@ -90,9 +92,11 @@ public class NavController {
     protected void handleSubmitButtonAction() {
 
         //默认交通方式为步行
-        int traffic = 0;
+        int traffic = -1;
 
-        if (Bicycle.isSelected()) {
+        if (Walk.isSelected()) {
+            traffic = 0;
+        } else if (Bicycle.isSelected()) {
             traffic = 1;
         } else if (Electric.isSelected()) {
             traffic = 2;
@@ -107,20 +111,54 @@ public class NavController {
         //实例化导航类
         Navigate navigate = new Navigate();
         if (end.isEmpty()) {
-            if (!this.Course.getText().isEmpty()) {
+            if (!this.Course_Name.getText().isEmpty()) {
                 //课程信息
-                String course = this.Course.getText();
+                String course = this.Course_Name.getText();
                 try {
                     int Num = Integer.parseInt(course);
-
+                    Search search = new Search();
+                    Course ACourse;
+                    int tool = search.BinaryCourseSearch(Num, this.courses);
+                    if (tool != this.courses.size()) {
+                        ACourse = this.courses.get(tool);
+                        end = ACourse.getM_sConstruction().get_con_name();
+                    }
+                    else
+                        ResOfNav.setText("查找失败");
                 } catch (NumberFormatException e) {
-                    String course_info = this.Course.getText();
+                    String course_info = this.Course_Name.getText();
                     FuzzySearch fuzzySearch = new FuzzySearch();
                     ArrayList<Course> results = fuzzySearch.get_FS_result(course_info, this.courses);
                     end = results.get(0).getM_sConstruction().get_con_name();
                 }
             } else if (!this.Week.getText().isEmpty() && !this.Hour.getText().isEmpty() && !this.Minute.getText().isEmpty()) {
-
+                //存储距离输入时间最短的课程
+                Course min = new Course();
+                int week = Integer.parseInt(this.Week.getText());
+                int hour = Integer.parseInt(this.Hour.getText());
+                int minute = Integer.parseInt(this.Minute.getText());
+                Time linshi = new Time(week, 0, 0);
+                min.setM_tTime(linshi);
+                //遍历课程列表，寻找与输入时间差距最小的课程
+                for (Course temp : this.courses) {
+                    //当前的课程如果与输入的星期不同则舍弃
+                    if (temp.getM_tTime().getWeek() == week) {
+                        int hour0 = temp.getM_tTime().getStartHour();
+                        int minute0 = temp.getM_tTime().getStartMinute();
+                        //如果当前课程上课时间在输入时间前则舍弃
+                        if (hour0 > hour) {
+                            if ((hour0 - hour) < Math.abs(min.getM_tTime().getStartHour() - hour))
+                                min = temp;
+                            else if ((hour0 - hour) == Math.abs(min.getM_tTime().getStartHour() - hour))
+                                if ((minute0 - minute) <= Math.abs(min.getM_tTime().getStartMinute() - minute))
+                                    min = temp;
+                        }
+                    }
+                }
+                if (this.courses.contains(min))
+                    end = min.getM_sConstruction().get_con_name();
+                else
+                    ResOfNav.setText("您输入的时间并不符合您的任何一门课程~无法导航");
             } else {
                 ResOfNav.setText("输入异常，请重新输入");
             }
