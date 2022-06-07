@@ -35,8 +35,6 @@
                 <TextField fx:id="Month" prefWidth="35.0"/>
                 <Label text="日：" labelFor="$Date"/>
                 <TextField fx:id="Date" prefWidth="35.0"/>
-                <Label text="周：" labelFor="$Week"/>
-                <TextField fx:id="Week" prefWidth="35.0"/>
             </HBox>
 
             <HBox alignment="CENTER">
@@ -69,20 +67,6 @@
             </HBox>
 
             <Label text="请输入活动地点~"/>
-            <HBox alignment="CENTER">
-                <fx:define>
-                    <ToggleGroup fx:id="toggleGroup2"/>
-                </fx:define>
-                <RadioButton fx:id="ShaHe" text="沙河校区" toggleGroup="$toggleGroup2"/>
-                <padding>
-                    <Insets left="5"/>
-                </padding>
-                <RadioButton fx:id="XiTuCheng" text="西土城校区" toggleGroup="$toggleGroup2"/>
-                <padding>
-                    <Insets bottom="5.0"/>
-                </padding>
-            </HBox>
-
             <HBox alignment="CENTER">
                 <Label text="建筑物：" labelFor="$Building"/>
                 <TextField fx:id="Building" prefWidth="65"/>
