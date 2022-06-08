@@ -95,7 +95,7 @@
         <HBox alignment="CENTER">
             <Label alignment="TOP_CENTER" text="请在构建课程结束后按确定键" style="-fx-font-size:15"/>
         </HBox>
-        <HBox>
+        <HBox alignment="CENTER">
             <Label text="删除课程只需输入课程编号即可" style="-fx-font-size:15"/>
         </HBox>
 

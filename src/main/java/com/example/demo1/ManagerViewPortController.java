@@ -1,5 +1,6 @@
 package com.example.demo1;
 
+import com.example.demo1.Code.Mysql.AccountDatabase;
 import com.example.demo1.Code.Mysql.CourseDatabase;
 import com.example.demo1.Code.Util.Property;
 import com.example.demo1.Code.Util.Time;
@@ -7,13 +8,13 @@ import com.example.demo1.Code.entity.Construction;
 import com.example.demo1.Code.entity.Course;
 import com.example.demo1.Code.entity.Navigate;
 import com.example.demo1.Code.entity.Search;
+import com.example.demo1.Code.entity.account.Account;
+import com.example.demo1.Code.entity.account.StudentAccount;
+import com.example.demo1.Code.systemtime.SystemTime;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,6 +35,12 @@ public class ManagerViewPortController {
 
     //管理员新建的课程
     Course course_alter;
+
+    //存储要操作的学生账户
+    StudentAccount studentAccount;
+
+    //存储待添加课程
+    Course ToBeOperated;
 
     @FXML
     public TextField CourseNum;
@@ -122,6 +129,8 @@ public class ManagerViewPortController {
     @FXML
     public TextField Course_ID;
     @FXML
+    public TextArea AllCourses;
+    @FXML
     public Button PreView2;
     @FXML
     public Button Assure2;
@@ -135,6 +144,8 @@ public class ManagerViewPortController {
 
         //创建新场景
         thisStage = new Stage();
+
+        this.course_alter = new Course();
 
         //实例化数据库
         CourseDatabase courseDatabase1 = new CourseDatabase();
@@ -175,12 +186,14 @@ public class ManagerViewPortController {
         this.PreView2.setOnAction(event -> PreViewCourWithStu());
         this.Assure2.setOnAction(event -> AddCourseToStu());
         this.Delete1.setOnAction(event -> DeleteFromDatabase());
+        this.Delete2.setOnAction(event -> DeleteFromStu());
     }
 
     /**
      * 回到主界面
      */
     protected void BackToMainMenu() {
+        SystemTime.restartTime();
         //将第二个界面展示出来
         this.controller.showStage();
 
@@ -260,30 +273,26 @@ public class ManagerViewPortController {
 
         CourseDatabase database = new CourseDatabase();
 
-        //从用户输入中读取时间信息
-        if (!mark) {
-            month = Integer.parseInt(this.Month.getText());
-            week = Integer.parseInt(this.Week.getText());
-            date = Integer.parseInt(this.Day.getText());
-            sth = Integer.parseInt(this.StartHour.getText());
-            stm = Integer.parseInt(this.StartMinute.getText());
-            enh = Integer.parseInt(this.EndHour.getText());
-            enm = Integer.parseInt(this.EndMinute.getText());
-        } else {
-            week = Integer.parseInt(this.Week.getText());
-            sth = Integer.parseInt(this.StartHour.getText());
-            stm = Integer.parseInt(this.StartMinute.getText());
-            enh = Integer.parseInt(this.EndHour.getText());
-            enm = Integer.parseInt(this.EndMinute.getText());
-        }
-
         try {
+            //从用户输入中读取时间信息
+            if (!mark) {
+                month = Integer.parseInt(this.Month.getText());
+                week = Integer.parseInt(this.Week.getText());
+                date = Integer.parseInt(this.Day.getText());
+            } else {
+                week = Integer.parseInt(this.Week.getText());
+            }
+            sth = Integer.parseInt(this.StartHour.getText());
+            stm = Integer.parseInt(this.StartMinute.getText());
+            enh = Integer.parseInt(this.EndHour.getText());
+            enm = Integer.parseInt(this.EndMinute.getText());
+
             if (mark) {
                 //判断输入是否合法
                 if (sth <= 0 || stm < 0 || enh < 0 || enm < 0 || stm > 60 || sth > 24 || enh > 24 || enm > 60 || week <=0 || week > 7)
                     throw new NumberFormatException();
 
-                //构建时间类型对象，本对象为上课时间，仅需包含起止时间
+                //构建时间类型对象，本对象为上课时间，仅需包含星期与起止时间
                 time2 = new Time(sth, stm, enh, enm, week);
 
                 this.course.setM_tTime(time2);
@@ -348,76 +357,79 @@ public class ManagerViewPortController {
         }
     }
 
-    protected Course Create() throws Exception{
+    protected void Create() throws Exception{
 
-        Course temp;
+        String Name = this.Name.getText();
+        this.course_alter.setM_sName(Name);
 
-            String Name = this.Name.getText();
+        String Teacher = this.Teacher.getText();
+        this.course_alter.setM_sTeacher(Teacher);
 
-            String Teacher = this.Teacher.getText();
+        Property property = null;
+        if (this.Theory.isSelected()) {
+            property = Property.Theory;
+        } else if (this.Practice.isSelected()) {
+            property = Property.Practice;
+        } else if (this.PE.isSelected()) {
+            property = Property.Sports;
+        }
+        this.course_alter.setM_eProperty(property);
 
-            Property property = null;
-            if (this.Theory.isSelected()) {
-                property = Property.Theory;
-            } else if (this.Practice.isSelected()) {
-                property = Property.Practice;
-            } else if (this.PE.isSelected()) {
-                property = Property.Sports;
-            }
+        String group = this.Group.getText();
+        this.course_alter.setM_sCurGroup(group);
 
-            String group = this.Group.getText();
+        int week  = Integer.parseInt(this.Week_Alter.getText());
+        int sth = Integer.parseInt(this.StartHour_Alter.getText());
+        int stm = Integer.parseInt(this.StartMinute_Alter.getText());
+        int enh = Integer.parseInt(this.EndHour_Alter.getText());
+        int enm = Integer.parseInt(this.EndMinute_Alter.getText());
+        Time time = new Time(sth, stm, enh, enm, week);
+        this.course_alter.setM_tTime(time);
 
-            int week  = Integer.parseInt(this.Week_Alter.getText());
-            int sth = Integer.parseInt(this.StartHour_Alter.getText());
-            int stm = Integer.parseInt(this.StartMinute_Alter.getText());
-            int enh = Integer.parseInt(this.EndHour_Alter.getText());
-            int enm = Integer.parseInt(this.EndMinute_Alter.getText());
-            Time time = new Time(sth, stm, enh, enm, week);
+        int campus = 0;
+        if (this.ShaHe.isSelected()) {
+            campus = 0;
+        } else if (this.XiTuCheng.isSelected()) {
+            campus = 1;
+        }
 
-            int campus = 0;
-            if (this.ShaHe.isSelected()) {
-                campus = 0;
-            } else if (this.XiTuCheng.isSelected()) {
-                campus = 1;
-            }
+        int max = Integer.parseInt(this.MaxPle.getText());
+        this.course_alter.setM_iMaxPle(max);
 
-            int max = Integer.parseInt(this.MaxPle.getText());
+        String Building = this.Building_Alter.getText();
 
-            String Building = this.Building_Alter.getText();
+        Construction construction = new Construction(Building, campus);
+        this.course_alter.setM_sConstruction(construction);
 
-            Construction construction = new Construction(Building, campus);
+        int floor = Integer.parseInt(this.Floor_Alter.getText());
+        this.course_alter.setM_iFloor(floor);
 
-            int floor = Integer.parseInt(this.Floor_Alter.getText());
+        int room = Integer.parseInt(this.Room_Alter.getText());
+        this.course_alter.setM_iRoom(room);
 
-            int room = Integer.parseInt(this.Room_Alter.getText());
+        //设置一个自增的编号
+        int Num = this.courses.get(this.courses.size() - 1).getM_iNum() + 1;
+        this.course_alter.setM_iNum(Num);
 
-            /*
-             * 编号有问题！！！！！！！！
-             */
-            temp = new Course(Name, time, property, construction, floor, room, 0, max, 0);
-            temp.setM_sTeacher(Teacher);
-            temp.setM_sCurGroup(group);
-        return temp;
     }
 
     protected void PreViewCour() {
         try {
-            this.course_alter = Create();
-            StringBuilder text = new StringBuilder();
-            text.append("课程信息：").append(this.course_alter.getM_sName()).append("\t")
-                    .append("教师为：").append(this.course_alter.getM_sTeacher()).append("\t")
-                    .append("编号为：").append(this.course_alter.getM_iNum()).append("\n")
-                    .append("上课时间为：").append("星期").append(this.course_alter.getM_tTime().getWeek())
-                    .append(this.course_alter.getM_tTime().getStartHour()).append("时")
-                    .append(this.course_alter.getM_tTime().getStartMinute()).append("分").append("~")
-                    .append(this.course_alter.getM_tTime().getEndHour()).append("时")
-                    .append(this.course_alter.getM_tTime().getEndMinute()).append("分").append("\n")
-                    .append("上课地点为：").append(this.course_alter.getM_sConstruction())
-                    .append(this.course_alter.getM_iFloor()).append("层")
-                    .append(this.course_alter.getM_iRoom()).append("室").append("\t")
-                    .append("课程群号：").append(this.course_alter.getM_sCurGroup()).append("\n")
-                    .append("是否确认添加？");
-            this.Info.setText(text.toString());
+            Create();
+            String text = "课程信息：" + this.course_alter.getM_sName() + "\t" +
+                    "教师为：" + this.course_alter.getM_sTeacher() + "\t" +
+                    "编号为：" + this.course_alter.getM_iNum() + "\n" +
+                    "上课时间为：" + "星期" + this.course_alter.getM_tTime().getWeek() + "\t" +
+                    this.course_alter.getM_tTime().getStartHour() + "时" +
+                    this.course_alter.getM_tTime().getStartMinute() + "分" + "~" +
+                    this.course_alter.getM_tTime().getEndHour() + "时" +
+                    this.course_alter.getM_tTime().getEndMinute() + "分" + "\n" +
+                    "上课地点为：" + this.course_alter.getM_sConstruction() +
+                    this.course_alter.getM_iFloor() + "层" +
+                    this.course_alter.getM_iRoom() + "室" + "\t" +
+                    "课程群号：" + this.course_alter.getM_sCurGroup() + "\n" +
+                    "是否确认添加？";
+            this.Info.setText(text);
         } catch (Exception e) {
             this.ErrorInfo.setText("输入异常，请重试");
         }
@@ -444,17 +456,68 @@ public class ManagerViewPortController {
 
     protected void AddANewCourse() {
         try {
-            this.course_alter = Create();
-            //调用暂时有问题，先搁置
+            Create();
+
+            CourseDatabase courseDatabase = new CourseDatabase();
+
+            if (this.courses.contains(this.course_alter))
+                this.ErrorInfo.setText("课程已存在！");
+            else {
+                courseDatabase.insert(this.course_alter);
+                this.Info.setText("成功添加" + this.course_alter.getM_sName());
+                this.courses.add(this.course_alter);
+            }
         } catch (Exception e) {
             this.ErrorInfo.setText("输入异常，请重试");
         }
     }
 
-    protected void PreViewCourWithStu() {
-
+    protected void WriteIn() {
+        try {
+            AccountDatabase accountDatabase = new AccountDatabase();
+            Account account = new Account();
+            account.setM_sID(this.Stu_ID.getText());
+            Search search = new Search();
+            int tool = Integer.parseInt(this.Course_ID.getText());
+            if (accountDatabase.findByName(account)) {
+                //获得待操作学生账号
+                this.studentAccount = new StudentAccount(account);
+                //修改待操作课程编号
+                int Num = search.BinaryCourseSearch(tool, this.courses);
+                if (Num != this.courses.size()) {
+                    this.ToBeOperated = this.courses.get(Num);
+                } else
+                    this.AllCourses.setText("查找失败！课程不在库中！");
+            } else {
+                this.ErrorInfo.setText("该学生不存在");
+            }
+        } catch (Exception e) {
+            this.ErrorInfo.setText("输入信息异常！");
+        }
     }
-    protected void AddCourseToStu() {
 
+    protected void PreViewCourWithStu() {
+        WriteIn();
+        StringBuilder text = new StringBuilder();
+        text.append("账号").append(this.studentAccount.getID()).append("的课程有：").append("\n");
+        for (Course course : this.studentAccount.getCourse()) {
+            text.append(course.getM_sName()).append("\t")
+                    .append("教师为：").append(course.getM_sTeacher()).append("\t")
+                    .append("编号为：").append(course.getM_iNum()).append("\n");
+        }
+        text.append("是否将").append(this.ToBeOperated.getM_sName()).append("\t")
+                .append("编号为：").append(this.ToBeOperated.getM_iNum())
+                .append("添加到学生账户").append(this.studentAccount.getID());
+        this.AllCourses.setText(text.toString());
+    }
+
+    protected void AddCourseToStu() {
+        WriteIn();
+        this.AllCourses.setText(this.studentAccount.registerCourse(this.ToBeOperated));
+    }
+
+    protected void DeleteFromStu() {
+        WriteIn();
+        this.AllCourses.setText(this.studentAccount.exitCourse(this.ToBeOperated));
     }
 }

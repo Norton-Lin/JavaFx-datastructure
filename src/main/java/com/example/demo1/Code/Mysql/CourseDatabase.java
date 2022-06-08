@@ -27,7 +27,7 @@ public class CourseDatabase {
         Connection conn = null ; // 数据库连接
         Statement stmt = null ; // 数据库操作
         String sql = "INSERT INTO course(id,name,weeks,starthour,startmin,endhour,endmin,property,num,maxnum," +
-                "connectgroup,tstartmonth,tstartdate,tstarthour,tstartmin,tendhour,tendmin,data,teacher)"
+                "connectgroup,tstartmonth,tstartdate,tstarthour,tstartmin,tendhour,tendmin,totalClass,currentClass,data,teacher)"
                 + " VALUES ('" + course.getM_iNum() + "','" + course.getM_sName() + "','" +course.getM_tTime().getWeek()
                 + "','" + course.getM_tTime().getStartHour() + "','" +course.getM_tTime().getStartMinute()
                 + "','" + course.getM_tTime().getEndHour() + "','" + course.getM_tTime().getEndMinute()
