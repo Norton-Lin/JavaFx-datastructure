@@ -2,14 +2,15 @@ package com.example.demo1;
 
 import com.example.demo1.Code.Util.Authority;
 import com.example.demo1.Code.entity.account.Account;
+import com.example.demo1.Code.systemtime.SystemTime;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.time.OffsetDateTime;
 
 public class MainViewPort_Controller {
 
@@ -40,11 +41,31 @@ public class MainViewPort_Controller {
     public Button Manager;
     @FXML
     public Label buttonStatusText;
+    @FXML
+    public RadioButton One;
+    @FXML
+    public RadioButton Hundred;
+    @FXML
+    public RadioButton SixHundred;
+    @FXML
+    public RadioButton Thousand;
+    @FXML
+    public Button SetSpeed;
+
+    SystemTime systemTime;
 
     public MainViewPort_Controller(HelloController controller) {
 
         //收到了hello-view.fxml的Controller
         this.helloController = controller;
+
+        //实例化系统时间以便系统时间推进
+        systemTime = new SystemTime();
+
+        //启动系统时间
+        systemTime.SystemTimeStart();
+
+        SystemTime.setSpeed(1);
 
         //创建新场景
         thisStage = new Stage();
@@ -57,7 +78,7 @@ public class MainViewPort_Controller {
             loader.setController(this);
 
             //加载场景
-            thisStage.setScene(new Scene(loader.load(), 300, 200));
+            thisStage.setScene(new Scene(loader.load(), 400, 300));
 
             //搭建窗口
             thisStage.setTitle("欢迎来到主界面!");
@@ -86,15 +107,18 @@ public class MainViewPort_Controller {
         Upload.setOnAction(event -> handleUploadButtonAction());
         Clock.setOnAction(event -> handleClockButtonAction());
         Manager.setOnAction(event -> handleManagerButtonAction());
+        SetSpeed.setOnAction(event -> handleSpeed());
     }
 
     protected void handleNavButtonAction() {
+        SystemTime.stopTime();
         NavController navController = new NavController(this);
         thisStage.hide();
         navController.showStage();
     }
 
     protected void handleStuCourButtonAction() {
+        SystemTime.stopTime();
         if (this.helloController.getAccount().getAuthority() != Authority.Student) {
             buttonStatusText.setText("你不是学生！");
             return;
@@ -106,6 +130,7 @@ public class MainViewPort_Controller {
     }
 
     protected void handleStuActButtonAction() {
+        SystemTime.stopTime();
         if (this.helloController.getAccount().getAuthority() != Authority.Student) {
             buttonStatusText.setText("你不是学生！");
             return;
@@ -116,6 +141,7 @@ public class MainViewPort_Controller {
     }
 
     protected void handleTeaCourButtonAction() {
+        SystemTime.stopTime();
         if (this.helloController.getAccount().getAuthority() != Authority.Teacher) {
             buttonStatusText.setText("你不是教师！");
             return;
@@ -126,6 +152,7 @@ public class MainViewPort_Controller {
     }
 
     protected void handleTeaActButtonAction() {
+        SystemTime.stopTime();
         if (this.helloController.getAccount().getAuthority() != Authority.Teacher) {
             buttonStatusText.setText("你不是教师！");
             return;
@@ -136,6 +163,7 @@ public class MainViewPort_Controller {
     }
 
     protected void handleCourTabButtonAction() {
+        SystemTime.stopTime();
         if (this.helloController.getAccount().getAuthority() != Authority.Student) {
             buttonStatusText.setText("只有学生可以查看课程表！");
             return;
@@ -146,7 +174,7 @@ public class MainViewPort_Controller {
     }
 
     protected void handleUploadButtonAction() {
-
+        SystemTime.stopTime();
     }
 
     protected void handleClockButtonAction() {
@@ -161,6 +189,7 @@ public class MainViewPort_Controller {
     }
 
     protected void handleManagerButtonAction() {
+        SystemTime.stopTime();
         if (this.helloController.getAccount().getAuthority() != Authority.Manager) {
             buttonStatusText.setText("你不是管理员！");
             return;
@@ -169,5 +198,19 @@ public class MainViewPort_Controller {
                 = new ManagerViewPortController(this);
         thisStage.hide();
         managerViewPortController.showStage();
+    }
+
+    protected void handleSpeed() {
+        int speed = 1;
+        if (this.One.isSelected()) {
+            speed = 1;
+        } else if (this.Hundred.isSelected()) {
+            speed = 100;
+        } else if (this.SixHundred.isSelected()) {
+            speed = 600;
+        } else if (this.Thousand.isSelected()) {
+            speed = 1000;
+        }
+        SystemTime.setSpeed(speed);
     }
 }

@@ -10,10 +10,10 @@
     <top>
         <BorderPane>
             <center>
-                <Label text="请选择您要进行的操作~" style="-fx-font-size:18"/>
+                <Label text="请选择您要进行的操作~" style="-fx-font-size:18" alignment="CENTER"/>
             </center>
             <bottom>
-                <Label text="请注意管理员按钮只有管理员可以按哦" style="-fx-font-size:18"/>
+                <Label text="请注意管理员按钮只有管理员可以按哦" style="-fx-font-size:18" alignment="CENTER"/>
             </bottom>
         </BorderPane>
     </top>
@@ -48,6 +48,19 @@
         <BorderPane>
             <center>
                 <Button fx:id="Manager" text="管*理*员*系*统"/>
+                <VBox alignment="CENTER">
+                    <Label text="下面可以选择系统时间的快进速度~" style="-fx-font-size:15"/>
+                    <HBox alignment="CENTER">
+                        <fx:define>
+                            <ToggleGroup fx:id="toggleGroup"/>
+                        </fx:define>
+                        <RadioButton fx:id="One" text="1" toggleGroup="$toggleGroup"/>
+                        <RadioButton fx:id="Hundred" text="100" toggleGroup="$toggleGroup"/>
+                        <RadioButton fx:id="SixHundred" text="600" toggleGroup="$toggleGroup"/>
+                        <RadioButton fx:id="Thousand" text="1000" toggleGroup="$toggleGroup"/>
+                    </HBox>
+                    <Button alignment="CENTER" fx:id="SetSpeed" text="设置快进速度"/>
+                </VBox>
             </center>
             <bottom>
                 <BorderPane>

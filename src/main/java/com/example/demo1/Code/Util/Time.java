@@ -21,25 +21,39 @@ public class Time {
         week = -1;
     }
 
-    public Time(int startHour, int startMinute, int endHour, int endMinute) {
+    public Time(int week, int startHour, int startMinute) {
+        this.startHour = startHour;
+        this.startMinute = startMinute;
+        this.week = week;
+    }
+
+    public Time(int startHour, int startMinute, int endHour, int endMinute, int week) {
         this.startHour = startHour;
         this.startMinute = startMinute;
         this.endHour = endHour;
         this.endMinute = endMinute;
-        this.week = 0;
+        this.week = week;
         this.startMonth = 0;
         this.startDate = 0;
     }
 
-    public Time(int hour1, int minute1, int hour2, int minute2, int date, int month, int week) {
+    public Time(int hour1, int minute1, int hour2, int minute2, int date, int month) {
         this.startHour = hour1;
         this.startMinute = minute1;
         this.endHour = hour2;
         this.endMinute = minute2;
         this.startDate = date;
         this.startMonth = month;
-        this.week = week;
+    }
 
+    public Time(int startHour, int startMinute, int endHour, int endMinute, int startMonth, int startDate, int week) {
+        this.startHour = startHour;
+        this.startMinute = startMinute;
+        this.endHour = endHour;
+        this.endMinute = endMinute;
+        this.startMonth = startMonth;
+        this.startDate = startDate;
+        this.week = week;
     }
 
     public boolean checkTime(Time time) {

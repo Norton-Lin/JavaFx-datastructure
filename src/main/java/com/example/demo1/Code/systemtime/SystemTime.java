@@ -58,7 +58,7 @@ public class SystemTime {
      */
     public static void restartTime() {
         SystemTime.flag = true;
-        StartTime = currentTime;
+        StartTime = getStringCurrentTime();
     }
 
     /**
@@ -167,7 +167,7 @@ public class SystemTime {
      */
     public void SystemTimeStart() {
 
-        setSpeed(1);//设置模拟系统初始快进速度
+//        setSpeed(1);//设置模拟系统初始快进速度
         findStartTime();//设置模拟系统开始计时时间
 
         //开始模拟系统时间
