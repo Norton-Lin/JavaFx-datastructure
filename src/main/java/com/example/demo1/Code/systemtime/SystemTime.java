@@ -27,6 +27,7 @@ public class SystemTime {
     private static Calendar CurrentTime;//当前时间
     private static boolean flag = true;//时间推进状况
     private static String currentTime;//当前时间，String类型
+    private static Calendar temp;
 
     /**
      * 设置模拟系统时间快进速度
@@ -34,7 +35,9 @@ public class SystemTime {
      * @param speed 目标快进速度
      */
     public static void setSpeed(int speed) {
+        temp = Calendar.getInstance();
         SystemTime.speed = speed;
+        SystemTime.StartTime = getStringCurrentTime();
     }
 
     /**
@@ -58,7 +61,8 @@ public class SystemTime {
      */
     public static void restartTime() {
         SystemTime.flag = true;
-        StartTime = getStringCurrentTime();
+        temp = Calendar.getInstance();
+        SystemTime.StartTime = getStringCurrentTime();
     }
 
     /**
@@ -71,12 +75,15 @@ public class SystemTime {
     }
 
     /**
+     * 为StartTime赋初值
      * 系统运行时调用该方法，将此时的计算机系统时间设置为模拟系统的开始时间
      */
     public static void findStartTime() {
         Date current_time = new Date();//当前系统时间
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        StartTime = sdf.format(current_time);
+        SystemTime.StartTime = sdf.format(current_time);
+        SystemTime.temp = Calendar.getInstance();
+        SystemTime.CurrentTime = temp;
     }
 
     /**
@@ -98,7 +105,7 @@ public class SystemTime {
 
         Calendar current_time = Calendar.getInstance();//当前系统时间
 
-        long interval = (current_time.getTimeInMillis() - initial_time.getTimeInMillis()) * getSpeed();//时间间隙
+        long interval = (current_time.getTimeInMillis() - temp.getTimeInMillis()) * getSpeed();//时间间隙
 
         return initial_time.getTimeInMillis() + interval;// show_time为模拟系统的当前时间
 
@@ -167,7 +174,7 @@ public class SystemTime {
      */
     public void SystemTimeStart() {
 
-//        setSpeed(1);//设置模拟系统初始快进速度
+        setSpeed(1);//设置模拟系统初始快进速度
         findStartTime();//设置模拟系统开始计时时间
 
         //开始模拟系统时间
@@ -227,46 +234,49 @@ class SimulatedTime extends JFrame {
 
         public void run() {
 
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String startTime = getStartTime();
-            Calendar initialTime = shiftDate(startTime);
-
-            //模拟系统的当前时间及基本时间信息
-            calendar = (GregorianCalendar) shiftDate(df.format(showSimulateTime(initialTime)));
-
-            //如果系统时间未暂停，则更新当前系统模拟时间
             if (getFlag()) {
+
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String startTime = getStartTime();
+                Calendar initialTime = shiftDate(startTime);
+
+                //模拟系统的当前时间及基本时间信息
+                calendar = (GregorianCalendar) shiftDate(df.format(showSimulateTime(initialTime)));
+
+                //如果系统时间未暂停，则更新当前系统模拟时间
+
                 setCurrentTime(calendar);
                 setStringCurrentTime(getCurrentTime());
+
+
+                year = getCurrentTime().get(Calendar.YEAR);
+                month = getCurrentTime().get(Calendar.MONTH);
+                date = getCurrentTime().get(Calendar.DATE);
+                week = getCurrentTime().get(Calendar.DAY_OF_WEEK);
+                hour = getCurrentTime().get(Calendar.HOUR_OF_DAY);
+                minute = getCurrentTime().get(Calendar.MINUTE);
+                second = getCurrentTime().get(Calendar.SECOND);
+
+                //Calendar.WEEK从周日开始
+                if (week == 1) {
+                    week = 7;
+                } else {
+                    week = week - 1;
+                }
+
+                month = month + 1;//Calendar.MONTH从0开始
+
+                display = year + "年" + month + "月" + date + "日 " + "星期" + week + " " + hour + " : " + minute + " : " + second;
+
+                hourLine.x2 = X + 40 * Math.cos(hour * (Math.PI / 6) - Math.PI / 2);
+                hourLine.y2 = Y + 40 * Math.sin(hour * (Math.PI / 6) - Math.PI / 2);
+                minLine.x2 = X + 45 * Math.cos(minute * (Math.PI / 30) - Math.PI / 2);
+                minLine.y2 = Y + 45 * Math.sin(minute * (Math.PI / 30) - Math.PI / 2);
+                secondLine.x2 = X + 50 * Math.cos(second * (Math.PI / 30) - Math.PI / 2);
+                secondLine.y2 = Y + 50 * Math.sin(second * (Math.PI / 30) - Math.PI / 2);
+
+                repaint();
             }
-
-            year = getCurrentTime().get(Calendar.YEAR);
-            month = getCurrentTime().get(Calendar.MONTH);
-            date = getCurrentTime().get(Calendar.DATE);
-            week = getCurrentTime().get(Calendar.DAY_OF_WEEK);
-            hour = getCurrentTime().get(Calendar.HOUR_OF_DAY);
-            minute = getCurrentTime().get(Calendar.MINUTE);
-            second = getCurrentTime().get(Calendar.SECOND);
-
-            //Calendar.WEEK从周日开始
-            if (week == 1) {
-                week = 7;
-            } else {
-                week = week - 1;
-            }
-
-            month = month + 1;//Calendar.MONTH从0开始
-
-            display = year + "年" + month + "月" + date + "日 " + "星期" + week + " " + hour + " : " + minute + " : " + second;
-
-            hourLine.x2 = X + 40 * Math.cos(hour * (Math.PI / 6) - Math.PI / 2);
-            hourLine.y2 = Y + 40 * Math.sin(hour * (Math.PI / 6) - Math.PI / 2);
-            minLine.x2 = X + 45 * Math.cos(minute * (Math.PI / 30) - Math.PI / 2);
-            minLine.y2 = Y + 45 * Math.sin(minute * (Math.PI / 30) - Math.PI / 2);
-            secondLine.x2 = X + 50 * Math.cos(second * (Math.PI / 30) - Math.PI / 2);
-            secondLine.y2 = Y + 50 * Math.sin(second * (Math.PI / 30) - Math.PI / 2);
-
-            repaint();
         }
 
     }

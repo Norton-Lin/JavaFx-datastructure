@@ -235,7 +235,7 @@ public class AccountDatabase {
             rs = stmt.executeQuery(sql1);// 实例化ResultSet对象
             while (rs.next()) { // 指针向下移动
                 Course course = new Course();
-                course.setM_iNum(rs.getInt("id_account"));
+                course.setM_iNum(rs.getInt("id_course"));
                 CourseDatabase courseDatabase = new CourseDatabase();
                 courseDatabase.find(course);//这边要读course数据
                 teacherAccount.getCourse().add(course);//向ArrayList中添加

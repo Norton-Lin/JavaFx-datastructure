@@ -146,9 +146,9 @@ public class MainViewPort_Controller {
             buttonStatusText.setText("你不是教师！");
             return;
         }
-        CourseChooseController courseChooseController = new CourseChooseController(this);
+        TeaCourController teaCourController = new TeaCourController(this);
         thisStage.hide();
-        courseChooseController.showStage();
+        teaCourController.showStage();
     }
 
     protected void handleTeaActButtonAction() {
@@ -175,6 +175,9 @@ public class MainViewPort_Controller {
 
     protected void handleUploadButtonAction() {
         SystemTime.stopTime();
+        HomeAndMaterialController homeAndMaterialController = new HomeAndMaterialController(this);
+        this.thisStage.hide();
+        homeAndMaterialController.showStage();
     }
 
     protected void handleClockButtonAction() {
