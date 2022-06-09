@@ -1,6 +1,8 @@
 package com.example.demo1;
 
 import com.example.demo1.Code.Util.Time;
+import com.example.demo1.Code.clock.ClockOperation;
+import com.example.demo1.Code.clock.EventClock;
 import com.example.demo1.Code.entity.account.StudentAccount;
 import com.example.demo1.Code.systemtime.SystemTime;
 import javafx.fxml.FXML;
@@ -8,7 +10,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ClockController {
     //控制当前Controller的场景
@@ -18,16 +22,18 @@ public class ClockController {
     private final MainViewPort_Controller controller;
 
     //建立闹钟的实例化
-    SystemTime systemTime;
+    ClockOperation clockOperation;
 
     StudentAccount studentAccount;
 
     @FXML
-    public Button pause;
+    public Label info;
     @FXML
     public Button setClock;
     @FXML
-    public Button setSpeed;
+    public Button deleteClock;
+    @FXML
+    public Button lookClock;
     @FXML
     public Button backToMain;
 
@@ -43,25 +49,15 @@ public class ClockController {
     public TextField Minute1;
     @FXML
     public TextField Hour1;
+    @FXML
+    public TextArea Result;
 
-    @FXML
-    public ToggleGroup toggleGroup1;
-    @FXML
-    public ToggleGroup toggleGroup2;
     @FXML
     public RadioButton Once;
     @FXML
     public RadioButton PerDay;
     @FXML
     public RadioButton PerWeek;
-    @FXML
-    public RadioButton One = new RadioButton();
-    @FXML
-    public RadioButton Hundred = new RadioButton();
-    @FXML
-    public RadioButton SixHundred = new RadioButton();
-    @FXML
-    public RadioButton Thousand = new RadioButton();
 
     public ClockController(MainViewPort_Controller mainViewPortController) {
         //收到了hello-view.fxml的Controller
@@ -74,9 +70,9 @@ public class ClockController {
 
         //创建当前闹钟的学生账户
         this.studentAccount = new StudentAccount(this.controller.getAccount());
-        //获取系统时间
-//        this.systemTime = new SystemTime(this.studentAccount);
-        this.systemTime.SystemTimeStart();
+        //获取闹钟信息
+        this.clockOperation = new ClockOperation(this.studentAccount);
+
         try {
             //加载FXML文件
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Clock.fxml"));
@@ -90,9 +86,9 @@ public class ClockController {
 
     @FXML
     private void initialize() {
-        this.pause.setOnAction(event -> ClockPause());
         this.setClock.setOnAction(event -> SetOnClock());
-        this.setSpeed.setOnAction(event -> SetFastSpeed());
+        this.lookClock.setOnAction(event -> handleLook());
+        this.deleteClock.setOnAction(event -> handleDelete());
         this.backToMain.setOnAction(event -> BackToMainMenu());
     }
 
@@ -101,55 +97,73 @@ public class ClockController {
         thisStage.show();
     }
 
-    protected void ClockPause() {
-        this.systemTime.stopTime();
-    }
-
     protected void SetOnClock() {
-        Time time = new Time(Integer.parseInt(Hour1.getText()), Integer.parseInt(Minute1.getText()), 0, 0,
-                Integer.parseInt(Date.getText()), Integer.parseInt(Month.getText()), Integer.parseInt(Week.getText()));
+        int week, month, date, hour, minute;
+        Time time = new Time();
+        try {
+            int type = 0;
+            if (this.Once.isSelected()) {
+                type = 0;
+                month = Integer.parseInt(this.Month.getText());
+                week = Integer.parseInt(this.Week.getText());
+                date = Integer.parseInt(this.Date.getText());
+                hour = Integer.parseInt(this.Hour1.getText());
+                minute = Integer.parseInt(this.Minute1.getText());
+                time.setStartMonth(month);
+                time.setStartDate(date);
+                time.setWeek(week);
+                time.setStartHour(hour);
+                time.setStartMinute(minute);
 
-        toggleGroup2 = new ToggleGroup();
-        final int[] type = new int[1];
-
-        toggleGroup2.selectedToggleProperty().addListener((observableValue, toggle, t1) -> {
-            RadioButton r = (RadioButton)t1;
-            switch (r.getText()) {
-                case "只响一次" -> type[0] = 0;
-                case "一天一次" -> type[0] = 1;
-                case "一周一次" -> type[0] = 7;
+            } else if (this.PerDay.isSelected()) {
+                type = 1;
+                hour = Integer.parseInt(this.Hour1.getText());
+                minute = Integer.parseInt(this.Minute1.getText());
+                time.setStartHour(hour);
+                time.setStartMinute(minute);
+            } else if (this.PerWeek.isSelected()) {
+                type = 7;
+                week = Integer.parseInt(this.Week.getText());
+                hour = Integer.parseInt(this.Hour1.getText());
+                minute = Integer.parseInt(this.Minute1.getText());
+                time.setWeek(week);
+                time.setStartHour(hour);
+                time.setStartMinute(minute);
             }
-        });
 
- //       this.systemTime.setClock(time, this.NameOfClock.getText(), type[0], this.studentAccount.getM_CaEventClock());
-//        this.systemTime.setClock(time, this.NameOfClock.getText(), type[0]);
-    }
+            String Name = this.NameOfClock.getText();
 
-    protected void SetFastSpeed() {
-        toggleGroup1 = new ToggleGroup();
-        int speed = 0;
-
-        if (One.isSelected()) {
-            speed = 1;
-        } else if (Hundred.isSelected()) {
-            speed = 100;
-        } else if (SixHundred.isSelected()) {
-            speed = 600;
-        } else if (Thousand.isSelected()) {
-            speed = 1000;
+            this.info.setText(clockOperation.setClock(time, Name, type).toString());
+            this.studentAccount.getM_CaEventClock().add(new EventClock(time, Name, type));
+        } catch (Exception e) {
+            this.info.setText("输入有误，请重试");
         }
-
-        this.systemTime.setSpeed(speed);
     }
 
     protected void BackToMainMenu() {
+        SystemTime.restartTime();
         //将第二个界面展示出来
         this.controller.showStage();
 
-        //停止时钟
-        this.systemTime.stopTime();
-
         //本页面隐藏
         this.thisStage.hide();
+    }
+
+    protected void handleDelete() {
+        String Name = this.NameOfClock.getText();
+        if (!Name.isEmpty()) {
+            this.info.setText(clockOperation.deleteClock(Name).toString());
+        } else {
+            this.info.setText("请输入要删除的闹钟名！");
+        }
+    }
+
+    protected void handleLook() {
+        ArrayList<EventClock> allClock = clockOperation.LookClock();
+        StringBuilder text = new StringBuilder();
+        for (EventClock tool : allClock) {
+            text.append(tool.toString()).append("\n");
+        }
+        this.Result.setText(text.toString());
     }
 }

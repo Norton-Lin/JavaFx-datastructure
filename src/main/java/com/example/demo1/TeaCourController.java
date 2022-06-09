@@ -1,10 +1,13 @@
 package com.example.demo1;
 
 import com.example.demo1.Code.Mysql.CourseDatabase;
+import com.example.demo1.Code.Mysql.HomeWorkDatabase;
 import com.example.demo1.Code.entity.Course;
 import com.example.demo1.Code.entity.FuzzySearch;
+import com.example.demo1.Code.entity.Homework;
 import com.example.demo1.Code.entity.Search;
 import com.example.demo1.Code.entity.account.TeacherAccount;
+import com.example.demo1.Code.submit.MaterialOperation;
 import com.example.demo1.Code.systemtime.SystemTime;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -42,6 +46,12 @@ public class TeaCourController {
     public Button Assure;
     @FXML
     public Button BackToMain;
+    @FXML
+    public TextField Homework_Name;
+    @FXML
+    public Button Publish;
+    @FXML
+    public Button Upload;
 
     public TeaCourController(MainViewPort_Controller controller) {
         //得到新Controller
@@ -62,7 +72,7 @@ public class TeaCourController {
             //加载FXML文件
             FXMLLoader loader = new FXMLLoader(getClass().getResource("TeaCour.fxml"));
             loader.setController(this);
-            thisStage.setScene(new Scene(loader.load(), 500, 200));
+            thisStage.setScene(new Scene(loader.load(), 800, 300));
             thisStage.setTitle("欢迎来到教师课程进度管理界面~");
         } catch (IOException e) {
             e.printStackTrace();
@@ -79,6 +89,8 @@ public class TeaCourController {
         this.Search.setOnAction(event -> handleSearch());
         this.Assure.setOnAction(event -> handleAdd());
         this.BackToMain.setOnAction(event -> handleBack());
+        this.Publish.setOnAction(event -> handlePublish());
+        this.Upload.setOnAction(event -> handleUpload());
     }
 
     protected void handleBack() {
@@ -143,5 +155,60 @@ public class TeaCourController {
         } else {
             this.Info.setText("未查找到课程，无法操作！");
         }
+    }
+
+    protected void handlePublish() {
+        String name;
+        Homework homework = new Homework();
+        if (!Homework_Name.getText().isEmpty()) {
+            name = this.Homework_Name.getText();
+            homework.setM_iName(name);
+            if (this.result != null) {
+                //在作业文件夹里创建对应课程的作业文件夹
+                String dirName = "D://Homework" + "//" + this.result.getM_iNum();
+                File file = new File(dirName);
+                //判断是否存在同名作业
+                String[] names = file.list();
+                boolean mark = false;
+                if (names != null) {
+                    for (String tool : names) {
+                        if (tool.equals(name)) {
+                            mark = true;
+                            break;
+                        }
+                    }
+                    if (mark)
+                        this.Info.setText("您输入的作业已存在！");
+                    else {
+                        //建立作业文件夹
+                        dirName = dirName + "//" + name;
+                        File newfile = new File(dirName);
+                        //建立学生提交作业的文件夹
+                        String Students = dirName + "//students";
+                        File newnewfile = new File(Students);
+
+                        if(newfile.mkdir())
+                            if(newnewfile.mkdir()) {
+                                homework.setM_iPath(dirName);
+                                this.result.getM_CaHomework().add(homework);
+                                HomeWorkDatabase database = new HomeWorkDatabase();
+                                database.insert(this.result, homework);
+                                this.Info.setText("作业发布成功！");
+                            }
+                        else
+                            this.Info.setText("作业发布失败~");
+                    }
+                }
+            }
+        } else
+            this.Info.setText("输入作业名不能为空！");
+    }
+
+    protected void handleUpload() {
+        if (this.result != null) {
+            String resourcePath = this.result.getM_sData();
+            MaterialOperation.MaterialPort(resourcePath);
+        } else
+            this.Info.setText("未选中课程，请重试！");
     }
 }

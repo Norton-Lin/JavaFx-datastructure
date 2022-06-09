@@ -6,11 +6,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.geometry.Insets?>
 <VBox xmlns:fx="http://javafx.com/fxml">
     <HBox>
         <VBox alignment="CENTER_LEFT">
+            <padding>
+                <Insets left="50"/>
+            </padding>
             <TextField fx:id="Course_Name"/>
-            <Button fx:id="Search" text="查找" alignment="CENTER"/>
+            <Button fx:id="Search" text="查询并选中" alignment="CENTER"/>
             <Label fx:id="Info"/>
         </VBox>
 
@@ -19,8 +23,18 @@
         </VBox>
 
         <VBox alignment="CENTER_RIGHT">
+            <Button fx:id="Publish" text="发 布 作 业"/>
             <Button fx:id="Assure" text="进 度 加 一"/>
+            <Button fx:id="Upload" text="上 传 资 料"/>
             <Button fx:id="BackToMain" text="回到主界面"/>
+        </VBox>
+
+        <VBox>
+            <padding>
+                <Insets left="50"/>
+            </padding>
+            <Label text="请在下方文本框内输入作业名称"/>
+            <TextField fx:id="Homework_Name" prefColumnCount="10"/>
         </VBox>
     </HBox>
 </VBox>

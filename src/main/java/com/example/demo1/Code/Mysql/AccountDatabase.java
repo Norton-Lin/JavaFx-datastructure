@@ -1,7 +1,7 @@
 package com.example.demo1.Code.Mysql;
+
 import com.example.demo1.Code.LogUtil.LogFile;
 import com.example.demo1.Code.Util.Authority;
-import com.example.demo1.Code.Util.Property;
 import com.example.demo1.Code.clock.EventClock;
 import com.example.demo1.Code.entity.Activity;
 import com.example.demo1.Code.entity.Course;
@@ -9,10 +9,7 @@ import com.example.demo1.Code.entity.account.Account;
 import com.example.demo1.Code.entity.account.ManagerAccount;
 import com.example.demo1.Code.entity.account.StudentAccount;
 import com.example.demo1.Code.entity.account.TeacherAccount;
-//import com.mysql.cj.log.Log;
 
-import java.io.File;
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -342,8 +339,8 @@ public class AccountDatabase {
         Statement stmt = null ; // 数据库操作
         String id = account.getID(); // id
         // 拼凑出一个完整的SQL语句
-        String sql = "DELETE FROM account_clock WHERE account_id='" + account.getID()+
-                "'and clock_name="+clock;
+        String sql = "DELETE FROM account_clock WHERE account_id='" + account.getID()+"'and clock_name='"+clock+"'";
+
         try {
             Class.forName(m_sDriver) ; // 加载驱动程序
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);

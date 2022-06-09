@@ -220,6 +220,7 @@ class SimulatedTime extends JFrame {
         setTitle("Clock");
         clockPanel = new MyPanel();
         add(clockPanel);
+        this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 
         //模拟时间
         Timer t = new Timer();

@@ -6,9 +6,9 @@
 
 <HBox xmlns:fx="http://javafx.com/fxml">
     <HBox>
-        <TextArea fx:id="CourseTable" prefRowCount="15" prefColumnCount="75"/>
+        <TextArea fx:id="CourseTable" prefRowCount="15" prefColumnCount="120"/>
 
-        <Label text="                                                       "/>
+        <Label text="                       "/>
 
         <VBox alignment="CENTER">
             <Label alignment="TOP_CENTER" text="您可以输入课程表中的课程编号" style="-fx-font-size:15"/>
