@@ -92,6 +92,9 @@ public class NavController {
         backToMain.setOnAction(event -> handleBackAction());
     }
 
+    /**
+     * 导航操作
+     */
     protected void handleSubmitButtonAction() {
         LogFile.info("User" + this.mainViewPort_controller.getAccount().getID(),"用户进行导航操作");
 
@@ -186,6 +189,9 @@ public class NavController {
             ResOfNav.setText(AppendingInfo + navigate.toNavigate(traffic, start, end, SystemTime.getCurrentTime().get(Calendar.HOUR_OF_DAY)).toString());
     }
 
+    /**
+     * 回到主界面
+     */
     protected void handleBackAction() {
         LogFile.info("User" + this.mainViewPort_controller.getAccount().getID(),"用户返回主界面");
         SystemTime.restartTime();

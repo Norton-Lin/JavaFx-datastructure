@@ -153,6 +153,14 @@ public class HomeworkOperation {
                                 File tempFile = new File(storage + "\\temp");
                                 tempFile.mkdir();
                                 String tempFilePath = tempFile.getAbsolutePath();
+                                //新建临时文件夹保存作业源文件的副本，防止查重时修改源文件
+                                File tempMyMaterial = new File(storage + "\\" + "duplicate");
+                                tempMyMaterial.mkdir();
+                                String duplicateMaterial = tempMyMaterial.getAbsolutePath();
+                                copyFile(String.valueOf(MyHomeworkPath), duplicateMaterial);
+                                //将上传文件的地方更新为副本
+                                MyHomeworkPath.set(duplicateMaterial + "\\" + new File(String.valueOf(MyHomeworkPath)).getName());
+
 
                                 //先遍历所有的txt文件和word文件，对待交作业进行查重去重
                                 for (File homework : packedHomework) {
@@ -222,6 +230,11 @@ public class HomeworkOperation {
                                 //删除查重时产生的临时文件夹
                                 if (tempFile.exists()) {
                                     deleteDirectory(tempFile.getAbsolutePath());
+                                }
+
+                                //删除去重时产生的保存原文件副本的文件夹
+                                if (tempMyMaterial.exists()) {
+                                    deleteDirectory(tempMyMaterial.getAbsolutePath());
                                 }
                             }
 

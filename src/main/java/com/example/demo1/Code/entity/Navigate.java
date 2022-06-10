@@ -6,7 +6,10 @@ import com.example.demo1.Code.Mysql.MapDatabase;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Objects;
+
+import static com.example.demo1.Code.systemtime.SystemTime.getCurrentTime;
 
 public class Navigate {
 
@@ -224,16 +227,41 @@ public class Navigate {
         result.append("\n从").append(target_road.get(0).get_con_name());
         result.append("到");
         result.append(target_road.get(target_road.size() - 1).get_con_name());
-        result.append("的最短时间为：").append(min_time);
+        result.append("的最短时间为：").append(min_time).append("秒");
 
         result.append(".路径导航为：\n");
         result.append("从").append(target_road.get(0).get_con_name()).append("出发，");
 
+        double walkTime = 0.0;//导航所用的时间（单位：分钟）
 
         for (int i = 0; i < target_road.size() - 1; i++) {
 
-            result.append("沿").append(LoadName[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()]);
-            result.append("走").append(matrix[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()]).append("秒，");
+            int currentHour = getCurrentTime().get(Calendar.HOUR_OF_DAY) + (int) walkTime / 60;//当前系统时间（小时数）
+            int currentMinute = getCurrentTime().get(Calendar.MINUTE) + (int) (walkTime - 60 * (int) walkTime / 60);//当前系统时间（分钟）
+
+            //这段路是跨校区的，考虑跨校区交通方式，认为公交车、班车速度等于校内汽车速度
+            if (LoadName[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()].equals("跨校区道路")) {
+
+                //在这几个时间段乘坐班车，此外的时间坐公交车
+                if (currentHour == 6 || currentHour == 12 || currentHour == 18) {
+                    result.append("乘坐学校班车");
+                } else {
+                    int waitTime;//等候时间
+                    if (currentMinute > 30) {
+                        waitTime = 60 - currentMinute;
+                    } else {
+                        waitTime = 30 - currentMinute;
+                    }
+                    result.append("等候").append(waitTime).append("分钟，坐公交车，");
+                }
+            } else {
+                walkTime += matrix[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()] / 60;
+                result.append("沿").append(LoadName[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()]);
+
+            }
+            NumberFormat nf = NumberFormat.getNumberInstance();
+            nf.setMaximumFractionDigits(1);//输入小数点后一位
+            result.append("走").append(nf.format(matrix[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()])).append("秒，");
             result.append("到达").append(target_road.get(i + 1).get_con_name()).append("\n");
 
         }
@@ -425,19 +453,54 @@ public class Navigate {
             case 0 -> {
                 for (int i = 0; i < target_road.size() - 1; i++) {
 
+                    NumberFormat nf = NumberFormat.getNumberInstance();
+                    nf.setMaximumFractionDigits(1);//输入小数点后一位
                     result.append("沿").append(LoadName[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()]);
-                    result.append("走").append(matrix[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()]).append("米，");
+                    result.append("走").append(nf.format(matrix[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()])).append("米，");
                     result.append("到达").append(target_road.get(i + 1).get_con_name()).append("\n");
 
                 }
             }
             case 1 -> {
+
+                double walkTime = 0.0;//当前导航所用的时间（单位：分钟）
+
                 for (int i = 0; i < target_road.size() - 1; i++) {
 
-                    result.append("沿").append(LoadName[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()]);
-                    result.append("走").append(matrix[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()] / getSpeed(traffic_type)).append("秒，");
-                    result.append("到达").append(target_road.get(i + 1).get_con_name()).append("\n");
+                    int currentHour = getCurrentTime().get(Calendar.HOUR_OF_DAY) + (int) walkTime / 60;//当前系统时间（小时数）
+                    int currentMinute = getCurrentTime().get(Calendar.MINUTE) + (int) (walkTime - 60 * (int) walkTime / 60);//当前系统时间（分钟）
 
+                    //这段路是跨校区的，考虑跨校区交通方式，认为公交车、班车是校内汽车速度的二倍
+                    if (LoadName[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()].equals("跨校区道路")) {
+
+                        //在这几个时间段乘坐班车，此外的时间坐公交车
+                        if (currentHour == 6 || currentHour == 12 || currentHour == 18) {
+                            result.append("乘坐学校班车");
+                        } else {
+                            int waitTime;//等候时间
+                            if (currentMinute > 30) {
+                                waitTime = 60 - currentMinute;
+                            } else {
+                                waitTime = 30 - currentMinute;
+                            }
+                            result.append("等候").append(waitTime).append("分钟，坐公交车，");
+                        }
+                        NumberFormat nf = NumberFormat.getNumberInstance();
+                        nf.setMaximumFractionDigits(1);//输入小数点后一位
+                        result.append("走").append(nf.format(matrix[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()] / (getSpeed(3)))).append("秒，");
+                        result.append("到达").append(target_road.get(i + 1).get_con_name()).append("\n");
+                    } else {
+
+                        //更新导航所用的时间（单位：分钟）
+                        walkTime += (matrix[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()] / (getSpeed(traffic_type)) * 60);
+
+                        NumberFormat nf = NumberFormat.getNumberInstance();
+                        nf.setMaximumFractionDigits(1);//输入小数点后一位
+                        result.append("沿").append(LoadName[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()]);
+                        result.append("走").append(nf.format(matrix[target_road.get(i).get_con_number()][target_road.get(i + 1).get_con_number()] / getSpeed(traffic_type))).append("秒，");
+                        result.append("到达").append(target_road.get(i + 1).get_con_name()).append("\n");
+
+                    }
                 }
             }
         }

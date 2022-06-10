@@ -94,6 +94,9 @@ public class TeaCourController {
         this.Upload.setOnAction(event -> handleUpload());
     }
 
+    /**
+     * 回到主界面
+     */
     protected void handleBack() {
         LogFile.info("Teacher" + this.teacherAccount.getID(),"教师返回主界面");
         SystemTime.restartTime();
@@ -104,6 +107,9 @@ public class TeaCourController {
         this.thisStage.hide();
     }
 
+    /**
+     * 教师查找自己所教课程
+     */
     protected void handleSearch() {
         LogFile.info("Teacher" + this.teacherAccount.getID(),"教师查找课程");
         if (!this.Course_Name.getText().isEmpty()) {
@@ -145,6 +151,9 @@ public class TeaCourController {
         }
     }
 
+    /**
+     * 教师增加课程进度
+     */
     protected void handleAdd() {
         if (result != null) {
             int Num = result.getM_iCurrentClass();
@@ -161,6 +170,9 @@ public class TeaCourController {
         }
     }
 
+    /**
+     * 教师发布作业
+     */
     protected void handlePublish() {
         String name;
         Homework homework = new Homework();
@@ -209,6 +221,9 @@ public class TeaCourController {
             this.Info.setText("输入作业名不能为空！");
     }
 
+    /**
+     * 教师上传课程资料
+     */
     protected void handleUpload() {
         LogFile.info("Teacher" + this.teacherAccount.getID(),"教师给" + this.result.toString() + "上传资料");
         if (this.result != null) {

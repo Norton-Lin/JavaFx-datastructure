@@ -47,15 +47,17 @@ public class MainViewPort_Controller {
     @FXML
     public Button Exit;
     @FXML
+    public Button StartClock;
+    @FXML
     public Label buttonStatusText;
     @FXML
     public RadioButton One;
     @FXML
-    public RadioButton Hundred;
+    public RadioButton Sixty;
+    @FXML
+    public RadioButton ThreeHundredSixty;
     @FXML
     public RadioButton SixHundred;
-    @FXML
-    public RadioButton Thousand;
     @FXML
     public Button SetSpeed;
 
@@ -76,12 +78,6 @@ public class MainViewPort_Controller {
 
         SystemTime.setSpeed(1);
 
-        if (this.helloController.getAccount().getAuthority() == Authority.Student) {
-            StudentAccount studentAccount = new StudentAccount(this.helloController.getAccount());
-            clockOperation = new ClockOperation(studentAccount);
-            clockOperation.startClock();
-        }
-
         //创建新场景
         thisStage = new Stage();
 
@@ -93,7 +89,7 @@ public class MainViewPort_Controller {
             loader.setController(this);
 
             //加载场景
-            thisStage.setScene(new Scene(loader.load(), 400, 300));
+            thisStage.setScene(new Scene(loader.load(), 400, 400));
 
             //搭建窗口
             thisStage.setTitle("欢迎来到主界面!");
@@ -116,6 +112,10 @@ public class MainViewPort_Controller {
         thisStage.show();
     }
 
+    /**
+     * 获取账号信息
+     * @return 账号信息
+     */
     public Account getAccount() {
         return this.helloController.getAccount();
     }
@@ -134,8 +134,12 @@ public class MainViewPort_Controller {
         SetSpeed.setOnAction(event -> handleSpeed());
         Manager_Act.setOnAction(event -> handleManagerAct());
         Exit.setOnAction(event -> handleExit());
+        StartClock.setOnAction(event -> StartTheClock());
     }
 
+    /**
+     * 跳转到导航界面
+     */
     protected void handleNavButtonAction() {
         SystemTime.stopTime();
         LogFile.info("User" + this.helloController.getAccount().getID(),"用户进入导航页面");
@@ -144,6 +148,9 @@ public class MainViewPort_Controller {
         navController.showStage();
     }
 
+    /**
+     * 跳转到学生课程管理界面
+     */
     protected void handleStuCourButtonAction() {
         if (this.helloController.getAccount().getAuthority() != Authority.Student) {
             buttonStatusText.setText("你不是学生！");
@@ -157,6 +164,9 @@ public class MainViewPort_Controller {
 
     }
 
+    /**
+     * 跳转到学生活动管理界面
+     */
     protected void handleStuActButtonAction() {
         if (this.helloController.getAccount().getAuthority() != Authority.Student) {
             buttonStatusText.setText("你不是学生！");
@@ -169,6 +179,9 @@ public class MainViewPort_Controller {
         activityController.showStage();
     }
 
+    /**
+     * 跳转教师课程管理界面
+     */
     protected void handleTeaCourButtonAction() {
         if (this.helloController.getAccount().getAuthority() != Authority.Teacher) {
             buttonStatusText.setText("你不是教师！");
@@ -181,6 +194,9 @@ public class MainViewPort_Controller {
         teaCourController.showStage();
     }
 
+    /**
+     * 跳转到课程表界面
+     */
     protected void handleCourTabButtonAction() {
         if (this.helloController.getAccount().getAuthority() != Authority.Student) {
             buttonStatusText.setText("只有学生可以查看课程表！");
@@ -193,6 +209,9 @@ public class MainViewPort_Controller {
         courseTableController.showStage();
     }
 
+    /**
+     * 跳转到上传作业与资料界面
+     */
     protected void handleUploadButtonAction() {
         if (this.helloController.getAccount().getAuthority() != Authority.Student) {
             buttonStatusText.setText("只有学生可以上传作业！");
@@ -205,6 +224,9 @@ public class MainViewPort_Controller {
         homeAndMaterialController.showStage();
     }
 
+    /**
+     * 跳转到闹钟设置界面
+     */
     protected void handleClockButtonAction() {
         if (this.helloController.getAccount().getAuthority() != Authority.Student) {
             buttonStatusText.setText("只有学生可以设置闹钟！");
@@ -217,6 +239,9 @@ public class MainViewPort_Controller {
         clockController.showStage();
     }
 
+    /**
+     * 跳转到管理员管理课程界面
+     */
     protected void handleManagerButtonAction() {
         if (this.helloController.getAccount().getAuthority() != Authority.Manager) {
             buttonStatusText.setText("你不是管理员！");
@@ -230,6 +255,9 @@ public class MainViewPort_Controller {
         managerViewPortController.showStage();
     }
 
+    /**
+     * 跳转到管理员管理活动界面
+     */
     protected void handleManagerAct() {
         if (this.helloController.getAccount().getAuthority() != Authority.Manager) {
             buttonStatusText.setText("你不是管理员！");
@@ -242,23 +270,40 @@ public class MainViewPort_Controller {
         controller.showStage();
     }
 
+    /**
+     * 退出系统
+     */
     protected void handleExit() {
         LogFile.info("User" + this.helloController.getAccount().getID(),"用户退出程序");
         System.exit(0);
     }
 
+    /**
+     * 设置快进速度
+     */
     protected void handleSpeed() {
-        int speed = 1;
+        int speed = 360;
         if (this.One.isSelected()) {
             speed = 1;
-        } else if (this.Hundred.isSelected()) {
-            speed = 100;
+        } else if (this.Sixty.isSelected()) {
+            speed = 60;
+        } else if (this.ThreeHundredSixty.isSelected()) {
+            speed = 360;
         } else if (this.SixHundred.isSelected()) {
             speed = 600;
-        } else if (this.Thousand.isSelected()) {
-            speed = 1000;
         }
         LogFile.info("User" + this.helloController.getAccount().getID(),"用户设置系统快进时间");
         SystemTime.setSpeed(speed);
+    }
+
+    /**
+     * 启动闹钟
+     */
+    protected void StartTheClock() {
+        if (this.helloController.getAccount().getAuthority() == Authority.Student) {
+            StudentAccount studentAccount = new StudentAccount(this.helloController.getAccount());
+            clockOperation = new ClockOperation(studentAccount);
+        } else
+            this.buttonStatusText.setText("你不是学生！");
     }
 }

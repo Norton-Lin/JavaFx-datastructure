@@ -13,7 +13,9 @@
                 <Label text="请选择您要进行的操作~" style="-fx-font-size:18" alignment="CENTER"/>
             </center>
             <bottom>
-                <Label text="请注意管理员按钮只有管理员可以按哦" style="-fx-font-size:18" alignment="CENTER"/>
+                <HBox alignment="CENTER">
+                    <Label text="请注意管理员按钮只有管理员可以按哦" style="-fx-font-size:18" alignment="CENTER"/>
+                </HBox>
             </bottom>
         </BorderPane>
     </top>
@@ -60,11 +62,12 @@
                             <ToggleGroup fx:id="toggleGroup"/>
                         </fx:define>
                         <RadioButton fx:id="One" text="1" toggleGroup="$toggleGroup"/>
-                        <RadioButton fx:id="Hundred" text="100" toggleGroup="$toggleGroup"/>
+                        <RadioButton fx:id="Sixty" text="60" toggleGroup="$toggleGroup"/>
+                        <RadioButton fx:id="ThreeHundredSixty" text="360" toggleGroup="$toggleGroup"/>
                         <RadioButton fx:id="SixHundred" text="600" toggleGroup="$toggleGroup"/>
-                        <RadioButton fx:id="Thousand" text="1000" toggleGroup="$toggleGroup"/>
                     </HBox>
                     <Button alignment="CENTER" fx:id="SetSpeed" text="设置快进速度"/>
+                    <Button alignment="CENTER" fx:id="StartClock" text="启动闹钟"/>
                 </VBox>
             </center>
             <bottom>

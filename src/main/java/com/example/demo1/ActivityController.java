@@ -177,7 +177,7 @@ public class ActivityController {
             if (!activities.isEmpty()) {
                 for (Activity activity : activities) {
                     Time time = activity.getM_tTime();
-                    text.append(activity.getM_sName()).append("\t")
+                    text.append(activity.getM_sName()).append("\t").append("编号为").append(activity.getM_iNum()).append("\t")
                             .append("时间为：").append(time.getStartMonth()).append("月")
                             .append(time.getStartDate()).append("日").append("\t");
 
@@ -208,7 +208,7 @@ public class ActivityController {
                 if (Num != activities.size()) {
                     Activity activity = activities.get(Num);
                     Time time = activity.getM_tTime();
-                    text.append(activity.getM_sName()).append("\t")
+                    text.append(activity.getM_sName()).append("\t").append("编号为").append(activity.getM_iNum()).append("\t")
                             .append("时间为：").append(time.getStartMonth()).append("月")
                             .append(time.getStartDate()).append("日").append("\t");
 
@@ -231,11 +231,11 @@ public class ActivityController {
                 FuzzySearch fuzzySearch = new FuzzySearch();
                 //根据输入框中内容查找获得结果
                 ArrayList<Activity> results = fuzzySearch.get_FS_result(this.ToBe.getText(), activities);
-                //若结果不为空则遍历输出
+                //若结果不为空则输出结果的首位
                 if (results != null) {
-                    for (Activity activity : activities) {
+                    for (Activity activity : results) {
                         Time time = activity.getM_tTime();
-                        text.append(activity.getM_sName()).append("\t")
+                        text.append(activity.getM_sName()).append("\t").append("编号为").append(activity.getM_iNum()).append("\t")
                                 .append("时间为：").append(time.getStartMonth()).append("月")
                                 .append(time.getStartDate()).append("日").append("\t");
 

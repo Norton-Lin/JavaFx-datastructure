@@ -68,6 +68,9 @@ public class HelloController {
         submitButton.setOnAction(event -> GetSubmit());
     }
 
+    /**
+     * 判断登录是否成功
+     */
     private void GetSubmit() {
         //创建数据库
         AccountDatabase database = new AccountDatabase();
@@ -90,6 +93,10 @@ public class HelloController {
          buttonStatusText.setText("很遗憾，账号不存在或密码错误了捏……");
     }
 
+    /**
+     * 获得账号信息
+     * @return 当前账号信息
+     */
     public Account getAccount() {
         return this.account;
     }

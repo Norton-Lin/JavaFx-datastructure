@@ -107,6 +107,9 @@ public class CourseTableController {
         return results;
     }
 
+    /**
+     * 回到主界面
+     */
     protected void BackToMainMenu() {
         LogFile.info("Student" + this.studentAccount.getID(),"学生在课程表中查询课程信息");
         SystemTime.restartTime();
@@ -117,6 +120,9 @@ public class CourseTableController {
         this.thisStage.hide();
     }
 
+    /**
+     * 查找课程，原理具体与选课界面的查找相同
+     */
     protected void handleSearch() {
         LogFile.info("Student" + this.studentAccount.getID(),"学生在课程表中查询课程信息");
         int Num = search.BinaryCourseSearch(
@@ -154,6 +160,9 @@ public class CourseTableController {
         this.Info.setText(Info);
     }
 
+    /**
+     * 建立课程表
+     */
     protected void BuildTheTable() {
         LogFile.info("Student" + this.studentAccount.getID(),"学生访问课程表");
         if (this.courses != null) {

@@ -93,6 +93,9 @@ public class HomeAndMaterialController {
         this.AssureHomework.setOnAction(event -> setAssureHomework());
     }
 
+    /**
+     * 回到主界面
+     */
     protected void BackToMain() {
         SystemTime.restartTime();
 
@@ -180,6 +183,9 @@ public class HomeAndMaterialController {
         }
     }
 
+    /**
+     * 查询作业
+     */
     protected void handleLookForHomework() {
         LogFile.info("Student" + this.studentAccount.getID(),"学生查看某门课程的所有作业");
         StringBuilder results = new StringBuilder();
@@ -202,7 +208,9 @@ public class HomeAndMaterialController {
         }
     }
 
-
+    /**
+     * 上传作业
+     */
     protected void setUpload_Homework() {
         LogFile.info("Student" + this.studentAccount.getID(),"学生上传作业");
         if (this.homework != null) {
@@ -218,6 +226,9 @@ public class HomeAndMaterialController {
         }
     }
 
+    /**
+     * 上传资料
+     */
     protected void setUpload_Resources() {
         LogFile.info("Student" + this.studentAccount.getID(),"学生上传资料");
         if (this.result != null) {

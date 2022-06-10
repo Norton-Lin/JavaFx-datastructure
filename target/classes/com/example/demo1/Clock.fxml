@@ -46,7 +46,7 @@
             </BorderPane>
 
             <HBox alignment="CENTER">
-                <TextArea fx:id="Result" prefColumnCount="10" prefRowCount="5"/>
+                <TextArea fx:id="Result" prefColumnCount="20"/>
             </HBox>
         </VBox>
     </center>

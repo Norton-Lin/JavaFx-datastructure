@@ -78,7 +78,7 @@ public class ClockController {
             //加载FXML文件
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Clock.fxml"));
             loader.setController(this);
-            thisStage.setScene(new Scene(loader.load(), 550, 150));
+            thisStage.setScene(new Scene(loader.load(), 550, 350));
             thisStage.setTitle("欢迎来到闹钟界面~");
         } catch (IOException e) {
             e.printStackTrace();
@@ -148,6 +148,9 @@ public class ClockController {
         }
     }
 
+    /**
+     * 回到主界面
+     */
     protected void BackToMainMenu() {
         LogFile.info("Student" + this.studentAccount.getID(),"学生返回主界面");
         SystemTime.restartTime();
@@ -158,6 +161,9 @@ public class ClockController {
         this.thisStage.hide();
     }
 
+    /**
+     * 删除闹钟
+     */
     protected void handleDelete() {
         LogFile.info("Student" + this.studentAccount.getID(),"学生删除闹钟");
         String Name = this.NameOfClock.getText();
@@ -168,6 +174,9 @@ public class ClockController {
         }
     }
 
+    /**
+     * 查看闹钟
+     */
     protected void handleLook() {
         LogFile.info("Student" + this.studentAccount.getID(),"学生查看闹钟");
         ArrayList<EventClock> allClock = clockOperation.LookClock();

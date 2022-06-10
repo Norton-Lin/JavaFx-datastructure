@@ -336,6 +336,10 @@ public class ManagerViewPortController {
 
     }
 
+    /**
+     * 设置上课地点或考试地点
+     * @param mark 上课信息还是考试信息的标记
+     */
     protected void SetConstruction(boolean mark) {
 
         CourseDatabase database = new CourseDatabase();
@@ -394,6 +398,9 @@ public class ManagerViewPortController {
         }
     }
 
+    /**
+     * 根据输入的各种信息，创建全新的课程
+     */
     protected void Create() throws MyException{
 
         //获取课程名
@@ -510,6 +517,9 @@ public class ManagerViewPortController {
         }
     }
 
+    /**
+     * 从数据库中删除课程
+     */
     protected void DeleteFromDatabase() {
         CourseDatabase courseDatabase = new CourseDatabase();
         Search search = new Search();
@@ -530,6 +540,9 @@ public class ManagerViewPortController {
         }
     }
 
+    /**
+     * 添加一门全新的课程，并更新数据库
+     */
     protected void AddANewCourse() {
         try {
             Create();
@@ -561,6 +574,9 @@ public class ManagerViewPortController {
         }
     }
 
+    /**
+     * 根据输入获得待操作学生账户和课程
+     */
     protected void WriteIn() {
         try {
             AccountDatabase accountDatabase = new AccountDatabase();
@@ -585,6 +601,9 @@ public class ManagerViewPortController {
         }
     }
 
+    /**
+     * 预览自己即将进行的向学生账户添加课程操作
+     */
     protected void PreViewCourWithStu() {
         WriteIn();
         StringBuilder text = new StringBuilder();
@@ -601,12 +620,18 @@ public class ManagerViewPortController {
         LogFile.info("Manager" + this.managerAccount.getID(),"管理员预览" + this.course.toString() + "与待添加学生" + this.studentAccount.getID());
     }
 
+    /**
+     * 向学生账户中添加课程
+     */
     protected void AddCourseToStu() {
         WriteIn();
         this.AllCourses.setText(this.studentAccount.registerCourse(this.ToBeOperated));
         LogFile.info("Manager" + this.managerAccount.getID(),"管理员添加" + this.course.toString() + "到" + this.studentAccount.getID());
     }
 
+    /**
+     * 从学生账户中删除课程
+     */
     protected void DeleteFromStu() {
         WriteIn();
         this.AllCourses.setText(this.studentAccount.exitCourse(this.ToBeOperated));

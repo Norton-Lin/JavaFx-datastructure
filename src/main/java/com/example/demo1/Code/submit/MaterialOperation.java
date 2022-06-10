@@ -15,6 +15,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static javax.swing.JFileChooser.FILES_AND_DIRECTORIES;
 
+/**
+ * 资料相关功能图形化
+ * 与前端的接口：MaterialPort()方法
+ * 注意事项：小组其他成员在测试时可能需要修改代码第70-85行中部分exe文件的内存地址
+ */
 public class MaterialOperation {
     public static class MaterialMenu extends JFrame {
 
@@ -132,6 +137,14 @@ public class MaterialOperation {
                         tempFile.mkdir();
                         String tempFilePath = tempFile.getAbsolutePath();
 
+                        //新建临时文件夹保存作业源文件的副本，防止查重时修改源文件
+                        File tempMyMaterial = new File(storage + "\\" + "duplicate");
+                        tempMyMaterial.mkdir();
+                        String duplicateMaterial = tempMyMaterial.getAbsolutePath();
+                        copyFile(String.valueOf(MyMaterialPath), duplicateMaterial);
+                        //将上传文件的地方更新为副本
+                        MyMaterialPath.set(duplicateMaterial + "\\" + new File(String.valueOf(MyMaterialPath)).getName());
+
                         //遍历所有的文件
                         for (File file : fs) {
 
@@ -196,6 +209,11 @@ public class MaterialOperation {
                             //删除查重时产生的临时文件夹
                             if (tempFile.exists()) {
                                 deleteDirectory(tempFile.getAbsolutePath());
+                            }
+
+                            //删除去重时产生的保存原文件副本的文件夹
+                            if (tempMyMaterial.exists()) {
+                                deleteDirectory(tempMyMaterial.getAbsolutePath());
                             }
                         }
 

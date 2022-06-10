@@ -27,7 +27,7 @@ public class Clock {
         Timer t = new Timer();
         Task task = new Task(eventClock);
 
-        t.schedule(task, 0, 3600000 / SystemTime.getSpeed()); //闹钟刷新时间间隔(单位：ms)
+        t.schedule(task, 0, (60000 / SystemTime.getSpeed())); //闹钟刷新时间间隔(单位：ms)
 
     }
 
@@ -41,6 +41,7 @@ public class Clock {
         public int setHour;
         public String setName;
         public int setType;
+        public int setMinute;
 
         public Task(EventClock eventClock) {
             this.eventClock = eventClock;
@@ -52,6 +53,7 @@ public class Clock {
             year = SystemTime.getCurrentTime().get(Calendar.YEAR);
             month = SystemTime.getCurrentTime().get(Calendar.MONTH);
             date = SystemTime.getCurrentTime().get(Calendar.DATE);
+            minute = SystemTime.getCurrentTime().get(Calendar.MINUTE);
             week = SystemTime.getCurrentTime().get(Calendar.DAY_OF_WEEK);
             hour = SystemTime.getCurrentTime().get(Calendar.HOUR_OF_DAY);
             minute = SystemTime.getCurrentTime().get(Calendar.MINUTE);
@@ -62,6 +64,7 @@ public class Clock {
             setDate = eventClock.getClockTime().getStartDate();
             setWeek = eventClock.getClockTime().getWeek();
             setHour = eventClock.getClockTime().getStartHour();
+            setMinute = eventClock.getClockTime().getStartMinute();
             setName = eventClock.getClockName();
             setType = eventClock.getClockType();
 
@@ -78,7 +81,7 @@ public class Clock {
 
                 //一次性闹钟
                 case 0 -> {
-                    if (setMonth == month && setDate == date && setHour == hour) {
+                    if (setMonth == month && setDate == date && setHour == hour && setMinute == minute) {
                         JFrame jf = new JFrame("闹钟");
                         jf.setSize(300, 200);
                         jf.setLocation(200, 100);
@@ -99,7 +102,7 @@ public class Clock {
 
                 //每天一次闹钟
                 case 1 -> {
-                    if (setHour == hour) {
+                    if (setHour == hour && setMinute == minute) {
                         JFrame jf = new JFrame("闹钟");
                         jf.setSize(300, 200);
                         jf.setLocation(200, 100);
@@ -120,7 +123,7 @@ public class Clock {
 
                 //每周一次闹钟
                 case 7 -> {
-                    if (setWeek == week && setHour == hour) {
+                    if (setWeek == week && setHour == hour && setMinute == minute) {
                         JFrame jf = new JFrame("闹钟");
                         jf.setSize(300, 200);
                         jf.setLocation(200, 100);

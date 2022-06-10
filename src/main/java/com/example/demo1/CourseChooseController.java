@@ -94,7 +94,8 @@ public class CourseChooseController {
     }
 
     /**
-     * 将在所有课程库中查找到的结果显示在文本框中
+     * 从课程库中查询课程，空操作查所有，输入数字进行精确查找，输入其他模糊查找
+     * @return 查找到的课程结果
      */
     private ArrayList<Course> Search1ButtonClicked() {
         LogFile.info("Student" + this.studentAccount.getID(),"学生查找课程");
@@ -241,6 +242,10 @@ public class CourseChooseController {
         }
     }
 
+    /**
+     * 从自己的课程表中查询课程，空操作查所有，输入数字进行精确查找，输入其他模糊查找
+     * @return 查找自己课程表得到的结果
+     */
     private ArrayList<Course> Search2ButtonClicked() {
         LogFile.info("Student" + this.studentAccount.getID(),"学生查找课程");
         //实例化模糊查找对象
@@ -333,6 +338,9 @@ public class CourseChooseController {
         return primaryResults;
     }
 
+    /**
+     * 删除课程
+     */
     private void Assure2ButtonClicked() {
         LogFile.info("Student" + this.studentAccount.getID(),"学生删除课程");
         //实例化查找类型对象
@@ -378,6 +386,9 @@ public class CourseChooseController {
         }
     }
 
+    /**
+     * 回到主界面
+     */
     private void backToMainClicked() {
         SystemTime.restartTime();
         //将第二个界面展示出来
