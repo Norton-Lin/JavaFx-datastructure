@@ -45,7 +45,9 @@ public class StudentAccount extends Account{
     public ArrayList<Course> getCourse(){
         return this.m_CaCourse;
     }
-
+    public void setCourse(ArrayList<Course> m_CaCourse){
+        this.m_CaCourse = m_CaCourse;
+    }
     /**
      * 指定课程查询
      * @param id 指定课程id
@@ -64,7 +66,9 @@ public class StudentAccount extends Account{
     public ArrayList<Activity> getActivity(){
         return this.m_CaActivity;
     }
-
+    public void setActivity(ArrayList<Activity>  m_CaActivity){
+        this.m_CaActivity = m_CaActivity;
+    }
     /**
      * 指定活动查询
      * @param id 指定活动id
@@ -249,7 +253,7 @@ public class StudentAccount extends Account{
     public void addActivity(Activity activity){
         this.m_CaActivity.add(activity);
         ActivityDatabase activityDatabase = new ActivityDatabase();
-        activityDatabase.insert(activity,this.getID());
+        activityDatabase.insert(activity,this.getID(),0);
         LogFile.info("Student "+getID(),"添加活动");
    }
 

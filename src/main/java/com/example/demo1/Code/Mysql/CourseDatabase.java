@@ -84,12 +84,19 @@ public class CourseDatabase {
      * @param course 待添加课程
      * @param ID 用户Id
      */
-    public void insert(Course course,String ID)
+    public void insert(Course course,String ID,int choice)
     {
         Connection conn = null ; // 数据库连接
         Statement stmt = null ; // 数据库操作
-        String sql = "INSERT INTO account_course(id_account, id_course)"
+        String sql;
+        if(choice==1) {
+             sql = "INSERT INTO account_course(id_account, id_course)"
+                    + " VALUES ('" + ID + "','" + course.getM_iNum() + "')";
+        }
+        else{
+            sql = "INSERT INTO class_course(id_class, id_course)"
                 + " VALUES ('" + ID + "','" + course.getM_iNum() + "')";
+        }
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
             stmt = conn.createStatement() ;// 实例化Statement对象
