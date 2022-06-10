@@ -130,6 +130,13 @@ public class HomeWorkDatabase {
                 +"','"+homework.getM_iPath()+"')";
         executeSql(sql);
     }
+    public void insert(Course course,Homework homework,StudentAccount studentAccount)
+    {
+        String sql = "INSERT INTO account_homework(account_id,course_id,work_name,tag)"
+                +"VALUES('"+studentAccount.getID()+"','"+course.getM_iNum()+"','"
+                +homework.getM_iName() +"','"+homework.getM_iTag()+"')";
+        executeSql(sql);
+    }
 
     public void executeSql(String sql) {
         Connection conn;
