@@ -32,19 +32,24 @@
                     GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
             <Button fx:id="Cour_Tab" text="课     程     表"
-                    GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                    GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
             <Button fx:id="Upload" text="学生上传文件"
-                    GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
             <Button fx:id="Clock" text="设置活动闹钟"
-                    GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                    GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+            <Button fx:id="Manager" text="管*理*员*加*课"
+                    GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+
+            <Button fx:id="Manager_Act" text="管*理*员*活*动"
+                    GridPane.columnIndex="2" GridPane.rowIndex="3"/>
         </GridPane>
     </center>
     <bottom>
         <BorderPane>
             <center>
-                <Button fx:id="Manager" text="管*理*员*系*统"/>
                 <VBox alignment="CENTER">
                     <Label text="下面可以选择系统时间的快进速度~" style="-fx-font-size:15"/>
                     <HBox alignment="CENTER">
