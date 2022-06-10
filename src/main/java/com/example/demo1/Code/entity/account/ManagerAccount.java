@@ -184,4 +184,15 @@ public class ManagerAccount extends Account{
            courseDatabase.insert(course,ID,1);//为单个用户添加课程
     }
 
+    public boolean addClassActivity(Activity activity,String ID) {
+        boolean result = false;
+        AccountDatabase accountDatabase = new AccountDatabase();
+        ActivityDatabase activityDatabase = new ActivityDatabase();
+        if(accountDatabase.findClass(ID))//班级存在
+        {
+            activityDatabase.insert(activity, ID, 1);//为班级添加活动
+            result = true;
+        }
+        return result;
+    }
 }

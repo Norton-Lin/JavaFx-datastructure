@@ -303,6 +303,11 @@ public class AccountDatabase {
          s = 1+2;
     }
 
+    /**
+     * 查询账号是否存在
+     * @param id 账号ID
+     * @return 返回boolean
+     */
     public boolean findStuAccount(String id) {
         Connection conn = null ; // 数据库连接
         Statement stmt = null ; // 数据库操作
@@ -321,6 +326,36 @@ public class AccountDatabase {
                 {
                     result = true;
                 }
+            }
+            rs.close();// 关闭结果集
+            stmt.close(); // 操作关闭
+            conn.close(); // 数据库关闭
+
+        } catch (SQLException | ClassNotFoundException throwable) {
+            throwable.printStackTrace();
+        }
+        return result;
+    }
+    /**
+     * 查询班级是否存在
+     * @param id 班级ID
+     * @return 返回boolean
+     */
+    public boolean findClass(String id) {
+        Connection conn = null ; // 数据库连接
+        Statement stmt = null ; // 数据库操作
+        ResultSet rs = null; // 保存查询结果
+        String sql1 = "SELECT id,authority,class_id FROM account where class_id = '"
+                +id+"'";
+        int num = 1;
+        boolean result = false;
+        try {
+            Class.forName(m_sDriver) ; // 加载驱动程序
+            conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
+            stmt = conn.createStatement();// 实例化Statement对象
+            rs = stmt.executeQuery(sql1);// 实例化ResultSet对象
+            if(rs.next()) {
+                    result = true;
             }
             rs.close();// 关闭结果集
             stmt.close(); // 操作关闭
