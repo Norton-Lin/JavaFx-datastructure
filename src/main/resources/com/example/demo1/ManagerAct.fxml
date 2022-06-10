@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns:fx="http://javafx.com/fxml">
+    <top>
+        <VBox alignment="CENTER">
+            <Label text="请输入您想添加的班级活动的各种信息~" style="-fx-font-size:15"/>
+            <Label text="按添加按钮可将活动添加至该班级列表" style="-fx-font-size:15"/>
+            <Label text="按查询和删除按钮可以从该班级的活动列表中查询或删除活动" style="-fx-font-size:15"/>
+            <Label text="注意活动名称需不同哦" style="-fx-font-size:15"/>
+            <Label fx:id="ErrorInfo"/>
+        </VBox>
+    </top>
+    <left>
+        <VBox alignment="CENTER">
+
+            <Label text="请输入活动名"/>
+            <HBox alignment="CENTER">
+                <Label text="活动名：" labelFor="$Name"/>
+                <TextField fx:id="Name" prefWidth="75"/>
+                <padding>
+                    <Insets bottom="15.0"/>
+                </padding>
+            </HBox>
+
+            <Label text="请输入活动时间"/>
+            <HBox alignment="CENTER">
+                <Label text="月：" labelFor="$Month"/>
+                <TextField fx:id="Month" prefWidth="35.0"/>
+                <Label text="日：" labelFor="$Date"/>
+                <TextField fx:id="Date" prefWidth="35.0"/>
+            </HBox>
+
+            <HBox alignment="CENTER">
+                <Label text="起始时：" labelFor="$STH"/>
+                <TextField fx:id="STH" prefWidth="35.0"/>
+                <Label text="起始分：" labelFor="$STM"/>
+                <TextField fx:id="STM" prefWidth="35.0"/>
+                <Label text="结束时：" labelFor="$ENH"/>
+                <TextField fx:id="ENH" prefWidth="35.0"/>
+                <Label text="结束分：" labelFor="$ENM"/>
+                <TextField fx:id="ENM" prefWidth="35.0"/>
+                <padding>
+                    <Insets bottom="15.0"/>
+                </padding>
+            </HBox>
+
+            <Label text="请输入活动班级~"/>
+            <HBox alignment="CENTER">
+                <TextField fx:id="ClassNum" prefColumnCount="10"/>
+            </HBox>
+
+            <Label text="请输入活动地点~"/>
+            <HBox alignment="CENTER">
+                <Label text="建筑物：" labelFor="$Building"/>
+                <TextField fx:id="Building" prefWidth="65"/>
+                <Label text="楼层：" labelFor="$Floor"/>
+                <TextField fx:id="Floor" prefWidth="35"/>
+                <Label text="房间：" labelFor="$Room"/>
+                <TextField fx:id="Room" prefWidth="35"/>
+            </HBox>
+
+            <Button fx:id="Assure" text="添加活动"/>
+
+            <padding>
+                <Insets left="25"/>
+            </padding>
+        </VBox>
+    </left>
+
+    <right>
+        <VBox alignment="CENTER">
+            <HBox alignment="CENTER">
+                <TextField fx:id="ToBe" prefWidth="100"/>
+            </HBox>
+            <HBox alignment="CENTER">
+                <Button fx:id="Search" text="查询活动"/>
+                <padding>
+                    <Insets left="10.0"/>
+                </padding>
+                <Button fx:id="Delete" text="删除活动"/>
+            </HBox>
+            <HBox alignment="CENTER">
+                <TextArea fx:id="Info" prefRowCount="15"/>
+            </HBox>
+            <padding>
+                <Insets right="25"/>
+            </padding>
+        </VBox>
+    </right>
+
+    <bottom>
+        <HBox alignment="CENTER">
+            <Button fx:id="BackToMain" text="返回主界面"/>
+        </HBox>
+    </bottom>
+</BorderPane>

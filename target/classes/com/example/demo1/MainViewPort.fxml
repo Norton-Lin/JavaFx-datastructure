@@ -39,12 +39,12 @@
 
             <Button fx:id="Clock" text="设置活动闹钟"
                     GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+            <Button fx:id="Manager" text="管*理*员*加*课"/>
         </GridPane>
     </center>
     <bottom>
         <BorderPane>
             <center>
-                <Button fx:id="Manager" text="管*理*员*系*统"/>
                 <VBox alignment="CENTER">
                     <Label text="下面可以选择系统时间的快进速度~" style="-fx-font-size:15"/>
                     <HBox alignment="CENTER">

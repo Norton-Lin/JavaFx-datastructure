@@ -38,6 +38,8 @@ public class MainViewPort_Controller {
     @FXML
     public Button Manager;
     @FXML
+    public Button Manager_Act;
+    @FXML
     public Label buttonStatusText;
     @FXML
     public RadioButton One;
@@ -105,6 +107,7 @@ public class MainViewPort_Controller {
         Clock.setOnAction(event -> handleClockButtonAction());
         Manager.setOnAction(event -> handleManagerButtonAction());
         SetSpeed.setOnAction(event -> handleSpeed());
+        Manager_Act.setOnAction(event -> handleManagerAct());
     }
 
     protected void handleNavButtonAction() {
@@ -115,11 +118,11 @@ public class MainViewPort_Controller {
     }
 
     protected void handleStuCourButtonAction() {
-        SystemTime.stopTime();
         if (this.helloController.getAccount().getAuthority() != Authority.Student) {
             buttonStatusText.setText("你不是学生！");
             return;
         }
+        SystemTime.stopTime();
         CourseChooseController courseChooseController = new CourseChooseController(this);
         thisStage.hide();
         courseChooseController.showStage();
@@ -127,39 +130,43 @@ public class MainViewPort_Controller {
     }
 
     protected void handleStuActButtonAction() {
-        SystemTime.stopTime();
         if (this.helloController.getAccount().getAuthority() != Authority.Student) {
             buttonStatusText.setText("你不是学生！");
             return;
         }
+        SystemTime.stopTime();
         ActivityController activityController = new ActivityController(this);
         thisStage.hide();
         activityController.showStage();
     }
 
     protected void handleTeaCourButtonAction() {
-        SystemTime.stopTime();
         if (this.helloController.getAccount().getAuthority() != Authority.Teacher) {
             buttonStatusText.setText("你不是教师！");
             return;
         }
+        SystemTime.stopTime();
         TeaCourController teaCourController = new TeaCourController(this);
         thisStage.hide();
         teaCourController.showStage();
     }
 
     protected void handleCourTabButtonAction() {
-        SystemTime.stopTime();
         if (this.helloController.getAccount().getAuthority() != Authority.Student) {
             buttonStatusText.setText("只有学生可以查看课程表！");
             return;
         }
+        SystemTime.stopTime();
         CourseTableController courseTableController = new CourseTableController(this);
         thisStage.hide();
         courseTableController.showStage();
     }
 
     protected void handleUploadButtonAction() {
+        if (this.helloController.getAccount().getAuthority() != Authority.Student) {
+            buttonStatusText.setText("只有学生可以上传作业！");
+            return;
+        }
         SystemTime.stopTime();
         HomeAndMaterialController homeAndMaterialController = new HomeAndMaterialController(this);
         this.thisStage.hide();
@@ -167,26 +174,37 @@ public class MainViewPort_Controller {
     }
 
     protected void handleClockButtonAction() {
-        SystemTime.stopTime();
         if (this.helloController.getAccount().getAuthority() != Authority.Student) {
             buttonStatusText.setText("只有学生可以设置闹钟！");
             return;
         }
+        SystemTime.stopTime();
         ClockController clockController = new ClockController(this);
         thisStage.hide();
         clockController.showStage();
     }
 
     protected void handleManagerButtonAction() {
-        SystemTime.stopTime();
         if (this.helloController.getAccount().getAuthority() != Authority.Manager) {
             buttonStatusText.setText("你不是管理员！");
             return;
         }
+        SystemTime.stopTime();
         ManagerViewPortController managerViewPortController
                 = new ManagerViewPortController(this);
         thisStage.hide();
         managerViewPortController.showStage();
+    }
+
+    protected void handleManagerAct() {
+        if (this.helloController.getAccount().getAuthority() != Authority.Manager) {
+            buttonStatusText.setText("你不是管理员！");
+            return;
+        }
+        SystemTime.stopTime();
+        ManagerActController controller = new ManagerActController(this);
+        thisStage.hide();
+        controller.showStage();
     }
 
     protected void handleSpeed() {
