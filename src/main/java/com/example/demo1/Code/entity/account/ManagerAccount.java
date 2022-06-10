@@ -21,7 +21,7 @@ public class ManagerAccount extends Account{
         CourseDatabase courseDatabase = new CourseDatabase();
         ActivityDatabase activityDatabase = new ActivityDatabase();
         courseDatabase.find(this.m_CaCourse);//从数据库内读取所有课程信息
-        activityDatabase.find(this.m_CaActivity,Id);//从数据库内读取所有活动信息
+        activityDatabase.find(this.m_CaActivity);//从数据库内读取所有活动信息
     }
 
     public ManagerAccount(Account account) {
@@ -181,7 +181,18 @@ public class ManagerAccount extends Account{
         AccountDatabase accountDatabase = new AccountDatabase();
         CourseDatabase courseDatabase = new CourseDatabase();
         if(accountDatabase.findStuAccount(ID))//用户存在
-           courseDatabase.insert(course,ID);
+           courseDatabase.insert(course,ID,1);//为单个用户添加课程
     }
 
+    public boolean addClassActivity(Activity activity,String ID) {
+        boolean result = false;
+        AccountDatabase accountDatabase = new AccountDatabase();
+        ActivityDatabase activityDatabase = new ActivityDatabase();
+        if(accountDatabase.findClass(ID))//班级存在
+        {
+            activityDatabase.insert(activity, ID, 1);//为班级添加活动
+            result = true;
+        }
+        return result;
+    }
 }

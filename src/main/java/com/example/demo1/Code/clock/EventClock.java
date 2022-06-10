@@ -12,7 +12,6 @@ public class EventClock {
     private int clockType;//闹钟的类型
 
     public EventClock() {
-        clockTime = new Time();
     }
 
     public EventClock(Time time, String name, int type) {
@@ -45,10 +44,4 @@ public class EventClock {
         this.clockType = clockType;
     }
 
-    @Override
-    public String toString() {
-        String result;
-        result = "闹钟名为：" + this.clockName;
-        return result;
-    }
 }

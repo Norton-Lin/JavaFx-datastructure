@@ -13,7 +13,6 @@ import com.example.demo1.Code.entity.Course;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class NavController {
     //从主界面继承而来的信息
@@ -127,7 +126,7 @@ public class NavController {
                         ACourse = this.courses.get(tool);
                         end = ACourse.getM_sConstruction().get_con_name();
                         AppendingInfo = "您输入的起点到所选课程所在地的最佳路径为" + "\n";
-                        ResOfNav.setText(AppendingInfo + navigate.toNavigate(traffic, start, end, SystemTime.getCurrentTime().get(Calendar.HOUR_OF_DAY)).toString());
+                        ResOfNav.setText(AppendingInfo + navigate.toNavigate(traffic, start, end, 0).toString());
                     }
                     else
                         ResOfNav.setText("查找失败");
@@ -139,7 +138,7 @@ public class NavController {
                     if (results != null) {
                         end = results.get(0).getM_sConstruction().get_con_name();
                         AppendingInfo = "您输入的起点到所选课程所在地的最佳路径为" + "\n";
-                        ResOfNav.setText(AppendingInfo + navigate.toNavigate(traffic, start, end, SystemTime.getCurrentTime().get(Calendar.HOUR_OF_DAY)).toString());
+                        ResOfNav.setText(AppendingInfo + navigate.toNavigate(traffic, start, end, 0).toString());
                     } else {
                         ResOfNav.setText("查找失败");
                     }
@@ -171,14 +170,14 @@ public class NavController {
                 if (this.courses.contains(min)) {
                     end = min.getM_sConstruction().get_con_name();
                     AppendingInfo = "您输入的起点到距离您输入时间最近的课程所在地点的最佳路径为：" + "\n";
-                    ResOfNav.setText(AppendingInfo + navigate.toNavigate(traffic, start, end, SystemTime.getCurrentTime().get(Calendar.HOUR_OF_DAY)).toString());
+                    ResOfNav.setText(AppendingInfo + navigate.toNavigate(traffic, start, end, 0).toString());
                 } else
                     ResOfNav.setText("您输入的时间并不符合您的任何一门课程~无法导航");
             } else {
                 ResOfNav.setText("输入异常，请重新输入");
             }
         } else
-            ResOfNav.setText(AppendingInfo + navigate.toNavigate(traffic, start, end, SystemTime.getCurrentTime().get(Calendar.HOUR_OF_DAY)).toString());
+            ResOfNav.setText(AppendingInfo + navigate.toNavigate(traffic, start, end, 0).toString());
     }
 
     protected void handleBackAction() {
