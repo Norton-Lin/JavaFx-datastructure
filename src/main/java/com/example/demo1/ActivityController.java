@@ -133,12 +133,15 @@ public class ActivityController {
 
             //根据选项判断活动类型（个人/集体）
             Property type = Property.SELF;
+            ArrayList<Activity> activities = this.studentAccount.getActivity();
             int Num = 2000;
+            if (!activities.isEmpty())
+                Num = activities.get(activities.size() - 1).getM_iNum() + 1;
             if (this.Solo.isSelected()) {
-                Num = 2000;
+                type = Property.SELF;
             } else if (this.Group.isSelected()) {
                 type = Property.GROUP;
-                Num = 3000;
+
             }
 
             //获取活动地点

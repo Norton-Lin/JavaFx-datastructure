@@ -77,7 +77,12 @@
     <right>
         <VBox alignment="CENTER">
             <HBox alignment="CENTER">
+                <Label text="活动名" labelFor="$ToBe"/>
                 <TextField fx:id="ToBe" prefWidth="100"/>
+            </HBox>
+            <HBox alignment="CENTER">
+                <Label text="班级" labelFor="$DClass"/>
+                <TextField fx:id="DClass" prefWidth="100"/>
             </HBox>
             <HBox alignment="CENTER">
                 <Button fx:id="Delete" text="删除活动"/>

@@ -167,7 +167,7 @@ public class ActivityDatabase {
     public void find(ArrayList<Activity> activity,String ID,int choice) {
         ResultSet rs = null; // 保存查询结果
         String sql;
-        if(choice==1){
+        if(choice==0){
             sql = "SELECT id, name, startmonth,startdate,starthour, startmin, endhour," +
                 " endmin, property, num, maxnum,floor,room,construction " +
                 "FROM activity WHERE account_id ='" + ID+"'";
@@ -185,6 +185,7 @@ public class ActivityDatabase {
             rs = stmt.executeQuery(sql);// 实例化ResultSet对象
             while (rs.next()) { // 指针向下移动
                 Activity a = new Activity();
+                a.setM_iNum(rs.getInt("id"));
                 a.setM_sName(rs.getString("name"));
                 a.getM_tTime().setStartMonth(rs.getInt("startmonth"));
                 a.getM_tTime().setStartDate(rs.getInt("startdate"));
