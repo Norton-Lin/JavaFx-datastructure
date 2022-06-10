@@ -19,25 +19,28 @@
     </top>
     <center>
         <GridPane alignment="TOP_CENTER" hgap="8" vgap="8" style="-fx-padding:30 0 0 0">
-            <Button fx:id="Navigate" text="校园导航系统"
+            <Button fx:id="Navigate" text="导航系统"
                     GridPane.columnIndex="0" GridPane.rowIndex="0"/>
 
-            <Button fx:id="Stu_Cour" text="学生课程管理"
+            <Button fx:id="Stu_Cour" text="学生选课"
                     GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 
-            <Button fx:id="Stu_Act" text="学生活动管理"
+            <Button fx:id="Stu_Act" text="学生活动"
                     GridPane.columnIndex="2" GridPane.rowIndex="0"/>
 
-            <Button fx:id="Tea_Cour" text="教师课程管理"
+            <Button fx:id="Tea_Cour" text="教师选课"
                     GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
-            <Button fx:id="Cour_Tab" text="课     程     表"
+            <Button fx:id="Tea_Act" text="教师活动"
+                    GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Button fx:id="Cour_Tab" text="课程表"
                     GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
-            <Button fx:id="Upload" text="学生上传文件"
+            <Button fx:id="Upload" text="上传文件"
                     GridPane.columnIndex="0" GridPane.rowIndex="2"/>
 
-            <Button fx:id="Clock" text="设置活动闹钟"
+            <Button fx:id="Clock" text="设置闹钟"
                     GridPane.columnIndex="2" GridPane.rowIndex="2"/>
             <Button fx:id="Manager" text="管*理*员*加*课"/>
         </GridPane>

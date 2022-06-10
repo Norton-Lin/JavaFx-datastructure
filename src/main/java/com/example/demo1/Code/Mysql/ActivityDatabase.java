@@ -23,18 +23,34 @@ public class ActivityDatabase {
      * @param activity 新活动
      * @param ID 对应账号Id
      */
-    public void insert(Activity activity,String ID){
+    public void insert(Activity activity,String ID,int choice){
         Connection conn = null ; // 数据库连接
         Statement stmt = null ; // 数据库操作
-        String sql = "INSERT INTO activity(id,account_id,name,startmonth,startdate,starthour,startmin" +
-                ",endhour,endmin,property,num,maxnum,floor,room,construction)"
-                + " VALUES ('" + activity.getM_iNum() + "','" + ID +"','" +activity.getM_sName() + "','" +
-                activity.getM_tTime().getStartMonth()+ "','" +activity.getM_tTime().getStartDate()+ "','" +
-                activity.getM_tTime().getStartHour()+ "','" +activity.getM_tTime().getStartMinute()+ 
-                "','" + activity.getM_tTime().getEndHour()+ "','" + activity.getM_tTime().getEndMinute()
-                + "','" + activity.getM_eProperty(1)+ "','" +activity.getM_iPle()+ "','"
-                +activity.getM_iMaxPle()+ "','" +activity.getM_iFloor() +"','"+activity.getM_iRoom()+"','"
-                +activity.getM_sConstruction().get_con_name()+"')";
+        String sql;
+        //个人活动
+        if(choice==0){
+            sql = "INSERT INTO activity(id,account_id,name,startmonth,startdate,starthour,startmin" +
+                    ",endhour,endmin,property,num,maxnum,floor,room,construction)"
+                    + " VALUES ('" + activity.getM_iNum() + "','" + ID +"','" +activity.getM_sName() + "','" +
+                    activity.getM_tTime().getStartMonth()+ "','" +activity.getM_tTime().getStartDate()+ "','" +
+                    activity.getM_tTime().getStartHour()+ "','" +activity.getM_tTime().getStartMinute()+
+                    "','" + activity.getM_tTime().getEndHour()+ "','" + activity.getM_tTime().getEndMinute()
+                    + "','" + choice+ "','" +activity.getM_iPle()+ "','"
+                    +activity.getM_iMaxPle()+ "','" +activity.getM_iFloor() +"','"+activity.getM_iRoom()+"','"
+                    +activity.getM_sConstruction().get_con_name()+"')";
+        }
+        //班级活动
+        else{
+            sql = "INSERT INTO class_activity(id,class_id,name,startmonth,startdate,starthour,startmin" +
+                    ",endhour,endmin,property,num,maxnum,floor,room,construction)"
+                    + " VALUES ('" + activity.getM_iNum() + "','" + ID +"','" +activity.getM_sName() + "','" +
+                    activity.getM_tTime().getStartMonth()+ "','" +activity.getM_tTime().getStartDate()+ "','" +
+                    activity.getM_tTime().getStartHour()+ "','" +activity.getM_tTime().getStartMinute()+
+                    "','" + activity.getM_tTime().getEndHour()+ "','" + activity.getM_tTime().getEndMinute()
+                    + "','" + choice+ "','" +activity.getM_iPle()+ "','"
+                    +activity.getM_iMaxPle()+ "','" +activity.getM_iFloor() +"','"+activity.getM_iRoom()+"','"
+                    +activity.getM_sConstruction().get_con_name()+"')";
+        }
         try {
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
             stmt = conn.createStatement() ;// 实例化Statement对象
@@ -136,11 +152,19 @@ public class ActivityDatabase {
             LogFile.error("ActivityDatabase","数据库读取错误");
         }
     }
-    public void find(ArrayList<Activity> activity,String ID) {
+    public void find(ArrayList<Activity> activity,String ID,int choice) {
         ResultSet rs = null; // 保存查询结果
-        String sql = "SELECT id, name, startmonth,startdate,starthour, startmin, endhour," +
-                " endmin, property, num, maxnum,floor,room,construction " +
-                "FROM activity WHERE account_id ='" + ID+"'";
+        String sql;
+        if(choice==1){
+            sql = "SELECT id, name, startmonth,startdate,starthour, startmin, endhour," +
+                    " endmin, property, num, maxnum,floor,room,construction " +
+                    "FROM activity WHERE account_id ='" + ID+"'";
+        }
+        else{
+            sql = "SELECT id, name, startmonth,startdate,starthour, startmin, endhour," +
+                    " endmin, property, num, maxnum,floor,room,construction " +
+                    "FROM class_activity WHERE class_id ='" + ID+"'";
+        }
         Connection conn = null; // 数据库连接
         Statement stmt = null; // 数据库操作
         try {
@@ -172,4 +196,39 @@ public class ActivityDatabase {
             LogFile.error("ActivityDatabase","数据库读取错误");
         }
     }
+    public void find(ArrayList<Activity> activities){
+        ResultSet rs = null; // 保存查询结果
+        Connection conn = null; // 数据库连接
+        Statement stmt = null; // 数据库操作
+        String sql="SELECT * FROM class_activity";
+        try {
+            conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
+            stmt = conn.createStatement();// 实例化Statement对象
+            rs = stmt.executeQuery(sql);// 实例化ResultSet对象
+            while (rs.next()) { // 指针向下移动
+                Activity a = new Activity();
+                a.setM_sName(rs.getString("name"));
+                a.getM_tTime().setStartMonth(rs.getInt("startmonth"));
+                a.getM_tTime().setStartDate(rs.getInt("startdate"));
+                a.getM_tTime().setStartHour(rs.getInt("starthour"));
+                a.getM_tTime().setStartMinute(rs.getInt("startmin"));
+                a.getM_tTime().setEndHour(rs.getInt("endhour"));
+                a.getM_tTime().setEndMinute(rs.getInt("endmin"));
+                a.setM_eProperty(rs.getInt("property"));
+                a.setM_iPle(rs.getInt("num"));
+                a.setM_iMaxPle(rs.getInt("maxnum"));
+                a.setM_iFloor(rs.getInt("floor"));
+                a.setM_iRoom(rs.getInt("room"));
+                a.getM_sConstruction().set_con_name(rs.getString("construction"));
+                activities.add(a);
+            }
+            rs.close();// 关闭结果集
+            stmt.close(); // 操作关闭
+            conn.close(); // 数据库关闭
+        } catch (SQLException e) {
+            e.printStackTrace();
+            LogFile.error("ActivityDatabase","数据库读取错误");
+        }
+    }
+
 }
