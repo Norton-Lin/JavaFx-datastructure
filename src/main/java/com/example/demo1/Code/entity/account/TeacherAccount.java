@@ -126,7 +126,7 @@ public class TeacherAccount extends Account{
     public void decActivity(Activity activity){
         this.m_CaActivity.remove(activity);
         ActivityDatabase activityDatabase = new ActivityDatabase();
-        activityDatabase.delete(activity,this.getID(), 0);
+        activityDatabase.delete(activity,this.getID(),0);
         LogFile.info("Teacher "+getID(),"删除活动");
     }
     public void teaching(int id)

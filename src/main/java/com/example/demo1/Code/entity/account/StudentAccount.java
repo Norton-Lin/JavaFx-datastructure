@@ -187,9 +187,15 @@ public class StudentAccount extends Account{
      */
     public String registerActivity(Activity activity){
         String message="报名失败,存在时间冲突";
-        if(checkTime(activity)&&checkActivityName(activity)){
-            message="报名成功！";
-            addActivity(activity);
+        if(checkTime(activity)){
+            if(!checkActivityName(activity))
+            {
+                message="活动名称冲突！";
+            }
+            else{
+                message = "报名成功！";
+                addActivity(activity);
+            }
         }
         return message;
     }
@@ -231,6 +237,7 @@ public class StudentAccount extends Account{
         CourseDatabase courseDatabase = new CourseDatabase();
         courseDatabase.insert(course,this);
         courseDatabase.update(course);
+        sortCourse();//对课程进行排序
         LogFile.info("Student "+getID(),"添加课程");
    }
 
@@ -264,7 +271,7 @@ public class StudentAccount extends Account{
     public void decActivity(Activity activity){
         this.m_CaActivity.remove(activity);
         ActivityDatabase activityDatabase = new ActivityDatabase();
-        activityDatabase.delete(activity,this.getID(), 0);
+        activityDatabase.delete(activity,this.getID(),0);
         LogFile.info("Student "+getID(),"删除活动");
    }
 

@@ -127,7 +127,7 @@ public class ActivityDatabase {
         ResultSet rs = null; // 保存查询结果
         String sql;
         if(choice ==0) {
-            sql = "SELECT * " +
+              sql = "SELECT * " +
                     "FROM activity WHERE name='" + activity.getM_sName() + "'and account_id ='" + ID + "'";
         }
         else{

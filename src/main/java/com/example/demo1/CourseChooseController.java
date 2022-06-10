@@ -175,7 +175,7 @@ public class CourseChooseController {
                             .append("\n");
                 }
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             System.out.println("用户输入异常");
             SearchResult_Name.setText("右侧输入框中应该输入数字哦~");
         }

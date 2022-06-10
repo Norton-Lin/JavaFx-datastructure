@@ -45,9 +45,6 @@
 
             <Button fx:id="Manager_Act" text="管*理*员*活*动"
                     GridPane.columnIndex="2" GridPane.rowIndex="3"/>
-
-            <Button fx:id="Exit" text="退  出  系  统"
-                    GridPane.columnIndex="1" GridPane.rowIndex="4"/>
         </GridPane>
     </center>
     <bottom>
