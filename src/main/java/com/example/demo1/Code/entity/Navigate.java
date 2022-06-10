@@ -65,7 +65,7 @@ public class Navigate {
 
         //初始化邻接矩阵
         for (double[] doubles : matrix) {
-            Arrays.fill(doubles, 10000.0);
+            Arrays.fill(doubles, Double.MAX_VALUE);
         }
 
         int congestion_type;//道路拥挤度类型
@@ -89,7 +89,7 @@ public class Navigate {
 
         for (Line l : line) {
 
-            double[] congestion = l.getM_d_congestion();//这里的功能需要修改
+            double[] congestion = l.getM_d_congestion();//这里的功能不需要修改
 
             //只读入该交通工具对应的道路
             if (l.getDegree() >= road_degree) {
@@ -168,7 +168,7 @@ public class Navigate {
             double[][] timeMatrix = getHybridMatrix(line, currentHour);
             floydAlgorithm(timeMatrix);
 
-            if (timeMatrix[start_number][end_number] == 999999.0) {
+            if (timeMatrix[start_number][end_number] == Double.MAX_VALUE) {
                 Result.append("无有效路径");
             } else {
                 ArrayList<Construction> target_road = new ArrayList<>();//保存导航给出的道路
@@ -195,7 +195,7 @@ public class Navigate {
 
                 floydAlgorithm(matrix);//弗洛伊德算法求最短路径
 
-                if (matrix[start_number][end_number] == 10000.0) {
+                if (matrix[start_number][end_number] == Double.MAX_VALUE) {
                     Result.append("无有效路径");
                 } else {
                     double min_length = matrix[start_number][end_number];//保存最短路径长度
@@ -249,7 +249,7 @@ public class Navigate {
 
         //初始化邻接矩阵
         for (double[] doubles : timeMatrix) {
-            Arrays.fill(doubles, 999999.0);
+            Arrays.fill(doubles, Double.MAX_VALUE);
         }
 
         int congestion_type;//道路拥挤度类型

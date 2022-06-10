@@ -8,6 +8,7 @@ public class Construction {
     private String con_name;//建筑物名称
     private ArrayList<ArrayList<Integer>> con_room = new ArrayList<>();//建筑物的房间信息：楼层数+房间编号
     private int con_number;//建筑物在地图上的编号
+    private int campus ;//校区
     public int getCampus() {
         return campus;
     }
@@ -16,15 +17,17 @@ public class Construction {
         this.campus = campus;
     }
 
-    private int campus ;//校区
+    public Construction(String con_name, int campus) {
+        this.con_name = con_name;
+        this.campus = campus;
+    }
 
     public Construction() {
         super();
     }
 
-    public Construction(String con_name, int campus) {
+    public Construction(String con_name) {
         this.con_name = con_name;
-        this.campus = campus;
     }
 
     /**

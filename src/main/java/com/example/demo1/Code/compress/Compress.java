@@ -94,7 +94,6 @@ public class Compress {
 
     /**
      * 从哈夫曼树的根开始，获取所有叶子结点存储数据对应的哈夫曼编码
-     *
      * @param root 哈夫曼树根结点
      */
     private void huffmanCode(Huffman root) {
@@ -114,7 +113,6 @@ public class Compress {
 
     /**
      * 记录码表数据
-     *
      * @param c 从文件内读取的一个字符
      */
     private void CreatFileState(char c) {
@@ -181,7 +179,6 @@ public class Compress {
 
     /**
      * 将源文件数据压缩后写入压缩文件
-     *
      * @param filename  文件名
      * @param storePath 压缩文件存储地址：students目录
      */
@@ -227,7 +224,11 @@ public class Compress {
         }
         writeCompressCode(fr, fw); //进一步写入操作
     }
-
+    /**
+     * 将源文件数据压缩后写入压缩文件
+     * @param fr  原文件
+     * @param fw 压缩文件
+     */
     private void writeCompressCode(File fr, File fw) {
         String code;//临时存放哈夫曼编码
         char tmp, buffer = 0;
@@ -305,14 +306,17 @@ public class Compress {
 
     /**
      * 文件解压
-     *
      * @param filename  待解压文件名
      * @param storePath 已解压文件的存储地址
      */
     public void uncompress(String filename, String storePath) {
         writeToDeFile(filename, storePath);
     }
-
+    /**
+     * 文件解压写入新文件
+     * @param filename  待解压文件名
+     * @param storePath 已解压文件的存储地址
+     */
     public void writeToDeFile(String filename, String storePath) {
         File fr = new File(filename);//待解压文件
         String newFileName = storePath+"\\"+fr.getName().replace(".si", "");//解压文件名通过删去压缩文件名的.si拓展得到
@@ -357,7 +361,6 @@ public class Compress {
 
     /**
      * 将文件解压后写入一个新建文本文件
-     *
      * @param fr   待解压缩文件
      * @param fw   解压缩数据输出文件
      * @param root 对应编码哈夫曼树
@@ -394,6 +397,11 @@ public class Compress {
         }
     }
 
+    /**
+     * 获取文件扩展名
+     * @param file 文件
+     * @return 返回扩展名
+     */
     private static String getFileExtension(File file) {
         String fileName = file.getName();
         if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)

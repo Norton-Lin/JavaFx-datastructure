@@ -5,10 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71e31705-279e-40b4-9a73-b40e17f75272" name="变更" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Interactive/MainInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Interactive/MainInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/submit/Homework.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/submit/HomeworkOperation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/submit/Material.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/submit/MaterialOperation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/entity/Navigate.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/entity/Navigate.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Interactive/MainInterface.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/compress/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/compress/Compress.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Construction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Construction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Course.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Navigate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Navigate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/Account.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,7 +188,7 @@
       <workItem from="1654508097398" duration="490000" />
       <workItem from="1654530423378" duration="295000" />
       <workItem from="1654590618770" duration="599000" />
-      <workItem from="1654825452521" duration="3830000" />
+      <workItem from="1654825452521" duration="4598000" />
     </task>
     <servers />
   </component>

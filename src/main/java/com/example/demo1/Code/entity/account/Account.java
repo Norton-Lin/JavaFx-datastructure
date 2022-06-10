@@ -16,6 +16,9 @@ public class Account {
         this.m_sPassword=password;
     }
 
+    /**
+     * 账户类无参构造函数
+     */
     public Account() {}
 
     /**
@@ -66,6 +69,10 @@ public class Account {
         this.m_eAuthority = m_eAuthority;
     }
 
+    /**
+     * 修改权限
+     * @param num 新权限对应int
+     */
     public void setM_eAuthority(int num){
         switch (num) {
             case 0 -> this.m_eAuthority = Authority.Student;
