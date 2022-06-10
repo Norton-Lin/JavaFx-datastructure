@@ -69,7 +69,7 @@ public class NavController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Nav.fxml"));
             loader.setController(this);
-            thisStage.setScene(new Scene(loader.load(), 1500, 400));
+            thisStage.setScene(new Scene(loader.load(), 1500, 600));
             thisStage.setTitle("欢迎使用导航系统~");
         } catch (IOException e) {
             e.printStackTrace();
@@ -112,6 +112,7 @@ public class NavController {
         String end = this.EndPoint.getText();
         //实例化导航类
         Navigate navigate = new Navigate();
+        //输出导航信息
         String AppendingInfo = "";
         if (end.isEmpty()) {
             if (!this.Course_Name.getText().isEmpty()) {
@@ -159,18 +160,20 @@ public class NavController {
                         int hour0 = temp.getM_tTime().getStartHour();
                         int minute0 = temp.getM_tTime().getStartMinute();
                         //如果当前课程上课时间在输入时间前则舍弃
-                        if (hour0 > hour) {
-                            if ((hour0 - hour) < Math.abs(min.getM_tTime().getStartHour() - hour))
-                                min = temp;
-                            else if ((hour0 - hour) == Math.abs(min.getM_tTime().getStartHour() - hour))
-                                if ((minute0 - minute) <= Math.abs(min.getM_tTime().getStartMinute() - minute))
+                        if (hour0 >= hour) {
+                            if (minute0 >= minute) {
+                                if ((hour0 - hour) < Math.abs(min.getM_tTime().getStartHour() - hour))
                                     min = temp;
+                                else if ((hour0 - hour) == Math.abs(min.getM_tTime().getStartHour() - hour))
+                                    if ((minute0 - minute) <= Math.abs(min.getM_tTime().getStartMinute() - minute))
+                                        min = temp;
+                            }
                         }
                     }
                 }
                 if (this.courses.contains(min)) {
                     end = min.getM_sConstruction().get_con_name();
-                    AppendingInfo = "您输入的起点到距离您输入时间最近的课程所在地点的最佳路径为：" + "\n";
+                    AppendingInfo = "您输入的起点到" + min.getM_sName() +"课的所在地点的最佳路径为：" + "\n";
                     ResOfNav.setText(AppendingInfo + navigate.toNavigate(traffic, start, end, SystemTime.getCurrentTime().get(Calendar.HOUR_OF_DAY)).toString());
                 } else
                     ResOfNav.setText("您输入的时间并不符合您的任何一门课程~无法导航");

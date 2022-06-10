@@ -67,6 +67,7 @@ public class ManagerActController {
         //创建新场景
         thisStage = new Stage();
 
+        this.managerAccount = new ManagerAccount(this.controller.getAccount());
 
         try {
             //加载FXML文件
@@ -121,8 +122,10 @@ public class ManagerActController {
             Activity activity = new Activity(Name, time, Property.GROUP, construction, Floor, Room, 3000);
 
             if (this.managerAccount.addClassActivity(activity, ClassID))
-            //根据上面的参数构建活动并传入
-            this.ErrorInfo.setText(Name + "已添加至班级\b" + ClassID);
+                //根据上面的参数构建活动并传入
+                this.Info.setText(Name + "已添加至班级\b" + ClassID);
+            else
+                this.Info.setText("添加活动失败！");
         } catch (Exception e) {
             this.ErrorInfo.setText("输入错误！\n请按照合理的方式输入数据哦！");
         }

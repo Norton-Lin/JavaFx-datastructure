@@ -57,13 +57,6 @@
             </padding>
             <Button fx:id="ExamTime" text="发布/修改考试时间"/>
         </HBox>
-        <HBox alignment="CENTER">
-            <fx:define>
-                <ToggleGroup fx:id="toggleGroup0"/>
-            </fx:define>
-            <RadioButton fx:id="ShaHe0" text="沙河校区" toggleGroup="$toggleGroup0"/>
-            <RadioButton fx:id="XiTuCheng0" text="西土城校区" toggleGroup="$toggleGroup0"/>
-        </HBox>
         <GridPane alignment="CENTER">
             <Label text="教学楼" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
             <TextField fx:id="Building" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
@@ -136,14 +129,6 @@
                 <Label text="结束分钟"/>
                 <TextField fx:id="EndMinute_Alter" prefWidth="50"/>
             </VBox>
-        </HBox>
-
-        <HBox alignment="CENTER">
-            <fx:define>
-                <ToggleGroup fx:id="toggleGroup2"/>
-            </fx:define>
-            <RadioButton fx:id="ShaHe" text="沙河校区" toggleGroup="$toggleGroup2"/>
-            <RadioButton fx:id="XiTuCheng" text="西土城校区" toggleGroup="$toggleGroup2"/>
         </HBox>
 
         <GridPane alignment="CENTER">

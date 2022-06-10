@@ -126,7 +126,8 @@ public class CourseTableController {
                     + temp.getM_tTime().getEndHour() + ":"
                     + temp.getM_tTime().getEndMinute()
                     + "\n" + "上课地点：" + temp.getM_sConstruction()
-                    + temp.getM_iFloor() + "层" + temp.getM_iRoom() + "室" + "\n";
+                    + temp.getM_iFloor() + "层" + temp.getM_iRoom() + "室" + "\n"
+                    + "当前进度为：" + temp.getM_iCurrentClass() + "/" + temp.getM_iTotalClass();
             if (temp.getM_cExamTime().getStartHour() != -1) {
                 Info = Info +"考试时间：" + temp.getM_cExamTime().getStartMonth()
                         + "月" + temp.getM_cExamTime().getStartDate() + "日"

@@ -1,7 +1,9 @@
 package com.example.demo1;
 
 import com.example.demo1.Code.Mysql.AccountDatabase;
+import com.example.demo1.Code.Mysql.ConstructionDatabase;
 import com.example.demo1.Code.Mysql.CourseDatabase;
+import com.example.demo1.Code.Util.MyException;
 import com.example.demo1.Code.Util.Property;
 import com.example.demo1.Code.Util.Time;
 import com.example.demo1.Code.entity.Construction;
@@ -43,6 +45,9 @@ public class ManagerViewPortController {
     //存储待添加课程
     Course ToBeOperated;
 
+    //存储所有建筑物的列表
+    ArrayList<Construction> allCons;
+
     @FXML
     public TextField CourseNum;
     @FXML
@@ -65,10 +70,6 @@ public class ManagerViewPortController {
     public Button CourTime;
     @FXML
     public Button ExamTime;
-    @FXML
-    public RadioButton ShaHe0 = new RadioButton();
-    @FXML
-    public RadioButton XiTuCheng0 = new RadioButton();
     @FXML
     public TextField Building;
     @FXML
@@ -105,10 +106,6 @@ public class ManagerViewPortController {
     public TextField EndHour_Alter;
     @FXML
     public TextField EndMinute_Alter;
-    @FXML
-    public RadioButton ShaHe = new RadioButton();
-    @FXML
-    public RadioButton XiTuCheng = new RadioButton();
     @FXML
     public TextField Building_Alter;
     @FXML
@@ -153,6 +150,13 @@ public class ManagerViewPortController {
 
         //获取所有课程的列表
         courseDatabase1.find(this.courses);
+
+        //实例化建筑物数据库
+        ConstructionDatabase database = new ConstructionDatabase();
+
+        this.allCons = new ArrayList<>();
+        //获取所有建筑物
+        database.find(this.allCons);
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ManagerViewPort.fxml"));
@@ -236,7 +240,7 @@ public class ManagerViewPortController {
                         + this.course.getM_iFloor() + "层" + this.course.getM_iRoom() + "室" + "\n";
                 if (this.course.getM_cExamTime().getWeek() > 0) {
                     Info = Info  + "考试时间：" + this.course.getM_cExamTime().getStartMonth() + "月" + this.course.getM_cExamTime().getStartDate() + "日" +
-                             "星期" + this.course.getM_cExamTime().getWeek()
+                             "星期" + this.course.getM_cExamTime().getWeek() + "\t"
                              + this.course.getM_cExamTime().getStartHour() + "时"
                              + this.course.getM_cExamTime().getStartMinute() + "分" + "~"
                              + this.course.getM_cExamTime().getEndHour() + "时"
@@ -322,22 +326,41 @@ public class ManagerViewPortController {
     }
 
     protected void SetConstruction(boolean mark) {
-        //建筑物查找的功能内置在Navigate中
-        Navigate navigate = new Navigate();
 
         CourseDatabase database = new CourseDatabase();
 
-        //根据建筑物名称找出建筑物
-        Construction temp =navigate.getConstruction(this.Building.getText());
-
-        if (this.ShaHe0.isSelected())  {
-            temp.setCampus(0);
-        } else  if (this.XiTuCheng0.isSelected()) {
-            temp.setCampus(1);
+        Construction temp = new Construction();
+        try {
+            try {
+                int Con_name = Integer.parseInt(this.Building.getText());
+                if (Con_name >=0 && Con_name < this.allCons.size())
+                    for (Construction tool : allCons) {
+                        if (tool.get_con_number() == Con_name) {
+                            temp = tool;
+                            break;
+                        }
+                    }
+                else
+                    throw new MyException(0);
+            } catch (NumberFormatException e) {
+                String ConName = this.Building_Alter.getText();
+                boolean flag = false;
+                for (Construction tool : this.allCons) {
+                    if (tool.get_con_name().equals(ConName)) {
+                        temp = tool;
+                        mark = true;
+                        break;
+                    }
+                }
+                if (!flag)
+                    throw new MyException(0);
+            }
+        } catch (MyException e1) {
+            this.ErrorInfo.setText(e1.getMessage());
         }
 
         try {
-            if (temp != null) {
+            if (temp.get_con_name() != null) {
                 //根据按钮不同设置上课地点或考试地点
                 if (mark) {
                     this.course.setM_sConstruction(temp);
@@ -358,14 +381,17 @@ public class ManagerViewPortController {
         }
     }
 
-    protected void Create() throws Exception{
+    protected void Create() throws MyException{
 
+        //获取课程名
         String Name = this.Name.getText();
         this.course_alter.setM_sName(Name);
 
+        //获取课程教师
         String Teacher = this.Teacher.getText();
         this.course_alter.setM_sTeacher(Teacher);
 
+        //获取课程属性
         Property property = null;
         if (this.Theory.isSelected()) {
             property = Property.Theory;
@@ -376,9 +402,11 @@ public class ManagerViewPortController {
         }
         this.course_alter.setM_eProperty(property);
 
+        //获取课程群
         String group = this.Group.getText();
         this.course_alter.setM_sCurGroup(group);
 
+        //获取课程时间
         int week  = Integer.parseInt(this.Week_Alter.getText());
         int sth = Integer.parseInt(this.StartHour_Alter.getText());
         int stm = Integer.parseInt(this.StartMinute_Alter.getText());
@@ -386,27 +414,54 @@ public class ManagerViewPortController {
         int enm = Integer.parseInt(this.EndMinute_Alter.getText());
         Time time = new Time(sth, stm, enh, enm, week);
         this.course_alter.setM_tTime(time);
+        if (week <= 0 || week > 7 || sth < 0 || sth >= 24 || stm < 0 || stm >= 60 || enh < 0 || enh >= 24 || enm < 0 || enm >= 60)
+            throw new MyException(2);
 
-        int campus = 0;
-        if (this.ShaHe.isSelected()) {
-            campus = 0;
-        } else if (this.XiTuCheng.isSelected()) {
-            campus = 1;
-        }
-
+        //获取课程最大人数
         int max = Integer.parseInt(this.MaxPle.getText());
         this.course_alter.setM_iMaxPle(max);
 
-        String Building = this.Building_Alter.getText();
-
-        Construction construction = new Construction(Building, campus);
+        //获取课程建筑
+        Construction construction = new Construction();
+        try {
+            int ConNum = Integer.parseInt(this.Building_Alter.getText());
+            if (ConNum >=0 && ConNum < this.allCons.size())
+                for (Construction temp : allCons) {
+                    if (temp.get_con_number() == ConNum) {
+                        construction = temp;
+                        break;
+                    }
+                }
+            else
+                throw new MyException(0);
+        } catch (NumberFormatException e) {
+            String ConName = this.Building_Alter.getText();
+            boolean mark = false;
+            for (Construction tool : this.allCons) {
+                if (tool.get_con_name().equals(ConName)) {
+                    construction = tool;
+                    mark = true;
+                    break;
+                }
+            }
+            if (!mark)
+                throw new MyException(0);
+        }
         this.course_alter.setM_sConstruction(construction);
 
+        //获取上课楼层
         int floor = Integer.parseInt(this.Floor_Alter.getText());
-        this.course_alter.setM_iFloor(floor);
+        if (floor > 0 && floor <= construction.get_con_room().size())
+            this.course_alter.setM_iFloor(floor);
+        else
+            throw new MyException(2);
 
+        //获取上课房间号
         int room = Integer.parseInt(this.Room_Alter.getText());
-        this.course_alter.setM_iRoom(room);
+        if (construction.get_con_room().get(floor - 1).contains(room))
+            this.course_alter.setM_iRoom(room);
+        else
+            throw new MyException(2);
 
         //设置一个自增的编号
         int Num = this.courses.get(this.courses.size() - 1).getM_iNum() + 1;
@@ -431,8 +486,10 @@ public class ManagerViewPortController {
                     "课程群号：" + this.course_alter.getM_sCurGroup() + "\n" +
                     "是否确认添加？";
             this.Info.setText(text);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             this.ErrorInfo.setText("输入异常，请重试");
+        } catch (MyException e1) {
+            this.ErrorInfo.setText(e1.getMessage());
         }
     }
 
@@ -478,8 +535,10 @@ public class ManagerViewPortController {
                 this.Info.setText("成功添加" + this.course_alter.getM_sName());
                 this.courses.add(this.course_alter);
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             this.ErrorInfo.setText("输入异常，请重试");
+        } catch (MyException e1) {
+            this.ErrorInfo.setText(e1.getMessage());
         }
     }
 
@@ -532,3 +591,4 @@ public class ManagerViewPortController {
         this.AllCourses.setText(this.studentAccount.exitCourse(this.ToBeOperated));
     }
 }
+

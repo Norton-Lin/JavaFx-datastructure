@@ -127,7 +127,8 @@ public class CourseChooseController {
                             .append(course_ex.getM_tTime().getEndMinute()).append("分").append("\t")
                             .append("上课地点为：").append(course_ex.getM_sConstruction())
                             .append(course_ex.getM_iFloor()).append("层")
-                            .append(course_ex.getM_iRoom()).append("室").append("\t")
+                            .append(course_ex.getM_iRoom()).append("室").append("\n")
+                            .append("当前进度为：").append(course_ex.getM_iCurrentClass()).append("/").append(course_ex.getM_iTotalClass()).append("\t")
                             .append("课程群号：").append(course_ex.getM_sCurGroup()).append("\n");
                     if (course_ex.getM_cExamTime().getWeek() != -1) {
                         texts.append("考试时间：").append("星期").append(course_ex.getM_cExamTime().getWeek())
@@ -174,6 +175,7 @@ public class CourseChooseController {
                             .append(course.getM_iFloor()).append("层").append(course.getM_iRoom()).append("室")
                             .append("\n");
                 }
+                ResOfSearch.setText(texts.toString());
             }
         } catch (NumberFormatException e) {
             System.out.println("用户输入异常");
@@ -263,7 +265,8 @@ public class CourseChooseController {
                             .append(course_ex.getM_tTime().getEndMinute()).append("分").append("\t")
                             .append("上课地点为：").append(course_ex.getM_sConstruction())
                             .append(course_ex.getM_iFloor()).append("层")
-                            .append(course_ex.getM_iRoom()).append("室").append("\t")
+                            .append(course_ex.getM_iRoom()).append("室").append("\n")
+                            .append("当前进度为：").append(course_ex.getM_iCurrentClass()).append("/").append(course_ex.getM_iTotalClass()).append("\t")
                             .append("课程群号：").append(course_ex.getM_sCurGroup()).append("\n");
                     if (course_ex.getM_cExamTime().getWeek() != -1) {
                         texts.append("考试时间：").append("星期").append(course_ex.getM_cExamTime().getWeek())
@@ -307,6 +310,16 @@ public class CourseChooseController {
                     ResOfSearch.setText(texts.toString());
                 } else
                     ResOfSearch.setText("查找失败，请重新输入");
+            } else if (this.ToBeBinarySearched.getText().isEmpty() && this.ToBeFuzzySearched.getText().isEmpty()) {
+                for (Course course : this.courses) {
+                    texts.append(course.getM_sName()).append("\t")
+                            .append("教师为：").append(course.getM_sTeacher()).append("\t")
+                            .append("编号为：").append(course.getM_iNum()).append("\t")
+                            .append("上课地点为：").append(course.getM_sConstruction())
+                            .append(course.getM_iFloor()).append("层").append(course.getM_iRoom()).append("室")
+                            .append("\n");
+                }
+                ResOfSearch.setText(texts.toString());
             }
         } catch (Exception e) {
             e.printStackTrace();
