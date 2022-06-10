@@ -1,5 +1,6 @@
 package com.example.demo1;
 
+import com.example.demo1.Code.LogUtil.LogFile;
 import com.example.demo1.Code.Util.Time;
 import com.example.demo1.Code.clock.ClockOperation;
 import com.example.demo1.Code.clock.EventClock;
@@ -101,6 +102,7 @@ public class ClockController {
      * 设置闹钟
      */
     protected void SetOnClock() {
+        LogFile.info("Student" + this.studentAccount.getID(),"学生设置闹钟");
         int week, month, date, hour, minute;
         Time time = new Time();
         try {
@@ -147,6 +149,7 @@ public class ClockController {
     }
 
     protected void BackToMainMenu() {
+        LogFile.info("Student" + this.studentAccount.getID(),"学生返回主界面");
         SystemTime.restartTime();
         //将第二个界面展示出来
         this.controller.showStage();
@@ -156,6 +159,7 @@ public class ClockController {
     }
 
     protected void handleDelete() {
+        LogFile.info("Student" + this.studentAccount.getID(),"学生删除闹钟");
         String Name = this.NameOfClock.getText();
         if (!Name.isEmpty()) {
             this.info.setText(clockOperation.deleteClock(Name).toString());
@@ -165,6 +169,7 @@ public class ClockController {
     }
 
     protected void handleLook() {
+        LogFile.info("Student" + this.studentAccount.getID(),"学生查看闹钟");
         ArrayList<EventClock> allClock = clockOperation.LookClock();
         StringBuilder text = new StringBuilder();
         for (EventClock tool : allClock) {

@@ -1,5 +1,6 @@
 package com.example.demo1;
 
+import com.example.demo1.Code.LogUtil.LogFile;
 import com.example.demo1.Code.Util.Authority;
 import com.example.demo1.Code.clock.ClockOperation;
 import com.example.demo1.Code.entity.account.Account;
@@ -12,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
+
+import java.io.File;
 import java.io.IOException;
 
 public class MainViewPort_Controller {
@@ -94,6 +97,16 @@ public class MainViewPort_Controller {
 
             //搭建窗口
             thisStage.setTitle("欢迎来到主界面!");
+            final String TAG = "Main";
+            // (可选) 设置日志输出级别, 默认为 INFO 级别
+            LogFile.setLogOutLevel(LogFile.Level.DEBUG);
+            // (可选) 设置日志输出文件(追加到文件尾部)
+            try {
+                LogFile.setLogOutFile(new File("MyLog.log"));
+            } catch (IOException e) {
+                LogFile.error(TAG, "The error log.无法打开日志输出文件");
+                e.printStackTrace();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -125,6 +138,7 @@ public class MainViewPort_Controller {
 
     protected void handleNavButtonAction() {
         SystemTime.stopTime();
+        LogFile.info("User" + this.helloController.getAccount().getID(),"用户进入导航页面");
         NavController navController = new NavController(this);
         thisStage.hide();
         navController.showStage();
@@ -135,6 +149,7 @@ public class MainViewPort_Controller {
             buttonStatusText.setText("你不是学生！");
             return;
         }
+        LogFile.info("User" + this.helloController.getAccount().getID(),"用户进入学生课程管理");
         SystemTime.stopTime();
         CourseChooseController courseChooseController = new CourseChooseController(this);
         thisStage.hide();
@@ -147,6 +162,7 @@ public class MainViewPort_Controller {
             buttonStatusText.setText("你不是学生！");
             return;
         }
+        LogFile.info("User" + this.helloController.getAccount().getID(),"用户进入学生活动管理");
         SystemTime.stopTime();
         ActivityController activityController = new ActivityController(this);
         thisStage.hide();
@@ -158,6 +174,7 @@ public class MainViewPort_Controller {
             buttonStatusText.setText("你不是教师！");
             return;
         }
+        LogFile.info("User" + this.helloController.getAccount().getID(),"用户进入教师课程管理");
         SystemTime.stopTime();
         TeaCourController teaCourController = new TeaCourController(this);
         thisStage.hide();
@@ -169,6 +186,7 @@ public class MainViewPort_Controller {
             buttonStatusText.setText("只有学生可以查看课程表！");
             return;
         }
+        LogFile.info("User" + this.helloController.getAccount().getID(),"用户进入课程表界面");
         SystemTime.stopTime();
         CourseTableController courseTableController = new CourseTableController(this);
         thisStage.hide();
@@ -180,6 +198,7 @@ public class MainViewPort_Controller {
             buttonStatusText.setText("只有学生可以上传作业！");
             return;
         }
+        LogFile.info("User" + this.helloController.getAccount().getID(),"用户进入学生作业上传界面");
         SystemTime.stopTime();
         HomeAndMaterialController homeAndMaterialController = new HomeAndMaterialController(this);
         this.thisStage.hide();
@@ -191,6 +210,7 @@ public class MainViewPort_Controller {
             buttonStatusText.setText("只有学生可以设置闹钟！");
             return;
         }
+        LogFile.info("User" + this.helloController.getAccount().getID(),"用户进入闹钟设置界面");
         SystemTime.stopTime();
         ClockController clockController = new ClockController(this);
         thisStage.hide();
@@ -202,6 +222,7 @@ public class MainViewPort_Controller {
             buttonStatusText.setText("你不是管理员！");
             return;
         }
+        LogFile.info("User" + this.helloController.getAccount().getID(),"用户进入管理员课程管理界面");
         SystemTime.stopTime();
         ManagerViewPortController managerViewPortController
                 = new ManagerViewPortController(this);
@@ -214,6 +235,7 @@ public class MainViewPort_Controller {
             buttonStatusText.setText("你不是管理员！");
             return;
         }
+        LogFile.info("User" + this.helloController.getAccount().getID(),"用户进入管理员活动管理界面");
         SystemTime.stopTime();
         ManagerActController controller = new ManagerActController(this);
         thisStage.hide();
@@ -221,6 +243,7 @@ public class MainViewPort_Controller {
     }
 
     protected void handleExit() {
+        LogFile.info("User" + this.helloController.getAccount().getID(),"用户退出程序");
         System.exit(0);
     }
 
@@ -235,6 +258,7 @@ public class MainViewPort_Controller {
         } else if (this.Thousand.isSelected()) {
             speed = 1000;
         }
+        LogFile.info("User" + this.helloController.getAccount().getID(),"用户设置系统快进时间");
         SystemTime.setSpeed(speed);
     }
 }

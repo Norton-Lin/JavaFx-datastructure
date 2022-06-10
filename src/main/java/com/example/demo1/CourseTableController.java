@@ -1,5 +1,6 @@
 package com.example.demo1;
 
+import com.example.demo1.Code.LogUtil.LogFile;
 import com.example.demo1.Code.entity.Course;
 import com.example.demo1.Code.entity.Search;
 import com.example.demo1.Code.entity.account.StudentAccount;
@@ -29,6 +30,9 @@ public class CourseTableController {
     //在查询课程信息时会用到的Search类的实例化
     private final Search search;
 
+    //本页面的学生账号
+    StudentAccount studentAccount;
+
     @FXML
     public TextArea CourseTable;
     @FXML
@@ -50,7 +54,7 @@ public class CourseTableController {
         this.thisStage = new Stage();
 
         //学生账号
-        StudentAccount studentAccount = new StudentAccount(this.controller.getAccount());
+        studentAccount = new StudentAccount(this.controller.getAccount());
 
         //获取课程
         this.courses = studentAccount.getCourse();
@@ -104,6 +108,7 @@ public class CourseTableController {
     }
 
     protected void BackToMainMenu() {
+        LogFile.info("Student" + this.studentAccount.getID(),"学生在课程表中查询课程信息");
         SystemTime.restartTime();
         //将第二个界面展示出来
         this.controller.showStage();
@@ -113,6 +118,7 @@ public class CourseTableController {
     }
 
     protected void handleSearch() {
+        LogFile.info("Student" + this.studentAccount.getID(),"学生在课程表中查询课程信息");
         int Num = search.BinaryCourseSearch(
                 Integer.parseInt(ToBeSearched.getText()), this.courses);
         String Info;
@@ -149,6 +155,7 @@ public class CourseTableController {
     }
 
     protected void BuildTheTable() {
+        LogFile.info("Student" + this.studentAccount.getID(),"学生访问课程表");
         if (this.courses != null) {
             //存储一周的课表
             ArrayList<String> Mon = new ArrayList<>();

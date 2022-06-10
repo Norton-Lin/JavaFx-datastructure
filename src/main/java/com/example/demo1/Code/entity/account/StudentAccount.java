@@ -238,7 +238,7 @@ public class StudentAccount extends Account{
         courseDatabase.insert(course,this);
         courseDatabase.update(course);
         sortCourse();//对课程进行排序
-        LogFile.info("Student "+getID(),"添加课程");
+        LogFile.info("Student "+getID(),"添加课程"+course.getM_sName());
    }
 
     /**
@@ -250,7 +250,7 @@ public class StudentAccount extends Account{
         CourseDatabase courseDatabase = new CourseDatabase();
         courseDatabase.delete(course,this);
         courseDatabase.update(course);
-        LogFile.info("Student "+getID(),"删除课程");
+        LogFile.info("Student "+getID(),"删除课程"+course.getM_sName());
     }
 
     /**
@@ -261,7 +261,7 @@ public class StudentAccount extends Account{
         this.m_CaActivity.add(activity);
         ActivityDatabase activityDatabase = new ActivityDatabase();
         activityDatabase.insert(activity,this.getID(),0);
-        LogFile.info("Student "+getID(),"添加活动");
+        LogFile.info("Student "+getID(),"添加活动"+activity.getM_sName());
    }
 
     /**
@@ -272,7 +272,7 @@ public class StudentAccount extends Account{
         this.m_CaActivity.remove(activity);
         ActivityDatabase activityDatabase = new ActivityDatabase();
         activityDatabase.delete(activity,this.getID(),0);
-        LogFile.info("Student "+getID(),"删除活动");
+        LogFile.info("Student "+getID(),"删除活动"+activity.getM_sName());
    }
 
     /**
@@ -293,6 +293,7 @@ public class StudentAccount extends Account{
         {
             AccountDatabase accountDatabase = new AccountDatabase();
             accountDatabase.insertClock(this,clock);
+            LogFile.info("Student "+getID(),"添加闹钟");
         }
         return result;
     }
@@ -316,6 +317,7 @@ public class StudentAccount extends Account{
         {
             AccountDatabase accountDatabase = new AccountDatabase();
             accountDatabase.deleteClock(this,clock);
+            LogFile.info("Student "+getID(),"删除闹钟");
         }
         return result;
     }

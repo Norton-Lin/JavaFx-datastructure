@@ -1,5 +1,6 @@
 package com.example.demo1;
 
+import com.example.demo1.Code.LogUtil.LogFile;
 import com.example.demo1.Code.Mysql.AccountDatabase;
 import com.example.demo1.Code.Util.Authority;
 import com.example.demo1.Code.entity.account.Account;
@@ -77,6 +78,7 @@ public class HelloController {
 
         //登录成功的场景
         if (database.findByPassword(account)) {
+            LogFile.info("User" + this.account.getID(),"登录");
         buttonStatusText.setText("欢迎使用捏！");
         MainViewPort_Controller mainViewPort_controller = new MainViewPort_Controller(this);
         //本页面隐藏

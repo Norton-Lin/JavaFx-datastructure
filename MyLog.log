@@ -1,10 +1,6 @@
-05/18 13:49:07.711 D/Main: The debug log.The debug log.
-05/18 13:49:07.721 I/Main: The info log.The info log.
-05/18 13:49:07.721 W/Main: The warn log.The warn log.
-05/18 13:49:07.721 E/Main: The error log.The error log.无法打开日志输出文件
-05/18 13:49:07.721 I/Student: The info log.查询课程1
-05/18 16:04:54.903 D/Main: The debug log.The debug log.
-05/18 16:04:54.916 I/Main: The info log.The info log.
-05/18 16:04:54.917 W/Main: The warn log.The warn log.
-05/18 16:04:54.917 E/Main: The error log.The error log.无法打开日志输出文件
-05/18 16:04:54.917 I/Student: The info log.查询课程1
+06/10 21:13:01.707 I/Student1: The info log. 查询课程1001
+06/10 21:13:01.750 I/Student 1: The info log.删除课程
+06/10 21:13:05.776 I/Student 1: The info log.添加课程
+06/10 21:13:15.270 I/Student1: The info log. 查询课程1001
+06/10 21:13:15.294 I/Student 1: The info log.删除课程
+06/10 21:13:17.500 I/Student 1: The info log.添加课程

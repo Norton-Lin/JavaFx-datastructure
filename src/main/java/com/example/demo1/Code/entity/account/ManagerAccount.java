@@ -197,6 +197,7 @@ public class ManagerAccount extends Account{
         if(accountDatabase.findClass(ID))//班级存在
         {
             activityDatabase.insert(activity, ID, 1);//为单个用户添加活动
+            LogFile.info("Manager"+getID(),"管理员发布班级活动 "+activity.getM_sName());
             result = true;
         }
         return result;

@@ -1,5 +1,6 @@
 package com.example.demo1;
 
+import com.example.demo1.Code.LogUtil.LogFile;
 import com.example.demo1.Code.Mysql.CourseDatabase;
 import com.example.demo1.Code.Mysql.HomeWorkDatabase;
 import com.example.demo1.Code.entity.Course;
@@ -94,6 +95,7 @@ public class TeaCourController {
     }
 
     protected void handleBack() {
+        LogFile.info("Teacher" + this.teacherAccount.getID(),"教师返回主界面");
         SystemTime.restartTime();
         //将第二个界面展示出来
         this.controller.showStage();
@@ -103,6 +105,7 @@ public class TeaCourController {
     }
 
     protected void handleSearch() {
+        LogFile.info("Teacher" + this.teacherAccount.getID(),"教师查找课程");
         if (!this.Course_Name.getText().isEmpty()) {
             try {
                 int Num0 = Integer.parseInt(this.Course_Name.getText());
@@ -149,6 +152,7 @@ public class TeaCourController {
                 result.setM_iCurrentClass(Num + 1);
                 database.update(this.result);
                 this.Info.setText("进度已成功加一！");
+                LogFile.info("Teacher" + this.teacherAccount.getID(),"教师增加" + this.result.toString() + "课程进度");
             } else {
                 this.Info.setText("进度已达最大值！");
             }
@@ -194,6 +198,7 @@ public class TeaCourController {
                                 HomeWorkDatabase database = new HomeWorkDatabase();
                                 database.insert(this.result, homework);
                                 this.Info.setText("作业发布成功！");
+                                LogFile.info("Teacher" + this.teacherAccount.getID(),"教师给" + this.result.toString() + "发布作业");
                             }
                         else
                             this.Info.setText("作业发布失败~");
@@ -205,6 +210,7 @@ public class TeaCourController {
     }
 
     protected void handleUpload() {
+        LogFile.info("Teacher" + this.teacherAccount.getID(),"教师给" + this.result.toString() + "上传资料");
         if (this.result != null) {
             String resourcePath = this.result.getM_sData();
             MaterialOperation.MaterialPort(resourcePath);

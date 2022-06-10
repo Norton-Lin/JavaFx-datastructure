@@ -1,5 +1,6 @@
 package com.example.demo1;
 
+import com.example.demo1.Code.LogUtil.LogFile;
 import com.example.demo1.Code.Util.Time;
 import com.example.demo1.Code.entity.account.StudentAccount;
 import com.example.demo1.Code.systemtime.SystemTime;
@@ -92,6 +93,7 @@ public class NavController {
     }
 
     protected void handleSubmitButtonAction() {
+        LogFile.info("User" + this.mainViewPort_controller.getAccount().getID(),"用户进行导航操作");
 
         //默认交通方式为步行
         int traffic = -1;
@@ -185,6 +187,7 @@ public class NavController {
     }
 
     protected void handleBackAction() {
+        LogFile.info("User" + this.mainViewPort_controller.getAccount().getID(),"用户返回主界面");
         SystemTime.restartTime();
 
         //将第二个界面展示出来
