@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static javax.swing.JFileChooser.FILES_AND_DIRECTORIES;
 
-public class MaterialOperation {
+public class Material {
     public static class MaterialMenu extends JFrame {
 
         /**
@@ -39,6 +39,7 @@ public class MaterialOperation {
 
             MenuItem typeView = new MenuItem("查看资料");
             MenuItem typeChoose = new MenuItem("选择资料");
+            MenuItem typeClose = new MenuItem("退       出");
 
             //查看资料选项
             menuType.addActionListener(e -> {
@@ -104,8 +105,12 @@ public class MaterialOperation {
                 }
             });
 
+            //退出选项
+            typeClose.addActionListener(e -> System.exit(0));
+
             menuType.add(typeView);
             menuType.add(typeChoose);
+            menuType.add(typeClose);
 
             //创建菜单 Operate，添加到菜单栏
             Menu menuOperate = new Menu("去重[可选]", true);
@@ -241,7 +246,7 @@ public class MaterialOperation {
             setVisible(true);
             this.setLocationRelativeTo(null);
             this.setResizable(false);
-            this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+            this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         }
     }
@@ -342,11 +347,11 @@ public class MaterialOperation {
      *
      * @param storePath 资料区目录
      */
-    public static void MaterialPort(String storePath) {
-        new MaterialOperation.MaterialMenu(storePath);
+    public static void MaterialOperation(String storePath) {
+        new Material.MaterialMenu(storePath);
     }
 
     public static void main(String[] args) {
-        MaterialPort("D:\\Material");
+        MaterialOperation("D:\\Material");
     }
 }

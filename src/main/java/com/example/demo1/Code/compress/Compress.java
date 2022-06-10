@@ -188,7 +188,7 @@ public class Compress {
     private void writeToFile(String filename, String storePath) {
         File fr = new File(filename);//待压缩文件
         File temp = new File(filename);
-        String newFileName = storePath + "\\" + temp.getName() + ".si";//压缩文件名是在原文件的后面加.si拓展
+        String newFileName = storePath +"\\"+ temp.getName()+".si";//压缩文件名是在原文件的后面加.si拓展
         /*Scanner x = new Scanner(System.in);//读取输入指令
         int order ;*/
         if (!fr.exists()) {
@@ -241,34 +241,32 @@ public class Compress {
                 flag = true;
             tmp = (char) in.read();//读入一个字符
             code = searchDictionary(tmp); //从字典里查出字符的哈夫曼编码
-            if (code != null) {
-                while (flag) {
-                    while (index < 8)//8个比特（1字节）一循环写入压缩数据
+            while (flag) {
+                while (index < 8)//8个比特（1字节）一循环写入压缩数据
+                {
+                    if (code.length() > codeIndex) {
+                        if (code.charAt(codeIndex) == '0') //标记位为0
+                            buffer &= ~(1 << index); //对应的位置为0
+                        else// if (code.charAt(codeIndex) == '1') //标记位为1
+                            buffer |= (1 << index); //对应的位置为1
+                        codeIndex++;
+                        index++;
+                    } else //字符已读完，跳出循环，读取下一个字符
                     {
-                        if (code.length() > codeIndex) {
-                            if (code.charAt(codeIndex) == '0') //标记位为0
-                                buffer &= ~(1 << index); //对应的位置为0
-                            else// if (code.charAt(codeIndex) == '1') //标记位为1
-                                buffer |= (1 << index); //对应的位置为1
-                            codeIndex++;
-                            index++;
-                        } else //字符已读完，跳出循环，读取下一个字符
-                        {
-                            tmp = (char) in.read(); //从源文件读一个字符
-                            codeIndex = 0;                    //字符检索位归0
-                            code = searchDictionary(tmp); //从字典里查出字符的哈夫曼编码
-                            if (tmp == 65535) {
-                                flag = false;//文件已读完
-                                break;
-                            }
+                        tmp = (char) in.read(); //从源文件读一个字符
+                        codeIndex = 0;                    //字符检索位归0
+                        code = searchDictionary(tmp); //从字典里查出字符的哈夫曼编码
+                        if (tmp == 65535) {
+                            flag = false;//文件已读完
+                            break;
                         }
                     }
-                    if (index != 0) {
-                        out.write(buffer); //将转换后的内容写入压缩文件
-                        buffer = 0;
-                    }
-                    index = 0;
                 }
+                if (index != 0) {
+                    out.write(buffer); //将转换后的内容写入压缩文件
+                    buffer = 0;
+                }
+                index = 0;
             }
             in.close();
             out.close();
@@ -317,7 +315,7 @@ public class Compress {
 
     public void writeToDeFile(String filename, String storePath) {
         File fr = new File(filename);//待解压文件
-        String newFileName = storePath + "\\" + fr.getName().replace(".si", "");//解压文件名通过删去压缩文件名的.si拓展得到
+        String newFileName = storePath+"\\"+fr.getName().replace(".si", "");//解压文件名通过删去压缩文件名的.si拓展得到
         System.out.println(newFileName);
         //int order;
         if (!fr.exists()) {
@@ -398,8 +396,8 @@ public class Compress {
 
     private static String getFileExtension(File file) {
         String fileName = file.getName();
-        if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
-            return fileName.substring(fileName.lastIndexOf(".") + 1);
+        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+            return fileName.substring(fileName.lastIndexOf(".")+1);
         else return "";
     }
 

@@ -20,7 +20,7 @@ import static javax.swing.JFileChooser.FILES_AND_DIRECTORIES;
  * 与前端的接口为HomeworkOperation()方法
  * 注意事项：小组其他成员在测试时可能需要修改代码第70-85行中部分exe文件的内存地址
  */
-public class HomeworkOperation {
+public class Homework {
 
     public static class HomeworkMenu extends JFrame {
 
@@ -44,6 +44,7 @@ public class HomeworkOperation {
             //创建菜单 Type的选项
             MenuItem typeView = new MenuItem("查看作业");
             MenuItem typeChoose = new MenuItem("提交作业");
+            MenuItem typeClose = new MenuItem("退       出");
 
             AtomicInteger flag = new AtomicInteger();//设置标志，用于判断后续执行何种操作
 
@@ -114,8 +115,12 @@ public class HomeworkOperation {
                 }
             });
 
+            //退出程序选项
+            typeClose.addActionListener(e -> System.exit(0));
+
             menuType.add(typeView);
             menuType.add(typeChoose);
+            menuType.add(typeClose);
 
             //创建菜单 Operate，添加到菜单栏
             Menu menuOperate = new Menu("去重[可选]", true);
@@ -275,7 +280,7 @@ public class HomeworkOperation {
             setVisible(true);
             this.setLocationRelativeTo(null);
             this.setResizable(false);
-            this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+            this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         }
 
@@ -378,12 +383,12 @@ public class HomeworkOperation {
      *
      * @param storePath 作业区目录
      */
-    public static void HomeworkPort(String storePath) {
+    public static void HomeworkOperation(String storePath) {
         new HomeworkMenu(storePath);
     }
 
     //main方法仅作测试
     public static void main(String[] args) {
-        HomeworkPort("D:\\Homework");
+        HomeworkOperation("D:\\Homework");
     }
 }
