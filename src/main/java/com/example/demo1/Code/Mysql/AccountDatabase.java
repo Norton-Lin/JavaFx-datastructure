@@ -171,79 +171,65 @@ public class AccountDatabase {
         return true;
     }
     //读取学生对应的数据
-    public void findStuAccount(StudentAccount studentAccount){
-        ArrayList<Course> course = new ArrayList<>();
-        ArrayList<Activity> activity = new ArrayList<>();
-        ArrayList<EventClock> clocks = new ArrayList<>();
-        CourseDatabase courseDatabase = new CourseDatabase();
-        ActivityDatabase activityDatabase = new ActivityDatabase();
-        courseDatabase.find(course);//这边要读course数据
-        activityDatabase.find(activity,studentAccount.getID(),1);//读取活动数据
-        activityDatabase.find(activity,studentAccount.getClassID(),0);//读取班级活动
-        findClock(studentAccount,clocks);
-        studentAccount.setCourse(course);
-        studentAccount.setActivity(activity);
-        studentAccount.setM_CaEventClock(clocks);
+    public void findStuAccount(StudentAccount studentAccount) {
+            Connection conn = null ; // 数据库连接
+            Statement stmt = null ; // 数据库操作
+            ResultSet rs = null; // 保存查询结果
+            //读取对应课程
+            String sql1 = "SELECT id_account,id_course FROM account_course where id_account = '"+studentAccount.getID()+"'";
+            //读取对应活动
+            String sql2 = "SELECT *FROM activity where account_id= '"+studentAccount.getID()+"'";
+            String sql3 = "SELECT * FROM account_clock where account_id ="+studentAccount.getID();
+            String sql4 = "SELECT *FROM class_activity where class_id='"+studentAccount.getClassID()+"'";
+            try {
+                conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
+                stmt = conn.createStatement();// 实例化Statement对象
+                rs = stmt.executeQuery(sql1);// 实例化ResultSet对象
+                while (rs.next()) { // 指针向下移动
+                    Course course = new Course();
+                    course.setM_iNum(rs.getInt("id_course"));
+                    CourseDatabase courseDatabase = new CourseDatabase();
+                    courseDatabase.find(course);//这边要读course数据
+                    studentAccount.getCourse().add(course);//向ArrayList中添加
+                }
+                rs.close();// 关闭课程结果集
+                rs = stmt.executeQuery(sql2);// 实例化ResultSet对象
+                while (rs.next()) { // 指针向下移动
+                    Activity activity = new Activity();
+                    activity.setM_sName(rs.getString("name"));
+                    ActivityDatabase activityDatabase = new ActivityDatabase();
+                    activityDatabase.find(activity,studentAccount.getID());//这边要读course数据
+                    studentAccount.getActivity().add(activity);//向ArrayList中添加
+                }
+                rs.close();// 关闭活动结果集
+                rs = stmt.executeQuery(sql3);// 实例化ResultSet对象
+                while(rs.next()){
+                    EventClock eventClock = new EventClock();
+                    eventClock.setClockName(rs.getString("clock_name"));
+                    eventClock.setClockType(rs.getInt("type"));
+                    eventClock.getClockTime().setStartMonth(rs.getInt("month"));
+                    eventClock.getClockTime().setStartDate(rs.getInt("day"));
+                    eventClock.getClockTime().setWeek(rs.getInt("week"));
+                    eventClock.getClockTime().setStartHour(rs.getInt("hour"));
+                    eventClock.getClockTime().setStartMinute(rs.getInt("min"));
+                    studentAccount.getM_CaEventClock().add(eventClock);
+                }
+                rs.close();// 关闭课程结果集
+                rs = stmt.executeQuery(sql4);// 实例化ResultSet对象
+                while (rs.next()) { // 指针向下移动
+                    Activity activity = new Activity();
+                    activity.setM_sName(rs.getString("name"));
+                    ActivityDatabase activityDatabase = new ActivityDatabase();
+                    activityDatabase.find(activity,studentAccount.getClassID());//这边要读course数据
+                    studentAccount.getActivity().add(activity);//向ArrayList中添加
+                }
+                stmt.close();
+                conn.close();
+            } catch (SQLException throwable) {
+                throwable.printStackTrace();
+                LogFile.error("AccountDatabase","数据库读取错误");
+            }
     }
-   /** {
-        Connection conn = null ; // 数据库连接
-        Statement stmt = null ; // 数据库操作
-        ResultSet rs = null; // 保存查询结果
-        //读取对应课程
-        String sql1 = "SELECT id_account,id_course FROM account_course where id_account = '"+studentAccount.getID()+"'";
-        //读取对应活动
-        String sql2 = "SELECT *FROM activity where account_id= '"+studentAccount.getID()+"'";
-        String sql3 = "SELECT * FROM account_clock where account_id ="+studentAccount.getID();
-        String sql4 = "SELECT *FROM class_activity where class_id='"+studentAccount.getClassID()+"'";
-        try {
-            conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
-            stmt = conn.createStatement();// 实例化Statement对象
-            rs = stmt.executeQuery(sql1);// 实例化ResultSet对象
-            while (rs.next()) { // 指针向下移动
-                Course course = new Course();
-                course.setM_iNum(rs.getInt("id_course"));
-                CourseDatabase courseDatabase = new CourseDatabase();
-                courseDatabase.find(course);//这边要读course数据
-                studentAccount.getCourse().add(course);//向ArrayList中添加
-            }
-            rs.close();// 关闭课程结果集
-            rs = stmt.executeQuery(sql2);// 实例化ResultSet对象
-            while (rs.next()) { // 指针向下移动
-                Activity activity = new Activity();
-                activity.setM_sName(rs.getString("name"));
-                ActivityDatabase activityDatabase = new ActivityDatabase();
-                activityDatabase.find(activity,studentAccount.getID());//这边要读course数据
-                studentAccount.getActivity().add(activity);//向ArrayList中添加
-            }
-            rs.close();// 关闭活动结果集
-            rs = stmt.executeQuery(sql3);// 实例化ResultSet对象
-            while(rs.next()){
-                EventClock eventClock = new EventClock();
-                eventClock.setClockName(rs.getString("clock_name"));
-                eventClock.setClockType(rs.getInt("type"));
-                eventClock.getClockTime().setStartMonth(rs.getInt("month"));
-                eventClock.getClockTime().setStartDate(rs.getInt("day"));
-                eventClock.getClockTime().setWeek(rs.getInt("week"));
-                eventClock.getClockTime().setStartHour(rs.getInt("hour"));
-                eventClock.getClockTime().setStartMinute(rs.getInt("min"));
-                studentAccount.getM_CaEventClock().add(eventClock);
-            }
-            rs.close();// 关闭课程结果集
-            rs = stmt.executeQuery(sql4);// 实例化ResultSet对象
-            while (rs.next()) { // 指针向下移动
-                Activity activity = new Activity();
-                activity.setM_sName(rs.getString("name"));
-                ActivityDatabase activityDatabase = new ActivityDatabase();
-                activityDatabase.find(activity,studentAccount.getClassID());//这边要读course数据
-                studentAccount.getActivity().add(activity);//向ArrayList中添加
-            }
-            stmt.close();
-            conn.close();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-            LogFile.error("AccountDatabase","数据库读取错误");
-        }
-    }*/
     //读取教师对应的数据
     public void findTeaAccount(TeacherAccount teacherAccount){
         Connection conn = null ; // 数据库连接
