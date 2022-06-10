@@ -115,7 +115,7 @@ public class TeacherAccount extends Account{
     public void addActivity(Activity activity){
         this.m_CaActivity.add(activity);
         ActivityDatabase activityDatabase = new ActivityDatabase();
-        activityDatabase.insert(activity,this.getID());
+        activityDatabase.insert(activity,this.getID(),0);
         LogFile.info("Teacher "+getID(),"添加活动");
     }
 
