@@ -5,7 +5,6 @@ import com.example.demo1.Code.entity.Course;
 import com.example.demo1.Code.entity.FuzzySearch;
 import com.example.demo1.Code.entity.Search;
 import com.example.demo1.Code.entity.account.StudentAccount;
-import com.example.demo1.Code.systemtime.SystemTime;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -347,7 +346,6 @@ public class CourseChooseController {
     }
 
     private void backToMainClicked() {
-        SystemTime.restartTime();
         //将第二个界面展示出来
         this.controller.showStage();
 

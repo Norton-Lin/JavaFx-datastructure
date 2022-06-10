@@ -6,7 +6,6 @@ import com.example.demo1.Code.entity.Activity;
 import com.example.demo1.Code.entity.Construction;
 import com.example.demo1.Code.entity.FuzzySearch;
 import com.example.demo1.Code.entity.account.StudentAccount;
-import com.example.demo1.Code.systemtime.SystemTime;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -32,8 +31,6 @@ public class ActivityController {
     @FXML
     public TextField Date;
     @FXML
-    public TextField Week;
-    @FXML
     public TextField STH;
     @FXML
     public TextField STM;
@@ -45,10 +42,6 @@ public class ActivityController {
     public RadioButton Solo = new RadioButton();
     @FXML
     public RadioButton Group = new RadioButton();
-    @FXML
-    public RadioButton ShaHe = new RadioButton();
-    @FXML
-    public RadioButton XiTuCheng = new RadioButton();
     @FXML
     public TextField Building;
     @FXML
@@ -107,7 +100,6 @@ public class ActivityController {
     }
 
     private void BackToMainClicked() {
-        SystemTime.restartTime();
         //将第二个界面展示出来
         this.controller.showStage();
 
@@ -121,17 +113,16 @@ public class ActivityController {
 
             int Month = Integer.parseInt(this.Month.getText());
             int Date = Integer.parseInt(this.Date.getText());
-            int Week = Integer.parseInt(this.Week.getText());
             int STH = Integer.parseInt(this.STH.getText());
             int STM = Integer.parseInt(this.STM.getText());
             int ENH = Integer.parseInt(this.ENH.getText());
             int ENM = Integer.parseInt(this.ENM.getText());
-            if (Month <= 0 || Month > 12 || Date <= 0 || Date > 31 || Week <= 0 || Week > 7)
+            if (Month <= 0 || Month > 12 || Date <= 0 || Date > 31)
                 throw new Exception();
-            Time time = new Time(STH, STM, ENH, ENM, Date, Month, Week);
+            Time time = new Time(STH, STM, ENH, ENM, Date, Month);
 
             Property type = Property.SELF;
-            int Num = -1000;
+            int Num = 2000;
             if (this.Solo.isSelected()) {
                 Num = 2000;
             } else if (this.Group.isSelected()) {
@@ -139,15 +130,8 @@ public class ActivityController {
                 Num = 3000;
             }
 
-            int campus = -1;
-            if (this.ShaHe.isSelected()) {
-                campus = 0;
-            } else if (this.XiTuCheng.isSelected()) {
-                campus = 1;
-            }
             String Building = this.Building.getText();
-            Construction construction = new Construction(Building, campus);
-
+            Construction construction = new Construction(Building);
             int Floor = Integer.parseInt(this.Floor.getText());
             int Room = Integer.parseInt(this.Room.getText());
 
@@ -156,7 +140,7 @@ public class ActivityController {
             //根据上面的参数构建活动并传入
             this.ErrorInfo.setText(this.studentAccount.registerActivity(activity));
         } catch (Exception e) {
-            this.ErrorInfo.setText("输入错误！\n月日周楼层房间都请输入数字！");
+            this.ErrorInfo.setText("输入错误！\n请按照合理的方式输入数据哦！");
         }
     }
 

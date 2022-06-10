@@ -75,7 +75,7 @@ public class ClockController {
         //创建当前闹钟的学生账户
         this.studentAccount = new StudentAccount(this.controller.getAccount());
         //获取系统时间
-//        this.systemTime = new SystemTime(this.studentAccount);
+        this.systemTime = new SystemTime(this.studentAccount);
         this.systemTime.SystemTimeStart();
         try {
             //加载FXML文件
