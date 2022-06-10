@@ -1,7 +1,9 @@
 package com.example.demo1;
 
 import com.example.demo1.Code.Util.Authority;
+import com.example.demo1.Code.clock.ClockOperation;
 import com.example.demo1.Code.entity.account.Account;
+import com.example.demo1.Code.entity.account.StudentAccount;
 import com.example.demo1.Code.systemtime.SystemTime;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,6 +42,8 @@ public class MainViewPort_Controller {
     @FXML
     public Button Manager_Act;
     @FXML
+    public Button Exit;
+    @FXML
     public Label buttonStatusText;
     @FXML
     public RadioButton One;
@@ -54,6 +58,8 @@ public class MainViewPort_Controller {
 
     SystemTime systemTime;
 
+    ClockOperation clockOperation;
+
     public MainViewPort_Controller(HelloController controller) {
 
         //收到了hello-view.fxml的Controller
@@ -66,6 +72,12 @@ public class MainViewPort_Controller {
         systemTime.SystemTimeStart();
 
         SystemTime.setSpeed(1);
+
+        if (this.helloController.getAccount().getAuthority() == Authority.Student) {
+            StudentAccount studentAccount = new StudentAccount(this.helloController.getAccount());
+            clockOperation = new ClockOperation(studentAccount);
+            clockOperation.startClock();
+        }
 
         //创建新场景
         thisStage = new Stage();
@@ -108,6 +120,7 @@ public class MainViewPort_Controller {
         Manager.setOnAction(event -> handleManagerButtonAction());
         SetSpeed.setOnAction(event -> handleSpeed());
         Manager_Act.setOnAction(event -> handleManagerAct());
+        Exit.setOnAction(event -> handleExit());
     }
 
     protected void handleNavButtonAction() {
@@ -205,6 +218,10 @@ public class MainViewPort_Controller {
         ManagerActController controller = new ManagerActController(this);
         thisStage.hide();
         controller.showStage();
+    }
+
+    protected void handleExit() {
+        System.exit(0);
     }
 
     protected void handleSpeed() {

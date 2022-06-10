@@ -264,7 +264,7 @@ public class StudentAccount extends Account{
     public void decActivity(Activity activity){
         this.m_CaActivity.remove(activity);
         ActivityDatabase activityDatabase = new ActivityDatabase();
-        activityDatabase.delete(activity,this.getID());
+        activityDatabase.delete(activity,this.getID(), 0);
         LogFile.info("Student "+getID(),"删除活动");
    }
 

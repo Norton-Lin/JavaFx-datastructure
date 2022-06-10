@@ -113,38 +113,42 @@ public class CourseChooseController {
         //若精确查找框内有内容，优先查找此部分
         try {
             if (!this.ToBeBinarySearched.getText().isEmpty()) {
+                search.QuickSort(tool, 0, tool.size() - 1);
                 int Num = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), tool);
-                Course course_ex = tool.get(Num);
-                texts.append(course_ex.getM_sName()).append("\t")
-                        .append("教师为：").append(course_ex.getM_sTeacher()).append("\t")
-                        .append("编号为：").append(course_ex.getM_iNum()).append("\t")
-                        .append("上课时间为：").append("星期").append(course_ex.getM_tTime().getWeek())
-                        .append(course_ex.getM_tTime().getStartHour()).append("时")
-                        .append(course_ex.getM_tTime().getStartMinute()).append("分").append("~")
-                        .append(course_ex.getM_tTime().getEndHour()).append("时")
-                        .append(course_ex.getM_tTime().getEndMinute()).append("分").append("\t")
-                        .append("上课地点为：").append(course_ex.getM_sConstruction())
-                        .append(course_ex.getM_iFloor()).append("层")
-                        .append(course_ex.getM_iRoom()).append("室").append("\t")
-                        .append("课程群号：").append(course_ex.getM_sCurGroup()).append("\n");
-                if (course_ex.getM_cExamTime().getWeek() != -1) {
-                    texts.append("考试时间：").append("星期").append(course_ex.getM_cExamTime().getWeek())
-                            .append(course_ex.getM_cExamTime().getStartHour()).append("时")
-                            .append(course_ex.getM_cExamTime().getStartMinute()).append("分").append("~")
-                            .append(course_ex.getM_cExamTime().getEndHour()).append("时")
-                            .append(course_ex.getM_cExamTime().getEndMinute()).append("分");
+                if (Num != tool.size()) {
+                    Course course_ex = tool.get(Num);
+                    texts.append(course_ex.getM_sName()).append("\t")
+                            .append("教师为：").append(course_ex.getM_sTeacher()).append("\t")
+                            .append("编号为：").append(course_ex.getM_iNum()).append("\t")
+                            .append("上课时间为：").append("星期").append(course_ex.getM_tTime().getWeek())
+                            .append(course_ex.getM_tTime().getStartHour()).append("时")
+                            .append(course_ex.getM_tTime().getStartMinute()).append("分").append("~")
+                            .append(course_ex.getM_tTime().getEndHour()).append("时")
+                            .append(course_ex.getM_tTime().getEndMinute()).append("分").append("\t")
+                            .append("上课地点为：").append(course_ex.getM_sConstruction())
+                            .append(course_ex.getM_iFloor()).append("层")
+                            .append(course_ex.getM_iRoom()).append("室").append("\t")
+                            .append("课程群号：").append(course_ex.getM_sCurGroup()).append("\n");
+                    if (course_ex.getM_cExamTime().getWeek() != -1) {
+                        texts.append("考试时间：").append("星期").append(course_ex.getM_cExamTime().getWeek())
+                                .append(course_ex.getM_cExamTime().getStartHour()).append("时")
+                                .append(course_ex.getM_cExamTime().getStartMinute()).append("分").append("~")
+                                .append(course_ex.getM_cExamTime().getEndHour()).append("时")
+                                .append(course_ex.getM_cExamTime().getEndMinute()).append("分");
+                    } else {
+                        texts.append("考试时间未公布\t");
+                    }
+                    if (!course_ex.getM_cExamConstruction().toString().equals("")) {
+                        texts.append("考试地点：").append(course_ex.getM_cExamConstruction())
+                                .append(course_ex.getM_iExamFloor()).append("层")
+                                .append(course_ex.getM_iExamRoom()).append("室");
+                    } else {
+                        texts.append("考试地点未公布");
+                    }
+                    this.ResOfSearch.setText(texts.toString());
                 } else {
-                    texts.append("考试时间未公布\t");
+                    texts.append("查找失败！");
                 }
-                if (!course_ex.getM_cExamConstruction().toString().equals("")) {
-                    texts.append("考试地点：").append(course_ex.getM_cExamConstruction())
-                            .append(course_ex.getM_iExamFloor()).append("层")
-                            .append(course_ex.getM_iExamRoom()).append("室");
-                } else {
-                    texts.append("考试地点未公布");
-                }
-                this.ResOfSearch.setText(texts.toString());
-
                 //若精确查找框内不存在内容，则进行模糊查找，否则不进行模糊查找
             } else if (!this.ToBeFuzzySearched.getText().isEmpty()) {
                 //将模糊查找结果存入 list
@@ -161,6 +165,15 @@ public class CourseChooseController {
                     ResOfSearch.setText(texts.toString());
                 } else
                     ResOfSearch.setText("查找失败，请重新输入");
+            } else if (this.ToBeBinarySearched.getText().isEmpty() && this.ToBeFuzzySearched.getText().isEmpty()) {
+                for (Course course : tool) {
+                    texts.append(course.getM_sName()).append("\t")
+                            .append("教师为：").append(course.getM_sTeacher()).append("\t")
+                            .append("编号为：").append(course.getM_iNum()).append("\t")
+                            .append("上课地点为：").append(course.getM_sConstruction())
+                            .append(course.getM_iFloor()).append("层").append(course.getM_iRoom()).append("室")
+                            .append("\n");
+                }
             }
         } catch (Exception e) {
             System.out.println("用户输入异常");
@@ -236,6 +249,7 @@ public class CourseChooseController {
         //若精确查找框内有内容，优先查找此部分
         try {
             if (!this.ToBeBinarySearched.getText().isEmpty()) {
+                search.QuickSort(this.courses, 0, this.courses.size() - 1);
                 int Num = search.BinaryCourseSearch(Integer.parseInt(ToBeBinarySearched.getText()), this.courses);
                 if(Num!=this.courses.size()){
                 Course course_ex = this.courses.get(Num);

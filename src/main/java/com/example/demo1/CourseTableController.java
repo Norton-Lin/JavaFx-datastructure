@@ -62,7 +62,7 @@ public class CourseTableController {
             //加载FXML文件
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseTable.fxml"));
             loader.setController(this);
-            thisStage.setScene(new Scene(loader.load(), 1800, 700));
+            thisStage.setScene(new Scene(loader.load(), 1200, 700));
             thisStage.setTitle("欢迎来到课程表~");
         } catch (IOException e) {
             e.printStackTrace();

@@ -97,11 +97,16 @@ public class ClockController {
         thisStage.show();
     }
 
+    /**
+     * 设置闹钟
+     */
     protected void SetOnClock() {
         int week, month, date, hour, minute;
         Time time = new Time();
         try {
             int type = 0;
+            //根据不同的闹钟类型获得不同的参数以构造时间类
+            //只响一次的闹钟需要输入全部信息
             if (this.Once.isSelected()) {
                 type = 0;
                 month = Integer.parseInt(this.Month.getText());
@@ -114,13 +119,14 @@ public class ClockController {
                 time.setWeek(week);
                 time.setStartHour(hour);
                 time.setStartMinute(minute);
-
+            //每天一次的闹钟只需输入时间和分钟信息
             } else if (this.PerDay.isSelected()) {
                 type = 1;
                 hour = Integer.parseInt(this.Hour1.getText());
                 minute = Integer.parseInt(this.Minute1.getText());
                 time.setStartHour(hour);
                 time.setStartMinute(minute);
+            //每周一次的闹钟需要输入星期、小时和分钟信息
             } else if (this.PerWeek.isSelected()) {
                 type = 7;
                 week = Integer.parseInt(this.Week.getText());

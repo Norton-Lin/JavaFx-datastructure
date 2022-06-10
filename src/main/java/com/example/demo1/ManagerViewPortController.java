@@ -464,16 +464,19 @@ public class ManagerViewPortController {
             if (this.courses.contains(this.course_alter))
                 this.ErrorInfo.setText("课程已存在！");
             else {
-                courseDatabase.insert(this.course_alter);
-                this.Info.setText("成功添加" + this.course_alter.getM_sName());
-                this.courses.add(this.course_alter);
+
                 String dirName0 = "D://Homework" + "//" + this.course_alter.getM_iNum();
                 String dirName1 = "D://Resources" + "//" + this.course_alter.getM_iNum();
                 File file0 = new File(dirName0);
                 File file1 = new File(dirName1);
                 boolean mark = file0.mkdir();
-                if (!mark)
-                    this.ErrorInfo.setText("创建作业文件夹失败");
+                boolean mark1 = file1.mkdir();
+                this.course_alter.setM_sData(dirName1);
+                if (!mark || !mark1)
+                    this.ErrorInfo.setText("创建课程文件管理区失败！");
+                courseDatabase.insert(this.course_alter);
+                this.Info.setText("成功添加" + this.course_alter.getM_sName());
+                this.courses.add(this.course_alter);
             }
         } catch (Exception e) {
             this.ErrorInfo.setText("输入异常，请重试");

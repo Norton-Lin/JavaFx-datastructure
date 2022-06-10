@@ -100,6 +100,9 @@ public class ActivityController {
         this.Delete.setOnAction(event -> DeleteClicked());
     }
 
+    /**
+     * 处理回到主界面的请求
+     */
     private void BackToMainClicked() {
         SystemTime.restartTime();
         //将第二个界面展示出来
@@ -109,10 +112,15 @@ public class ActivityController {
         this.thisStage.hide();
     }
 
+    /**
+     * 构建一个活动
+     */
     private void AssureClicked() {
         try {
+            //获得活动名
             String Name = this.Name.getText();
 
+            //获得活动时间
             int Month = Integer.parseInt(this.Month.getText());
             int Date = Integer.parseInt(this.Date.getText());
             int STH = Integer.parseInt(this.STH.getText());
@@ -123,6 +131,7 @@ public class ActivityController {
                 throw new Exception();
             Time time = new Time(STH, STM, ENH, ENM, Date, Month);
 
+            //根据选项判断活动类型（个人/集体）
             Property type = Property.SELF;
             int Num = 2000;
             if (this.Solo.isSelected()) {
@@ -132,6 +141,7 @@ public class ActivityController {
                 Num = 3000;
             }
 
+            //获取活动地点
             String Building = this.Building.getText();
             Construction construction = new Construction(Building);
             int Floor = Integer.parseInt(this.Floor.getText());
@@ -155,28 +165,22 @@ public class ActivityController {
         //存储要输出在文本框中的信息的字符串
         StringBuilder text = new StringBuilder();
 
+        //若搜索框为空，则输出该账号下所有活动
         if (this.ToBe.getText().isEmpty()) {
             if (!activities.isEmpty()) {
                 for (Activity activity : activities) {
                     Time time = activity.getM_tTime();
                     text.append(activity.getM_sName()).append("\t")
                             .append("时间为：").append(time.getStartMonth()).append("月")
-                            .append(time.getStartDate()).append("日").append("星期").append(time.getWeek())
-                            .append("\t");
+                            .append(time.getStartDate()).append("日").append("\t");
 
                     if (activity.getM_eProperty() == Property.SELF) {
-                        text.append("课程属性：").append("个人活动").append("\t");
+                        text.append("活动属性：").append("个人活动").append("\t");
                     } else if (activity.getM_eProperty() == Property.GROUP) {
-                        text.append("课程属性：").append("集体活动").append("\t");
+                        text.append("活动属性：").append("集体活动").append("\t");
                     }
 
                     text.append("活动地点：");
-
-                    if (activity.getM_sConstruction().getCampus() == 0) {
-                        text.append("校区为：").append("沙河校区").append("\t");
-                    } else if (activity.getM_sConstruction().getCampus() == 1) {
-                        text.append("校区为：").append("西土城校区").append("\t");
-                    }
 
                     text.append(activity.getM_sConstruction().get_con_name())
                             .append(activity.getM_iFloor()).append("层")
@@ -184,35 +188,31 @@ public class ActivityController {
 
                     text.append("\n");
                 }
+            //当某人活动列表为空时输出空表信息
             } else {
                 text.append("活动列表为空~");
             }
+        //当搜索框不为空时按照输入查找课程，具体实现使用模糊查找算法
         } else {
             //实例化模糊查找对象
             FuzzySearch fuzzySearch = new FuzzySearch();
             //根据输入框中内容查找获得结果
             ArrayList<Activity> results = fuzzySearch.get_FS_result(this.ToBe.getText(), activities);
+            //若结果不为空则遍历输出
             if (results != null) {
                 for (Activity activity : activities) {
                     Time time = activity.getM_tTime();
                     text.append(activity.getM_sName()).append("\t")
                             .append("时间为：").append(time.getStartMonth()).append("月")
-                            .append(time.getStartDate()).append("日").append("星期").append(time.getWeek())
-                            .append("\t");
+                            .append(time.getStartDate()).append("日").append("\t");
 
                     if (activity.getM_eProperty() == Property.SELF) {
-                        text.append("课程属性：").append("个人活动").append("\t");
+                        text.append("活动属性：").append("个人活动").append("\t");
                     } else if (activity.getM_eProperty() == Property.GROUP) {
-                        text.append("课程属性：").append("集体活动").append("\t");
+                        text.append("活动属性：").append("集体活动").append("\t");
                     }
 
                     text.append("活动地点：");
-
-                    if (activity.getM_sConstruction().getCampus() == 0) {
-                        text.append("校区为：").append("沙河校区").append("\t");
-                    } else if (activity.getM_sConstruction().getCampus() == 1) {
-                        text.append("校区为：").append("西土城校区").append("\t");
-                    }
 
                     text.append(activity.getM_sConstruction().get_con_name())
                             .append(activity.getM_iFloor()).append("层")
@@ -220,6 +220,7 @@ public class ActivityController {
 
                     text.append("\n");
                 }
+            //结果为空则输出报错信息
             } else {
                 text.append("查找失败，请重新输入");
             }
@@ -227,8 +228,11 @@ public class ActivityController {
         this.Info.setText(text.toString());
     }
 
+    /**
+     * 删除活动
+     */
     private void DeleteClicked() {
-        Activity activity = new Activity();
+        Activity activity;
         if (this.ToBe.getText().isEmpty())
             this.ErrorInfo.setText("请输入要删除的课程信息！");
         else {
@@ -236,7 +240,7 @@ public class ActivityController {
             ArrayList<Activity> results = fuzzySearch.get_FS_result(this.ToBe.getText(), this.studentAccount.getActivity());
             if (results != null) {
                 activity = results.get(0);
-                this.ErrorInfo.setText(this.studentAccount.exitActivity(activity));
+                this.Info.setText(this.studentAccount.exitActivity(activity));
             } else {
                 this.ErrorInfo.setText("活动列表中没有活动");
             }

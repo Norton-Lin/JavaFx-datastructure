@@ -96,11 +96,17 @@ public class ActivityDatabase {
      * 删除数据库中的指定活动
      * @param activity 待删除活动
      */
-    public void delete(Activity activity,String ID){
+    public void delete(Activity activity,String ID,int choice){
         Connection conn = null ; // 数据库连接
         Statement stmt = null ; // 数据库操作
-        String sql1 = "DELETE FROM activity WHERE name='" + activity.getM_sName()
-                +"'and account_id ='"+ID+"'";
+        String sql1;
+        if(choice == 0) {
+            sql1 = "DELETE FROM activity WHERE name='" + activity.getM_sName()
+                    + "'and account_id ='" + ID + "'";
+        }else{
+            sql1 = "DELETE FROM class_activity WHERE name='" + activity.getM_sName()
+                    + "'and class_id ='" + ID + "'";
+        }
         try {
             Class.forName(m_sDriver) ; // 加载驱动程序
             conn = DriverManager.getConnection(m_sUrl, m_sUser, m_sPassword);
@@ -117,11 +123,17 @@ public class ActivityDatabase {
      * 从数据库内读取活动
      * @param activity 待读取活动内容
      */
-    public void find(Activity activity,String ID) {
+    public void find(Activity activity,String ID,int choice) {
         ResultSet rs = null; // 保存查询结果
-        String sql = "SELECT id, name, startmonth,startdate,starthour, startmin, endhour," +
-                " endmin, property, num, maxnum,floor,room,construction " +
-                "FROM activity WHERE name='"+activity.getM_sName()+"'and account_id ='" + ID+"'";
+        String sql;
+        if(choice ==0) {
+            sql = "SELECT * " +
+                    "FROM activity WHERE name='" + activity.getM_sName() + "'and account_id ='" + ID + "'";
+        }
+        else{
+            sql = "SELECT * " +
+                    "FROM class_activity WHERE name='" + activity.getM_sName() + "'and class_id ='" + ID + "'";
+        }
         Connection conn = null; // 数据库连接
         Statement stmt = null; // 数据库操作
         ConstructionDatabase constructionDatabase = new ConstructionDatabase();
