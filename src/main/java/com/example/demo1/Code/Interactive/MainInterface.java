@@ -92,7 +92,7 @@ public class MainInterface {
      * 教师操作界面
      * @param account 账号信息
      */
-    public void TeacherInterface(Account account) {
+    public void TeacherInterface(Account account) {/**
         TeacherAccount teacherAccount = new TeacherAccount(account);//调用函数证明账号存在，直接利用构造函数读取数据
         ArrayList<Course> allCourses = new ArrayList<>();//所有课程列表
         ArrayList<Activity> allActivities  = new ArrayList<>();//所有活动列表
@@ -114,14 +114,14 @@ public class MainInterface {
                 case 2 -> ActivityOperation(teacherAccount,allActivities);
                 default -> System.out.println("感谢您的使用！");
             }
-        }
+        }*/
     }
 
     /**
      * 学生操作界面
      * @param account 账号信息
      */
-    public void StudentInterface(Account account){
+    public void StudentInterface(Account account){/**
         StudentAccount studentAccount = new StudentAccount(account);//调用函数证明账号存在，直接利用构造函数读取数据
         ArrayList<Course> allCourses = new ArrayList<>();//所有课程列表
         ArrayList<Activity> allActivities  = new ArrayList<>();//所有活动列表
@@ -143,7 +143,7 @@ public class MainInterface {
                 case 2 -> ActivityOperation(studentAccount,allActivities);
                 default -> System.out.println("感谢您的使用！");
             }
-        }
+        }*/
     }
 
     /**
