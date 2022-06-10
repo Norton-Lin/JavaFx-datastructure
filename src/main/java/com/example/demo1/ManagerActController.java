@@ -2,6 +2,7 @@ package com.example.demo1;
 
 import com.example.demo1.Code.Mysql.AccountDatabase;
 import com.example.demo1.Code.Mysql.ActivityDatabase;
+import com.example.demo1.Code.Util.MyException;
 import com.example.demo1.Code.Util.Property;
 import com.example.demo1.Code.Util.Time;
 import com.example.demo1.Code.entity.Activity;
@@ -24,6 +25,8 @@ public class ManagerActController {
     private final MainViewPort_Controller controller;
 
     ManagerAccount managerAccount;
+
+    ActivityDatabase activityDatabase;
 
     @FXML
     public Label ErrorInfo;
@@ -54,6 +57,8 @@ public class ManagerActController {
     @FXML
     public TextField ToBe;
     @FXML
+    public TextField DClass;
+    @FXML
     public Button Delete;
     @FXML
     public TextArea Info;
@@ -66,6 +71,8 @@ public class ManagerActController {
 
         //创建新场景
         thisStage = new Stage();
+
+        this.activityDatabase = new ActivityDatabase();
 
         this.managerAccount = new ManagerAccount(this.controller.getAccount());
 
@@ -109,7 +116,7 @@ public class ManagerActController {
             int ENH = Integer.parseInt(this.ENH.getText());
             int ENM = Integer.parseInt(this.ENM.getText());
             if (Month <= 0 || Month > 12 || Date <= 0 || Date > 31)
-                throw new Exception();
+                throw new MyException(1);
             Time time = new Time(STH, STM, ENH, ENM, Date, Month);
 
             String ClassID = this.ClassNum.getText();
@@ -119,15 +126,22 @@ public class ManagerActController {
             int Floor = Integer.parseInt(this.Floor.getText());
             int Room = Integer.parseInt(this.Room.getText());
 
-            Activity activity = new Activity(Name, time, Property.GROUP, construction, Floor, Room, 3000);
+            int Num = 3000;
+            ArrayList<Activity> activities = new ArrayList<>();
+            this.activityDatabase.find(activities, ClassID, 1);
+            if (!activities.isEmpty())
+                Num = activities.get(activities.size() - 1).getM_iNum() + 1;
+            Activity activity = new Activity(Name, time, Property.GROUP, construction, Floor, Room, Num);
 
             if (this.managerAccount.addClassActivity(activity, ClassID))
                 //根据上面的参数构建活动并传入
                 this.Info.setText(Name + "已添加至班级\b" + ClassID);
             else
                 this.Info.setText("添加活动失败！");
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             this.ErrorInfo.setText("输入错误！\n请按照合理的方式输入数据哦！");
+        } catch (MyException e1) {
+            this.ErrorInfo.setText(e1.getMessage());
         }
     }
 
@@ -140,9 +154,8 @@ public class ManagerActController {
         else {
             Activity activity = new Activity();
             activity.setM_sName(this.ToBe.getText());
-            if (!this.ClassNum.getText().isEmpty()) {
-                String tool = this.ClassNum.getText();
-                ActivityDatabase activityDatabase = new ActivityDatabase();
+            if (!this.DClass.getText().isEmpty()) {
+                String tool = this.DClass.getText();
                 activityDatabase.find(activity, tool, 1);
                 if (activity.getM_iNum() != 0) {
                     this.managerAccount.deleteClassActivity(activity, tool);

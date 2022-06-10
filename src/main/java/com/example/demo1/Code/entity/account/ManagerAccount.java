@@ -196,7 +196,7 @@ public class ManagerAccount extends Account{
         ActivityDatabase activityDatabase = new ActivityDatabase();
         if(accountDatabase.findClass(ID))//班级存在
         {
-            activityDatabase.insert(activity, ID, 0);//为单个用户添加活动
+            activityDatabase.insert(activity, ID, 1);//为单个用户添加活动
             result = true;
         }
         return result;
