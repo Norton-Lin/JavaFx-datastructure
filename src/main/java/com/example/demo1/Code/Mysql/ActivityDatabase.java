@@ -220,6 +220,7 @@ public class ActivityDatabase {
             rs = stmt.executeQuery(sql);// 实例化ResultSet对象
             while (rs.next()) { // 指针向下移动
                 Activity a = new Activity();
+                a.setM_iNum(rs.getInt("id"));
                 a.setM_sName(rs.getString("name"));
                 a.getM_tTime().setStartMonth(rs.getInt("startmonth"));
                 a.getM_tTime().setStartDate(rs.getInt("startdate"));

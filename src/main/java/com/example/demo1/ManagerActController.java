@@ -64,7 +64,6 @@ public class ManagerActController {
     public TextArea Info;
     @FXML
     public Button BackToMain;
-    private ActivityDatabase activityDatabase;
 
     public ManagerActController(MainViewPort_Controller mainViewPort_controller) {
         //得到新Controller

@@ -1,5 +1,6 @@
 package com.example.demo1;
 
+import com.example.demo1.Code.LogUtil.LogFile;
 import com.example.demo1.Code.Util.Authority;
 import com.example.demo1.Code.clock.ClockOperation;
 import com.example.demo1.Code.entity.account.Account;
@@ -12,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
+
+import java.io.File;
 import java.io.IOException;
 
 public class MainViewPort_Controller {
@@ -94,6 +97,16 @@ public class MainViewPort_Controller {
 
             //搭建窗口
             thisStage.setTitle("欢迎来到主界面!");
+            final String TAG = "Main";
+            // (可选) 设置日志输出级别, 默认为 INFO 级别
+            LogFile.setLogOutLevel(LogFile.Level.DEBUG);
+            // (可选) 设置日志输出文件(追加到文件尾部)
+            try {
+                LogFile.setLogOutFile(new File("MyLog.log"));
+            } catch (IOException e) {
+                LogFile.error(TAG, "The error log.无法打开日志输出文件");
+                e.printStackTrace();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
