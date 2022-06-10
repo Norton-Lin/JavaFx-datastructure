@@ -1,81 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml">
     <top>
-        <GridPane>
-            <Label text="请选择系统时间快进速度" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-            <fx:define>
-                <ToggleGroup fx:id="toggleGroup1"/>
-            </fx:define>
-            <RadioButton fx:id="One" text="1" GridPane.columnIndex="1"  userData="1" GridPane.rowIndex="0" toggleGroup="$toggleGroup1"/>
-            <RadioButton fx:id="Hundred" text="100" GridPane.columnIndex="2" userData="100" GridPane.rowIndex="0" toggleGroup="$toggleGroup1"/>
-            <RadioButton fx:id="SixHundred" text="600" GridPane.columnIndex="3" userData="600" GridPane.rowIndex="0" toggleGroup="$toggleGroup1"/>
-            <RadioButton fx:id="Thousand" text="1000" GridPane.columnIndex="4" userData="1000" GridPane.rowIndex="0" toggleGroup="$toggleGroup1"/>
-        </GridPane>
+        <Label fx:id="info" alignment="CENTER"/>
     </top>
-
     <center>
-        <BorderPane>
-            <top>
-                <HBox>
-                    <Label text="请设置闹钟名称："/>
-                    <TextField fx:id="NameOfClock" prefColumnCount="15"/>
-                </HBox>
-            </top>
+        <VBox alignment="CENTER">
+            <BorderPane>
+                <top>
+                    <HBox>
+                        <Label text="请设置闹钟名称："/>
+                        <TextField fx:id="NameOfClock" prefColumnCount="15"/>
+                    </HBox>
+                </top>
 
-            <center>
-                <HBox>
-                    <Label text="闹钟小时："/>
-                    <TextField fx:id="Hour1" prefColumnCount="2"/>
-                    <Label text=" 闹钟分钟："/>
-                    <TextField fx:id="Minute1" prefColumnCount="2"/>
-                    <Label text=" 闹钟月份："/>
-                    <TextField fx:id="Month" prefColumnCount="2"/>
-                    <Label text=" 闹钟星期"/>
-                    <TextField fx:id="Week" prefColumnCount="2"/>
-                    <Label text=" 闹钟日期："/>
-                    <TextField fx:id="Date" prefColumnCount="2"/>
-                </HBox>
-            </center>
+                <center>
+                    <HBox>
+                        <Label text="闹钟小时："/>
+                        <TextField fx:id="Hour1" prefColumnCount="2"/>
+                        <Label text=" 闹钟分钟："/>
+                        <TextField fx:id="Minute1" prefColumnCount="2"/>
+                        <Label text=" 闹钟月份："/>
+                        <TextField fx:id="Month" prefColumnCount="2"/>
+                        <Label text=" 闹钟星期"/>
+                        <TextField fx:id="Week" prefColumnCount="2"/>
+                        <Label text=" 闹钟日期："/>
+                        <TextField fx:id="Date" prefColumnCount="2"/>
+                    </HBox>
+                </center>
 
-            <bottom>
-                <GridPane>
-                    <Label text="请选择闹钟类型" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                    <fx:define>
-                        <ToggleGroup fx:id="toggleGroup2"/>
-                    </fx:define>
-                    <RadioButton fx:id="Once" text="只响一次" GridPane.columnIndex="1" GridPane.rowIndex="0" toggleGroup="$toggleGroup2"/>
-                    <RadioButton fx:id="PerDay" text="一天一次" GridPane.columnIndex="2" GridPane.rowIndex="0" toggleGroup="$toggleGroup2"/>
-                    <RadioButton fx:id="PerWeek" text="一周一次" GridPane.columnIndex="3" GridPane.rowIndex="0" toggleGroup="$toggleGroup2"/>
-                </GridPane>
-            </bottom>
-        </BorderPane>
+                <bottom>
+                    <GridPane>
+                        <Label text="请选择闹钟类型" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <fx:define>
+                            <ToggleGroup fx:id="toggleGroup2"/>
+                        </fx:define>
+                        <RadioButton fx:id="Once" text="只响一次" GridPane.columnIndex="1" GridPane.rowIndex="0" toggleGroup="$toggleGroup2"/>
+                        <RadioButton fx:id="PerDay" text="一天一次" GridPane.columnIndex="2" GridPane.rowIndex="0" toggleGroup="$toggleGroup2"/>
+                        <RadioButton fx:id="PerWeek" text="一周一次" GridPane.columnIndex="3" GridPane.rowIndex="0" toggleGroup="$toggleGroup2"/>
+                    </GridPane>
+                </bottom>
+            </BorderPane>
+
+            <HBox alignment="CENTER">
+                <TextArea fx:id="Result" prefColumnCount="10" prefRowCount="5"/>
+            </HBox>
+        </VBox>
     </center>
 
     <bottom>
-        <BorderPane>
-            <left>
-                <Button fx:id="pause" text="暂停计时"/>
-            </left>
-            <center>
-                <BorderPane>
-                    <left>
-                        <Button fx:id="setClock" text="设置闹钟"/>
-                    </left>
-                    <right>
-                        <Button fx:id="setSpeed" text="设置快进速度"/>
-                    </right>
-                </BorderPane>
-            </center>
-            <right>
-                <Button fx:id="backToMain" text="回到主界面"/>
-            </right>
-        </BorderPane>
+        <HBox alignment="CENTER">
+            <Button fx:id="setClock" text="添加闹钟"/>
+            <Button fx:id="lookClock" text="查看闹钟"/>
+            <Button fx:id="deleteClock" text="删除闹钟"/>
+            <Button fx:id="backToMain" text="回到主界面"/>
+        </HBox>
     </bottom>
 </BorderPane>

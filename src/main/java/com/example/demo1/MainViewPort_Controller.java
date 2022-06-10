@@ -30,8 +30,6 @@ public class MainViewPort_Controller {
     @FXML
     public Button Tea_Cour;
     @FXML
-    public Button Tea_Act;
-    @FXML
     public Button Cour_Tab;
     @FXML
     public Button Upload;
@@ -102,7 +100,6 @@ public class MainViewPort_Controller {
         Stu_Cour.setOnAction(event -> handleStuCourButtonAction());
         Stu_Act.setOnAction(event -> handleStuActButtonAction());
         Tea_Cour.setOnAction(event -> handleTeaCourButtonAction());
-        Tea_Act.setOnAction(event -> handleTeaActButtonAction());
         Cour_Tab.setOnAction(event -> handleCourTabButtonAction());
         Upload.setOnAction(event -> handleUploadButtonAction());
         Clock.setOnAction(event -> handleClockButtonAction());
@@ -146,20 +143,9 @@ public class MainViewPort_Controller {
             buttonStatusText.setText("你不是教师！");
             return;
         }
-        CourseChooseController courseChooseController = new CourseChooseController(this);
+        TeaCourController teaCourController = new TeaCourController(this);
         thisStage.hide();
-        courseChooseController.showStage();
-    }
-
-    protected void handleTeaActButtonAction() {
-        SystemTime.stopTime();
-        if (this.helloController.getAccount().getAuthority() != Authority.Teacher) {
-            buttonStatusText.setText("你不是教师！");
-            return;
-        }
-        ActivityController activityController = new ActivityController(this);
-        thisStage.hide();
-        activityController.showStage();
+        teaCourController.showStage();
     }
 
     protected void handleCourTabButtonAction() {
@@ -175,10 +161,13 @@ public class MainViewPort_Controller {
 
     protected void handleUploadButtonAction() {
         SystemTime.stopTime();
+        HomeAndMaterialController homeAndMaterialController = new HomeAndMaterialController(this);
+        this.thisStage.hide();
+        homeAndMaterialController.showStage();
     }
 
     protected void handleClockButtonAction() {
-
+        SystemTime.stopTime();
         if (this.helloController.getAccount().getAuthority() != Authority.Student) {
             buttonStatusText.setText("只有学生可以设置闹钟！");
             return;

@@ -16,9 +16,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.IdentityHashMap;
 
 public class ManagerViewPortController {
     //控制当前Controller的场景
@@ -466,6 +467,13 @@ public class ManagerViewPortController {
                 courseDatabase.insert(this.course_alter);
                 this.Info.setText("成功添加" + this.course_alter.getM_sName());
                 this.courses.add(this.course_alter);
+                String dirName0 = "D://Homework" + "//" + this.course_alter.getM_iNum();
+                String dirName1 = "D://Resources" + "//" + this.course_alter.getM_iNum();
+                File file0 = new File(dirName0);
+                File file1 = new File(dirName1);
+                boolean mark = file0.mkdir();
+                if (!mark)
+                    this.ErrorInfo.setText("创建作业文件夹失败");
             }
         } catch (Exception e) {
             this.ErrorInfo.setText("输入异常，请重试");

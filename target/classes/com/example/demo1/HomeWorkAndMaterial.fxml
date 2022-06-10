@@ -6,6 +6,52 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox>
+<?import javafx.geometry.Insets?>
+<HBox xmlns:fx="http://javafx.com/fxml">
+    <VBox alignment="CENTER_LEFT">
+        <padding>
+            <Insets left="50"/>
+        </padding>
+        <HBox alignment="CENTER">
+            <TextField fx:id="ToBe" prefColumnCount="10"/>
+            <Button fx:id="Search" text="查找课程并选中"/>
+        </HBox>
+        <HBox alignment="CENTER">
+            <TextField fx:id="HomeworkName" prefColumnCount="10"/>
+            <Button fx:id="AssureHomework" text="查找作业并选中"/>
+        </HBox>
+        <HBox alignment="CENTER">
+            <padding>
+                <Insets top="25"/>
+            </padding>
+            <TextArea fx:id="Info" prefColumnCount="15"/>
+        </HBox>
+    </VBox>
 
+    <VBox alignment="CENTER_RIGHT">
+        <padding>
+            <Insets left="100"/>
+        </padding>
+        <VBox alignment="CENTER">
+            <HBox alignment="CENTER">
+                <Button fx:id="LookForHomework" text="查看当前课程作业"/>
+                <padding>
+                    <Insets bottom="20"/>
+                </padding>
+            </HBox>
+            <HBox alignment="CENTER">
+                <Button fx:id="Upload_Homework" text="上传作业"/>
+                <padding>
+                    <Insets bottom="20"/>
+                </padding>
+            </HBox>
+            <HBox alignment="CENTER">
+                <Button fx:id="Upload_Resources" text="上传课程资料"/>
+                <padding>
+                    <Insets bottom="20"/>
+                </padding>
+            </HBox>
+            <Button fx:id="BackToMain" text="回到主界面"/>
+        </VBox>
+    </VBox>
 </HBox>
