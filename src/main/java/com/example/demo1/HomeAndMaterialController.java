@@ -1,5 +1,6 @@
 package com.example.demo1;
 
+import com.example.demo1.Code.LogUtil.LogFile;
 import com.example.demo1.Code.Mysql.HomeWorkDatabase;
 import com.example.demo1.Code.entity.Course;
 import com.example.demo1.Code.entity.FuzzySearch;
@@ -102,6 +103,9 @@ public class HomeAndMaterialController {
         thisStage.hide();
     }
 
+    /**
+     * 查找课程
+     */
     protected void setSearch() {
         HomeWorkDatabase database = new HomeWorkDatabase();
         if (!this.ToBe.getText().isEmpty()) {
@@ -114,6 +118,7 @@ public class HomeAndMaterialController {
                     this.Info.setText("您要查看的课程是否是：" + this.result.toString() + "\n");
                     //查找并得到课程、账号对应的作业
                     database.find(this.result, this.homeworks, studentAccount);
+                    LogFile.info("Student" + this.studentAccount.getID(),"学生在上传作业页面查找课程");
                 } else {
                     this.Info.setText("查找失败！");
                 }
@@ -126,11 +131,13 @@ public class HomeAndMaterialController {
                     //查找并得到课程、账号对应的作业
                     database.find(this.result, this.homeworks, studentAccount);
                     this.Info.setText("您要操作的课程是否是：" + this.result.toString() + "\n");
+                    LogFile.info("Student" + this.studentAccount.getID(),"学生在上传作业页面查找课程");
                 } else {
                     this.Info.setText("查找失败");
                 }
             }
         } else {
+            LogFile.info("Student" + this.studentAccount.getID(),"学生在上传作业页面查找课程");
             StringBuilder text = new StringBuilder();
             if (this.courses != null) {
                 text.append("您的课程有：\n");
@@ -149,6 +156,7 @@ public class HomeAndMaterialController {
      * 查询并选中自己要交的作业
      */
     protected void setAssureHomework() {
+        LogFile.info("Student" + this.studentAccount.getID(),"学生查找并选中某一门课的作业");
         String temp = this.HomeworkName.getText();
         if (!temp.isEmpty()) {
             if (!this.homeworks.isEmpty()) {
@@ -173,6 +181,7 @@ public class HomeAndMaterialController {
     }
 
     protected void handleLookForHomework() {
+        LogFile.info("Student" + this.studentAccount.getID(),"学生查看某门课程的所有作业");
         StringBuilder results = new StringBuilder();
         if (this.result != null) {
             if (!homeworks.isEmpty()) {
@@ -195,6 +204,7 @@ public class HomeAndMaterialController {
 
 
     protected void setUpload_Homework() {
+        LogFile.info("Student" + this.studentAccount.getID(),"学生上传作业");
         if (this.homework != null) {
             String address = "D://Homework" + "//" + this.result.getM_iNum() + "//" + this.homework.getM_iName();
             HomeWorkDatabase database = new HomeWorkDatabase();
@@ -209,6 +219,7 @@ public class HomeAndMaterialController {
     }
 
     protected void setUpload_Resources() {
+        LogFile.info("Student" + this.studentAccount.getID(),"学生上传资料");
         if (this.result != null) {
             String resourcePath = this.result.getM_sData();
             MaterialOperation.MaterialPort(resourcePath);

@@ -1,5 +1,6 @@
 package com.example.demo1;
 
+import com.example.demo1.Code.LogUtil.LogFile;
 import com.example.demo1.Code.Mysql.AccountDatabase;
 import com.example.demo1.Code.Mysql.ActivityDatabase;
 import com.example.demo1.Code.Util.MyException;
@@ -64,7 +65,6 @@ public class ManagerActController {
     public TextArea Info;
     @FXML
     public Button BackToMain;
-    private ActivityDatabase activityDatabase;
 
     public ManagerActController(MainViewPort_Controller mainViewPort_controller) {
         //得到新Controller
@@ -108,6 +108,7 @@ public class ManagerActController {
      * 确定添加活动
      */
     private void AssureClicked() {
+        LogFile.info("Manager" + this.managerAccount.getID(),"管理员构建活动");
         try {
             String Name = this.Name.getText();
 
@@ -152,6 +153,7 @@ public class ManagerActController {
      * 删除班级活动
      */
     private void DeleteClicked() {
+        LogFile.info("Manager" + this.managerAccount.getID(),"管理员删除活动");
         if (this.ToBe.getText().isEmpty())
             this.ErrorInfo.setText("请输入要删除的活动信息！");
         else {
@@ -159,7 +161,6 @@ public class ManagerActController {
             activity.setM_sName(this.ToBe.getText());
             if (!this.DClass.getText().isEmpty()) {
                 String tool = this.DClass.getText();
-                activityDatabase.find(activity, tool, 1);
                 if (activity.getM_iNum() != 0) {
                     this.managerAccount.deleteClassActivity(activity, tool);
                     this.Info.setText("活动" + tool + "删除成功！");
@@ -176,6 +177,7 @@ public class ManagerActController {
      * 回到主界面
      */
     private void BackToMainClicked() {
+        LogFile.info("Manager" + this.managerAccount.getID(),"管理员回到主界面");
         SystemTime.restartTime();
         //将第二个界面展示出来
         this.controller.showStage();

@@ -1,5 +1,6 @@
 package com.example.demo1;
 
+import com.example.demo1.Code.LogUtil.LogFile;
 import com.example.demo1.Code.Mysql.AccountDatabase;
 import com.example.demo1.Code.Mysql.ConstructionDatabase;
 import com.example.demo1.Code.Mysql.CourseDatabase;
@@ -11,6 +12,7 @@ import com.example.demo1.Code.entity.Course;
 import com.example.demo1.Code.entity.Navigate;
 import com.example.demo1.Code.entity.Search;
 import com.example.demo1.Code.entity.account.Account;
+import com.example.demo1.Code.entity.account.ManagerAccount;
 import com.example.demo1.Code.entity.account.StudentAccount;
 import com.example.demo1.Code.systemtime.SystemTime;
 import javafx.fxml.FXML;
@@ -47,6 +49,9 @@ public class ManagerViewPortController {
 
     //存储所有建筑物的列表
     ArrayList<Construction> allCons;
+
+    //存储管理员账号
+    ManagerAccount managerAccount;
 
     @FXML
     public TextField CourseNum;
@@ -143,7 +148,10 @@ public class ManagerViewPortController {
         //创建新场景
         thisStage = new Stage();
 
+        //用来存储新建的课程
         this.course_alter = new Course();
+
+        this.managerAccount = new ManagerAccount(this.controller.getAccount());
 
         //实例化数据库
         CourseDatabase courseDatabase1 = new CourseDatabase();
@@ -198,6 +206,7 @@ public class ManagerViewPortController {
      * 回到主界面
      */
     protected void BackToMainMenu() {
+        LogFile.info("Manager" + this.managerAccount.getID(),"管理员构建活动");
         SystemTime.restartTime();
         //将第二个界面展示出来
         this.controller.showStage();
@@ -210,6 +219,7 @@ public class ManagerViewPortController {
      * 根据管理员输入的课程编号查找课程
      */
     protected void SearchForCourse() {
+        LogFile.info("Manager" + this.managerAccount.getID(),"管理员查找课程");
         try {
             //获取用户输入的课程编号
             int Num1 = Integer.parseInt(this.CourseNum.getText());
@@ -270,7 +280,6 @@ public class ManagerViewPortController {
      * 设置/修改课程上课时间
      */
     protected void SetTime(boolean mark) {
-
         int month = 0, date = 0;
         int sth, stm, enh, enm, week;
 
@@ -300,6 +309,7 @@ public class ManagerViewPortController {
                 //构建时间类型对象，本对象为上课时间，仅需包含星期与起止时间
                 time2 = new Time(sth, stm, enh, enm, week);
 
+                LogFile.info("Manager" + this.managerAccount.getID(),"管理员设置" + this.course.toString() + "的上课时间");
                 this.course.setM_tTime(time2);
             } else {
                 //判断输入是否合法
@@ -310,6 +320,7 @@ public class ManagerViewPortController {
                 //构建时间类型对象，本对象为考试时间，需要包含月日星期等信息
                 time1 = new Time(sth, stm, enh, enm, month, date, week);
 
+                LogFile.info("Manager" + this.managerAccount.getID(),"管理员设置" + this.course.toString() + "的考试时间");
                 this.course.setM_cExamTime(time1);
             }
 
@@ -366,10 +377,12 @@ public class ManagerViewPortController {
                     this.course.setM_sConstruction(temp);
                     this.course.setM_iFloor(Integer.parseInt(this.Floor.getText()));
                     this.course.setM_iRoom(Integer.parseInt(this.Room.getText()));
+                    LogFile.info("Manager" + this.managerAccount.getID(),"管理员设置" + this.course.toString() + "的上课地点");
                 } else {
                     this.course.setM_cExamConstruction(temp);
                     this.course.setM_iExamFloor(Integer.parseInt(this.Floor.getText()));
                     this.course.setM_iExamRoom(Integer.parseInt(this.Room.getText()));
+                    LogFile.info("Manager" + this.managerAccount.getID(),"管理员设置" + this.course.toString() + "的考试地点");
                 }
 
                 database.update(this.course);
@@ -469,7 +482,11 @@ public class ManagerViewPortController {
 
     }
 
+    /**
+     * 管理员预览自己构建的课程信息
+     */
     protected void PreViewCour() {
+        LogFile.info("Manager" + this.managerAccount.getID(),"管理员预览自己构建的课程信息");
         try {
             Create();
             String text = "课程信息：" + this.course_alter.getM_sName() + "\t" +
@@ -504,6 +521,7 @@ public class ManagerViewPortController {
             if (tool != courses0.size()) {
                 courseDatabase.delete(courses0.get(tool));
                 this.Info.setText(courses0.get(tool).getM_sName() + "编号为" + courses0.get(tool).getM_iNum() + "删除成功");
+                LogFile.info("Manager" + this.managerAccount.getID(),"管理员删除" + this.course.toString());
             } else {
                 this.Info.setText("查找与删除失败");
             }
@@ -534,6 +552,7 @@ public class ManagerViewPortController {
                 courseDatabase.insert(this.course_alter);
                 this.Info.setText("成功添加" + this.course_alter.getM_sName());
                 this.courses.add(this.course_alter);
+                LogFile.info("Manager" + this.managerAccount.getID(),"管理员添加了" + this.course.toString());
             }
         } catch (NumberFormatException e) {
             this.ErrorInfo.setText("输入异常，请重试");
@@ -579,16 +598,19 @@ public class ManagerViewPortController {
                 .append("编号为：").append(this.ToBeOperated.getM_iNum())
                 .append("添加到学生账户").append(this.studentAccount.getID());
         this.AllCourses.setText(text.toString());
+        LogFile.info("Manager" + this.managerAccount.getID(),"管理员预览" + this.course.toString() + "与待添加学生" + this.studentAccount.getID());
     }
 
     protected void AddCourseToStu() {
         WriteIn();
         this.AllCourses.setText(this.studentAccount.registerCourse(this.ToBeOperated));
+        LogFile.info("Manager" + this.managerAccount.getID(),"管理员添加" + this.course.toString() + "到" + this.studentAccount.getID());
     }
 
     protected void DeleteFromStu() {
         WriteIn();
         this.AllCourses.setText(this.studentAccount.exitCourse(this.ToBeOperated));
+        LogFile.info("Manager" + this.managerAccount.getID(),"管理员从" + this.studentAccount.getID() + "删除" + this.course.toString());
     }
 }
 

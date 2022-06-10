@@ -1,5 +1,6 @@
 package com.example.demo1;
 
+import com.example.demo1.Code.LogUtil.LogFile;
 import com.example.demo1.Code.Mysql.CourseDatabase;
 import com.example.demo1.Code.entity.Course;
 import com.example.demo1.Code.entity.FuzzySearch;
@@ -96,6 +97,7 @@ public class CourseChooseController {
      * 将在所有课程库中查找到的结果显示在文本框中
      */
     private ArrayList<Course> Search1ButtonClicked() {
+        LogFile.info("Student" + this.studentAccount.getID(),"学生查找课程");
         //用来存储课程列表的空表
         ArrayList<Course> tool = new ArrayList<>();
         //实例化数据库
@@ -188,6 +190,7 @@ public class CourseChooseController {
      * 点击此按钮选定课程
      */
     private void Assure1ButtonClicked() {
+        LogFile.info("Student" + this.studentAccount.getID(),"学生添加课程");
         //用来存储课程列表的空表
         ArrayList<Course> tool = new ArrayList<>();
         //实例化数据库
@@ -239,6 +242,7 @@ public class CourseChooseController {
     }
 
     private ArrayList<Course> Search2ButtonClicked() {
+        LogFile.info("Student" + this.studentAccount.getID(),"学生查找课程");
         //实例化模糊查找对象
         FuzzySearch fuzzySearch = new FuzzySearch();
         //建立一个空表用于存储模糊查找结果
@@ -330,6 +334,7 @@ public class CourseChooseController {
     }
 
     private void Assure2ButtonClicked() {
+        LogFile.info("Student" + this.studentAccount.getID(),"学生删除课程");
         //实例化查找类型对象
         Search search = new Search();
         //存储查找2的结果
@@ -380,5 +385,6 @@ public class CourseChooseController {
 
         //本页面隐藏
         this.thisStage.hide();
+        LogFile.info("Student" + this.studentAccount.getID(),"学生返回主界面");
     }
 }
