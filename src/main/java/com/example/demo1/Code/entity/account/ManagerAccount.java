@@ -130,7 +130,7 @@ public class ManagerAccount extends Account{
     public void deleteActivity(Activity activity){
         this.m_CaActivity.remove(activity);
         ActivityDatabase activityDatabase = new ActivityDatabase();
-        activityDatabase.delete(activity,this.getID());
+        activityDatabase.delete(activity,this.getID(),0);
         LogFile.info("Manager"+getID(),"管理员删除活动 "+activity.getM_sName());
     }
 
@@ -184,6 +184,12 @@ public class ManagerAccount extends Account{
            courseDatabase.insert(course,ID,1);//为单个用户添加课程
     }
 
+    /**
+     * 为班级添加活动
+     * @param activity 活动
+     * @param ID 班级编号
+     * @return boolean
+     */
     public boolean addClassActivity(Activity activity,String ID) {
         boolean result = false;
         AccountDatabase accountDatabase = new AccountDatabase();
@@ -194,5 +200,17 @@ public class ManagerAccount extends Account{
             result = true;
         }
         return result;
+    }
+
+    /**
+     * 删除班级活动
+     * @param activity 活动
+     * @param ID 班级ID
+     */
+    public void deleteClassActivity(Activity activity,String ID){
+        this.m_CaActivity.remove(activity);
+        ActivityDatabase activityDatabase = new ActivityDatabase();
+        activityDatabase.delete(activity,ID,1);
+        LogFile.info("Manager"+getID(),"管理员删除活动 "+activity.getM_sName());
     }
 }

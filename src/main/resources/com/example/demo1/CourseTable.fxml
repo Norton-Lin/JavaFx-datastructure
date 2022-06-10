@@ -6,7 +6,7 @@
 
 <HBox xmlns:fx="http://javafx.com/fxml">
     <HBox>
-        <TextArea fx:id="CourseTable" prefRowCount="15" prefColumnCount="120"/>
+        <TextArea fx:id="CourseTable" prefRowCount="15" prefColumnCount="60"/>
 
         <Label text="                       "/>
 

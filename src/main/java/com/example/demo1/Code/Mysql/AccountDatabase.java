@@ -198,7 +198,7 @@ public class AccountDatabase {
                 Activity activity = new Activity();
                 activity.setM_sName(rs.getString("name"));
                 ActivityDatabase activityDatabase = new ActivityDatabase();
-                activityDatabase.find(activity,studentAccount.getID());//这边要读course数据
+                activityDatabase.find(activity,studentAccount.getID(),0);//这边要读course数据
                 studentAccount.getActivity().add(activity);//向ArrayList中添加
             }
             rs.close();// 关闭活动结果集
@@ -220,7 +220,7 @@ public class AccountDatabase {
                     Activity activity = new Activity();
                     activity.setM_sName(rs.getString("name"));
                     ActivityDatabase activityDatabase = new ActivityDatabase();
-                    activityDatabase.find(activity,studentAccount.getClassID());//这边要读course数据
+                    activityDatabase.find(activity,studentAccount.getClassID(),0);//这边要读course数据
                     studentAccount.getActivity().add(activity);//向ArrayList中添加
                 }
             stmt.close();
@@ -256,7 +256,7 @@ public class AccountDatabase {
                 Activity activity = new Activity();
                 activity.setM_sName(rs.getString("name"));
                 ActivityDatabase activityDatabase = new ActivityDatabase();
-                activityDatabase.find(activity,teacherAccount.getID());//这边要读course数据
+                activityDatabase.find(activity,teacherAccount.getID(),0);//这边要读course数据
                 teacherAccount.getActivity().add(activity);//向ArrayList中添加
             }
             rs.close();// 关闭结果集

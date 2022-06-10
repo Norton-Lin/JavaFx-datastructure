@@ -162,7 +162,7 @@ public class CourseChooseController {
                 } else
                     ResOfSearch.setText("查找失败，请重新输入");
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             System.out.println("用户输入异常");
             SearchResult_Name.setText("右侧输入框中应该输入数字哦~");
         }
