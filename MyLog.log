@@ -4,3 +4,123 @@
 06/10 21:13:15.270 I/Student1: The info log. 查询课程1001
 06/10 21:13:15.294 I/Student 1: The info log.删除课程
 06/10 21:13:17.500 I/Student 1: The info log.添加课程
+06/11 00:07:39.811 I/User1: The info log.用户进入导航页面
+06/11 00:07:52.993 I/User1: The info log.用户进行导航操作
+06/11 00:07:56.643 I/User1: The info log.用户进行导航操作
+06/11 00:09:47.905 I/User1: The info log.用户返回主界面
+06/11 00:12:53.453 I/User1: The info log.用户进入导航页面
+06/11 00:13:10.936 I/User1: The info log.用户进行导航操作
+06/11 00:13:15.395 I/User1: The info log.用户进行导航操作
+06/11 00:15:06.314 I/User1: The info log.用户进入导航页面
+06/11 00:15:14.185 I/User1: The info log.用户进行导航操作
+06/11 00:15:48.481 I/User1: The info log.用户进行导航操作
+06/11 00:15:54.112 I/User1: The info log.用户进行导航操作
+06/11 00:16:15.932 I/User1: The info log.用户返回主界面
+06/11 00:16:21.932 I/User1: The info log.用户设置系统快进时间
+06/11 00:17:20.227 I/User1: The info log.用户进入导航页面
+06/11 00:17:29.722 I/User1: The info log.用户进行导航操作
+06/11 00:18:09.125 I/User1: The info log.用户返回主界面
+06/11 00:18:11.976 I/User1: The info log.用户设置系统快进时间
+06/11 00:18:14.712 I/User1: The info log.用户进入课程表界面
+06/11 00:18:14.985 I/Student1: The info log.学生访问课程表
+06/11 00:18:24.924 I/Student1: The info log.学生在课程表中查询课程信息
+06/11 00:18:37.064 I/Student1: The info log.学生在课程表中查询课程信息
+06/11 00:18:40.797 I/User1: The info log.用户退出程序
+06/11 00:19:06.889 I/User4: The info log.用户进入教师课程管理
+06/11 00:19:11.806 I/Teacher4: The info log.教师查找课程
+06/11 00:20:44.670 I/User4: The info log.用户进入教师课程管理
+06/11 00:20:47.792 I/Teacher4: The info log.教师查找课程
+06/11 00:20:50.622 I/Teacher4: The info log.教师查找课程
+06/11 00:20:58.547 I/Teacher4: The info log.教师查找课程
+06/11 00:20:59.216 I/Teacher4: The info log.教师查找课程
+06/11 00:21:00.314 I/Teacher4: The info log.教师返回主界面
+06/11 00:21:01.151 I/User4: The info log.用户进入教师课程管理
+06/11 00:21:03.541 I/Teacher4: The info log.教师查找课程
+06/11 00:21:30.279 I/User4: The info log.用户进入教师课程管理
+06/11 00:21:33.934 I/Teacher4: The info log.教师查找课程
+06/11 00:22:16.330 I/User4: The info log.用户进入教师课程管理
+06/11 00:22:18.529 I/Teacher4: The info log.教师查找课程
+06/11 00:22:20.290 I/Teacher4: The info log.教师查找课程
+06/11 00:22:21.120 I/Teacher4: The info log.教师查找课程
+06/11 00:22:21.268 I/Teacher4: The info log.教师查找课程
+06/11 00:22:21.394 I/Teacher4: The info log.教师查找课程
+06/11 00:22:21.526 I/Teacher4: The info log.教师查找课程
+06/11 00:22:50.853 I/User4: The info log.用户进入教师课程管理
+06/11 00:22:53.956 I/Teacher4: The info log.教师查找课程
+06/11 00:23:26.601 I/User4: The info log.用户进入教师课程管理
+06/11 00:23:29.059 I/Teacher4: The info log.教师查找课程
+06/11 00:24:45.062 I/User4: The info log.用户进入教师课程管理
+06/11 00:24:46.241 I/Teacher4: The info log.教师查找课程
+06/11 00:24:49.969 I/Teacher4: The info log.教师查找课程
+06/11 00:24:51.277 I/Teacher4: The info log.教师增加数据结构-1000课程进度
+06/11 00:24:52.233 I/Teacher4: The info log.教师查找课程
+06/11 10:38:09.659 I/User1: The info log.用户进入学生课程管理
+06/11 10:42:41.593 I/User1: The info log.用户进入课程表界面
+06/11 10:42:41.945 I/Student1: The info log.学生访问课程表
+06/11 10:42:45.508 I/Student1: The info log.学生在课程表中查询课程信息
+06/11 10:42:48.048 I/Student1: The info log.学生在课程表中查询课程信息
+06/11 10:44:20.324 I/User1: The info log.用户进入课程表界面
+06/11 10:44:20.681 I/Student1: The info log.学生访问课程表
+06/11 11:01:10.012 I/User4: The info log.用户进入教师课程管理
+06/11 11:01:39.888 I/Teacher4: The info log.教师查找课程
+06/11 11:01:49.846 I/Teacher4: The info log.教师查找课程
+06/11 11:03:17.051 I/Teacher4: The info log.教师给数据结构-1000上传资料
+06/11 11:03:22.391 I/Teacher4: The info log.教师给数据结构-1000上传资料
+06/11 11:03:23.077 I/Teacher4: The info log.教师增加数据结构-1000课程进度
+06/11 11:03:24.823 I/Teacher4: The info log.教师给数据结构-1000上传资料
+06/11 11:03:25.337 I/Teacher4: The info log.教师给数据结构-1000上传资料
+06/11 11:03:25.644 I/Teacher4: The info log.教师给数据结构-1000上传资料
+06/11 11:03:26.417 I/Teacher4: The info log.教师给数据结构-1000上传资料
+06/11 11:03:27.486 I/Teacher4: The info log.教师给数据结构-1000上传资料
+06/11 11:03:27.851 I/Teacher4: The info log.教师返回主界面
+06/11 11:03:28.939 I/User4: The info log.用户进入教师课程管理
+06/11 11:03:32.957 I/Teacher4: The info log.教师返回主界面
+06/11 11:56:11.340 I/User4: The info log.用户进入教师课程管理
+06/11 11:58:52.114 I/User1: The info log.用户进入课程表界面
+06/11 11:58:52.486 I/Student1: The info log.学生访问课程表
+06/11 11:58:56.111 I/Student1: The info log.学生在课程表中查询课程信息
+06/11 12:28:20.738 I/User1: The info log.用户退出程序
+06/11 12:29:03.428 I/User3: The info log.用户进入管理员课程管理界面
+06/11 12:29:15.533 I/Manager3: The info log.管理员查找课程
+06/11 12:31:05.133 I/User3: The info log.用户进入管理员课程管理界面
+06/11 12:31:20.911 I/Student 2: The info log.添加课程计算机系统基础
+06/11 14:02:53.134 I/User1: The info log.用户进入导航页面
+06/11 14:03:00.851 I/User1: The info log.用户进行导航操作
+06/11 14:03:00.936 I/User: The info log.
+从雁北园a楼到澡堂的最短时间为：20190.0秒.路径导航为：
+从雁北园a楼出发，沿鸿雁路走20秒，到达雁北园c楼
+沿8走20秒，到达雁北园f楼
+沿17走20秒，到达雁南园s3楼
+沿26走20秒，到达教学楼1
+沿35走20秒，到达教学楼4
+沿44走10秒，到达教学楼7
+沿52走20秒，到达实验楼2
+等候28分钟，坐公交车，走20,000秒，到达实验楼3
+沿62走20秒，到达教工食堂
+沿71走20秒，到达图书馆
+沿80走20秒，到达澡堂
+
+06/11 14:03:02.554 I/User1: The info log.用户返回主界面
+06/11 14:03:52.939 I/User1: The info log.用户进入导航页面
+06/11 14:03:58.824 I/User1: The info log.用户进行导航操作
+06/11 14:03:58.896 I/导航: The info log.
+从澡堂到雁北园a楼的最短时间为：20200.0秒.路径导航为：
+从澡堂出发，沿197走20秒，到达图书馆
+沿188走20秒，到达教工食堂
+沿179走20秒，到达实验楼3
+等候27分钟，坐公交车，走20,000秒，到达实验楼2
+沿167走20秒，到达教学楼6
+沿158走20秒，到达教学楼3
+沿149走20秒，到达雁南园s5楼
+沿140走20秒，到达雁南园s2楼
+沿131走20秒，到达雁北园e楼
+沿122走20秒，到达雁北园b楼
+沿117走20秒，到达雁北园a楼
+
+06/11 14:47:03.208 I/User1: The info log.用户返回主界面
+06/11 14:49:01.994 I/User3: The info log.用户进入管理员活动管理界面
+06/11 14:49:36.570 I/User3: The info log.用户进入管理员活动管理界面
+06/11 14:50:00.315 I/Manager3: The info log.管理员构建活动
+06/11 14:50:00.365 I/Manager3: The info log.管理员发布班级活动 班会1
+06/11 14:50:12.457 I/Manager3: The info log.管理员删除活动
+06/11 14:50:55.308 I/Manager3: The info log.管理员删除活动

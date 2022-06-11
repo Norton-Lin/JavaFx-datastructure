@@ -1,5 +1,6 @@
 package com.example.demo1.Code.entity;
 
+import com.example.demo1.Code.LogUtil.LogFile;
 import com.example.demo1.Code.Mysql.ConstructionDatabase;
 import com.example.demo1.Code.Mysql.MapDatabase;
 
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import static com.example.demo1.Code.systemtime.SystemTime.getCurrentTime;
 
@@ -265,7 +267,7 @@ public class Navigate {
             result.append("到达").append(target_road.get(i + 1).get_con_name()).append("\n");
 
         }
-
+        LogFile.info("导航", String.valueOf(result));
         result.append("\n此次导航结束...\n");
 
     }

@@ -42,7 +42,7 @@
             <Button fx:id="Clock" text="设置活动闹钟"
                     GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-            <Button fx:id="Manager" text="管*理*员*加*课"
+            <Button fx:id="Manager" text="管*理*员*课*程"
                     GridPane.columnIndex="0" GridPane.rowIndex="3"/>
 
             <Button fx:id="Manager_Act" text="管*理*员*活*动"

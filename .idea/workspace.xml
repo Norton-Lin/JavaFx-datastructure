@@ -6,16 +6,26 @@
   <component name="ChangeListManager">
     <list default="true" id="71e31705-279e-40b4-9a73-b40e17f75272" name="变更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyLog.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/ActivityDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/Mysql/ActivityDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/ManagerAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/ManagerAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/StudentAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/account/StudentAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/MainViewPort_Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/MainViewPort_Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/ManagerActController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/ManagerActController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/Mysql/ActivityDatabase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/Mysql/ActivityDatabase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/entity/account/ManagerAccount.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/entity/account/ManagerAccount.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/entity/account/StudentAccount.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/entity/account/StudentAccount.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo1/ManagerActController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo1/ManagerActController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyLog.log" beforeDir="false" afterPath="$PROJECT_DIR$/MyLog.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Navigate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Navigate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/li.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/message.code" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/message.si" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/message.si.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/message.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/pic.code" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/pic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/pic.si" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/pic.si.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/picture.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/picture.code" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/picture.si" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo1/Code/picture.si.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/demo1/MainViewPort.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/demo1/MainViewPort.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/entity/Navigate.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/entity/Navigate.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/submit/HomeworkOperation$HomeworkMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/submit/HomeworkOperation$HomeworkMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/submit/HomeworkOperation.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo1/Code/submit/HomeworkOperation.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,6 +203,7 @@
       <workItem from="1654530423378" duration="295000" />
       <workItem from="1654590618770" duration="599000" />
       <workItem from="1654866042831" duration="1516000" />
+      <workItem from="1654915078192" duration="5993000" />
     </task>
     <servers />
   </component>
@@ -248,7 +259,7 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/entity/Navigate.java</url>
-          <line>61</line>
+          <line>63</line>
           <properties class="com.example.demo1.Code.entity.Navigate" method="getMatrix">
             <option name="EMULATED" value="true" />
           </properties>
@@ -257,7 +268,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/demo1/Code/LogUtil/LogFile.java</url>
           <line>226</line>
-          <properties class="com.example.demo1.Code.LogUtil.LogFile" method="main">
+          <properties class="com.example.demo1.Code.LogUtil.LogFile">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="51" />
