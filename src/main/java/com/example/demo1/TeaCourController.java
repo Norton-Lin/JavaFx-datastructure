@@ -120,7 +120,13 @@ public class TeaCourController {
                 if (Num1 != this.courses.size()) {
                     this.result = this.courses.get(Num1);
                     this.Info.setText("您要操作的课程是否是：" + this.result.toString() + "\n" + "当前进度为" +
-                            this.result.getM_iCurrentClass() + "/" + this.result.getM_iTotalClass());
+                            this.result.getM_iCurrentClass() + "/" + this.result.getM_iTotalClass()
+                            + "\n" + "上课时间：" + this.result.getM_tTime().getStartHour() + ":"
+                            + this.result.getM_tTime().getStartMinute() + "~"
+                            + this.result.getM_tTime().getEndHour() + ":"
+                            + this.result.getM_tTime().getEndMinute()
+                            + "\n" + "上课地点：" + this.result.getM_sConstruction()
+                            + this.result.getM_iFloor() + "层" + this.result.getM_iRoom() + "室" + "\n");
                 } else {
                     this.Info.setText("查找失败！");
                 }
@@ -225,10 +231,10 @@ public class TeaCourController {
      * 教师上传课程资料
      */
     protected void handleUpload() {
-        LogFile.info("Teacher" + this.teacherAccount.getID(),"教师给" + this.result.toString() + "上传资料");
         if (this.result != null) {
             String resourcePath = this.result.getM_sData();
             MaterialOperation.MaterialPort(resourcePath);
+            LogFile.info("Teacher" + this.teacherAccount.getID(),"教师给" + this.result.toString() + "上传资料");
         } else
             this.Info.setText("未选中课程，请重试！");
     }

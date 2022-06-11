@@ -9,6 +9,7 @@ import com.example.demo1.Code.Util.Time;
 import com.example.demo1.Code.entity.Activity;
 import com.example.demo1.Code.entity.Construction;
 import com.example.demo1.Code.entity.FuzzySearch;
+import com.example.demo1.Code.entity.Search;
 import com.example.demo1.Code.entity.account.ManagerAccount;
 import com.example.demo1.Code.entity.account.StudentAccount;
 import com.example.demo1.Code.systemtime.SystemTime;
@@ -60,6 +61,8 @@ public class ManagerActController {
     @FXML
     public TextField DClass;
     @FXML
+    public Button SearchAct;
+    @FXML
     public Button Delete;
     @FXML
     public TextArea Info;
@@ -101,7 +104,8 @@ public class ManagerActController {
         this.BackToMain.setOnAction(event -> BackToMainClicked());
         //点击删除按钮后的反应
         this.Delete.setOnAction(event -> DeleteClicked());
-
+        //点击查询按钮后的反应
+        this.SearchAct.setOnAction(event -> SearchAct());
     }
 
     /**
@@ -148,6 +152,98 @@ public class ManagerActController {
         }
     }
 
+    /**
+     * 查询活动，上下两栏全空查询所有活动，填入信息越多查询越精确
+     */
+    protected void SearchAct() {
+        LogFile.info("Manager" + this.managerAccount.getID(),"管理员查询活动");
+        StringBuilder Info = new StringBuilder();
+        ArrayList<Activity> result1 = new ArrayList<>();
+        Activity result2;
+        //名字班级都为空的情况
+        if (this.ToBe.getText().isEmpty() && this.DClass.getText().isEmpty()) {
+            ActivityDatabase database = new ActivityDatabase();
+            database.find(result1);
+            if (!result1.isEmpty()) {
+                Info.append("以下为所有课程列表：\n");
+                for (Activity temp : result1) {
+                    Info.append(temp.getM_sName()).append("-").append(temp.getM_iNum()).append("\n");
+                }
+            } else {
+                Info.append("查找失败！");
+            }
+            //名字不为空而班级为空的情况
+        } else if (!this.ToBe.getText().isEmpty() && this.DClass.getText().isEmpty()) {
+            ActivityDatabase database = new ActivityDatabase();
+            database.find(result1);
+            try {
+                int num = Integer.parseInt(this.ToBe.getText());
+                Search search = new Search();
+                int fin = search.BinaryCourseSearch(num, result1);
+                if (fin != result1.size()) {
+                    result2 = result1.get(fin);
+                    Info.append("根据输入的编号精确查找得到的结果为：");
+                    Info.append(result2.getM_sName()).append("-").append(result2.getM_iNum()).append("\t");
+                } else {
+                    Info.append("查找失败！");
+                }
+            } catch (NumberFormatException e) {
+                String name = this.ToBe.getText();
+                FuzzySearch fuzzySearch = new FuzzySearch();
+                ArrayList<Activity> activities = fuzzySearch.get_FS_result(name, result1);
+                if (activities != null) {
+                    Info.append("根据输入的名字在库中模糊查找得到的结果有：\n");
+                    for (Activity temp : activities) {
+                        Info.append(temp.getM_sName()).append("-").append(temp.getM_iNum()).append("\n");
+                    }
+                } else {
+                    Info.append("查找失败！");
+                }
+            }
+        } else if (this.ToBe.getText().isEmpty() && !this.DClass.getText().isEmpty()) {
+            String CLASS = this.DClass.getText();
+            ActivityDatabase database = new ActivityDatabase();
+            database.find(result1, CLASS, 1);
+            if (!result1.isEmpty()) {
+                Info.append("查找到该班级活动有：\n");
+                for (Activity temp : result1) {
+                    Info.append(temp.getM_sName()).append("-").append(temp.getM_iNum()).append("\n");
+                }
+            } else {
+                Info.append("查找失败！");
+            }
+            //都不为空的情况
+        } else {
+            String CLASS = this.DClass.getText();
+            ActivityDatabase database = new ActivityDatabase();
+            database.find(result1, CLASS, 1);
+            try {
+                int Num = Integer.parseInt(this.ToBe.getText());
+                Search search = new Search();
+                int fin = search.BinaryCourseSearch(Num, result1);
+                if (fin != result1.size()) {
+                    result2 = result1.get(fin);
+                    Info.append("查找结果为：\n");
+                    Info.append(result2.getM_sName()).append("-").append(result2.getM_iNum()).append("\n");
+                } else {
+                    Info.append("查找失败！");
+                }
+            } catch (NumberFormatException e) {
+                String name = this.ToBe.getText();
+                FuzzySearch fuzzySearch = new FuzzySearch();
+                ArrayList<Activity> fin = fuzzySearch.get_FS_result(name, result1);
+                if (fin != null) {
+                    Info.append("查询结果有：\n");
+                    for (Activity temp : fin) {
+                        Info.append(temp.getM_sName()).append("-").append(temp.getM_iNum()).append("\n");
+                    }
+                } else {
+                    Info.append("查找失败！");
+                }
+            }
+        }
+        this.Info.setText(Info.toString());
+    }
 
     /**
      * 删除班级活动

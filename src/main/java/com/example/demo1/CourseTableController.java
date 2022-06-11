@@ -133,7 +133,7 @@ public class CourseTableController {
             Info = "课程名：" + temp.getM_sName()
                     + "\n" + "课程编号：" + temp.getM_iNum()
                     + "\n" + "任课教师：" + temp.getM_sTeacher()
-                    + "\n" + "上课时间：" + temp.getM_tTime().getStartHour() + ":"
+                    + "\n" + "上课时间：\t" + "星期" + temp.getM_tTime().getWeek() + "\t" + temp.getM_tTime().getStartHour() + ":"
                     + temp.getM_tTime().getStartMinute() + "~"
                     + temp.getM_tTime().getEndHour() + ":"
                     + temp.getM_tTime().getEndMinute()
