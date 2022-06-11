@@ -85,6 +85,7 @@
                 <TextField fx:id="DClass" prefWidth="100"/>
             </HBox>
             <HBox alignment="CENTER">
+                <Button fx:id="SearchAct" text="查询活动"/>
                 <Button fx:id="Delete" text="删除活动"/>
             </HBox>
             <HBox alignment="CENTER">
