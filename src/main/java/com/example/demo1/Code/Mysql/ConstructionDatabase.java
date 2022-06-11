@@ -20,6 +20,11 @@ public class ConstructionDatabase {
     public static final String m_sUser ="root";
     // MySQL数据库的连接密码
     public static final String m_sPassword ="20021213";
+
+    /**
+     * 插入新建筑
+     * @param construction 新建筑
+     */
     public void insert(Construction construction){
         Connection conn = null ; // 数据库连接
         Statement stmt = null ; // 数据库操作
@@ -45,6 +50,11 @@ public class ConstructionDatabase {
             LogFile.error("ConstructionDatabase","数据库读取错误");
         }
     }
+
+    /**
+     * 更新建筑信息
+     * @param construction 新建筑
+     */
     public void update(Construction construction){
         Connection conn = null ; // 数据库连接
         Statement stmt = null ; // 数据库操作
@@ -72,6 +82,11 @@ public class ConstructionDatabase {
             LogFile.error("ConstructionDatabase","数据库读取错误");
         }
     }
+
+    /**
+     * 删除建筑
+     * @param construction 待删除建筑
+     */
     public void delete(Construction construction){
         Connection conn = null ; // 数据库连接
         Statement stmt = null ; // 数据库操作
@@ -89,6 +104,11 @@ public class ConstructionDatabase {
             LogFile.error("ConstructionDatabase","数据库读取错误");
         }
     }
+
+    /**
+     * 寻找建筑
+     * @param construction 对应寻找建筑
+     */
     public void find(Construction construction) {
         ResultSet rs = null; // 保存查询结果
         String sql = "SELECT * FROM construction WHERE id = "+ construction.get_con_number();
@@ -130,6 +150,11 @@ public class ConstructionDatabase {
             LogFile.error("ConstructionDatabase","数据库读取错误");
         }
     }
+
+    /**
+     * 寻找建筑
+     * @param constructions 建筑列表
+     */
     public void find(ArrayList<Construction> constructions) {
         ResultSet rs = null; // 保存查询结果
         String sql = "SELECT * FROM construction ";
@@ -175,6 +200,11 @@ public class ConstructionDatabase {
             LogFile.error("ConstructionDatabase","数据库读取错误");
         }
     }
+
+    /**
+     * 根据课程寻找建筑
+     * @param course 对应课程
+     */
     public void findByCourse(Course course) {
         ResultSet rs = null; // 保存查询结果
         Connection conn = null; // 数据库连接
@@ -210,6 +240,11 @@ public class ConstructionDatabase {
             LogFile.error("ConstructionDatabase", "数据库读取错误");
         }
     }
+
+    /**
+     * 根据活动寻找建筑
+     * @param activity 对应活动
+     */
     public void findByActivity(Activity activity){
         Construction construction = new Construction();
         construction.set_con_number(activity.getM_sConstruction().get_con_number());

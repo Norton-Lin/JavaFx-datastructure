@@ -10,45 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * 日志输出工具 <br/><br/>
- *
- * 可以输出到控制台和指定的文件中, 分为4个级别, 由低到高分别为: debug, info, warn, error
- *
- * <br/><br/>
- *
- * 输出级别:
- *
- * <ul>
- *     <li> debug: 输出 debug, info, warn, error </li>
- *     <li> info: 输出 info, warn, error </li>
- *     <li> warn: 输出 warn, error </li>
- *     <li> error: 输出 error </li>
- * </ul>
- *
- * 默认为 info 输出级别
- *
- * <p/>
- *
- * Demo:
- *
- * <pre>{@code
- *     // (可选) 设置日志输出级别, 默认为 INFO 级别
- *     LogFile.setLogOutLevel(LogFile.Level.DEBUG);
- *
- *     // (可选) 设置日志输出文件(追加到文件尾部)
- *     LogFile.setLogOutFile(new File("MyLog.log"));
- *
- *     // (可选) 设置日志输出位置(是否输出到控制台 和 是否输出到文件), 默认只输出到控制台, 不输出到文件
- *     LogFile.setLogOutTarget(true, true);
- *
- *     // 输出日志
- *     LogFile.debug("TAG", "The debug log.");
- *     LogFile.info("TAG", "The info log.");
- *     LogFile.warn("TAG", "The warn log.");
- *     LogFile.error("TAG", "The error log.");
- * }</pre>
- *
- * @author xietansheng
+ * 日志输出类
  */
 public class LogFile {
 
@@ -76,6 +38,9 @@ public class LogFile {
     /** 日志文件输出流, 追加到文件尾  */
     private static RandomAccessFile logOutFileStream;
     private String message;//详细输出数据
+    /**
+     * 设置日志输出等级
+     */
     public static void setLogOutLevel(Level currentLevel) {
         if (currentLevel == null) {
             currentLevel = Level.INFO;
@@ -83,6 +48,10 @@ public class LogFile {
         LogFile.logOutLevel = currentLevel;
     }
 
+    /**
+     * 异常检查
+     * @param logOutFile 日志文件
+     */
     public static synchronized void setLogOutFile(File logOutFile) throws IOException {
         LogFile.logOutFile = logOutFile;
 
@@ -102,28 +71,51 @@ public class LogFile {
             }
         }
     }
-
+    /**
+     * 设置日志输出方式
+     */
     public static void setLogOutTarget(boolean isOutToConsole, boolean isOutToFile) {
         LogFile.isOutToConsole = isOutToConsole;
         LogFile.isOutToFile = isOutToFile;
     }
 
+    /**
+     * DEBUG级日志输出
+     * @param tag 标志
+     * @param message 信息
+     */
     public static void debug(String tag, String message) {
         printLog(Level.DEBUG, tag, "The debug log."+message, false);
     }
-
+    /**
+     * INFO级日志输出
+     * @param tag 标志
+     * @param message 信息
+     */
     public static void info(String tag, String message) {
         printLog(Level.INFO, tag, "The info log."+message, false);
     }
-
+    /**
+     * WARN级日志输出
+     * @param tag 标志
+     * @param message 信息
+     */
     public static void warn(String tag, String message) {
         printLog(Level.WARN, tag, "The warn log."+message, false);
     }
-
+    /**
+     * ERROR级日志输出
+     * @param tag 标志
+     * @param message 信息
+     */
     public static void error(String tag, String message) {
         printLog(Level.ERROR, tag, "The error log."+message, true);
     }
-
+    /**
+     * ERROR级日志输出
+     * @param tag 标志
+     * @param e 异常
+     */
     public static void error(String tag, Exception e) {
         if (e == null) {
             error(tag, (String) null);
@@ -147,6 +139,13 @@ public class LogFile {
         }
     }
 
+    /**
+     * 打印日志
+     * @param level 日志等级
+     * @param tag 标志
+     * @param message 信息
+     * @param isOutToErr 是否输出到控制台
+     */
     private static void printLog(Level level, String tag, String message, boolean isOutToErr) {
         if (level.getLevelValue() >= logOutLevel.getLevelValue()) {
             String log = DATE_FORMAT.format(new Date()) +
@@ -166,6 +165,11 @@ public class LogFile {
         }
     }
 
+    /**
+     * 将控制台信息打印到日志上
+     * @param isOutToErr 是否输出到控制台
+     * @param log 日志信息
+     */
     private static void outLogToConsole(boolean isOutToErr, String log) {
         if (isOutToErr) {
             // System.err 和 System.out 是两个不同的输出流通道, 如果极短时间内连
@@ -175,7 +179,10 @@ public class LogFile {
             System.out.println(log);
         }
     }
-
+    /**
+     * 将控制台信息打印到文件内
+     * @param log 日志信息
+     */
     private static synchronized void outLogToFile(String log) {
         if (logOutFileStream != null) {
             try {
@@ -186,6 +193,12 @@ public class LogFile {
         }
     }
 
+    /**
+     * 日志长度检查
+     * @param text 日志信息
+     * @param maxLength 限定长度
+     * @return  符合规范的新信息
+     */
     private static String checkTextLengthLimit(String text, int maxLength) {
         if ((text != null) && (text.length() >  maxLength)) {
             text = text.substring(0, maxLength - 3) + "...";
@@ -193,6 +206,10 @@ public class LogFile {
         return text;
     }
 
+    /**
+     * 关闭输出流
+     * @param stream 输出流
+     */
     private static void closeStream(Closeable stream) {
         if (stream != null) {
             try {
@@ -203,6 +220,9 @@ public class LogFile {
         }
     }
 
+    /**
+     * 日志等级
+     */
     public static enum Level {
         DEBUG("D", 1), INFO("I", 2), WARN("W", 3), ERROR("E", 4);
 

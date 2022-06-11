@@ -11,21 +11,21 @@
         <Label text="                       "/>
 
         <VBox alignment="CENTER">
-            <Label alignment="TOP_CENTER" text="您可以输入课程表中的课程编号" style="-fx-font-size:15"/>
-            <Label alignment="TOP_CENTER" text="以获取课程详细信息" style="-fx-font-size:15"/>
+            <Label alignment="TOP_CENTER" text="           您可以输入课程表中的课程编号           " style="-fx-font-size:15"/>
+            <Label alignment="TOP_CENTER" text="              以获取课程详细信息" style="-fx-font-size:15"/>
             <HBox alignment="CENTER">
                 <TextField fx:id="ToBeSearched" prefWidth="125.0"/>
                 <padding>
                     <Insets top="25.0"/>
                 </padding>
             </HBox>
-            <Button fx:id="Search" text="查  找" alignment="BASELINE_CENTER"/>
+            <Button fx:id="Search" text="查找" alignment="BASELINE_CENTER"/>
             <Button fx:id="BackToMain" text="回到主界面" alignment="BASELINE_CENTER"/>
             <HBox alignment="CENTER" prefWidth="20">
                 <padding>
                     <Insets top="25.0"/>
                 </padding>
-                <TextArea fx:id="Info" prefRowCount="15" prefColumnCount="15"/>
+                <TextArea fx:id="Info" prefRowCount="15" prefColumnCount="50"/>
             </HBox>
         </VBox>
     </HBox>

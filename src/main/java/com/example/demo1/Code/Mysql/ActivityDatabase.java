@@ -122,6 +122,8 @@ public class ActivityDatabase {
     /**
      * 从数据库内读取活动
      * @param activity 待读取活动内容
+     * @param ID 对应账号ID/班级ID
+     * @param choice ID选择：0账号，1班级
      */
     public void find(Activity activity,String ID,int choice) {
         ResultSet rs = null; // 保存查询结果
@@ -164,6 +166,12 @@ public class ActivityDatabase {
             LogFile.error("ActivityDatabase","数据库读取错误");
         }
     }
+    /**
+     * 从数据库内读取活动
+     * @param activity 待读取活动列表内容
+     * @param ID 对应账号ID/班级ID
+     * @param choice ID选择：0账号，1班级
+     */
     public void find(ArrayList<Activity> activity,String ID,int choice) {
         ResultSet rs = null; // 保存查询结果
         String sql;
@@ -209,6 +217,11 @@ public class ActivityDatabase {
             LogFile.error("ActivityDatabase","数据库读取错误");
         }
     }
+
+    /**
+     * 读取所有班级活动
+     * @param activities 活动列表
+     */
     public void find(ArrayList<Activity> activities){
         ResultSet rs = null; // 保存查询结果
         Connection conn = null; // 数据库连接

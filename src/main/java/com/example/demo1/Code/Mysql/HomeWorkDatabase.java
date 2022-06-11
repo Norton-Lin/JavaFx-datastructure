@@ -130,6 +130,11 @@ public class HomeWorkDatabase {
         executeSql(sql1);
     }
 
+    /**
+     * 插入课程作业信息
+     * @param course 课程
+     * @param homework 作业
+     */
     public void insert(Course course, Homework homework) {
         String sql = "INSERT INTO course_homework(course_id,work_name,path)"
                 + "VALUES('" + course.getM_iNum() + "','" + homework.getM_iName()
@@ -137,6 +142,10 @@ public class HomeWorkDatabase {
         executeSql(sql);
     }
 
+    /**
+     * sql语句执行
+     * @param sql sql语句
+     */
     public void executeSql(String sql) {
         Connection conn;
         Statement stmt;
@@ -153,6 +162,12 @@ public class HomeWorkDatabase {
         }
     }
 
+    /**
+     * 插入用户课程作业信息
+     * @param course 课程
+     * @param homework 作业
+     * @param studentAccount 学生账户
+     */
     public void insert(Course course, Homework homework, StudentAccount studentAccount) {
         String sql = "INSERT INTO account_homework(account_id,course_id,work_name,tag)"
                 + "VALUES('" + studentAccount.getID() + "','" + course.getM_iNum() + "','"
